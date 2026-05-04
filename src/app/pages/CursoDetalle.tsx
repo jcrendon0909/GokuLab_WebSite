@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router";
 import { AnimatedSection } from "../components/AnimatedSection";
+import { useTheme } from "next-themes";
 import {
   Clock, Users, BarChart2, Monitor, CheckCircle, Star,
   MessageCircle, ArrowRight, ChevronLeft, Zap
@@ -329,41 +330,43 @@ export function CursoDetalle() {
   const { id, segmento } = useParams<{ id: string; segmento: string }>();
   const course = (id && courses[id]) ? courses[id] : defaultCourse;
   const relatedCourses = getRelatedCourses(id || "", course.age);
+  const { theme } = useTheme();
 
   const whatsappMsg = encodeURIComponent(
     `Hola, quiero agendar una masterclass del curso: ${course.title}`
   );
 
   return (
-    <div>
+    <div className="bg-white dark:bg-[#0A0F1E] transition-colors duration-300">
       {/* HERO */}
       <section
-        className="relative pt-28 pb-16 px-4 overflow-hidden"
-        style={{ background: "#050A14" }}
+        className="relative pt-28 pb-16 px-4 overflow-hidden bg-gray-50 dark:bg-[#050A14] transition-colors duration-300"
       >
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="absolute inset-0 pointer-events-none transition-colors duration-300"
           style={{
-            background: `radial-gradient(ellipse at 20% 50%, ${course.color}10 0%, transparent 60%)`,
+            background: theme === "dark" 
+              ? `radial-gradient(ellipse at 20% 50%, ${course.color}10 0%, transparent 60%)`
+              : `radial-gradient(ellipse at 20% 50%, ${course.color}08 0%, transparent 60%)`,
           }}
         />
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto relative z-10">
           {/* Breadcrumb */}
           <AnimatedSection className="mb-8">
-            <div className="flex items-center gap-2 text-sm text-white/40">
-              <Link to="/cursos" className="hover:text-white/70 flex items-center gap-1">
+            <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-white/40 transition-colors duration-300">
+              <Link to="/cursos" className="hover:text-gray-900 dark:hover:text-white/70 flex items-center gap-1 transition-colors duration-300">
                 <ChevronLeft size={14} />
                 Cursos
               </Link>
               <span>/</span>
-              <span className="text-white/60">{course.title}</span>
+              <span className="text-gray-900 dark:text-white/60 transition-colors duration-300">{course.title}</span>
             </div>
           </AnimatedSection>
 
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <AnimatedSection direction="left">
               <div
-                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm mb-6"
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm mb-6 shadow-sm"
                 style={{
                   background: `${course.color}15`,
                   color: course.color,
@@ -375,7 +378,7 @@ export function CursoDetalle() {
               </div>
 
               <h1
-                className="text-white mb-3"
+                className="text-gray-900 dark:text-white mb-3 transition-colors duration-300"
                 style={{
                   fontSize: "clamp(1.8rem, 4vw, 3.2rem)",
                   fontWeight: 900,
@@ -384,7 +387,7 @@ export function CursoDetalle() {
               >
                 {course.title}
               </h1>
-              <p className="text-white/60 mb-8" style={{ fontSize: "1.1rem" }}>
+              <p className="text-gray-600 dark:text-white/60 mb-8 transition-colors duration-300" style={{ fontSize: "1.1rem" }}>
                 {course.subtitle}
               </p>
 
@@ -398,16 +401,16 @@ export function CursoDetalle() {
                 ].map(({ icon: Icon, label, value }) => (
                   <div
                     key={label}
-                    className="flex items-start gap-3 p-3 rounded-2xl"
+                    className="flex items-start gap-3 p-3 rounded-2xl bg-white dark:bg-transparent shadow-sm dark:shadow-none transition-colors duration-300"
                     style={{
-                      background: "rgba(255,255,255,0.04)",
-                      border: "1px solid rgba(255,255,255,0.07)",
+                      background: theme === "dark" ? "rgba(255,255,255,0.04)" : "#ffffff",
+                      border: theme === "dark" ? "1px solid rgba(255,255,255,0.07)" : "1px solid rgba(0,0,0,0.06)",
                     }}
                   >
                     <Icon size={16} style={{ color: course.color, marginTop: 2 }} />
                     <div>
-                      <div className="text-white/40 text-xs">{label}</div>
-                      <div className="text-white text-sm font-semibold">{value}</div>
+                      <div className="text-gray-500 dark:text-white/40 text-xs transition-colors duration-300">{label}</div>
+                      <div className="text-gray-900 dark:text-white text-sm font-semibold transition-colors duration-300">{value}</div>
                     </div>
                   </div>
                 ))}
@@ -415,20 +418,20 @@ export function CursoDetalle() {
 
               {/* Price note */}
               <div
-                className="p-4 rounded-2xl mb-6"
+                className="p-4 rounded-2xl mb-6 shadow-sm dark:shadow-none transition-colors duration-300"
                 style={{
-                  background: `${course.color}10`,
-                  border: `1px solid ${course.color}25`,
+                  background: theme === "dark" ? `${course.color}10` : `${course.color}05`,
+                  border: theme === "dark" ? `1px solid ${course.color}25` : `1px solid ${course.color}15`,
                 }}
               >
-                <div className="text-white/50 text-sm mb-1">Inversión</div>
+                <div className="text-gray-500 dark:text-white/50 text-sm mb-1 transition-colors duration-300">Inversión</div>
                 <div
                   className="font-bold"
                   style={{ color: course.color, fontSize: "1.1rem" }}
                 >
                   {course.price}
                 </div>
-                <div className="text-white/40 text-xs mt-1">
+                <div className="text-gray-500 dark:text-white/40 text-xs mt-1 transition-colors duration-300">
                   Solicita información de planes y becas disponibles
                 </div>
               </div>
@@ -455,8 +458,7 @@ export function CursoDetalle() {
                   href={`https://wa.me/5612668168?text=Solicito%20información%20del%20curso%20${encodeURIComponent(course.title)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-4 rounded-2xl text-white font-semibold border border-white/25 hover:border-white/50 text-center"
-                  style={{ transition: "all 0.2s ease" }}
+                  className="px-6 py-4 rounded-2xl font-semibold border transition-all duration-300 text-center text-gray-900 dark:text-white border-gray-300 dark:border-white/25 hover:bg-gray-100 dark:hover:bg-white/5"
                 >
                   Solicitar info
                 </a>
@@ -465,16 +467,18 @@ export function CursoDetalle() {
 
             {/* Image */}
             <AnimatedSection direction="right" delay={100}>
-              <div className="relative rounded-3xl overflow-hidden" style={{ aspectRatio: "4/3" }}>
+              <div className="relative rounded-3xl overflow-hidden shadow-lg" style={{ aspectRatio: "4/3" }}>
                 <img
                   src={course.img}
                   alt={course.title}
                   className="w-full h-full object-cover"
                 />
                 <div
-                  className="absolute inset-0"
+                  className="absolute inset-0 transition-colors duration-300"
                   style={{
-                    background: `linear-gradient(135deg, ${course.color}30, transparent)`,
+                    background: theme === "dark" 
+                      ? `linear-gradient(135deg, ${course.color}30, transparent)` 
+                      : `linear-gradient(135deg, ${course.color}15, transparent)`,
                   }}
                 />
               </div>
@@ -484,12 +488,12 @@ export function CursoDetalle() {
       </section>
 
       {/* WHAT THEY'LL LEARN */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4 bg-white dark:bg-[#0A0F1E] transition-colors duration-300">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12">
             <AnimatedSection>
               <h2
-                className="text-white mb-8"
+                className="text-gray-900 dark:text-white mb-8 transition-colors duration-300"
                 style={{ fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800 }}
               >
                 ¿Qué{" "}
@@ -503,7 +507,7 @@ export function CursoDetalle() {
                         size={18}
                         style={{ color: course.color, marginTop: 2, flexShrink: 0 }}
                       />
-                      <span className="text-white/70 leading-relaxed">{item}</span>
+                      <span className="text-gray-600 dark:text-white/70 leading-relaxed transition-colors duration-300">{item}</span>
                     </div>
                   </AnimatedSection>
                 ))}
@@ -512,7 +516,7 @@ export function CursoDetalle() {
 
             <AnimatedSection delay={100}>
               <h2
-                className="text-white mb-8"
+                className="text-gray-900 dark:text-white mb-8 transition-colors duration-300"
                 style={{ fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800 }}
               >
                 Tecnologías del{" "}
@@ -522,9 +526,9 @@ export function CursoDetalle() {
                 {course.techs.map((tech: string) => (
                   <div
                     key={tech}
-                    className="flex items-center gap-2 px-4 py-2.5 rounded-2xl"
+                    className="flex items-center gap-2 px-4 py-2.5 rounded-2xl shadow-sm dark:shadow-none transition-colors duration-300"
                     style={{
-                      background: `${course.color}12`,
+                      background: theme === "dark" ? `${course.color}12` : `${course.color}08`,
                       border: `1px solid ${course.color}30`,
                       color: course.color,
                     }}
@@ -536,14 +540,14 @@ export function CursoDetalle() {
               </div>
 
               <h3
-                className="text-white mb-5"
+                className="text-gray-900 dark:text-white mb-5 transition-colors duration-300"
                 style={{ fontWeight: 700, fontSize: "1.2rem" }}
               >
                 Beneficios del programa
               </h3>
               <div className="flex flex-col gap-2">
                 {course.benefits.map((b: string, i: number) => (
-                  <div key={i} className="flex items-center gap-2 text-white/65 text-sm">
+                  <div key={i} className="flex items-center gap-2 text-gray-600 dark:text-white/65 text-sm transition-colors duration-300">
                     <span style={{ color: course.color }}>✦</span>
                     {b}
                   </div>
@@ -556,17 +560,16 @@ export function CursoDetalle() {
 
       {/* RESULTS */}
       <section
-        className="py-20 px-4"
+        className="py-20 px-4 bg-gray-50 dark:bg-transparent transition-colors duration-300"
         style={{
-          background: "rgba(255,255,255,0.02)",
-          borderTop: "1px solid rgba(255,255,255,0.06)",
-          borderBottom: "1px solid rgba(255,255,255,0.06)",
+          borderTop: theme === "dark" ? "1px solid rgba(255,255,255,0.06)" : "1px solid rgba(0,0,0,0.05)",
+          borderBottom: theme === "dark" ? "1px solid rgba(255,255,255,0.06)" : "1px solid rgba(0,0,0,0.05)",
         }}
       >
         <div className="max-w-5xl mx-auto text-center">
           <AnimatedSection>
             <h2
-              className="text-white mb-10"
+              className="text-gray-900 dark:text-white mb-10 transition-colors duration-300"
               style={{ fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800 }}
             >
               Resultados{" "}
@@ -577,14 +580,14 @@ export function CursoDetalle() {
             {course.results.map((result: string, i: number) => (
               <AnimatedSection key={i} delay={i * 80}>
                 <div
-                  className="p-5 rounded-2xl text-left"
+                  className="p-5 rounded-2xl text-left bg-white dark:bg-transparent shadow-sm dark:shadow-none transition-colors duration-300"
                   style={{
-                    background: `${course.color}08`,
-                    border: `1px solid ${course.color}20`,
+                    background: theme === "dark" ? `${course.color}08` : `${course.color}05`,
+                    border: theme === "dark" ? `1px solid ${course.color}20` : `1px solid ${course.color}15`,
                   }}
                 >
                   <div className="text-2xl mb-2">🎯</div>
-                  <p className="text-white/75 leading-relaxed">{result}</p>
+                  <p className="text-gray-700 dark:text-white/75 leading-relaxed transition-colors duration-300">{result}</p>
                 </div>
               </AnimatedSection>
             ))}
@@ -593,11 +596,11 @@ export function CursoDetalle() {
       </section>
 
       {/* TESTIMONIALS */}
-      <section className="py-20 px-4" style={{ background: "#050A14" }}>
+      <section className="py-20 px-4 bg-white dark:bg-[#050A14] transition-colors duration-300">
         <div className="max-w-5xl mx-auto">
           <AnimatedSection className="text-center mb-10">
             <h2
-              className="text-white"
+              className="text-gray-900 dark:text-white transition-colors duration-300"
               style={{ fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800 }}
             >
               Lo que dicen nuestros{" "}
@@ -608,10 +611,10 @@ export function CursoDetalle() {
             {course.testimonials.map((t: any, i: number) => (
               <AnimatedSection key={i} delay={i * 100}>
                 <div
-                  className="p-6 rounded-3xl"
+                  className="p-6 rounded-3xl bg-gray-50 dark:bg-transparent transition-colors duration-300"
                   style={{
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.07)",
+                    background: theme === "dark" ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.02)",
+                    border: theme === "dark" ? "1px solid rgba(255,255,255,0.07)" : "1px solid rgba(0,0,0,0.05)",
                   }}
                 >
                   <div className="flex mb-3">
@@ -619,8 +622,8 @@ export function CursoDetalle() {
                       <Star key={j} size={14} style={{ color: "#FFE134", fill: "#FFE134" }} />
                     ))}
                   </div>
-                  <p className="text-white/70 leading-relaxed italic mb-4">"{t.text}"</p>
-                  <p className="text-white/50 text-sm font-semibold">— {t.name}</p>
+                  <p className="text-gray-700 dark:text-white/70 leading-relaxed italic mb-4 transition-colors duration-300">"{t.text}"</p>
+                  <p className="text-gray-500 dark:text-white/50 text-sm font-semibold transition-colors duration-300">— {t.name}</p>
                 </div>
               </AnimatedSection>
             ))}
@@ -630,7 +633,7 @@ export function CursoDetalle() {
 
       {/* RELATED COURSES */}
       {relatedCourses.length > 0 && (
-        <section className="py-20 px-4">
+        <section className="py-20 px-4 bg-gray-50 dark:bg-[#0A0F1E] transition-colors duration-300">
           <div className="max-w-7xl mx-auto">
             <AnimatedSection className="text-center mb-12">
               <div
@@ -644,7 +647,7 @@ export function CursoDetalle() {
                 Cursos relacionados
               </div>
               <h2
-                className="text-white mb-4"
+                className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
                 style={{ fontSize: "clamp(1.8rem, 4vw, 2.5rem)", fontWeight: 800 }}
               >
                 Otros cursos{" "}
@@ -652,7 +655,7 @@ export function CursoDetalle() {
                   {getAgeSegment(course.age) === "kids" ? "para niños y adolescentes" : "para adultos"}
                 </span>
               </h2>
-              <p className="text-white/60 max-w-xl mx-auto">
+              <p className="text-gray-600 dark:text-white/60 max-w-xl mx-auto transition-colors duration-300">
                 Continúa tu aprendizaje con estos cursos diseñados para tu grupo de edad
               </p>
             </AnimatedSection>
@@ -661,11 +664,11 @@ export function CursoDetalle() {
               {relatedCourses.map((relCourse, i) => (
                 <AnimatedSection key={relCourse.id} delay={i * 100}>
                   <Link
-                    to={`/curso/${relCourse.id}`}
-                    className="block group rounded-3xl overflow-hidden h-full"
+                    to={`/cursos/${getAgeSegment(course.age) === 'kids' ? 'ninos' : 'adultos'}/${relCourse.id}`}
+                    className="block group rounded-3xl overflow-hidden h-full bg-white dark:bg-transparent shadow-sm dark:shadow-none transition-colors duration-300"
                     style={{
-                      background: "rgba(255,255,255,0.03)",
-                      border: "1px solid rgba(255,255,255,0.07)",
+                      background: theme === "dark" ? "rgba(255,255,255,0.03)" : "#ffffff",
+                      border: theme === "dark" ? "1px solid rgba(255,255,255,0.07)" : "1px solid rgba(0,0,0,0.08)",
                       transition: "all 0.3s ease",
                     }}
                     onMouseEnter={(e) => {
@@ -675,7 +678,7 @@ export function CursoDetalle() {
                     }}
                     onMouseLeave={(e) => {
                       (e.currentTarget as HTMLElement).style.transform = "none";
-                      (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.07)";
+                      (e.currentTarget as HTMLElement).style.borderColor = theme === "dark" ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.08)";
                       (e.currentTarget as HTMLElement).style.boxShadow = "none";
                     }}
                   >
@@ -696,7 +699,7 @@ export function CursoDetalle() {
                         <span className="text-4xl">{relCourse.emoji}</span>
                       </div>
                       <div
-                        className="absolute top-4 right-4 px-3 py-1.5 rounded-full text-xs font-semibold"
+                        className="absolute top-4 right-4 px-3 py-1.5 rounded-full text-xs font-semibold shadow-sm"
                         style={{ background: relCourse.color, color: "#fff" }}
                       >
                         {relCourse.level}
@@ -704,23 +707,23 @@ export function CursoDetalle() {
                     </div>
 
                     {/* Content */}
-                    <div className="p-6">
+                    <div className="p-6 relative z-10">
                       <h3
-                        className="text-white mb-2 group-hover:text-white transition-colors"
+                        className="text-gray-900 dark:text-white mb-2 transition-colors duration-300"
                         style={{ fontWeight: 700, fontSize: "1.15rem" }}
                       >
                         {relCourse.title}
                       </h3>
-                      <p className="text-white/50 text-sm mb-4 line-clamp-2">
+                      <p className="text-gray-500 dark:text-white/50 text-sm mb-4 line-clamp-2 transition-colors duration-300">
                         {relCourse.subtitle}
                       </p>
 
                       {/* Meta info */}
                       <div className="flex flex-wrap gap-2 mb-4">
                         <span
-                          className="text-xs px-2.5 py-1 rounded-full"
+                          className="text-xs px-2.5 py-1 rounded-full shadow-sm dark:shadow-none"
                           style={{
-                            background: `${relCourse.color}15`,
+                            background: theme === "dark" ? `${relCourse.color}15` : `${relCourse.color}10`,
                             color: relCourse.color,
                             border: `1px solid ${relCourse.color}25`,
                           }}
@@ -728,9 +731,9 @@ export function CursoDetalle() {
                           {relCourse.age}
                         </span>
                         <span
-                          className="text-xs px-2.5 py-1 rounded-full"
+                          className="text-xs px-2.5 py-1 rounded-full shadow-sm dark:shadow-none"
                           style={{
-                            background: `${relCourse.color}15`,
+                            background: theme === "dark" ? `${relCourse.color}15` : `${relCourse.color}10`,
                             color: relCourse.color,
                             border: `1px solid ${relCourse.color}25`,
                           }}
@@ -757,16 +760,16 @@ export function CursoDetalle() {
       )}
 
       {/* FINAL CTA */}
-      <section className="py-24 px-4">
+      <section className="py-24 px-4 bg-white dark:bg-[#050A14] transition-colors duration-300">
         <div className="max-w-4xl mx-auto text-center">
           <AnimatedSection>
             <h2
-              className="text-white mb-4"
+              className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
               style={{ fontSize: "clamp(1.8rem, 4vw, 2.8rem)", fontWeight: 800 }}
             >
               ¿Listo para dar el primer paso?
             </h2>
-            <p className="text-white/60 mb-8 max-w-xl mx-auto" style={{ fontSize: "1.1rem" }}>
+            <p className="text-gray-600 dark:text-white/60 mb-8 max-w-xl mx-auto transition-colors duration-300" style={{ fontSize: "1.1rem" }}>
               Agenda tu masterclass gratuita hoy. Sin compromiso. Sin costo.
               Con atención personalizada del equipo.
             </p>
@@ -790,16 +793,13 @@ export function CursoDetalle() {
               </a>
               <Link
                 to="/cursos"
-                className="flex items-center justify-center gap-2 px-10 py-5 rounded-2xl text-white font-semibold border border-white/25"
-                style={{ transition: "all 0.2s ease" }}
-                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = ""; }}
+                className="flex items-center justify-center gap-2 px-10 py-5 rounded-2xl font-semibold border transition-all duration-300 text-gray-900 dark:text-white border-gray-300 dark:border-white/25 hover:bg-gray-100 dark:hover:bg-white/10"
               >
                 Ver más cursos
                 <ArrowRight size={18} />
               </Link>
             </div>
-            <div className="mt-8 flex flex-wrap justify-center gap-5 text-sm text-white/40">
+            <div className="mt-8 flex flex-wrap justify-center gap-5 text-sm text-gray-500 dark:text-white/40 transition-colors duration-300">
               {["✅ Gratis", "✅ Sin compromiso", "✅ Atención personalizada"].map((i) => (
                 <span key={i}>{i}</span>
               ))}

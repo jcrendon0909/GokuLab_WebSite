@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AnimatedSection } from "../components/AnimatedSection";
+import { useTheme } from "next-themes";
 import { Phone, Mail, MapPin, MessageCircle, Send, CheckCircle, Clock } from "lucide-react";
 
 const countryOptions = [
@@ -27,6 +28,7 @@ export function Contacto() {
   const [loading, setLoading] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState(countryOptions[0]);
   const [countryMenuOpen, setCountryMenuOpen] = useState(false);
+  const { theme } = useTheme();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -46,37 +48,36 @@ export function Contacto() {
   };
 
   const inputStyle = {
-    background: "rgba(255,255,255,0.05)",
-    border: "1px solid rgba(255,255,255,0.12)",
+    background: theme === "dark" ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.03)",
+    border: theme === "dark" ? "1px solid rgba(255,255,255,0.12)" : "1px solid rgba(0,0,0,0.1)",
     borderRadius: "12px",
-    color: "#fff",
+    color: theme === "dark" ? "#fff" : "#111827",
     padding: "12px 16px",
     width: "100%",
     outline: "none",
     fontSize: "0.9rem",
-    transition: "border-color 0.2s ease",
+    transition: "border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease",
   };
 
   return (
-    <div>
+    <div className="bg-white dark:bg-[#0A0F1E] transition-colors duration-300">
       {/* HERO */}
       <section
-        className="pt-32 pb-16 px-4 relative overflow-hidden"
-        style={{ background: "#050A14" }}
+        className="pt-32 pb-16 px-4 relative overflow-hidden bg-gray-50 dark:bg-[#050A14] transition-colors duration-300"
       >
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="absolute inset-0 pointer-events-none transition-colors duration-300"
           style={{
-            background:
-              "radial-gradient(ellipse at center, rgba(0,201,255,0.06) 0%, transparent 60%)",
+            background: theme === "dark" 
+              ? "radial-gradient(ellipse at center, rgba(0,201,255,0.06) 0%, transparent 60%)"
+              : "radial-gradient(ellipse at center, rgba(0,201,255,0.04) 0%, transparent 60%)",
           }}
         />
         <div className="max-w-5xl mx-auto text-center relative">
           <AnimatedSection>
             <div
-              className="inline-block px-4 py-1.5 rounded-full text-sm mb-6"
+              className="inline-block px-4 py-1.5 rounded-full text-sm mb-6 bg-blue-50 dark:bg-blue-900/10"
               style={{
-                background: "rgba(0,201,255,0.1)",
                 color: "#00C9FF",
                 border: "1px solid rgba(0,201,255,0.25)",
               }}
@@ -84,7 +85,7 @@ export function Contacto() {
               📩 Contáctanos
             </div>
             <h1
-              className="text-white mb-4"
+              className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
               style={{
                 fontSize: "clamp(2rem, 5vw, 3.5rem)",
                 fontWeight: 900,
@@ -102,7 +103,7 @@ export function Contacto() {
                 superfuturo
               </span>
             </h1>
-            <p className="text-white/65 max-w-xl mx-auto" style={{ fontSize: "1.1rem" }}>
+            <p className="text-gray-600 dark:text-white/65 max-w-xl mx-auto transition-colors duration-300" style={{ fontSize: "1.1rem" }}>
               Alguien de nuestro equipo te contactará en menos de 24 horas. Sin robots,
               sin scripts. Solo personas que quieren ayudarte.
             </p>
@@ -119,7 +120,7 @@ export function Contacto() {
               {/* Quick options */}
               <div className="mb-10">
                 <h2
-                  className="text-white mb-6"
+                  className="text-gray-900 dark:text-white mb-6 transition-colors duration-300"
                   style={{ fontWeight: 700, fontSize: "1.3rem" }}
                 >
                   Contacto directo
@@ -156,32 +157,31 @@ export function Contacto() {
                       href={href}
                       target={href.startsWith("http") ? "_blank" : undefined}
                       rel="noopener noreferrer"
-                      className="flex items-center gap-4 p-4 rounded-2xl group"
+                      className="flex items-center gap-4 p-4 rounded-2xl group bg-white dark:bg-transparent shadow-sm dark:shadow-none transition-colors duration-300"
                       style={{
-                        background: `${color}08`,
+                        background: theme === "dark" ? `${color}08` : `${color}05`,
                         border: `1px solid ${color}20`,
-                        transition: "all 0.2s ease",
                       }}
                       onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLElement).style.background = `${color}15`;
+                        (e.currentTarget as HTMLElement).style.background = theme === "dark" ? `${color}15` : `${color}12`;
                         (e.currentTarget as HTMLElement).style.borderColor = `${color}40`;
                         (e.currentTarget as HTMLElement).style.transform = "translateX(4px)";
                       }}
                       onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLElement).style.background = `${color}08`;
+                        (e.currentTarget as HTMLElement).style.background = theme === "dark" ? `${color}08` : `${color}05`;
                         (e.currentTarget as HTMLElement).style.borderColor = `${color}20`;
                         (e.currentTarget as HTMLElement).style.transform = "none";
                       }}
                     >
                       <div
-                        className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
+                        className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-white dark:bg-transparent"
                         style={{ background: `${color}18` }}
                       >
                         <Icon size={22} style={{ color }} />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="text-white/40 text-xs mb-0.5">{label}</div>
-                        <div className="text-white text-sm font-semibold truncate">
+                        <div className="text-gray-500 dark:text-white/40 text-xs mb-0.5 transition-colors duration-300">{label}</div>
+                        <div className="text-gray-900 dark:text-white text-sm font-semibold truncate transition-colors duration-300">
                           {value}
                         </div>
                       </div>
@@ -199,7 +199,7 @@ export function Contacto() {
               {/* Location */}
               <div className="mb-10">
                 <h2
-                  className="text-white mb-4"
+                  className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
                   style={{ fontWeight: 700, fontSize: "1.1rem" }}
                 >
                   Ubicación
@@ -207,19 +207,19 @@ export function Contacto() {
 
                 {/* Sede Principal */}
                 <div
-                  className="p-5 rounded-2xl mb-4"
+                  className="p-5 rounded-2xl mb-4 bg-gray-50 dark:bg-transparent transition-colors duration-300"
                   style={{
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.07)",
+                    background: theme === "dark" ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.02)",
+                    border: theme === "dark" ? "1px solid rgba(255,255,255,0.07)" : "1px solid rgba(0,0,0,0.05)",
                   }}
                 >
                   <div className="flex items-start gap-3 mb-3">
                     <MapPin size={18} className="text-[#00C9FF] mt-0.5 shrink-0" />
                     <div className="flex-1">
-                      <div className="text-white text-sm font-semibold">
+                      <div className="text-gray-900 dark:text-white text-sm font-semibold transition-colors duration-300">
                         GOKU LAB – Sede Principal
                       </div>
-                      <div className="text-white/50 text-sm mt-0.5">
+                      <div className="text-gray-500 dark:text-white/50 text-sm mt-0.5 transition-colors duration-300">
                         Av. Insurgentes Sur 1234, Col. Del Valle,<br />
                         Ciudad de México, CDMX, 03100
                       </div>
@@ -227,7 +227,7 @@ export function Contacto() {
                   </div>
                   <div className="flex items-center gap-3 mb-3">
                     <Clock size={16} className="text-[#00C9FF] shrink-0" />
-                    <span className="text-white/50 text-sm">
+                    <span className="text-gray-500 dark:text-white/50 text-sm transition-colors duration-300">
                       Lunes–Viernes 10:00–18:00 · Sábados 9:00–13:00
                     </span>
                   </div>
@@ -236,19 +236,19 @@ export function Contacto() {
                       href="https://waze.com/ul?ll=19.3728,-99.1707&navigate=yes"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-semibold"
+                      className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-semibold bg-white dark:bg-transparent"
                       style={{
-                        background: "rgba(51,193,243,0.1)",
+                        background: theme === "dark" ? "rgba(51,193,243,0.1)" : "rgba(51,193,243,0.05)",
                         color: "#33C1F3",
                         border: "1px solid rgba(51,193,243,0.2)",
                         transition: "all 0.2s ease",
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.background = "rgba(51,193,243,0.18)";
+                        e.currentTarget.style.background = theme === "dark" ? "rgba(51,193,243,0.18)" : "rgba(51,193,243,0.12)";
                         e.currentTarget.style.borderColor = "rgba(51,193,243,0.4)";
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.background = "rgba(51,193,243,0.1)";
+                        e.currentTarget.style.background = theme === "dark" ? "rgba(51,193,243,0.1)" : "rgba(51,193,243,0.05)";
                         e.currentTarget.style.borderColor = "rgba(51,193,243,0.2)";
                       }}
                     >
@@ -258,19 +258,19 @@ export function Contacto() {
                       href="https://maps.google.com/?q=19.3728,-99.1707"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-semibold"
+                      className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-semibold bg-white dark:bg-transparent"
                       style={{
-                        background: "rgba(66,133,244,0.1)",
+                        background: theme === "dark" ? "rgba(66,133,244,0.1)" : "rgba(66,133,244,0.05)",
                         color: "#4285F4",
                         border: "1px solid rgba(66,133,244,0.2)",
                         transition: "all 0.2s ease",
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.background = "rgba(66,133,244,0.18)";
+                        e.currentTarget.style.background = theme === "dark" ? "rgba(66,133,244,0.18)" : "rgba(66,133,244,0.12)";
                         e.currentTarget.style.borderColor = "rgba(66,133,244,0.4)";
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.background = "rgba(66,133,244,0.1)";
+                        e.currentTarget.style.background = theme === "dark" ? "rgba(66,133,244,0.1)" : "rgba(66,133,244,0.05)";
                         e.currentTarget.style.borderColor = "rgba(66,133,244,0.2)";
                       }}
                     >
@@ -280,20 +280,19 @@ export function Contacto() {
                       href="https://maps.apple.com/?q=19.3728,-99.1707"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-semibold"
+                      className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-semibold bg-white dark:bg-transparent transition-colors duration-300"
                       style={{
-                        background: "rgba(255,255,255,0.08)",
-                        color: "#fff",
-                        border: "1px solid rgba(255,255,255,0.15)",
-                        transition: "all 0.2s ease",
+                        background: theme === "dark" ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.04)",
+                        color: theme === "dark" ? "#fff" : "#111827",
+                        border: theme === "dark" ? "1px solid rgba(255,255,255,0.15)" : "1px solid rgba(0,0,0,0.1)",
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.background = "rgba(255,255,255,0.12)";
-                        e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)";
+                        e.currentTarget.style.background = theme === "dark" ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.08)";
+                        e.currentTarget.style.borderColor = theme === "dark" ? "rgba(255,255,255,0.25)" : "rgba(0,0,0,0.2)";
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.background = "rgba(255,255,255,0.08)";
-                        e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)";
+                        e.currentTarget.style.background = theme === "dark" ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.04)";
+                        e.currentTarget.style.borderColor = theme === "dark" ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.1)";
                       }}
                     >
                       Apple
@@ -303,19 +302,19 @@ export function Contacto() {
 
                 {/* Sede Lomas Verdes */}
                 <div
-                  className="p-5 rounded-2xl mb-4"
+                  className="p-5 rounded-2xl mb-4 bg-gray-50 dark:bg-transparent transition-colors duration-300"
                   style={{
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.07)",
+                    background: theme === "dark" ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.02)",
+                    border: theme === "dark" ? "1px solid rgba(255,255,255,0.07)" : "1px solid rgba(0,0,0,0.05)",
                   }}
                 >
                   <div className="flex items-start gap-3 mb-3">
                     <MapPin size={18} className="text-[#7C3AED] mt-0.5 shrink-0" />
                     <div className="flex-1">
-                      <div className="text-white text-sm font-semibold">
+                      <div className="text-gray-900 dark:text-white text-sm font-semibold transition-colors duration-300">
                         GOKU LAB – Lomas Verdes
                       </div>
-                      <div className="text-white/50 text-sm mt-0.5">
+                      <div className="text-gray-500 dark:text-white/50 text-sm mt-0.5 transition-colors duration-300">
                         Irun 123, Lomas Verdes,<br />
                         Naucalpan, Estado de México
                       </div>
@@ -326,19 +325,19 @@ export function Contacto() {
                       href="https://waze.com/ul?ll=19.5169,-99.2394&navigate=yes"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-semibold"
+                      className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-semibold bg-white dark:bg-transparent"
                       style={{
-                        background: "rgba(51,193,243,0.1)",
+                        background: theme === "dark" ? "rgba(51,193,243,0.1)" : "rgba(51,193,243,0.05)",
                         color: "#33C1F3",
                         border: "1px solid rgba(51,193,243,0.2)",
                         transition: "all 0.2s ease",
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.background = "rgba(51,193,243,0.18)";
+                        e.currentTarget.style.background = theme === "dark" ? "rgba(51,193,243,0.18)" : "rgba(51,193,243,0.12)";
                         e.currentTarget.style.borderColor = "rgba(51,193,243,0.4)";
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.background = "rgba(51,193,243,0.1)";
+                        e.currentTarget.style.background = theme === "dark" ? "rgba(51,193,243,0.1)" : "rgba(51,193,243,0.05)";
                         e.currentTarget.style.borderColor = "rgba(51,193,243,0.2)";
                       }}
                     >
@@ -348,19 +347,19 @@ export function Contacto() {
                       href="https://maps.google.com/?q=19.5169,-99.2394"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-semibold"
+                      className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-semibold bg-white dark:bg-transparent"
                       style={{
-                        background: "rgba(66,133,244,0.1)",
+                        background: theme === "dark" ? "rgba(66,133,244,0.1)" : "rgba(66,133,244,0.05)",
                         color: "#4285F4",
                         border: "1px solid rgba(66,133,244,0.2)",
                         transition: "all 0.2s ease",
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.background = "rgba(66,133,244,0.18)";
+                        e.currentTarget.style.background = theme === "dark" ? "rgba(66,133,244,0.18)" : "rgba(66,133,244,0.12)";
                         e.currentTarget.style.borderColor = "rgba(66,133,244,0.4)";
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.background = "rgba(66,133,244,0.1)";
+                        e.currentTarget.style.background = theme === "dark" ? "rgba(66,133,244,0.1)" : "rgba(66,133,244,0.05)";
                         e.currentTarget.style.borderColor = "rgba(66,133,244,0.2)";
                       }}
                     >
@@ -370,20 +369,19 @@ export function Contacto() {
                       href="https://maps.apple.com/?q=19.5169,-99.2394"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-semibold"
+                      className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-semibold bg-white dark:bg-transparent transition-colors duration-300"
                       style={{
-                        background: "rgba(255,255,255,0.08)",
-                        color: "#fff",
-                        border: "1px solid rgba(255,255,255,0.15)",
-                        transition: "all 0.2s ease",
+                        background: theme === "dark" ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.04)",
+                        color: theme === "dark" ? "#fff" : "#111827",
+                        border: theme === "dark" ? "1px solid rgba(255,255,255,0.15)" : "1px solid rgba(0,0,0,0.1)",
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.background = "rgba(255,255,255,0.12)";
-                        e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)";
+                        e.currentTarget.style.background = theme === "dark" ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.08)";
+                        e.currentTarget.style.borderColor = theme === "dark" ? "rgba(255,255,255,0.25)" : "rgba(0,0,0,0.2)";
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.background = "rgba(255,255,255,0.08)";
-                        e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)";
+                        e.currentTarget.style.background = theme === "dark" ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.04)";
+                        e.currentTarget.style.borderColor = theme === "dark" ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.1)";
                       }}
                     >
                       Apple
@@ -393,19 +391,19 @@ export function Contacto() {
 
                 {/* Centro Ezequiel Montes */}
                 <div
-                  className="p-5 rounded-2xl"
+                  className="p-5 rounded-2xl bg-gray-50 dark:bg-transparent transition-colors duration-300"
                   style={{
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.07)",
+                    background: theme === "dark" ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.02)",
+                    border: theme === "dark" ? "1px solid rgba(255,255,255,0.07)" : "1px solid rgba(0,0,0,0.05)",
                   }}
                 >
                   <div className="flex items-start gap-3 mb-3">
                     <MapPin size={18} className="text-[#10B981] mt-0.5 shrink-0" />
                     <div className="flex-1">
-                      <div className="text-white text-sm font-semibold">
+                      <div className="text-gray-900 dark:text-white text-sm font-semibold transition-colors duration-300">
                         Centro S. C. Ezequiel Montes
                       </div>
-                      <div className="text-white/50 text-sm mt-0.5">
+                      <div className="text-gray-500 dark:text-white/50 text-sm mt-0.5 transition-colors duration-300">
                         Calle Benito Juárez 204,<br />
                         76650 Ezequiel Montes, Querétaro
                       </div>
@@ -413,7 +411,7 @@ export function Contacto() {
                   </div>
                   <div className="flex items-center gap-3 mb-3">
                     <Clock size={16} className="text-[#10B981] shrink-0" />
-                    <span className="text-white/50 text-sm">
+                    <span className="text-gray-500 dark:text-white/50 text-sm transition-colors duration-300">
                       Lunes 16:00–17:30
                     </span>
                   </div>
@@ -422,19 +420,19 @@ export function Contacto() {
                       href="https://waze.com/ul?ll=20.8067,-99.9006&navigate=yes"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-semibold"
+                      className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-semibold bg-white dark:bg-transparent"
                       style={{
-                        background: "rgba(51,193,243,0.1)",
+                        background: theme === "dark" ? "rgba(51,193,243,0.1)" : "rgba(51,193,243,0.05)",
                         color: "#33C1F3",
                         border: "1px solid rgba(51,193,243,0.2)",
                         transition: "all 0.2s ease",
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.background = "rgba(51,193,243,0.18)";
+                        e.currentTarget.style.background = theme === "dark" ? "rgba(51,193,243,0.18)" : "rgba(51,193,243,0.12)";
                         e.currentTarget.style.borderColor = "rgba(51,193,243,0.4)";
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.background = "rgba(51,193,243,0.1)";
+                        e.currentTarget.style.background = theme === "dark" ? "rgba(51,193,243,0.1)" : "rgba(51,193,243,0.05)";
                         e.currentTarget.style.borderColor = "rgba(51,193,243,0.2)";
                       }}
                     >
@@ -444,19 +442,19 @@ export function Contacto() {
                       href="https://maps.google.com/?q=20.8067,-99.9006"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-semibold"
+                      className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-semibold bg-white dark:bg-transparent"
                       style={{
-                        background: "rgba(66,133,244,0.1)",
+                        background: theme === "dark" ? "rgba(66,133,244,0.1)" : "rgba(66,133,244,0.05)",
                         color: "#4285F4",
                         border: "1px solid rgba(66,133,244,0.2)",
                         transition: "all 0.2s ease",
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.background = "rgba(66,133,244,0.18)";
+                        e.currentTarget.style.background = theme === "dark" ? "rgba(66,133,244,0.18)" : "rgba(66,133,244,0.12)";
                         e.currentTarget.style.borderColor = "rgba(66,133,244,0.4)";
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.background = "rgba(66,133,244,0.1)";
+                        e.currentTarget.style.background = theme === "dark" ? "rgba(66,133,244,0.1)" : "rgba(66,133,244,0.05)";
                         e.currentTarget.style.borderColor = "rgba(66,133,244,0.2)";
                       }}
                     >
@@ -466,20 +464,19 @@ export function Contacto() {
                       href="https://maps.apple.com/?q=20.8067,-99.9006"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-semibold"
+                      className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-semibold bg-white dark:bg-transparent transition-colors duration-300"
                       style={{
-                        background: "rgba(255,255,255,0.08)",
-                        color: "#fff",
-                        border: "1px solid rgba(255,255,255,0.15)",
-                        transition: "all 0.2s ease",
+                        background: theme === "dark" ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.04)",
+                        color: theme === "dark" ? "#fff" : "#111827",
+                        border: theme === "dark" ? "1px solid rgba(255,255,255,0.15)" : "1px solid rgba(0,0,0,0.1)",
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.background = "rgba(255,255,255,0.12)";
-                        e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)";
+                        e.currentTarget.style.background = theme === "dark" ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.08)";
+                        e.currentTarget.style.borderColor = theme === "dark" ? "rgba(255,255,255,0.25)" : "rgba(0,0,0,0.2)";
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.background = "rgba(255,255,255,0.08)";
-                        e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)";
+                        e.currentTarget.style.background = theme === "dark" ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.04)";
+                        e.currentTarget.style.borderColor = theme === "dark" ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.1)";
                       }}
                     >
                       Apple
@@ -490,19 +487,19 @@ export function Contacto() {
 
               {/* Response time */}
               <div
-                className="p-5 rounded-2xl"
+                className="p-5 rounded-2xl bg-white dark:bg-transparent transition-colors duration-300"
                 style={{
-                  background: "rgba(16,185,129,0.08)",
-                  border: "1px solid rgba(16,185,129,0.2)",
+                  background: theme === "dark" ? "rgba(16,185,129,0.08)" : "rgba(16,185,129,0.05)",
+                  border: theme === "dark" ? "1px solid rgba(16,185,129,0.2)" : "1px solid rgba(16,185,129,0.15)",
                 }}
               >
                 <div className="flex items-center gap-3 mb-2">
                   <CheckCircle size={18} className="text-[#10B981]" />
-                  <span className="text-white font-semibold">
+                  <span className="text-gray-900 dark:text-white font-semibold transition-colors duration-300">
                     Respuesta garantizada
                   </span>
                 </div>
-                <p className="text-white/60 text-sm leading-relaxed">
+                <p className="text-gray-600 dark:text-white/60 text-sm leading-relaxed transition-colors duration-300">
                   Respondemos todos los mensajes en menos de{" "}
                   <span className="text-[#10B981] font-semibold">24 horas hábiles</span>.
                   Por WhatsApp, en minutos.
@@ -513,29 +510,30 @@ export function Contacto() {
             {/* Form */}
             <AnimatedSection direction="right" delay={100}>
               <div
-                className="p-8 rounded-3xl"
+                className="p-8 rounded-3xl bg-gray-50 dark:bg-transparent transition-colors duration-300"
                 id="contacto-form"
                 style={{
-                  background: "rgba(255,255,255,0.03)",
-                  border: "1px solid rgba(255,255,255,0.08)",
+                  background: theme === "dark" ? "rgba(255,255,255,0.03)" : "#ffffff",
+                  border: theme === "dark" ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(0,0,0,0.08)",
+                  boxShadow: theme === "dark" ? "none" : "0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)"
                 }}
               >
                 {!submitted ? (
                   <>
                     <h2
-                      className="text-white mb-2"
+                      className="text-gray-900 dark:text-white mb-2 transition-colors duration-300"
                       style={{ fontWeight: 700, fontSize: "1.3rem" }}
                     >
                       Contacto
                     </h2>
-                    <p className="text-white/50 text-sm mb-6">
+                    <p className="text-gray-500 dark:text-white/50 text-sm mb-6 transition-colors duration-300">
                       Completa el formulario y alguien del equipo te contactará pronto.
                     </p>
 
                     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-white/60 text-xs mb-1.5">
+                          <label className="block text-gray-500 dark:text-white/60 text-xs mb-1.5 transition-colors duration-300">
                             Nombre completo *
                           </label>
                           <input
@@ -549,12 +547,12 @@ export function Contacto() {
                               e.target.style.borderColor = "#00C9FF";
                             }}
                             onBlur={(e) => {
-                              e.target.style.borderColor = "rgba(255,255,255,0.12)";
+                              e.target.style.borderColor = theme === "dark" ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.1)";
                             }}
                           />
                         </div>
                         <div>
-                          <label className="block text-white/60 text-xs mb-1.5">
+                          <label className="block text-gray-500 dark:text-white/60 text-xs mb-1.5 transition-colors duration-300">
                             Teléfono *
                           </label>
                           <div className="flex gap-2">
@@ -571,12 +569,12 @@ export function Contacto() {
                                 }}
                               >
                                 <span className="text-base">{selectedCountry.flag}</span>
-                                <span className="text-white/70 text-sm">{selectedCountry.code}</span>
+                                <span className="text-gray-600 dark:text-white/70 text-sm transition-colors duration-300">{selectedCountry.code}</span>
                                 <svg
                                   width="12"
                                   height="12"
                                   fill="none"
-                                  className="text-white/40"
+                                  className="text-gray-400 dark:text-white/40 transition-colors duration-300"
                                   style={{
                                     transform: countryMenuOpen ? "rotate(180deg)" : "rotate(0deg)",
                                     transition: "transform 0.2s",
@@ -593,10 +591,10 @@ export function Contacto() {
 
                               {countryMenuOpen && (
                                 <div
-                                  className="absolute top-full left-0 mt-1 w-48 rounded-xl overflow-hidden shadow-2xl z-50"
+                                  className="absolute top-full left-0 mt-1 w-48 rounded-xl overflow-hidden shadow-2xl z-50 bg-white dark:bg-transparent transition-colors duration-300"
                                   style={{
-                                    background: "rgba(14, 24, 33, 0.98)",
-                                    border: "1px solid rgba(0,201,255,0.2)",
+                                    background: theme === "dark" ? "rgba(14, 24, 33, 0.98)" : "#ffffff",
+                                    border: theme === "dark" ? "1px solid rgba(0,201,255,0.2)" : "1px solid rgba(0,0,0,0.1)",
                                     backdropFilter: "blur(12px)",
                                     maxHeight: "240px",
                                     overflowY: "auto",
@@ -610,15 +608,17 @@ export function Contacto() {
                                         setSelectedCountry(country);
                                         setCountryMenuOpen(false);
                                       }}
-                                      className="w-full flex items-center gap-3 px-4 py-2.5 text-left hover:bg-white/10 transition-colors duration-200"
+                                      className="w-full flex items-center gap-3 px-4 py-2.5 text-left hover:bg-gray-100 dark:hover:bg-white/10 transition-colors duration-200"
                                       style={{
-                                        background: selectedCountry.code === country.code ? "rgba(0,201,255,0.1)" : "transparent",
+                                        background: selectedCountry.code === country.code 
+                                          ? (theme === "dark" ? "rgba(0,201,255,0.1)" : "rgba(0,201,255,0.05)") 
+                                          : "transparent",
                                       }}
                                     >
                                       <span className="text-lg">{country.flag}</span>
                                       <div className="flex-1">
-                                        <div className="text-white/80 text-sm">{country.name}</div>
-                                        <div className="text-white/40 text-xs">{country.code}</div>
+                                        <div className="text-gray-900 dark:text-white/80 text-sm transition-colors duration-300">{country.name}</div>
+                                        <div className="text-gray-400 dark:text-white/40 text-xs transition-colors duration-300">{country.code}</div>
                                       </div>
                                     </button>
                                   ))}
@@ -639,7 +639,7 @@ export function Contacto() {
                                 e.target.style.borderColor = "#00C9FF";
                               }}
                               onBlur={(e) => {
-                                e.target.style.borderColor = "rgba(255,255,255,0.12)";
+                                e.target.style.borderColor = theme === "dark" ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.1)";
                               }}
                             />
                           </div>
@@ -647,7 +647,7 @@ export function Contacto() {
                       </div>
 
                       <div>
-                        <label className="block text-white/60 text-xs mb-1.5">
+                        <label className="block text-gray-500 dark:text-white/60 text-xs mb-1.5 transition-colors duration-300">
                           Correo electrónico *
                         </label>
                         <input
@@ -662,13 +662,13 @@ export function Contacto() {
                             e.target.style.borderColor = "#00C9FF";
                           }}
                           onBlur={(e) => {
-                            e.target.style.borderColor = "rgba(255,255,255,0.12)";
+                            e.target.style.borderColor = theme === "dark" ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.1)";
                           }}
                         />
                       </div>
 
                       <div>
-                        <label className="block text-white/60 text-xs mb-1.5">
+                        <label className="block text-gray-500 dark:text-white/60 text-xs mb-1.5 transition-colors duration-300">
                           ¿Qué te interesa?
                         </label>
                         <select
@@ -680,35 +680,35 @@ export function Contacto() {
                             e.target.style.borderColor = "#00C9FF";
                           }}
                           onBlur={(e) => {
-                            e.target.style.borderColor = "rgba(255,255,255,0.12)";
+                            e.target.style.borderColor = theme === "dark" ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.1)";
                           }}
                         >
-                          <option value="" style={{ background: "#0A0F1E" }}>
+                          <option value="" style={{ background: theme === "dark" ? "#0A0F1E" : "#ffffff", color: theme === "dark" ? "#fff" : "#000" }}>
                             Selecciona una opción
                           </option>
-                          <option value="ninos" style={{ background: "#0A0F1E" }}>
+                          <option value="ninos" style={{ background: theme === "dark" ? "#0A0F1E" : "#ffffff", color: theme === "dark" ? "#fff" : "#000" }}>
                             Cursos para mis hijos
                           </option>
-                          <option value="adultos" style={{ background: "#0A0F1E" }}>
+                          <option value="adultos" style={{ background: theme === "dark" ? "#0A0F1E" : "#ffffff", color: theme === "dark" ? "#fff" : "#000" }}>
                             Cursos para adultos
                           </option>
-                          <option value="empresa" style={{ background: "#0A0F1E" }}>
+                          <option value="empresa" style={{ background: theme === "dark" ? "#0A0F1E" : "#ffffff", color: theme === "dark" ? "#fff" : "#000" }}>
                             Capacitación empresarial
                           </option>
-                          <option value="beca" style={{ background: "#0A0F1E" }}>
+                          <option value="beca" style={{ background: theme === "dark" ? "#0A0F1E" : "#ffffff", color: theme === "dark" ? "#fff" : "#000" }}>
                             Beca o apoyo económico
                           </option>
-                          <option value="evento" style={{ background: "#0A0F1E" }}>
+                          <option value="evento" style={{ background: theme === "dark" ? "#0A0F1E" : "#ffffff", color: theme === "dark" ? "#fff" : "#000" }}>
                             Inscripción a evento
                           </option>
-                          <option value="otro" style={{ background: "#0A0F1E" }}>
+                          <option value="otro" style={{ background: theme === "dark" ? "#0A0F1E" : "#ffffff", color: theme === "dark" ? "#fff" : "#000" }}>
                             Otro
                           </option>
                         </select>
                       </div>
 
                       <div>
-                        <label className="block text-white/60 text-xs mb-1.5">
+                        <label className="block text-gray-500 dark:text-white/60 text-xs mb-1.5 transition-colors duration-300">
                           Mensaje (opcional)
                         </label>
                         <textarea
@@ -722,7 +722,7 @@ export function Contacto() {
                             e.target.style.borderColor = "#00C9FF";
                           }}
                           onBlur={(e) => {
-                            e.target.style.borderColor = "rgba(255,255,255,0.12)";
+                            e.target.style.borderColor = theme === "dark" ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.1)";
                           }}
                         />
                       </div>
@@ -733,7 +733,7 @@ export function Contacto() {
                         className="flex items-center justify-center gap-3 py-4 rounded-2xl text-white font-bold"
                         style={{
                           background: loading
-                            ? "rgba(255,255,255,0.1)"
+                            ? (theme === "dark" ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)")
                             : "linear-gradient(135deg, #00C9FF, #7C3AED)",
                           boxShadow: loading
                             ? "none"
@@ -769,7 +769,7 @@ export function Contacto() {
                         )}
                       </button>
 
-                      <p className="text-white/30 text-xs text-center">
+                      <p className="text-gray-400 dark:text-white/30 text-xs text-center transition-colors duration-300">
                         Al enviar aceptas que alguien del equipo te contacte. Sin spam. Sin compromiso.
                       </p>
                     </form>
@@ -786,12 +786,12 @@ export function Contacto() {
                       <CheckCircle size={36} className="text-[#10B981]" />
                     </div>
                     <h3
-                      className="text-white mb-3"
+                      className="text-gray-900 dark:text-white mb-3 transition-colors duration-300"
                       style={{ fontWeight: 800, fontSize: "1.5rem" }}
                     >
                       ¡Mensaje recibido! 🎉
                     </h3>
-                    <p className="text-white/60 mb-6 leading-relaxed">
+                    <p className="text-gray-600 dark:text-white/60 mb-6 leading-relaxed transition-colors duration-300">
                       Alguien del equipo GOKU LAB te contactará en las próximas
                       24 horas hábiles. Para respuesta inmediata, escríbenos
                       por WhatsApp.

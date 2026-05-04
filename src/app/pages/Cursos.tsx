@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router";
 import { AnimatedSection } from "../components/AnimatedSection";
+import { useTheme } from "next-themes";
 import { ChevronRight, Clock, Users, BarChart2, Monitor, MessageCircle, Filter, Award, Globe, Rocket, Star } from "lucide-react";
 import algorithmicsLogo from "../../imports/image-0.png";
 
@@ -201,7 +202,8 @@ const segmentConfig = {
     desc: "Aprendizaje dinámico, divertido y enfocado en crear con tecnología.",
     color: "#FF6B35",
     badge: "🧒",
-    bg: "rgba(255,107,53,0.06)",
+    bgLight: "rgba(255,107,53,0.06)",
+    bgDark: "rgba(255,107,53,0.06)",
   },
   adultos: {
     title: "Cursos para Adultos",
@@ -209,7 +211,8 @@ const segmentConfig = {
     desc: "Actualízate profesionalmente y abre nuevas oportunidades de carrera.",
     color: "#00C9FF",
     badge: "👨‍💼",
-    bg: "rgba(0,201,255,0.06)",
+    bgLight: "rgba(0,201,255,0.06)",
+    bgDark: "rgba(0,201,255,0.06)",
   },
   todos: {
     title: "Todos los Cursos",
@@ -217,13 +220,15 @@ const segmentConfig = {
     desc: "Explora nuestra oferta completa de cursos tecnológicos.",
     color: "#7C3AED",
     badge: "📚",
-    bg: "rgba(124,58,237,0.06)",
+    bgLight: "rgba(124,58,237,0.06)",
+    bgDark: "rgba(124,58,237,0.06)",
   },
 };
 
 export function Cursos() {
   const { segmento } = useParams<{ segmento?: string }>();
   const [activeCategory, setActiveCategory] = useState<Category | "todos">("todos");
+  const { theme } = useTheme();
 
   const seg = (segmento as keyof typeof segmentConfig) || "todos";
   const config = segmentConfig[seg] || segmentConfig.todos;
@@ -235,14 +240,14 @@ export function Cursos() {
   });
 
   return (
-    <div>
+    <div className="bg-white dark:bg-[#0A0F1E] transition-colors duration-300">
       {/* HERO */}
       <section
-        className="pt-32 pb-16 px-4 relative overflow-hidden"
+        className="pt-32 pb-16 px-4 relative overflow-hidden transition-colors duration-300"
         style={{
           background: seg === "ninos"
-            ? "linear-gradient(180deg, #0A0F1E 0%, #1a1547 50%, #2d1b69 100%)"
-            : config.bg
+            ? (theme === "dark" ? "linear-gradient(180deg, #0A0F1E 0%, #1a1547 50%, #2d1b69 100%)" : "linear-gradient(180deg, #ffffff 0%, #f3ebfb 50%, #e6dcf3 100%)")
+            : (theme === "dark" ? config.bgDark : config.bgLight)
         }}
       >
         {/* Space theme for kids */}
@@ -253,7 +258,7 @@ export function Cursos() {
               {[...Array(50)].map((_, i) => (
                 <div
                   key={i}
-                  className="absolute rounded-full bg-white"
+                  className="absolute rounded-full bg-indigo-500 dark:bg-white"
                   style={{
                     width: Math.random() * 3 + 1 + "px",
                     height: Math.random() * 3 + 1 + "px",
@@ -297,7 +302,7 @@ export function Cursos() {
         )}
 
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="absolute inset-0 pointer-events-none transition-colors duration-300"
           style={{
             background: seg === "ninos"
               ? "radial-gradient(ellipse at center, rgba(255,107,53,0.1) 0%, transparent 70%)"
@@ -318,7 +323,7 @@ export function Cursos() {
               <span>{config.subtitle}</span>
             </div>
             <h1
-              className="text-white mb-4"
+              className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
               style={{
                 fontSize: "clamp(2rem, 5vw, 3.5rem)",
                 fontWeight: 900,
@@ -327,7 +332,7 @@ export function Cursos() {
             >
               {config.title}
             </h1>
-            <p className="text-white/65 max-w-2xl mx-auto mb-8" style={{ fontSize: "1.1rem" }}>
+            <p className="text-gray-600 dark:text-white/65 max-w-2xl mx-auto mb-8 transition-colors duration-300" style={{ fontSize: "1.1rem" }}>
               {config.desc}
             </p>
 
@@ -342,12 +347,11 @@ export function Cursos() {
                 <Link
                   key={item.id}
                   to={item.href}
-                  className="px-5 py-2 rounded-xl text-sm font-semibold"
+                  className="px-5 py-2 rounded-xl text-sm font-semibold transition-colors duration-300"
                   style={{
-                    background: seg === item.id ? config.color : "rgba(255,255,255,0.06)",
-                    color: seg === item.id ? "#fff" : "rgba(255,255,255,0.6)",
-                    transition: "all 0.2s ease",
-                    border: `1px solid ${seg === item.id ? config.color : "rgba(255,255,255,0.1)"}`,
+                    background: seg === item.id ? config.color : (theme === "dark" ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)"),
+                    color: seg === item.id ? "#fff" : (theme === "dark" ? "rgba(255,255,255,0.6)" : "rgba(0,0,0,0.6)"),
+                    border: `1px solid ${seg === item.id ? config.color : (theme === "dark" ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)")}`,
                   }}
                 >
                   {item.label}
@@ -359,20 +363,19 @@ export function Cursos() {
       </section>
 
       {/* FILTERS */}
-      <section className="py-6 px-4 sticky top-16 z-30" style={{ background: "rgba(10,15,30,0.95)", backdropFilter: "blur(12px)", borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
+      <section className="py-6 px-4 sticky top-16 z-30 transition-colors duration-300" style={{ background: theme === "dark" ? "rgba(10,15,30,0.95)" : "rgba(255,255,255,0.95)", backdropFilter: "blur(12px)", borderBottom: theme === "dark" ? "1px solid rgba(255,255,255,0.07)" : "1px solid rgba(0,0,0,0.07)" }}>
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-3 overflow-x-auto pb-1">
-            <Filter size={16} className="text-white/40 shrink-0" />
+            <Filter size={16} className="text-gray-400 dark:text-white/40 shrink-0" />
             {categories.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm shrink-0"
+                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm shrink-0 transition-colors duration-300"
                 style={{
-                  background: activeCategory === cat.id ? config.color : "rgba(255,255,255,0.05)",
-                  color: activeCategory === cat.id ? "#fff" : "rgba(255,255,255,0.5)",
-                  transition: "all 0.2s ease",
-                  border: `1px solid ${activeCategory === cat.id ? config.color : "rgba(255,255,255,0.08)"}`,
+                  background: activeCategory === cat.id ? config.color : (theme === "dark" ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"),
+                  color: activeCategory === cat.id ? "#fff" : (theme === "dark" ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)"),
+                  border: `1px solid ${activeCategory === cat.id ? config.color : (theme === "dark" ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)")}`,
                 }}
               >
                 <span>{cat.emoji}</span>
@@ -389,7 +392,7 @@ export function Cursos() {
           {filtered.length === 0 ? (
             <div className="text-center py-20">
               <div className="text-5xl mb-4">🔍</div>
-              <p className="text-white/50">No se encontraron cursos con esos filtros.</p>
+              <p className="text-gray-500 dark:text-white/50 transition-colors duration-300">No se encontraron cursos con esos filtros.</p>
             </div>
           ) : (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
@@ -400,18 +403,18 @@ export function Cursos() {
                 return (
                 <AnimatedSection key={course.id} delay={i * 60}>
                   <div
-                    className={`rounded-3xl overflow-hidden flex flex-col h-full group ${isKids ? 'space-card' : ''}`}
+                    className={`rounded-3xl overflow-hidden flex flex-col h-full group ${isKids ? 'space-card' : ''} bg-white dark:bg-transparent`}
                     style={{
                       background: isKids
                         ? isTeen
-                          ? "linear-gradient(135deg, rgba(20,20,30,0.95), rgba(10,15,30,0.95))"
-                          : "linear-gradient(135deg, rgba(45,27,105,0.3), rgba(10,15,30,0.95))"
-                        : "rgba(255,255,255,0.03)",
+                          ? (theme === "dark" ? "linear-gradient(135deg, rgba(20,20,30,0.95), rgba(10,15,30,0.95))" : "linear-gradient(135deg, rgba(245,245,250,0.95), rgba(255,255,255,0.95))")
+                          : (theme === "dark" ? "linear-gradient(135deg, rgba(45,27,105,0.3), rgba(10,15,30,0.95))" : "linear-gradient(135deg, rgba(230,225,245,0.8), rgba(255,255,255,0.95))")
+                        : (theme === "dark" ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.02)"),
                       border: isKids
                         ? isTeen
-                          ? "1px solid rgba(0,201,255,0.2)"
+                          ? (theme === "dark" ? "1px solid rgba(0,201,255,0.2)" : "1px solid rgba(0,201,255,0.3)")
                           : `1px solid ${course.color}30`
-                        : "1px solid rgba(255,255,255,0.07)",
+                        : (theme === "dark" ? "1px solid rgba(255,255,255,0.07)" : "1px solid rgba(0,0,0,0.1)"),
                       transition: "all 0.3s ease",
                       position: "relative",
                     }}
@@ -427,9 +430,9 @@ export function Cursos() {
                       (e.currentTarget as HTMLElement).style.boxShadow = "none";
                       (e.currentTarget as HTMLElement).style.borderColor = isKids
                         ? isTeen
-                          ? "rgba(0,201,255,0.2)"
+                          ? (theme === "dark" ? "rgba(0,201,255,0.2)" : "rgba(0,201,255,0.3)")
                           : course.color + "30"
-                        : "rgba(255,255,255,0.07)";
+                        : (theme === "dark" ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.1)");
                     }}
                   >
                     {/* NASA/Tech grid pattern for teens */}
@@ -449,7 +452,7 @@ export function Cursos() {
                     {/* Sparkles for younger kids */}
                     {isKids && !isTeen && (
                       <div className="absolute top-2 right-2 pointer-events-none">
-                        <div className="text-yellow-300 text-xl animate-pulse">✨</div>
+                        <div className="text-yellow-400 dark:text-yellow-300 text-xl animate-pulse">✨</div>
                       </div>
                     )}
                     {/* Image */}
@@ -461,8 +464,8 @@ export function Cursos() {
                         style={{ transition: "transform 0.5s ease" }}
                       />
                       <div
-                        className="absolute inset-0"
-                        style={{ background: `linear-gradient(to top, rgba(10,15,30,0.9), transparent)` }}
+                        className="absolute inset-0 transition-colors duration-300"
+                        style={{ background: theme === "dark" ? `linear-gradient(to top, rgba(10,15,30,0.9), transparent)` : `linear-gradient(to top, rgba(255,255,255,0.9), transparent)` }}
                       />
                       <div className="absolute top-3 left-3 flex flex-col gap-1">
                         <span
@@ -473,7 +476,7 @@ export function Cursos() {
                         </span>
                         {course.algorithmics && (
                           <span
-                            className="text-xs px-2 py-1 rounded-full font-semibold flex items-center gap-1"
+                            className="text-xs px-2 py-1 rounded-full font-semibold flex items-center gap-1 shadow-sm"
                             style={{
                               background: "linear-gradient(135deg, #7C3AED, #00C9FF)",
                               color: "#fff"
@@ -484,20 +487,20 @@ export function Cursos() {
                           </span>
                         )}
                       </div>
-                      <div className="absolute bottom-3 right-3 text-2xl">
+                      <div className="absolute bottom-3 right-3 text-2xl drop-shadow-md">
                         {course.emoji}
                       </div>
                     </div>
 
                     {/* Content */}
-                    <div className="p-5 flex flex-col flex-1">
+                    <div className="p-5 flex flex-col flex-1 relative z-10">
                       <h3
-                        className="text-white mb-2"
+                        className="text-gray-900 dark:text-white mb-2 transition-colors duration-300"
                         style={{ fontWeight: 700, fontSize: "0.95rem" }}
                       >
                         {course.title}
                       </h3>
-                      <p className="text-white/55 text-xs leading-relaxed mb-4 flex-1">
+                      <p className="text-gray-600 dark:text-white/55 text-xs leading-relaxed mb-4 flex-1 transition-colors duration-300">
                         {course.desc}
                       </p>
 
@@ -510,8 +513,8 @@ export function Cursos() {
                           { icon: Monitor, text: course.modality.split(" / ")[0] },
                         ].map(({ icon: Icon, text }) => (
                           <div key={text} className="flex items-center gap-1.5">
-                            <Icon size={12} className="text-white/30" />
-                            <span className="text-white/45 text-xs">{text}</span>
+                            <Icon size={12} className="text-gray-400 dark:text-white/30" />
+                            <span className="text-gray-500 dark:text-white/45 text-xs transition-colors duration-300">{text}</span>
                           </div>
                         ))}
                       </div>
@@ -584,10 +587,10 @@ export function Cursos() {
 
       {/* ALGORITHMICS SECTION - Only show for kids/todos */}
       {(seg === "ninos" || seg === "todos") && (
-        <section className="py-16 px-4" style={{
-          background: "linear-gradient(135deg, rgba(124,58,237,0.08), rgba(0,201,255,0.08))",
-          borderTop: "1px solid rgba(124,58,237,0.15)",
-          borderBottom: "1px solid rgba(0,201,255,0.15)"
+        <section className="py-16 px-4 transition-colors duration-300" style={{
+          background: theme === "dark" ? "linear-gradient(135deg, rgba(124,58,237,0.08), rgba(0,201,255,0.08))" : "linear-gradient(135deg, rgba(124,58,237,0.04), rgba(0,201,255,0.04))",
+          borderTop: theme === "dark" ? "1px solid rgba(124,58,237,0.15)" : "1px solid rgba(124,58,237,0.1)",
+          borderBottom: theme === "dark" ? "1px solid rgba(0,201,255,0.15)" : "1px solid rgba(0,201,255,0.1)"
         }}>
           <div className="max-w-6xl mx-auto">
             <AnimatedSection>
@@ -599,16 +602,16 @@ export function Cursos() {
                       src={algorithmicsLogo}
                       alt="Algorithmics International School of Programming"
                       className="h-12 mb-4"
-                      style={{ filter: "brightness(1.1)" }}
+                      style={{ filter: theme === "dark" ? "brightness(1.1)" : "brightness(0.9) grayscale(100%)" }}
                     />
                     <div className="flex items-center gap-2 mb-2">
                       <Globe size={18} className="text-[#7C3AED]" />
-                      <span className="text-white/80 font-semibold">International School of Programming</span>
+                      <span className="text-gray-700 dark:text-white/80 font-semibold transition-colors duration-300">International School of Programming</span>
                     </div>
                   </div>
 
                   <h3
-                    className="text-white mb-4"
+                    className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
                     style={{ fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 800 }}
                   >
                     Cursos potenciados por{" "}
@@ -621,7 +624,7 @@ export function Cursos() {
                     </span>
                   </h3>
 
-                  <p className="text-white/65 mb-6 leading-relaxed">
+                  <p className="text-gray-600 dark:text-white/65 mb-6 leading-relaxed transition-colors duration-300">
                     Varios de nuestros cursos de programación utilizan la metodología internacional
                     de Algorithmics, una escuela global de programación con presencia en más de 70 países.
                   </p>
@@ -641,7 +644,7 @@ export function Cursos() {
                           <item.icon size={18} style={{ color: item.color }} />
                         </div>
                         <div className="pt-2">
-                          <p className="text-white/80">{item.text}</p>
+                          <p className="text-gray-700 dark:text-white/80 transition-colors duration-300">{item.text}</p>
                         </div>
                       </div>
                     ))}
@@ -652,7 +655,7 @@ export function Cursos() {
                     style={{
                       background: "rgba(124,58,237,0.12)",
                       border: "1px solid rgba(124,58,237,0.3)",
-                      color: "#B794F4"
+                      color: theme === "dark" ? "#B794F4" : "#7C3AED"
                     }}
                   >
                     <Award size={14} />
@@ -663,13 +666,13 @@ export function Cursos() {
                 {/* Courses with Algorithmics */}
                 <div>
                   <div
-                    className="p-6 rounded-3xl"
+                    className="p-6 rounded-3xl transition-colors duration-300"
                     style={{
-                      background: "rgba(255,255,255,0.03)",
-                      border: "1px solid rgba(255,255,255,0.1)"
+                      background: theme === "dark" ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.02)",
+                      border: theme === "dark" ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(0,0,0,0.05)"
                     }}
                   >
-                    <h4 className="text-white font-bold mb-4 text-sm uppercase tracking-wider opacity-60">
+                    <h4 className="text-gray-500 dark:text-white font-bold mb-4 text-sm uppercase tracking-wider opacity-80 dark:opacity-60 transition-colors duration-300">
                       Cursos con Algorithmics
                     </h4>
                     <div className="space-y-2">
@@ -679,17 +682,13 @@ export function Cursos() {
                         .map(course => (
                           <div
                             key={course.id}
-                            className="flex items-center justify-between p-3 rounded-xl"
-                            style={{
-                              background: "rgba(255,255,255,0.04)",
-                              border: "1px solid rgba(255,255,255,0.05)"
-                            }}
+                            className="flex items-center justify-between p-3 rounded-xl transition-colors duration-300 bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5 shadow-sm dark:shadow-none"
                           >
                             <div className="flex items-center gap-3">
                               <span className="text-xl">{course.emoji}</span>
                               <div>
-                                <p className="text-white/90 font-medium text-sm">{course.title}</p>
-                                <p className="text-white/40 text-xs">{course.age}</p>
+                                <p className="text-gray-900 dark:text-white/90 font-medium text-sm transition-colors duration-300">{course.title}</p>
+                                <p className="text-gray-500 dark:text-white/40 text-xs transition-colors duration-300">{course.age}</p>
                               </div>
                             </div>
                             <Link
@@ -716,21 +715,21 @@ export function Cursos() {
 
       {/* CTA BANNER */}
       <section
-        className="py-20 px-4"
+        className="py-20 px-4 transition-colors duration-300"
         style={{
-          background: "linear-gradient(135deg, rgba(0,201,255,0.06), rgba(124,58,237,0.06))",
-          borderTop: "1px solid rgba(0,201,255,0.1)",
+          background: theme === "dark" ? "linear-gradient(135deg, rgba(0,201,255,0.06), rgba(124,58,237,0.06))" : "linear-gradient(135deg, rgba(0,201,255,0.04), rgba(124,58,237,0.04))",
+          borderTop: theme === "dark" ? "1px solid rgba(0,201,255,0.1)" : "1px solid rgba(0,201,255,0.05)",
         }}
       >
         <div className="max-w-4xl mx-auto text-center">
           <AnimatedSection>
             <h2
-              className="text-white mb-4"
+              className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
               style={{ fontSize: "clamp(1.6rem, 4vw, 2.5rem)", fontWeight: 800 }}
             >
               ¿No encuentras lo que buscas?
             </h2>
-            <p className="text-white/60 mb-8 max-w-xl mx-auto">
+            <p className="text-gray-600 dark:text-white/60 mb-8 max-w-xl mx-auto transition-colors duration-300">
               Agenda una sesión gratuita y te orientamos al curso perfecto según tu perfil y objetivos.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -752,7 +751,7 @@ export function Cursos() {
               </a>
               <Link
                 to="/test"
-                className="flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-white font-semibold border border-white/25"
+                className="flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-semibold border transition-colors duration-300 text-gray-900 dark:text-white border-gray-300 dark:border-white/25 hover:bg-gray-100 dark:hover:bg-white/10"
                 style={{ transition: "all 0.2s ease" }}
               >
                 Hacer el test orientación

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import { AnimatedSection } from "../components/AnimatedSection";
+import { useTheme } from "next-themes";
 import { Calendar, Clock, MapPin, Users, MessageCircle, ArrowRight, Filter, ExternalLink } from "lucide-react";
 
 const EVENTS_IMG = "https://images.unsplash.com/photo-1756273488840-d585a91cbb99?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800";
@@ -220,6 +221,7 @@ const filters: { id: EventFilter; label: string; emoji: string }[] = [
 
 export function Eventos() {
   const [activeFilter, setActiveFilter] = useState<EventFilter>("todos");
+  const { theme } = useTheme();
 
   const filtered = events.filter(
     (e) => activeFilter === "todos" || e.type === activeFilter
@@ -228,25 +230,24 @@ export function Eventos() {
   const featured = events.filter((e) => e.featured).slice(0, 2);
 
   return (
-    <div>
+    <div className="bg-white dark:bg-[#0A0F1E] transition-colors duration-300">
       {/* HERO */}
       <section
-        className="relative pt-32 pb-20 px-4 overflow-hidden"
-        style={{ background: "#050A14" }}
+        className="relative pt-32 pb-20 px-4 overflow-hidden bg-gray-50 dark:bg-[#050A14] transition-colors duration-300"
       >
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="absolute inset-0 pointer-events-none transition-colors duration-300"
           style={{
-            background:
-              "radial-gradient(ellipse at 60% 40%, rgba(255,107,53,0.07) 0%, transparent 60%)",
+            background: theme === "dark"
+              ? "radial-gradient(ellipse at 60% 40%, rgba(255,107,53,0.07) 0%, transparent 60%)"
+              : "radial-gradient(ellipse at 60% 40%, rgba(255,107,53,0.05) 0%, transparent 60%)",
           }}
         />
         <div className="max-w-5xl mx-auto text-center relative">
           <AnimatedSection>
             <div
-              className="inline-block px-4 py-1.5 rounded-full text-sm mb-6"
+              className="inline-block px-4 py-1.5 rounded-full text-sm mb-6 bg-orange-50 dark:bg-orange-900/10"
               style={{
-                background: "rgba(255,107,53,0.1)",
                 color: "#FF6B35",
                 border: "1px solid rgba(255,107,53,0.25)",
               }}
@@ -254,7 +255,7 @@ export function Eventos() {
               📅 Eventos y talleres
             </div>
             <h1
-              className="text-white mb-4"
+              className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
               style={{
                 fontSize: "clamp(2rem, 5vw, 3.5rem)",
                 fontWeight: 900,
@@ -272,7 +273,7 @@ export function Eventos() {
                 crea juntos
               </span>
             </h1>
-            <p className="text-white/65 max-w-2xl mx-auto" style={{ fontSize: "1.1rem" }}>
+            <p className="text-gray-600 dark:text-white/65 max-w-2xl mx-auto transition-colors duration-300" style={{ fontSize: "1.1rem" }}>
               Talleres, hackathons, webinars y cursos de verano. Eventos para
               todos los niveles y edades.
             </p>
@@ -281,11 +282,11 @@ export function Eventos() {
       </section>
 
       {/* FEATURED */}
-      <section className="py-12 px-4">
+      <section className="py-12 px-4 bg-white dark:bg-[#0A0F1E] transition-colors duration-300">
         <div className="max-w-7xl mx-auto">
           <AnimatedSection className="mb-8">
             <h2
-              className="text-white"
+              className="text-gray-900 dark:text-white transition-colors duration-300"
               style={{ fontWeight: 700, fontSize: "1.3rem" }}
             >
               🌟 Destacados
@@ -295,10 +296,10 @@ export function Eventos() {
             {featured.map((ev, i) => (
               <AnimatedSection key={ev.id} delay={i * 80}>
                 <div
-                  className="relative overflow-hidden rounded-3xl p-7 h-full"
+                  className="relative overflow-hidden rounded-3xl p-7 h-full bg-white dark:bg-transparent shadow-sm dark:shadow-none"
                   style={{
-                    background: `linear-gradient(135deg, ${ev.color}15, ${ev.color}05)`,
-                    border: `1px solid ${ev.color}30`,
+                    background: theme === "dark" ? `linear-gradient(135deg, ${ev.color}15, ${ev.color}05)` : `linear-gradient(135deg, ${ev.color}10, ${ev.color}03)`,
+                    border: theme === "dark" ? `1px solid ${ev.color}30` : `1px solid ${ev.color}20`,
                     transition: "all 0.3s ease",
                   }}
                   onMouseEnter={(e) => {
@@ -322,16 +323,16 @@ export function Eventos() {
                         </span>
                       </div>
                     </div>
-                    <span className="text-white/40 text-sm">{ev.date}</span>
+                    <span className="text-gray-500 dark:text-white/40 text-sm transition-colors duration-300">{ev.date}</span>
                   </div>
                   <h3
-                    className="text-white mb-3"
+                    className="text-gray-900 dark:text-white mb-3 transition-colors duration-300"
                     style={{ fontWeight: 800, fontSize: "1.3rem" }}
                   >
                     {ev.title}
                   </h3>
-                  <p className="text-white/60 mb-5 leading-relaxed">{ev.desc}</p>
-                  <div className="flex flex-wrap gap-3 mb-5 text-sm text-white/50">
+                  <p className="text-gray-600 dark:text-white/60 mb-5 leading-relaxed transition-colors duration-300">{ev.desc}</p>
+                  <div className="flex flex-wrap gap-3 mb-5 text-sm text-gray-500 dark:text-white/50 transition-colors duration-300">
                     <span className="flex items-center gap-1.5">
                       <Clock size={13} />
                       {ev.time}
@@ -374,17 +375,17 @@ export function Eventos() {
       </section>
 
       {/* FILTER + LIST */}
-      <section className="py-8 px-4">
+      <section className="py-8 px-4 bg-white dark:bg-[#0A0F1E] transition-colors duration-300">
         <div className="max-w-7xl mx-auto">
           {/* Filters */}
           <div
-            className="flex items-center gap-3 mb-8 p-4 rounded-2xl"
+            className="flex items-center gap-3 mb-8 p-4 rounded-2xl transition-colors duration-300 bg-gray-50 dark:bg-transparent"
             style={{
-              background: "rgba(255,255,255,0.03)",
-              border: "1px solid rgba(255,255,255,0.07)",
+              background: theme === "dark" ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.02)",
+              border: theme === "dark" ? "1px solid rgba(255,255,255,0.07)" : "1px solid rgba(0,0,0,0.05)",
             }}
           >
-            <Filter size={16} className="text-white/40" />
+            <Filter size={16} className="text-gray-400 dark:text-white/40 transition-colors duration-300" />
             {filters.map((f) => (
               <button
                 key={f.id}
@@ -394,8 +395,8 @@ export function Eventos() {
                   background:
                     activeFilter === f.id
                       ? "linear-gradient(135deg, #00C9FF, #7C3AED)"
-                      : "rgba(255,255,255,0.05)",
-                  color: activeFilter === f.id ? "#fff" : "rgba(255,255,255,0.5)",
+                      : (theme === "dark" ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"),
+                  color: activeFilter === f.id ? "#fff" : (theme === "dark" ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)"),
                   transition: "all 0.2s ease",
                 }}
               >
@@ -410,10 +411,10 @@ export function Eventos() {
             {filtered.map((ev, i) => (
               <AnimatedSection key={ev.id} delay={i * 60}>
                 <div
-                  className="p-5 rounded-2xl flex flex-col sm:flex-row sm:items-center gap-4"
+                  className="p-5 rounded-2xl flex flex-col sm:flex-row sm:items-center gap-4 bg-white dark:bg-transparent shadow-sm dark:shadow-none transition-colors duration-300"
                   style={{
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.07)",
+                    background: theme === "dark" ? "rgba(255,255,255,0.03)" : "#ffffff",
+                    border: theme === "dark" ? "1px solid rgba(255,255,255,0.07)" : "1px solid rgba(0,0,0,0.07)",
                     transition: "all 0.3s ease",
                   }}
                   onMouseEnter={(e) => {
@@ -421,14 +422,14 @@ export function Eventos() {
                     (e.currentTarget as HTMLElement).style.transform = "translateX(4px)";
                   }}
                   onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.07)";
+                    (e.currentTarget as HTMLElement).style.borderColor = theme === "dark" ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.07)";
                     (e.currentTarget as HTMLElement).style.transform = "none";
                   }}
                 >
                   {/* Date badge */}
                   <div
-                    className="shrink-0 w-16 h-16 rounded-2xl flex flex-col items-center justify-center text-white"
-                    style={{ background: `${ev.color}20`, border: `1px solid ${ev.color}30` }}
+                    className="shrink-0 w-16 h-16 rounded-2xl flex flex-col items-center justify-center text-gray-900 dark:text-white"
+                    style={{ background: `${ev.color}15`, border: `1px solid ${ev.color}30` }}
                   >
                     <span style={{ fontSize: "1.5rem" }}>{ev.emoji}</span>
                   </div>
@@ -437,22 +438,22 @@ export function Eventos() {
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-wrap items-center gap-2 mb-1">
                       <h3
-                        className="text-white"
+                        className="text-gray-900 dark:text-white transition-colors duration-300"
                         style={{ fontWeight: 700, fontSize: "1rem" }}
                       >
                         {ev.title}
                       </h3>
                       <span
-                        className="text-xs px-2 py-0.5 rounded-full shrink-0"
+                        className="text-xs px-2 py-0.5 rounded-full shrink-0 font-semibold"
                         style={{
-                          background: `${ev.color}20`,
+                          background: `${ev.color}15`,
                           color: ev.color,
                         }}
                       >
                         {ev.status}
                       </span>
                     </div>
-                    <div className="flex flex-wrap gap-3 text-xs text-white/40 mb-2">
+                    <div className="flex flex-wrap gap-3 text-xs text-gray-500 dark:text-white/40 mb-2 transition-colors duration-300">
                       <span className="flex items-center gap-1">
                         <Calendar size={11} />
                         {ev.date}
@@ -470,10 +471,10 @@ export function Eventos() {
                       {ev.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="text-xs px-2 py-0.5 rounded-full"
+                          className="text-xs px-2 py-0.5 rounded-full transition-colors duration-300"
                           style={{
-                            background: "rgba(255,255,255,0.06)",
-                            color: "rgba(255,255,255,0.45)",
+                            background: theme === "dark" ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)",
+                            color: theme === "dark" ? "rgba(255,255,255,0.45)" : "rgba(0,0,0,0.5)",
                           }}
                         >
                           {tag}
@@ -506,18 +507,18 @@ export function Eventos() {
       </section>
 
       {/* EXTERNAL EVENTS */}
-      <section className="py-16 px-4" style={{ marginTop: "4rem" }}>
+      <section className="py-16 px-4 bg-gray-50 dark:bg-transparent transition-colors duration-300" style={{ marginTop: "2rem" }}>
         <div className="max-w-7xl mx-auto">
           <AnimatedSection className="mb-8">
             <div className="flex items-center gap-3 mb-3">
               <h2
-                className="text-white"
+                className="text-gray-900 dark:text-white transition-colors duration-300"
                 style={{ fontWeight: 700, fontSize: "1.3rem" }}
               >
                 🌍 Eventos externos recomendados
               </h2>
             </div>
-            <p className="text-white/50 text-sm">
+            <p className="text-gray-500 dark:text-white/50 text-sm transition-colors duration-300">
               Eventos de la comunidad tech que creemos que te pueden interesar
             </p>
           </AnimatedSection>
@@ -526,10 +527,10 @@ export function Eventos() {
             {externalEvents.map((ev, i) => (
               <AnimatedSection key={ev.id} delay={i * 70}>
                 <div
-                  className="relative overflow-hidden rounded-2xl p-5 h-full flex flex-col"
+                  className="relative overflow-hidden rounded-2xl p-5 h-full flex flex-col bg-white dark:bg-transparent shadow-sm dark:shadow-none transition-colors duration-300"
                   style={{
-                    background: "rgba(255,255,255,0.02)",
-                    border: `1px solid rgba(255,255,255,0.06)`,
+                    background: theme === "dark" ? "rgba(255,255,255,0.02)" : "#ffffff",
+                    border: theme === "dark" ? `1px solid rgba(255,255,255,0.06)` : `1px solid rgba(0,0,0,0.06)`,
                     transition: "all 0.3s ease",
                   }}
                   onMouseEnter={(e) => {
@@ -538,7 +539,7 @@ export function Eventos() {
                     (e.currentTarget as HTMLElement).style.boxShadow = `0 12px 40px ${ev.color}15`;
                   }}
                   onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.06)";
+                    (e.currentTarget as HTMLElement).style.borderColor = theme === "dark" ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)";
                     (e.currentTarget as HTMLElement).style.transform = "none";
                     (e.currentTarget as HTMLElement).style.boxShadow = "none";
                   }}
@@ -546,15 +547,15 @@ export function Eventos() {
                   {/* Header */}
                   <div className="flex items-start justify-between mb-4">
                     <div
-                      className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl"
+                      className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl bg-white dark:bg-transparent"
                       style={{
-                        background: `${ev.color}15`,
+                        background: `${ev.color}10`,
                         border: `1px solid ${ev.color}25`,
                       }}
                     >
                       {ev.emoji}
                     </div>
-                    <div className="flex items-center gap-1.5 text-white/40 text-xs">
+                    <div className="flex items-center gap-1.5 text-gray-400 dark:text-white/40 text-xs transition-colors duration-300">
                       <ExternalLink size={11} />
                       <span>Externo</span>
                     </div>
@@ -562,7 +563,7 @@ export function Eventos() {
 
                   {/* Content */}
                   <h3
-                    className="text-white mb-2"
+                    className="text-gray-900 dark:text-white mb-2 transition-colors duration-300"
                     style={{ fontWeight: 700, fontSize: "1rem" }}
                   >
                     {ev.title}
@@ -573,12 +574,12 @@ export function Eventos() {
                   >
                     {ev.organizer}
                   </p>
-                  <p className="text-white/55 text-sm mb-4 leading-relaxed flex-1">
+                  <p className="text-gray-600 dark:text-white/55 text-sm mb-4 leading-relaxed flex-1 transition-colors duration-300">
                     {ev.desc}
                   </p>
 
                   {/* Meta info */}
-                  <div className="flex flex-col gap-2 text-xs text-white/40 mb-4">
+                  <div className="flex flex-col gap-2 text-xs text-gray-500 dark:text-white/40 mb-4 transition-colors duration-300">
                     <span className="flex items-center gap-1.5">
                       <Calendar size={11} />
                       {ev.date}
@@ -594,7 +595,7 @@ export function Eventos() {
                     {ev.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="text-xs px-2 py-0.5 rounded-full"
+                        className="text-xs px-2 py-0.5 rounded-full font-medium"
                         style={{
                           background: `${ev.color}12`,
                           color: ev.color,
@@ -610,19 +611,19 @@ export function Eventos() {
                     href={ev.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold border"
+                    className="flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold border bg-white dark:bg-transparent"
                     style={{
                       color: ev.color,
                       borderColor: `${ev.color}30`,
-                      background: `${ev.color}08`,
+                      background: `${ev.color}05`,
                       transition: "all 0.2s ease",
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.background = `${ev.color}18`;
+                      e.currentTarget.style.background = `${ev.color}15`;
                       e.currentTarget.style.borderColor = `${ev.color}50`;
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.background = `${ev.color}08`;
+                      e.currentTarget.style.background = `${ev.color}05`;
                       e.currentTarget.style.borderColor = `${ev.color}30`;
                     }}
                   >
@@ -638,23 +639,28 @@ export function Eventos() {
 
       {/* CTA */}
       <section
-        className="py-20 px-4"
+        className="py-20 px-4 bg-gray-50 dark:bg-[#050A14] transition-colors duration-300"
         style={{
-          background:
-            "linear-gradient(135deg, rgba(255,107,53,0.06), rgba(255,225,52,0.06))",
-          borderTop: "1px solid rgba(255,107,53,0.1)",
-          marginTop: "3rem",
+          borderTop: theme === "dark" ? "1px solid rgba(255,107,53,0.1)" : "1px solid rgba(255,107,53,0.15)",
         }}
       >
-        <div className="max-w-4xl mx-auto text-center">
+        <div
+          className="absolute inset-0 pointer-events-none transition-colors duration-300"
+          style={{
+            background: theme === "dark" 
+              ? "linear-gradient(135deg, rgba(255,107,53,0.06), rgba(255,225,52,0.06))"
+              : "linear-gradient(135deg, rgba(255,107,53,0.03), rgba(255,225,52,0.03))",
+          }}
+        />
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <AnimatedSection>
             <h2
-              className="text-white mb-4"
+              className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
               style={{ fontSize: "clamp(1.6rem, 4vw, 2.5rem)", fontWeight: 800 }}
             >
               ¿Tienes un grupo o empresa?
             </h2>
-            <p className="text-white/60 mb-8 max-w-xl mx-auto">
+            <p className="text-gray-600 dark:text-white/60 mb-8 max-w-xl mx-auto transition-colors duration-300">
               Organizamos talleres y eventos privados para empresas, escuelas e
               instituciones. Cotización personalizada.
             </p>
@@ -677,8 +683,7 @@ export function Eventos() {
               </a>
               <Link
                 to="/contacto"
-                className="flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-white font-semibold border border-white/25"
-                style={{ transition: "all 0.2s ease" }}
+                className="flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-semibold border transition-all duration-300 text-gray-900 dark:text-white border-gray-300 dark:border-white/25 hover:bg-gray-100 dark:hover:bg-white/10"
               >
                 Contactar
                 <ArrowRight size={16} />

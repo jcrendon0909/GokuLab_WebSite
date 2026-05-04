@@ -16,7 +16,7 @@ export function Layout() {
   return (
     <ThemeProvider>
       <LanguageProvider>
-        <div className="min-h-screen bg-[#0A0F1E] dark:bg-[#0A0F1E] light:bg-white text-white dark:text-white light:text-gray-900 transition-colors duration-300">
+        <div className="min-h-screen bg-white dark:bg-[#0A0F1E] text-gray-900 dark:text-white transition-colors duration-300">
           <Header />
           <main>
             <Outlet />

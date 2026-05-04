@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import { AnimatedSection } from "../components/AnimatedSection";
+import { useTheme } from "next-themes";
 import { CheckCircle, MessageCircle, ArrowRight, Star, Globe, Award, Users } from "lucide-react";
 
 const becas = [
@@ -59,36 +60,28 @@ const becas = [
   },
 ];
 
-const allies = [
-  { name: "British Council", emoji: "🇬🇧", desc: "Programa de inglés tecnológico en colaboración" },
-  { name: "Google for Education", emoji: "🌐", desc: "Herramientas Google Workspace para todos los alumnos" },
-  { name: "Microsoft Learn", emoji: "💻", desc: "Certificaciones oficiales de Microsoft" },
-  { name: "Codecademy", emoji: "👨‍💻", desc: "Acceso a plataforma de práctica en línea" },
-  { name: "Fundación Televisa", emoji: "📺", desc: "Becas para comunidades vulnerables" },
-  { name: "INADEM / SE", emoji: "🏛️", desc: "Apoyo gubernamental para PyMEs en capacitación" },
-];
-
 export function Becas() {
+  const { theme } = useTheme();
+
   return (
-    <div>
+    <div className="bg-white dark:bg-[#0A0F1E] transition-colors duration-300">
       {/* HERO */}
       <section
-        className="pt-32 pb-20 px-4 relative overflow-hidden"
-        style={{ background: "#050A14" }}
+        className="pt-32 pb-20 px-4 relative overflow-hidden bg-gray-50 dark:bg-[#050A14] transition-colors duration-300"
       >
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="absolute inset-0 pointer-events-none transition-colors duration-300"
           style={{
-            background:
-              "radial-gradient(ellipse at center, rgba(16,185,129,0.07) 0%, transparent 60%)",
+            background: theme === "dark" 
+              ? "radial-gradient(ellipse at center, rgba(16,185,129,0.07) 0%, transparent 60%)"
+              : "radial-gradient(ellipse at center, rgba(16,185,129,0.05) 0%, transparent 60%)",
           }}
         />
         <div className="max-w-5xl mx-auto text-center relative">
           <AnimatedSection>
             <div
-              className="inline-block px-4 py-1.5 rounded-full text-sm mb-6"
+              className="inline-block px-4 py-1.5 rounded-full text-sm mb-6 bg-emerald-50 dark:bg-emerald-900/10"
               style={{
-                background: "rgba(16,185,129,0.1)",
                 color: "#10B981",
                 border: "1px solid rgba(16,185,129,0.25)",
               }}
@@ -96,7 +89,7 @@ export function Becas() {
               🎓 Becas y alianzas
             </div>
             <h1
-              className="text-white mb-6"
+              className="text-gray-900 dark:text-white mb-6 transition-colors duration-300"
               style={{
                 fontSize: "clamp(2rem, 5vw, 3.8rem)",
                 fontWeight: 900,
@@ -115,7 +108,7 @@ export function Becas() {
               </span>
             </h1>
             <p
-              className="text-white/65 max-w-2xl mx-auto"
+              className="text-gray-600 dark:text-white/65 max-w-2xl mx-auto transition-colors duration-300"
               style={{ fontSize: "1.15rem", lineHeight: 1.75 }}
             >
               Creemos que el dinero no debería ser un obstáculo para aprender.
@@ -127,13 +120,12 @@ export function Becas() {
       </section>
 
       {/* PROGRAMA NACIONAL */}
-      <section className="py-20 px-4" style={{ background: "#050A14" }}>
+      <section className="py-20 px-4 bg-gray-50 dark:bg-[#050A14] transition-colors duration-300">
         <div className="max-w-7xl mx-auto">
           <AnimatedSection className="text-center mb-12">
             <div
-              className="inline-block px-4 py-1.5 rounded-full text-sm mb-6"
+              className="inline-block px-4 py-1.5 rounded-full text-sm mb-6 bg-orange-50 dark:bg-orange-900/10"
               style={{
-                background: "rgba(255,107,53,0.1)",
                 color: "#FF6B35",
                 border: "1px solid rgba(255,107,53,0.25)",
               }}
@@ -141,7 +133,7 @@ export function Becas() {
               🎯 Programa Nacional
             </div>
             <h2
-              className="text-white mb-4"
+              className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
               style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 900, lineHeight: 1.1 }}
             >
               <span
@@ -154,7 +146,7 @@ export function Becas() {
                 "Abriendo Caminos Digitales"
               </span>
             </h2>
-            <p className="text-white/70 max-w-3xl mx-auto text-lg">
+            <p className="text-gray-600 dark:text-white/70 max-w-3xl mx-auto text-lg transition-colors duration-300">
               Proyecto nacional para la disminución de la brecha educativa y tecnológica
               entre México y los países desarrollados
             </p>
@@ -164,13 +156,13 @@ export function Becas() {
           <div className="grid lg:grid-cols-2 gap-10 mb-16">
             <AnimatedSection direction="left">
               <div
-                className="p-8 rounded-3xl h-full"
+                className="p-8 rounded-3xl h-full bg-white dark:bg-transparent transition-colors duration-300"
                 style={{
-                  background: "rgba(255,107,53,0.05)",
-                  border: "1px solid rgba(255,107,53,0.2)",
+                  background: theme === "dark" ? "rgba(255,107,53,0.05)" : "rgba(255,107,53,0.03)",
+                  border: theme === "dark" ? "1px solid rgba(255,107,53,0.2)" : "1px solid rgba(255,107,53,0.15)",
                 }}
               >
-                <h3 className="text-white text-2xl font-bold mb-6">
+                <h3 className="text-gray-900 dark:text-white text-2xl font-bold mb-6 transition-colors duration-300">
                   La situación STEAM en México 🇲🇽
                 </h3>
                 <div className="flex flex-col gap-5">
@@ -196,24 +188,24 @@ export function Becas() {
                     {
                       num: "04",
                       stat: "40%",
-                      desc: "Población vulnerable (Vivat socioeconómico bajo): 40% de niños sin acceso a internet y dispositivos (ENDUTIH 2025)",
+                      desc: "Población vulnerable (nivel socioeconómico bajo): 40% de niños sin acceso a internet y dispositivos (ENDUTIH 2025)",
                       color: "#7C3AED",
                     },
                   ].map((item) => (
                     <div key={item.num} className="flex gap-4">
                       <div
                         className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-                        style={{ background: `${item.color}20`, border: `2px solid ${item.color}` }}
+                        style={{ background: `${item.color}15`, border: `2px solid ${item.color}` }}
                       >
                         <span className="text-sm font-bold" style={{ color: item.color }}>
                           {item.num}
                         </span>
                       </div>
                       <div>
-                        <div className="text-white font-bold text-xl mb-1" style={{ color: item.color }}>
+                        <div className="font-bold text-xl mb-1" style={{ color: item.color }}>
                           {item.stat}
                         </div>
-                        <p className="text-white/60 text-sm leading-relaxed">{item.desc}</p>
+                        <p className="text-gray-600 dark:text-white/60 text-sm leading-relaxed transition-colors duration-300">{item.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -224,18 +216,20 @@ export function Becas() {
             {/* Solución */}
             <AnimatedSection direction="right">
               <div
-                className="p-8 rounded-3xl h-full"
+                className="p-8 rounded-3xl h-full bg-white dark:bg-transparent transition-colors duration-300"
                 style={{
-                  background: "linear-gradient(135deg, rgba(16,185,129,0.08), rgba(0,201,255,0.08))",
-                  border: "1px solid rgba(16,185,129,0.3)",
+                  background: theme === "dark" 
+                    ? "linear-gradient(135deg, rgba(16,185,129,0.08), rgba(0,201,255,0.08))"
+                    : "linear-gradient(135deg, rgba(16,185,129,0.04), rgba(0,201,255,0.04))",
+                  border: theme === "dark" ? "1px solid rgba(16,185,129,0.3)" : "1px solid rgba(16,185,129,0.2)",
                 }}
               >
-                <h3 className="text-white text-2xl font-bold mb-6">
+                <h3 className="text-gray-900 dark:text-white text-2xl font-bold mb-6 transition-colors duration-300">
                   Nuestra Propuesta ✨
                 </h3>
                 <div className="mb-8">
                   <div
-                    className="inline-block px-4 py-2 rounded-xl text-white font-bold mb-4"
+                    className="inline-block px-4 py-2 rounded-xl text-white font-bold mb-4 shadow-sm"
                     style={{ background: "linear-gradient(135deg, #10B981, #00C9FF)" }}
                   >
                     Becas Variables · Alta Cobertura · Escalable
@@ -268,26 +262,26 @@ export function Becas() {
                   ].map((item) => (
                     <div
                       key={item.label}
-                      className="flex items-center justify-between p-4 rounded-xl"
-                      style={{ background: "rgba(255,255,255,0.05)" }}
+                      className="flex items-center justify-between p-4 rounded-xl transition-colors duration-300"
+                      style={{ background: theme === "dark" ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.03)" }}
                     >
                       <div className="flex items-center gap-3">
                         <span className="text-2xl">{item.icon}</span>
-                        <span className="text-white/70 text-sm">{item.label}</span>
+                        <span className="text-gray-500 dark:text-white/70 text-sm transition-colors duration-300">{item.label}</span>
                       </div>
-                      <span className="text-white font-bold text-sm">{item.value}</span>
+                      <span className="text-gray-900 dark:text-white font-bold text-sm transition-colors duration-300">{item.value}</span>
                     </div>
                   ))}
                 </div>
 
-                <div className="mt-6 p-4 rounded-xl" style={{ background: "rgba(16,185,129,0.15)" }}>
+                <div className="mt-6 p-4 rounded-xl transition-colors duration-300" style={{ background: theme === "dark" ? "rgba(16,185,129,0.15)" : "rgba(16,185,129,0.1)" }}>
                   <div className="flex items-center gap-2 mb-2">
                     <CheckCircle size={18} className="text-[#10B981]" />
-                    <span className="text-white font-semibold text-sm">
+                    <span className="text-gray-900 dark:text-white font-semibold text-sm transition-colors duration-300">
                       Impacto Social Medible
                     </span>
                   </div>
-                  <p className="text-white/70 text-xs leading-relaxed">
+                  <p className="text-gray-600 dark:text-white/70 text-xs leading-relaxed transition-colors duration-300">
                     Becas con porcentajes asignados según perfil socioeconómico para comunidades
                     vulnerables, cerrando la brecha digital con metodología STEAM adaptada a la
                     realidad mexicana.
@@ -300,16 +294,18 @@ export function Becas() {
           {/* CTA del programa */}
           <AnimatedSection>
             <div
-              className="p-10 rounded-3xl text-center"
+              className="p-10 rounded-3xl text-center transition-colors duration-300"
               style={{
-                background: "linear-gradient(135deg, rgba(255,107,53,0.1), rgba(233,30,99,0.1))",
-                border: "1px solid rgba(255,107,53,0.3)",
+                background: theme === "dark" 
+                  ? "linear-gradient(135deg, rgba(255,107,53,0.1), rgba(233,30,99,0.1))"
+                  : "linear-gradient(135deg, rgba(255,107,53,0.05), rgba(233,30,99,0.05))",
+                border: theme === "dark" ? "1px solid rgba(255,107,53,0.3)" : "1px solid rgba(255,107,53,0.2)",
               }}
             >
-              <h3 className="text-white text-2xl font-bold mb-3">
+              <h3 className="text-gray-900 dark:text-white text-2xl font-bold mb-3 transition-colors duration-300">
                 ¿Tu comunidad califica para el programa?
               </h3>
-              <p className="text-white/70 mb-6 max-w-2xl mx-auto">
+              <p className="text-gray-600 dark:text-white/70 mb-6 max-w-2xl mx-auto transition-colors duration-300">
                 Escríbenos para saber si tu escuela, comunidad u organización puede participar
                 en "Abriendo Caminos Digitales" con becas de porcentajes variables según perfil.
               </p>
@@ -340,16 +336,16 @@ export function Becas() {
       </section>
 
       {/* BECAS */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4 bg-white dark:bg-[#0A0F1E] transition-colors duration-300">
         <div className="max-w-7xl mx-auto">
           <AnimatedSection className="mb-12">
             <h2
-              className="text-white"
+              className="text-gray-900 dark:text-white transition-colors duration-300"
               style={{ fontSize: "clamp(1.8rem, 4vw, 2.5rem)", fontWeight: 800 }}
             >
               Programas de apoyo
             </h2>
-            <p className="text-white/60 mt-2">
+            <p className="text-gray-600 dark:text-white/60 mt-2 transition-colors duration-300">
               Elige el programa que mejor se adapte a tu situación.
             </p>
           </AnimatedSection>
@@ -358,11 +354,10 @@ export function Becas() {
             {becas.map((b, i) => (
               <AnimatedSection key={b.title} delay={i * 80}>
                 <div
-                  className="p-7 rounded-3xl h-full flex flex-col"
+                  className="p-7 rounded-3xl h-full flex flex-col bg-white dark:bg-transparent shadow-sm dark:shadow-none transition-all duration-300"
                   style={{
-                    background: `${b.color}06`,
-                    border: `1px solid ${b.color}20`,
-                    transition: "all 0.3s ease",
+                    background: theme === "dark" ? `${b.color}06` : `${b.color}04`,
+                    border: theme === "dark" ? `1px solid ${b.color}20` : `1px solid ${b.color}30`,
                   }}
                   onMouseEnter={(e) => {
                     (e.currentTarget as HTMLElement).style.transform = "translateY(-6px)";
@@ -377,18 +372,18 @@ export function Becas() {
                     <span style={{ fontSize: "2rem" }}>{b.emoji}</span>
                     <span
                       className="text-xs px-3 py-1 rounded-full font-semibold"
-                      style={{ background: `${b.color}20`, color: b.color }}
+                      style={{ background: `${b.color}15`, color: b.color }}
                     >
                       {b.type}
                     </span>
                   </div>
                   <h3
-                    className="text-white mb-2"
+                    className="text-gray-900 dark:text-white mb-2 transition-colors duration-300"
                     style={{ fontWeight: 700, fontSize: "1.1rem" }}
                   >
                     {b.title}
                   </h3>
-                  <p className="text-white/60 text-sm leading-relaxed mb-4 flex-1">
+                  <p className="text-gray-600 dark:text-white/60 text-sm leading-relaxed mb-4 flex-1 transition-colors duration-300">
                     {b.desc}
                   </p>
                   <div
@@ -401,7 +396,7 @@ export function Becas() {
                     {b.req.map((r) => (
                       <div key={r} className="flex items-start gap-2 text-sm">
                         <CheckCircle size={14} style={{ color: b.color, marginTop: 1, flexShrink: 0 }} />
-                        <span className="text-white/55">{r}</span>
+                        <span className="text-gray-500 dark:text-white/55 transition-colors duration-300">{r}</span>
                       </div>
                     ))}
                   </div>
@@ -428,11 +423,11 @@ export function Becas() {
       </section>
 
       {/* PROCESS */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4 bg-white dark:bg-[#0A0F1E] transition-colors duration-300">
         <div className="max-w-5xl mx-auto">
           <AnimatedSection className="text-center mb-12">
             <h2
-              className="text-white mb-4"
+              className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
               style={{ fontSize: "clamp(1.8rem, 4vw, 2.8rem)", fontWeight: 800 }}
             >
               ¿Cómo solicito una beca?
@@ -464,10 +459,10 @@ export function Becas() {
             ].map((s, i) => (
               <AnimatedSection key={s.step} delay={i * 100}>
                 <div
-                  className="p-7 rounded-3xl text-center"
+                  className="p-7 rounded-3xl text-center bg-white dark:bg-transparent shadow-sm dark:shadow-none transition-colors duration-300"
                   style={{
-                    background: `${s.color}08`,
-                    border: `1px solid ${s.color}20`,
+                    background: theme === "dark" ? `${s.color}08` : `${s.color}05`,
+                    border: theme === "dark" ? `1px solid ${s.color}20` : `1px solid ${s.color}15`,
                   }}
                 >
                   <div className="text-4xl mb-4">{s.emoji}</div>
@@ -478,12 +473,12 @@ export function Becas() {
                     PASO {s.step}
                   </div>
                   <h3
-                    className="text-white mb-3"
+                    className="text-gray-900 dark:text-white mb-3 transition-colors duration-300"
                     style={{ fontWeight: 700, fontSize: "1.1rem" }}
                   >
                     {s.title}
                   </h3>
-                  <p className="text-white/60 text-sm leading-relaxed">{s.desc}</p>
+                  <p className="text-gray-600 dark:text-white/60 text-sm leading-relaxed transition-colors duration-300">{s.desc}</p>
                 </div>
               </AnimatedSection>
             ))}
@@ -493,21 +488,20 @@ export function Becas() {
 
       {/* CTA */}
       <section
-        className="py-24 px-4"
+        className="py-24 px-4 bg-gray-50 dark:bg-[#050A14] transition-colors duration-300"
         style={{
-          background: "#050A14",
-          borderTop: "1px solid rgba(16,185,129,0.15)",
+          borderTop: theme === "dark" ? "1px solid rgba(16,185,129,0.15)" : "1px solid rgba(16,185,129,0.1)",
         }}
       >
         <div className="max-w-4xl mx-auto text-center">
           <AnimatedSection>
             <h2
-              className="text-white mb-4"
+              className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
               style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 800 }}
             >
               ¿No encuentras el apoyo que necesitas?
             </h2>
-            <p className="text-white/60 mb-8 max-w-xl mx-auto" style={{ fontSize: "1.1rem" }}>
+            <p className="text-gray-600 dark:text-white/60 mb-8 max-w-xl mx-auto transition-colors duration-300" style={{ fontSize: "1.1rem" }}>
               Hablemos directamente. Siempre encontramos una solución para que
               el acceso a la tecnología no sea una barrera.
             </p>
@@ -531,8 +525,7 @@ export function Becas() {
               </a>
               <Link
                 to="/contacto"
-                className="flex items-center justify-center gap-2 px-10 py-4 rounded-2xl text-white font-semibold border border-white/25"
-                style={{ transition: "all 0.2s ease" }}
+                className="flex items-center justify-center gap-2 px-10 py-4 rounded-2xl font-semibold border transition-all duration-300 text-gray-900 dark:text-white border-gray-300 dark:border-white/25 hover:bg-gray-100 dark:hover:bg-white/10"
               >
                 Formulario de contacto
                 <ArrowRight size={16} />

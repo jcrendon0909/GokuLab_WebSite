@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import { AnimatedSection } from "../components/AnimatedSection";
+import { useTheme } from "next-themes";
 import {
   CheckCircle, MessageCircle, ArrowRight, BarChart2, Users, Clock,
   Shield, Zap, Globe, Cpu, Code, Layers
@@ -87,12 +88,14 @@ const clients = [
 ];
 
 export function Capacitaciones() {
+  const { theme } = useTheme();
+
   return (
-    <div style={{ background: "#0A0F1E" }}>
+    <div className="bg-white dark:bg-[#0A0F1E] transition-colors duration-300">
       {/* HERO */}
       <section
-        className="relative min-h-screen flex items-center overflow-hidden"
-        style={{ paddingTop: "80px", background: "#0e1821" }}
+        className="relative min-h-screen flex items-center overflow-hidden bg-gray-50 dark:bg-[#0e1821] transition-colors duration-300"
+        style={{ paddingTop: "80px" }}
       >
         {/* Background */}
         <div className="absolute inset-0">
@@ -100,23 +103,25 @@ export function Capacitaciones() {
             src={CORP_IMG}
             alt="Empresas y gobierno"
             className="w-full h-full object-cover"
-            style={{ opacity: 0.08 }}
+            style={{ opacity: theme === "dark" ? 0.08 : 0.05 }}
           />
           <div
-            className="absolute inset-0"
+            className="absolute inset-0 transition-colors duration-300"
             style={{
-              background:
-                "linear-gradient(135deg, rgba(14,24,33,0.98) 0%, rgba(14,24,33,0.85) 100%)",
+              background: theme === "dark" 
+                ? "linear-gradient(135deg, rgba(14,24,33,0.98) 0%, rgba(14,24,33,0.85) 100%)"
+                : "linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.85) 100%)",
             }}
           />
         </div>
 
         {/* Grid pattern */}
         <div
-          className="absolute inset-0 pointer-events-none opacity-5"
+          className="absolute inset-0 pointer-events-none opacity-5 dark:opacity-10 transition-colors duration-300"
           style={{
-            backgroundImage:
-              "linear-gradient(rgba(0,201,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(0,201,255,0.3) 1px, transparent 1px)",
+            backgroundImage: theme === "dark"
+              ? "linear-gradient(rgba(0,201,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(0,201,255,0.3) 1px, transparent 1px)"
+              : "linear-gradient(rgba(0,201,255,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(0,201,255,0.8) 1px, transparent 1px)",
             backgroundSize: "60px 60px",
           }}
         />
@@ -125,9 +130,8 @@ export function Capacitaciones() {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <AnimatedSection direction="left">
               <div
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm mb-8"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm mb-8 bg-blue-50 dark:bg-blue-900/10"
                 style={{
-                  background: "rgba(0,201,255,0.1)",
                   color: "#00C9FF",
                   border: "1px solid rgba(0,201,255,0.25)",
                 }}
@@ -137,7 +141,7 @@ export function Capacitaciones() {
               </div>
 
               <h1
-                className="text-white mb-6"
+                className="text-gray-900 dark:text-white mb-6 transition-colors duration-300"
                 style={{
                   fontSize: "clamp(2.2rem, 5vw, 4rem)",
                   fontWeight: 900,
@@ -159,7 +163,7 @@ export function Capacitaciones() {
               </h1>
 
               <p
-                className="text-white/65 mb-8"
+                className="text-gray-600 dark:text-white/65 mb-8 transition-colors duration-300"
                 style={{ fontSize: "1.15rem", lineHeight: 1.7 }}
               >
                 Soluciones tecnológicas 100% personalizadas para empresas y gobierno.
@@ -175,7 +179,7 @@ export function Capacitaciones() {
                 ].map((item) => (
                   <div key={item} className="flex items-center gap-2">
                     <CheckCircle size={16} className="text-[#00C9FF] shrink-0" />
-                    <span className="text-white/65 text-sm">{item}</span>
+                    <span className="text-gray-600 dark:text-white/65 text-sm transition-colors duration-300">{item}</span>
                   </div>
                 ))}
               </div>
@@ -200,8 +204,7 @@ export function Capacitaciones() {
                 </a>
                 <Link
                   to="/contacto"
-                  className="flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-white font-semibold border border-white/25 hover:border-white/50"
-                  style={{ transition: "all 0.2s ease" }}
+                  className="flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-semibold border transition-all duration-300 text-gray-900 dark:text-white border-gray-300 dark:border-white/25 hover:bg-gray-100 dark:hover:bg-white/10"
                 >
                   Formulario de contacto
                   <ArrowRight size={16} />
@@ -220,10 +223,10 @@ export function Capacitaciones() {
                 ].map((s) => (
                   <div
                     key={s.label}
-                    className="p-6 rounded-3xl"
+                    className="p-6 rounded-3xl bg-white dark:bg-transparent shadow-sm dark:shadow-none transition-colors duration-300"
                     style={{
-                      background: `${s.color}08`,
-                      border: `1px solid ${s.color}20`,
+                      background: theme === "dark" ? `${s.color}08` : `${s.color}15`,
+                      border: theme === "dark" ? `1px solid ${s.color}20` : `1px solid ${s.color}30`,
                     }}
                   >
                     <div
@@ -237,8 +240,8 @@ export function Capacitaciones() {
                     >
                       {s.number}
                     </div>
-                    <div className="text-white font-semibold">{s.label}</div>
-                    <div className="text-white/40 text-xs mt-0.5">{s.sub}</div>
+                    <div className="text-gray-900 dark:text-white font-semibold transition-colors duration-300">{s.label}</div>
+                    <div className="text-gray-500 dark:text-white/40 text-xs mt-0.5 transition-colors duration-300">{s.sub}</div>
                   </div>
                 ))}
               </div>
@@ -249,15 +252,14 @@ export function Capacitaciones() {
 
       {/* CLIENTS */}
       <section
-        className="py-20 px-4"
+        className="py-20 px-4 bg-gray-50 dark:bg-[#050A14] transition-colors duration-300"
         style={{
-          background: "#050A14",
-          borderTop: "1px solid rgba(255,255,255,0.06)",
+          borderTop: theme === "dark" ? "1px solid rgba(255,255,255,0.06)" : "1px solid rgba(0,0,0,0.05)",
         }}
       >
         <div className="max-w-7xl mx-auto">
           <AnimatedSection className="text-center mb-10">
-            <p className="text-white/40 text-sm uppercase tracking-widest">
+            <p className="text-gray-400 dark:text-white/40 text-sm uppercase tracking-widest transition-colors duration-300">
               Empresas que confían en GOKU LAB
             </p>
           </AnimatedSection>
@@ -265,24 +267,24 @@ export function Capacitaciones() {
             {clients.map((c, i) => (
               <AnimatedSection key={c.name} delay={i * 60}>
                 <div
-                  className="flex flex-col items-center gap-2 p-5 rounded-2xl text-center"
+                  className="flex flex-col items-center gap-2 p-5 rounded-2xl text-center bg-white dark:bg-transparent shadow-sm dark:shadow-none transition-colors duration-300"
                   style={{
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.06)",
+                    background: theme === "dark" ? "rgba(255,255,255,0.03)" : "#ffffff",
+                    border: theme === "dark" ? "1px solid rgba(255,255,255,0.06)" : "1px solid rgba(0,0,0,0.06)",
                     transition: "all 0.3s ease",
                   }}
                   onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,201,255,0.25)";
-                    (e.currentTarget as HTMLElement).style.background = "rgba(0,201,255,0.05)";
+                    (e.currentTarget as HTMLElement).style.borderColor = theme === "dark" ? "rgba(0,201,255,0.25)" : "rgba(0,201,255,0.4)";
+                    (e.currentTarget as HTMLElement).style.background = theme === "dark" ? "rgba(0,201,255,0.05)" : "rgba(0,201,255,0.1)";
                   }}
                   onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.06)";
-                    (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.03)";
+                    (e.currentTarget as HTMLElement).style.borderColor = theme === "dark" ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)";
+                    (e.currentTarget as HTMLElement).style.background = theme === "dark" ? "rgba(255,255,255,0.03)" : "#ffffff";
                   }}
                 >
                   <span style={{ fontSize: "2rem" }}>{c.emoji}</span>
-                  <span className="text-white text-xs font-semibold">{c.name}</span>
-                  <span className="text-white/30 text-xs">{c.sector}</span>
+                  <span className="text-gray-900 dark:text-white text-xs font-semibold transition-colors duration-300">{c.name}</span>
+                  <span className="text-gray-500 dark:text-white/30 text-xs transition-colors duration-300">{c.sector}</span>
                 </div>
               </AnimatedSection>
             ))}
@@ -291,14 +293,13 @@ export function Capacitaciones() {
       </section>
 
       {/* PROBLEM */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4 bg-white dark:bg-[#0A0F1E] transition-colors duration-300">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <AnimatedSection direction="left">
               <div
-                className="inline-block px-4 py-1.5 rounded-full text-sm mb-6"
+                className="inline-block px-4 py-1.5 rounded-full text-sm mb-6 bg-orange-50 dark:bg-orange-900/10"
                 style={{
-                  background: "rgba(255,107,53,0.1)",
                   color: "#FF6B35",
                   border: "1px solid rgba(255,107,53,0.25)",
                 }}
@@ -306,7 +307,7 @@ export function Capacitaciones() {
                 El reto actual
               </div>
               <h2
-                className="text-white mb-6"
+                className="text-gray-900 dark:text-white mb-6 transition-colors duration-300"
                 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 800 }}
               >
                 Tu equipo necesita{" "}
@@ -322,14 +323,14 @@ export function Capacitaciones() {
                 ].map((p, i) => (
                   <div
                     key={i}
-                    className="flex items-start gap-3 p-4 rounded-2xl"
+                    className="flex items-start gap-3 p-4 rounded-2xl transition-colors duration-300"
                     style={{
-                      background: "rgba(255,107,53,0.06)",
-                      border: "1px solid rgba(255,107,53,0.15)",
+                      background: theme === "dark" ? "rgba(255,107,53,0.06)" : "rgba(255,107,53,0.1)",
+                      border: theme === "dark" ? "1px solid rgba(255,107,53,0.15)" : "1px solid rgba(255,107,53,0.2)",
                     }}
                   >
-                    <span className="text-[#FF6B35] mt-0.5">✗</span>
-                    <span className="text-white/65 text-sm">{p}</span>
+                    <span className="text-[#FF6B35] mt-0.5 font-bold">✗</span>
+                    <span className="text-gray-600 dark:text-white/65 text-sm transition-colors duration-300">{p}</span>
                   </div>
                 ))}
               </div>
@@ -337,9 +338,8 @@ export function Capacitaciones() {
 
             <AnimatedSection direction="right" delay={100}>
               <div
-                className="inline-block px-4 py-1.5 rounded-full text-sm mb-6"
+                className="inline-block px-4 py-1.5 rounded-full text-sm mb-6 bg-blue-50 dark:bg-blue-900/10"
                 style={{
-                  background: "rgba(0,201,255,0.1)",
                   color: "#00C9FF",
                   border: "1px solid rgba(0,201,255,0.25)",
                 }}
@@ -347,7 +347,7 @@ export function Capacitaciones() {
                 La solución GOKU LAB
               </div>
               <h2
-                className="text-white mb-6"
+                className="text-gray-900 dark:text-white mb-6 transition-colors duration-300"
                 style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 800 }}
               >
                 Programas{" "}
@@ -362,14 +362,14 @@ export function Capacitaciones() {
                 ].map((s, i) => (
                   <div
                     key={i}
-                    className="flex items-start gap-3 p-4 rounded-2xl"
+                    className="flex items-start gap-3 p-4 rounded-2xl transition-colors duration-300"
                     style={{
-                      background: "rgba(0,201,255,0.05)",
-                      border: "1px solid rgba(0,201,255,0.15)",
+                      background: theme === "dark" ? "rgba(0,201,255,0.05)" : "rgba(0,201,255,0.1)",
+                      border: theme === "dark" ? "1px solid rgba(0,201,255,0.15)" : "1px solid rgba(0,201,255,0.2)",
                     }}
                   >
                     <CheckCircle size={18} className="text-[#00C9FF] mt-0.5 shrink-0" />
-                    <span className="text-white/65 text-sm">{s}</span>
+                    <span className="text-gray-600 dark:text-white/65 text-sm transition-colors duration-300">{s}</span>
                   </div>
                 ))}
               </div>
@@ -380,16 +380,15 @@ export function Capacitaciones() {
 
       {/* AREAS */}
       <section
-        className="py-20 px-4"
+        className="py-20 px-4 bg-gray-50 dark:bg-[#050A14] transition-colors duration-300"
         style={{
-          background: "#050A14",
-          borderTop: "1px solid rgba(255,255,255,0.06)",
+          borderTop: theme === "dark" ? "1px solid rgba(255,255,255,0.06)" : "1px solid rgba(0,0,0,0.05)",
         }}
       >
         <div className="max-w-7xl mx-auto">
           <AnimatedSection className="text-center mb-12">
             <h2
-              className="text-white mb-4"
+              className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
               style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 800 }}
             >
               Áreas de{" "}
@@ -403,7 +402,7 @@ export function Capacitaciones() {
                 especialización
               </span>
             </h2>
-            <p className="text-white/60 max-w-xl mx-auto">
+            <p className="text-gray-600 dark:text-white/60 max-w-xl mx-auto transition-colors duration-300">
               Diseñamos programas en múltiples áreas tecnológicas adaptados al
               nivel y objetivos de tu organización.
             </p>
@@ -413,31 +412,31 @@ export function Capacitaciones() {
             {areas.map((area, i) => (
               <AnimatedSection key={area.title} delay={i * 80}>
                 <div
-                  className="p-7 rounded-3xl h-full"
+                  className="p-7 rounded-3xl h-full bg-white dark:bg-transparent shadow-sm dark:shadow-none transition-colors duration-300"
                   style={{
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.07)",
+                    background: theme === "dark" ? "rgba(255,255,255,0.03)" : "#ffffff",
+                    border: theme === "dark" ? "1px solid rgba(255,255,255,0.07)" : "1px solid rgba(0,0,0,0.08)",
                     transition: "all 0.3s ease",
                   }}
                   onMouseEnter={(e) => {
                     (e.currentTarget as HTMLElement).style.transform = "translateY(-6px)";
                     (e.currentTarget as HTMLElement).style.borderColor = area.color + "40";
-                    (e.currentTarget as HTMLElement).style.background = area.color + "06";
+                    (e.currentTarget as HTMLElement).style.background = theme === "dark" ? area.color + "06" : area.color + "12";
                   }}
                   onMouseLeave={(e) => {
                     (e.currentTarget as HTMLElement).style.transform = "none";
-                    (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.07)";
-                    (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.03)";
+                    (e.currentTarget as HTMLElement).style.borderColor = theme === "dark" ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.08)";
+                    (e.currentTarget as HTMLElement).style.background = theme === "dark" ? "rgba(255,255,255,0.03)" : "#ffffff";
                   }}
                 >
                   <div
-                    className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4"
+                    className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4 bg-white dark:bg-transparent"
                     style={{ background: `${area.color}15` }}
                   >
                     <area.icon size={22} style={{ color: area.color }} />
                   </div>
                   <h3
-                    className="text-white mb-3"
+                    className="text-gray-900 dark:text-white mb-3 transition-colors duration-300"
                     style={{ fontWeight: 700, fontSize: "1.05rem" }}
                   >
                     {area.title}
@@ -446,7 +445,7 @@ export function Capacitaciones() {
                     {area.items.map((item) => (
                       <div key={item} className="flex items-center gap-2.5 text-sm">
                         <span style={{ color: area.color, fontSize: "8px" }}>●</span>
-                        <span className="text-white/60">{item}</span>
+                        <span className="text-gray-600 dark:text-white/60 transition-colors duration-300">{item}</span>
                       </div>
                     ))}
                   </div>
@@ -458,11 +457,11 @@ export function Capacitaciones() {
       </section>
 
       {/* FORMATS */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4 bg-white dark:bg-[#0A0F1E] transition-colors duration-300">
         <div className="max-w-7xl mx-auto">
           <AnimatedSection className="text-center mb-12">
             <h2
-              className="text-white mb-4"
+              className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
               style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 800 }}
             >
               Formatos{" "}
@@ -473,10 +472,10 @@ export function Capacitaciones() {
             {formats.map((f, i) => (
               <AnimatedSection key={f.title} delay={i * 80}>
                 <div
-                  className="p-6 rounded-3xl text-center h-full"
+                  className="p-6 rounded-3xl text-center h-full bg-white dark:bg-transparent shadow-sm dark:shadow-none transition-colors duration-300"
                   style={{
-                    background: `${f.color}08`,
-                    border: `1px solid ${f.color}20`,
+                    background: theme === "dark" ? `${f.color}08` : `${f.color}06`,
+                    border: theme === "dark" ? `1px solid ${f.color}20` : `1px solid ${f.color}30`,
                     transition: "all 0.3s ease",
                   }}
                   onMouseEnter={(e) => {
@@ -492,7 +491,7 @@ export function Capacitaciones() {
                     {f.icon}
                   </div>
                   <h3
-                    className="text-white mb-1"
+                    className="text-gray-900 dark:text-white mb-1 transition-colors duration-300"
                     style={{ fontWeight: 700, fontSize: "1rem" }}
                   >
                     {f.title}
@@ -503,7 +502,7 @@ export function Capacitaciones() {
                   >
                     {f.duration}
                   </div>
-                  <p className="text-white/55 text-sm leading-relaxed">{f.desc}</p>
+                  <p className="text-gray-600 dark:text-white/55 text-sm leading-relaxed transition-colors duration-300">{f.desc}</p>
                 </div>
               </AnimatedSection>
             ))}
@@ -513,16 +512,15 @@ export function Capacitaciones() {
 
       {/* FINAL CTA */}
       <section
-        className="py-24 px-4"
+        className="py-24 px-4 bg-gray-50 dark:bg-[#0e1821] transition-colors duration-300"
         style={{
-          background: "#0e1821",
-          borderTop: "1px solid rgba(0,201,255,0.1)",
+          borderTop: theme === "dark" ? "1px solid rgba(0,201,255,0.1)" : "1px solid rgba(0,201,255,0.2)",
         }}
       >
         <div className="max-w-4xl mx-auto text-center">
           <AnimatedSection>
             <h2
-              className="text-white mb-4"
+              className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
               style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 900 }}
             >
               Solicita tu{" "}
@@ -537,7 +535,7 @@ export function Capacitaciones() {
               </span>
             </h2>
             <p
-              className="text-white/60 mb-10 max-w-2xl mx-auto"
+              className="text-gray-600 dark:text-white/60 mb-10 max-w-2xl mx-auto transition-colors duration-300"
               style={{ fontSize: "1.1rem" }}
             >
               Sin precios genéricos. Cada empresa es diferente y merece una
@@ -564,16 +562,13 @@ export function Capacitaciones() {
               </a>
               <Link
                 to="/contacto"
-                className="flex items-center justify-center gap-2 px-10 py-5 rounded-2xl text-white font-semibold border border-white/25"
-                style={{ transition: "all 0.2s ease" }}
-                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = ""; }}
+                className="flex items-center justify-center gap-2 px-10 py-5 rounded-2xl font-semibold border transition-all duration-300 text-gray-900 dark:text-white border-gray-300 dark:border-white/25 hover:bg-gray-100 dark:hover:bg-white/10"
               >
                 Formulario de contacto
                 <ArrowRight size={18} />
               </Link>
             </div>
-            <div className="flex flex-wrap justify-center gap-6 text-sm text-white/40">
+            <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-500 dark:text-white/40 transition-colors duration-300">
               {["✅ Sin costo de diagnóstico", "✅ Propuesta en 48 hrs", "✅ Sin compromiso de contrato"].map(
                 (i) => <span key={i}>{i}</span>
               )}

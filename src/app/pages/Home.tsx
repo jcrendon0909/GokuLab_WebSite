@@ -74,7 +74,7 @@ function SegmentCards() {
       {segments.map((seg, i) => (
         <AnimatedSection key={seg.titleKey} delay={i * 120}>
           <div
-            className="group rounded-3xl overflow-hidden h-full flex flex-col"
+            className="group rounded-3xl overflow-hidden h-full flex flex-col bg-white dark:bg-transparent"
             style={{
               background: seg.bg,
               border: `1px solid ${seg.border}`,
@@ -114,12 +114,12 @@ function SegmentCards() {
             </div>
             <div className="p-6 flex flex-col flex-1">
               <h3
-                className="text-white dark:text-white light:text-gray-900 mb-2"
+                className="text-gray-900 dark:text-white mb-2 transition-colors duration-300"
                 style={{ fontWeight: 700, fontSize: "1.2rem" }}
               >
                 {t(seg.titleKey)}
               </h3>
-              <p className="text-white/60 dark:text-white/60 light:text-gray-600 text-sm leading-relaxed mb-4 flex-1">
+              <p className="text-gray-600 dark:text-white/60 text-sm leading-relaxed mb-4 flex-1 transition-colors duration-300">
                 {t(seg.descKey)}
               </p>
               <div className="flex flex-wrap gap-2 mb-5">
@@ -162,84 +162,6 @@ function SegmentCards() {
   );
 }
 
-const testimonials = [
-  {
-    name: "Ana García",
-    age: "28 años",
-    bgGradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-    bgImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop",
-  },
-  {
-    name: "Roberto Mendoza",
-    age: "32 años",
-    bgGradient: "linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.5))",
-    bgImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
-  },
-  {
-    name: "María Torres",
-    age: "25 años",
-    bgGradient: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
-    bgImage: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop",
-  },
-  {
-    name: "Carlos Ramírez",
-    age: "35 años",
-    bgGradient: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
-    bgImage: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop",
-  },
-];
-
-function HoverTypewriter({ text }: { text: string }) {
-  const [displayedText, setDisplayedText] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const startTyping = () => {
-    if (!isTyping) {
-      setIsTyping(true);
-      setCurrentIndex(0);
-      setDisplayedText("");
-    }
-  };
-
-  const resetTyping = () => {
-    setIsTyping(false);
-    setCurrentIndex(0);
-    setDisplayedText(text);
-  };
-
-  useEffect(() => {
-    if (!isTyping) {
-      setDisplayedText(text);
-      return;
-    }
-
-    if (currentIndex < text.length) {
-      const timeout = setTimeout(() => {
-        setDisplayedText((prev) => prev + text[currentIndex]);
-        setCurrentIndex((prev) => prev + 1);
-      }, 80);
-
-      return () => clearTimeout(timeout);
-    }
-  }, [currentIndex, text, isTyping]);
-
-  return (
-    <span onMouseEnter={startTyping} onMouseLeave={resetTyping}>
-      {displayedText}
-      {isTyping && currentIndex < text.length && (
-        <span
-          className="inline-block w-0.5 h-[0.9em] ml-1 animate-blink"
-          style={{
-            background: "#fff",
-            verticalAlign: "middle",
-          }}
-        />
-      )}
-    </span>
-  );
-}
-
 const methodSteps = [
   {
     icon: Target,
@@ -267,23 +189,23 @@ const methodSteps = [
   },
 ];
 
-
 export function Home() {
   const { t } = useLanguage();
   const { theme } = useTheme();
-  const [videoError, setVideoError] = useState(false);
 
   return (
-    <div style={{ background: "#000000" }}>
+    <div className="bg-white dark:bg-[#0A0F1E] transition-colors duration-300">
       {/* HERO */}
       <section
         className="relative min-h-screen flex items-center justify-center overflow-hidden"
-        style={{ paddingTop: "80px", background: "#000000" }}
+        style={{ paddingTop: "80px" }}
       >
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 transition-colors duration-300"
           style={{
-            background: "radial-gradient(ellipse at center, rgba(0,201,255,0.08) 0%, rgba(0,0,0,0.98) 70%)",
+            background: theme === "dark" 
+              ? "radial-gradient(ellipse at center, rgba(0,201,255,0.08) 0%, rgba(10,15,30,0.98) 70%)"
+              : "radial-gradient(ellipse at center, rgba(0,201,255,0.05) 0%, rgba(255,255,255,0.98) 70%)",
           }}
         />
 
@@ -306,9 +228,8 @@ export function Home() {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           {/* Badge */}
           <div
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 bg-blue-50 dark:bg-blue-900/10"
             style={{
-              background: "rgba(0,201,255,0.1)",
               border: "1px solid rgba(0,201,255,0.3)",
               animation: "fadeUp 0.6s ease both",
             }}
@@ -321,7 +242,7 @@ export function Home() {
 
           {/* Headline */}
           <h1
-            className="text-white dark:text-white light:text-gray-900 mb-6"
+            className="text-gray-900 dark:text-white mb-6 transition-colors duration-300"
             style={{
               fontSize: "clamp(2.2rem, 6vw, 5rem)",
               fontWeight: 900,
@@ -363,7 +284,7 @@ export function Home() {
           </h1>
 
           <p
-            className="text-white/70 dark:text-white/70 light:text-gray-600 mb-10 max-w-2xl"
+            className="text-gray-600 dark:text-white/70 mb-10 max-w-2xl transition-colors duration-300"
             style={{
               fontSize: "clamp(1rem, 2vw, 1.25rem)",
               lineHeight: 1.7,
@@ -403,8 +324,8 @@ export function Home() {
             </a>
             <Link
               to="/test"
-              className="flex items-center gap-2 px-8 py-4 rounded-2xl text-white dark:text-white light:text-gray-900 font-semibold border border-white/25 dark:border-white/25 light:border-gray-300 hover:border-white/50 hover:bg-white/8 dark:hover:bg-white/8 light:hover:bg-gray-100"
-              style={{ transition: "all 0.2s ease", fontSize: "1.05rem" }}
+              className="flex items-center gap-2 px-8 py-4 rounded-2xl font-semibold border transition-all duration-300 text-gray-900 dark:text-white border-gray-300 dark:border-white/25 hover:bg-gray-100 dark:hover:bg-white/10"
+              style={{ fontSize: "1.05rem" }}
             >
               {t("hero.cta.test")}
               <ArrowRight size={18} />
@@ -415,9 +336,8 @@ export function Home() {
           <div className="mt-20 max-w-7xl mx-auto">
             <AnimatedSection className="text-center mb-12">
               <div
-                className="inline-block px-4 py-1.5 rounded-full text-sm mb-4"
+                className="inline-block px-4 py-1.5 rounded-full text-sm mb-4 bg-purple-50 dark:bg-purple-900/10"
                 style={{
-                  background: "rgba(124,58,237,0.1)",
                   color: "#7C3AED",
                   border: "1px solid rgba(124,58,237,0.25)",
                 }}
@@ -425,7 +345,7 @@ export function Home() {
                 Tecnologías
               </div>
               <h2
-                className="text-white dark:text-white light:text-gray-900 mb-4 transition-colors duration-300"
+                className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
                 style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 800 }}
               >
                 No solo consumen tecnología,{" "}
@@ -439,7 +359,7 @@ export function Home() {
                   la crean
                 </span>
               </h2>
-              <p className="text-white/60 dark:text-white/60 light:text-gray-600 max-w-xl mx-auto transition-colors duration-300">
+              <p className="text-gray-600 dark:text-white/60 max-w-xl mx-auto transition-colors duration-300">
                 15+ tecnologías reales usadas en la industria, adaptadas a cada
                 nivel de aprendizaje.
               </p>
@@ -453,7 +373,7 @@ export function Home() {
           className="absolute bottom-8 left-1/2 -translate-x-1/2"
           style={{ animation: "bounce 2s infinite" }}
         >
-          <div className="w-6 h-10 rounded-full border-2 border-white/20 flex items-start justify-center p-1">
+          <div className="w-6 h-10 rounded-full border-2 border-gray-400 dark:border-white/20 flex items-start justify-center p-1">
             <div
               className="w-1.5 h-3 rounded-full bg-[#00C9FF]"
               style={{ animation: "scrollDot 2s infinite" }}
@@ -463,13 +383,12 @@ export function Home() {
       </section>
 
       {/* PROBLEM */}
-      <section className="py-24 px-4 dark:bg-[#050A14] light:bg-gray-50 transition-colors duration-300">
+      <section className="py-24 px-4 bg-gray-50 dark:bg-[#050A14] transition-colors duration-300">
         <div className="max-w-5xl mx-auto">
           <AnimatedSection className="text-center mb-16">
             <div
-              className="inline-block px-4 py-1.5 rounded-full text-sm mb-4"
+              className="inline-block px-4 py-1.5 rounded-full text-sm mb-4 bg-orange-50 dark:bg-orange-900/10"
               style={{
-                background: "rgba(255,107,53,0.1)",
                 color: "#FF6B35",
                 border: "1px solid rgba(255,107,53,0.25)",
               }}
@@ -477,13 +396,13 @@ export function Home() {
               El problema real
             </div>
             <h2
-              className="text-white dark:text-white light:text-gray-900 mb-4"
+              className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
               style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 800 }}
             >
               La brecha digital crece{" "}
               <span style={{ color: "#FF6B35" }}>cada día</span>
             </h2>
-            <p className="text-white/60 dark:text-white/60 light:text-gray-600 max-w-2xl mx-auto" style={{ fontSize: "1.1rem" }}>
+            <p className="text-gray-600 dark:text-white/60 max-w-2xl mx-auto transition-colors duration-300" style={{ fontSize: "1.1rem" }}>
               Millones de personas consumen tecnología sin entenderla, sin poder
               crearla, sin poder beneficiarse de ella profesionalmente.
             </p>
@@ -525,7 +444,7 @@ export function Home() {
                   >
                     {item.stat}
                   </div>
-                  <p className="text-white/60 dark:text-white/60 light:text-gray-600 leading-relaxed transition-colors duration-300">
+                  <p className="text-gray-600 dark:text-white/60 leading-relaxed transition-colors duration-300">
                     {item.desc}
                   </p>
                 </div>
@@ -536,13 +455,12 @@ export function Home() {
       </section>
 
       {/* SOLUTION */}
-      <section className="py-24 px-4 dark:bg-[#0A0F1E] light:bg-white transition-colors duration-300">
+      <section className="py-24 px-4 bg-white dark:bg-[#0A0F1E] transition-colors duration-300">
         <div className="max-w-7xl mx-auto">
           <AnimatedSection className="text-center mb-16">
             <div
-              className="inline-block px-4 py-1.5 rounded-full text-sm mb-4"
+              className="inline-block px-4 py-1.5 rounded-full text-sm mb-4 bg-blue-50 dark:bg-blue-900/10"
               style={{
-                background: "rgba(0,201,255,0.1)",
                 color: "#00C9FF",
                 border: "1px solid rgba(0,201,255,0.25)",
               }}
@@ -550,7 +468,7 @@ export function Home() {
               Nuestra solución
             </div>
             <h2
-              className="text-white dark:text-white light:text-gray-900 mb-4 transition-colors duration-300"
+              className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
               style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 800 }}
             >
               Tecnología que se{" "}
@@ -564,7 +482,7 @@ export function Home() {
                 crea, no solo se consume
               </span>
             </h2>
-            <p className="text-white/60 dark:text-white/60 light:text-gray-600 max-w-2xl mx-auto transition-colors duration-300" style={{ fontSize: "1.1rem" }}>
+            <p className="text-gray-600 dark:text-white/60 max-w-2xl mx-auto transition-colors duration-300" style={{ fontSize: "1.1rem" }}>
               En GOKU LAB transformamos la manera en que aprenden los niños,
               adolescentes, adultos y empresas con metodología práctica y
               proyectos reales.
@@ -577,13 +495,12 @@ export function Home() {
       </section>
 
       {/* METHODOLOGY */}
-      <section className="py-24 px-4 dark:bg-[#0A0F1E] light:bg-white transition-colors duration-300">
+      <section className="py-24 px-4 bg-gray-50 dark:bg-[#0A0F1E] transition-colors duration-300">
         <div className="max-w-7xl mx-auto">
           <AnimatedSection className="text-center mb-16">
             <div
-              className="inline-block px-4 py-1.5 rounded-full text-sm mb-4"
+              className="inline-block px-4 py-1.5 rounded-full text-sm mb-4 bg-emerald-50 dark:bg-emerald-900/10"
               style={{
-                background: "rgba(16,185,129,0.1)",
                 color: "#10B981",
                 border: "1px solid rgba(16,185,129,0.25)",
               }}
@@ -591,15 +508,14 @@ export function Home() {
               Metodología
             </div>
             <h2
-              className="text-white dark:text-white light:text-gray-900 mb-4 transition-colors duration-300"
+              className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
               style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 800 }}
             >
               Nuestro método{" "}
               <span style={{ color: "#10B981" }}>funciona</span>
             </h2>
-            <p className="text-white/60 dark:text-white/60 light:text-gray-600 max-w-2xl mx-auto transition-colors duration-300" style={{ fontSize: "1.1rem" }}>
-              Un proceso claro desde el diagnóstico hasta los resultados
-              medibles.
+            <p className="text-gray-600 dark:text-white/60 max-w-2xl mx-auto transition-colors duration-300" style={{ fontSize: "1.1rem" }}>
+              Un proceso claro desde el diagnóstico hasta los resultados medibles.
             </p>
           </AnimatedSection>
 
@@ -624,7 +540,7 @@ export function Home() {
                   }}
                 >
                   <div
-                    className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4"
+                    className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4 bg-white dark:bg-transparent"
                     style={{ background: `${step.color}18` }}
                   >
                     <step.icon size={22} style={{ color: step.color }} />
@@ -636,12 +552,12 @@ export function Home() {
                     PASO {i + 1}
                   </div>
                   <h3
-                    className="text-white dark:text-white light:text-gray-900 mb-2 transition-colors duration-300"
+                    className="text-gray-900 dark:text-white mb-2 transition-colors duration-300"
                     style={{ fontWeight: 700, fontSize: "1rem" }}
                   >
                     {step.title}
                   </h3>
-                  <p className="text-white/55 dark:text-white/55 light:text-gray-600 text-sm leading-relaxed transition-colors duration-300">
+                  <p className="text-gray-600 dark:text-white/55 text-sm leading-relaxed transition-colors duration-300">
                     {step.desc}
                   </p>
                 </div>
@@ -652,12 +568,7 @@ export function Home() {
           <AnimatedSection className="text-center mt-10" delay={400}>
             <Link
               to="/metodologia"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold border transition-all duration-300
-                text-white dark:text-white light:text-gray-900
-                border-white/20 dark:border-white/20 light:border-gray-300
-                hover:border-white/40 dark:hover:border-white/40 light:hover:border-gray-500
-                hover:bg-white/5 dark:hover:bg-white/5 light:hover:bg-gray-100"
-              style={{ transition: "all 0.2s ease" }}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold border transition-all duration-300 text-gray-900 dark:text-white border-gray-300 dark:border-white/20 hover:bg-gray-100 dark:hover:bg-white/5"
             >
               Conocer la metodología completa
               <ArrowRight size={16} />
@@ -667,15 +578,12 @@ export function Home() {
       </section>
 
       {/* EVENTS PREVIEW */}
-      <section className="py-24 px-4 dark:bg-[#0A0F1E] light:bg-white transition-colors duration-300">
+      <section className="py-24 px-4 bg-white dark:bg-[#0A0F1E] transition-colors duration-300">
         <div className="max-w-4xl mx-auto">
           <AnimatedSection className="mb-12">
             <div
               className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-bold mb-6"
-              style={{
-                background: "#10B981",
-                color: "#fff",
-              }}
+              style={{ background: "#10B981", color: "#fff" }}
             >
               <span className="w-2 h-2 bg-white rounded-sm" />
               Próximos eventos
@@ -720,39 +628,14 @@ export function Home() {
                 description: "Descubre cómo programar robots reales. Demostración en vivo con LEGO y Micro:bit.",
                 ctaText: "Asistir gratis",
               },
-              {
-                day: "Lun",
-                dayNum: "02",
-                month: "Junio, 2026",
-                title: "Inicio Curso de Verano",
-                time: "9:00AM",
-                location: "Ambas sedes",
-                type: "Verano",
-                color: "#FFE134",
-                description: "4 semanas intensivas de programación, robótica y diseño para niños y adolescentes.",
-                ctaText: "Ver programa",
-              },
-              {
-                day: "Mié",
-                dayNum: "04",
-                month: "Junio, 2026",
-                title: "Webinar Gratuito: IA para Todos",
-                time: "7:00PM",
-                location: "Online",
-                type: "Webinar",
-                color: "#10B981",
-                description: "Introducción práctica a ChatGPT y herramientas de IA. Abierto para todos los niveles.",
-                ctaText: "Registrarme gratis",
-              },
             ].map((ev, i) => (
               <AnimatedSection key={i} delay={i * 80}>
                 <div
                   className="flex gap-6 py-6 transition-all duration-300"
                   style={{
-                    borderBottom: i < 4 ? (theme === "dark" ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(0,0,0,0.08)") : "none",
+                    borderBottom: i < 2 ? (theme === "dark" ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(0,0,0,0.08)") : "none",
                   }}
                 >
-                  {/* Date Section */}
                   <div className="flex-shrink-0 w-28">
                     <div className="flex items-center gap-2 mb-2">
                       <div
@@ -765,16 +648,13 @@ export function Home() {
                       />
                       <div
                         className="inline-block px-2 py-1 rounded-md text-xs font-bold"
-                        style={{
-                          background: ev.color,
-                          color: "#fff",
-                        }}
+                        style={{ background: ev.color, color: "#fff" }}
                       >
                         {ev.day}
                       </div>
                     </div>
                     <div
-                      className="text-white dark:text-white light:text-gray-900"
+                      className="text-gray-900 dark:text-white transition-colors duration-300"
                       style={{
                         fontSize: "3.5rem",
                         fontWeight: 900,
@@ -784,42 +664,40 @@ export function Home() {
                     >
                       {ev.dayNum}
                     </div>
-                    <div className="text-white/50 dark:text-white/50 light:text-gray-600 text-xs mt-1">
+                    <div className="text-gray-500 dark:text-white/50 text-xs mt-1 transition-colors duration-300">
                       {ev.month}
                     </div>
                   </div>
 
-                  {/* Divider */}
                   <div
-                    className="w-px flex-shrink-0"
+                    className="w-px flex-shrink-0 transition-colors duration-300"
                     style={{
                       background: theme === "dark" ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"
                     }}
                   />
 
-                  {/* Content Section */}
                   <div className="flex-1 pt-1">
                     <h3
-                      className="text-white dark:text-white light:text-gray-900 mb-3"
+                      className="text-gray-900 dark:text-white mb-3 transition-colors duration-300"
                       style={{ fontWeight: 700, fontSize: "1.1rem" }}
                     >
                       {ev.title}
                     </h3>
                     <div className="space-y-1 mb-3">
-                      <div className="flex items-center gap-2 text-white/60 dark:text-white/60 light:text-gray-600 text-sm">
+                      <div className="flex items-center gap-2 text-gray-500 dark:text-white/60 text-sm transition-colors duration-300">
                         <span className="w-1 h-1 rounded-full bg-current" />
                         {ev.type}
                       </div>
-                      <div className="flex items-center gap-2 text-white/60 dark:text-white/60 light:text-gray-600 text-sm">
+                      <div className="flex items-center gap-2 text-gray-500 dark:text-white/60 text-sm transition-colors duration-300">
                         <span className="w-1 h-1 rounded-full bg-current" />
                         {ev.location}
                       </div>
-                      <div className="flex items-center gap-2 text-white/60 dark:text-white/60 light:text-gray-600 text-sm">
+                      <div className="flex items-center gap-2 text-gray-500 dark:text-white/60 text-sm transition-colors duration-300">
                         <span className="w-1 h-1 rounded-full bg-current" />
                         {ev.time}
                       </div>
                     </div>
-                    <p className="text-white/70 dark:text-white/70 light:text-gray-600 text-sm mb-4 leading-relaxed">
+                    <p className="text-gray-600 dark:text-white/70 text-sm mb-4 leading-relaxed transition-colors duration-300">
                       {ev.description}
                     </p>
                     <a
@@ -827,16 +705,9 @@ export function Home() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300"
-                      style={{
-                        background: ev.color,
-                        color: "#fff",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.opacity = "0.9";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.opacity = "1";
-                      }}
+                      style={{ background: ev.color, color: "#fff" }}
+                      onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.9"; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; }}
                     >
                       {ev.ctaText}
                       <ChevronRight size={14} />
@@ -853,7 +724,7 @@ export function Home() {
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold transition-all duration-300"
               style={{
                 background: theme === "dark" ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.04)",
-                color: theme === "dark" ? "#fff" : "#000",
+                color: theme === "dark" ? "#fff" : "#111827",
                 border: theme === "dark" ? "1px solid rgba(255,255,255,0.12)" : "1px solid rgba(0,0,0,0.12)",
               }}
             >
@@ -865,20 +736,19 @@ export function Home() {
       </section>
 
       {/* FINAL CTA */}
-      <section
-        className="py-28 px-4 relative overflow-hidden dark:bg-[#050A14] light:bg-gray-50 transition-colors duration-300"
-      >
+      <section className="py-28 px-4 relative overflow-hidden bg-gray-50 dark:bg-[#050A14] transition-colors duration-300">
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="absolute inset-0 pointer-events-none transition-colors duration-300"
           style={{
-            background:
-              "radial-gradient(ellipse at center, rgba(0,201,255,0.07) 0%, transparent 70%)",
+            background: theme === "dark" 
+              ? "radial-gradient(ellipse at center, rgba(0,201,255,0.07) 0%, transparent 70%)"
+              : "radial-gradient(ellipse at center, rgba(0,201,255,0.04) 0%, transparent 70%)",
           }}
         />
         <div className="max-w-4xl mx-auto text-center relative">
           <AnimatedSection>
             <h2
-              className="text-white dark:text-white light:text-gray-900 mb-6 transition-colors duration-300"
+              className="text-gray-900 dark:text-white mb-6 transition-colors duration-300"
               style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 900 }}
             >
               Tu{" "}
@@ -894,12 +764,11 @@ export function Home() {
               empieza hoy
             </h2>
             <p
-              className="text-white/60 dark:text-white/60 light:text-gray-600 mb-10 max-w-2xl mx-auto transition-colors duration-300"
+              className="text-gray-600 dark:text-white/60 mb-10 max-w-2xl mx-auto transition-colors duration-300"
               style={{ fontSize: "1.15rem" }}
             >
               Agenda tu diagnóstico gratuito y descubre cómo GOKU LAB puede
-              transformar tu futuro (o el de tus hijos). Sin compromiso. Sin
-              costo.
+              transformar tu futuro (o el de tus hijos). Sin compromiso. Sin costo.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
@@ -915,13 +784,11 @@ export function Home() {
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = "scale(1.03)";
-                  e.currentTarget.style.boxShadow =
-                    "0 12px 50px rgba(0,201,255,0.55)";
+                  e.currentTarget.style.boxShadow = "0 12px 50px rgba(0,201,255,0.55)";
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = "scale(1)";
-                  e.currentTarget.style.boxShadow =
-                    "0 8px 40px rgba(0,201,255,0.4)";
+                  e.currentTarget.style.boxShadow = "0 8px 40px rgba(0,201,255,0.4)";
                 }}
               >
                 <MessageCircle size={22} />
@@ -929,32 +796,11 @@ export function Home() {
               </a>
               <Link
                 to="/contacto"
-                className="flex items-center justify-center gap-2 px-10 py-5 rounded-2xl font-semibold border transition-all duration-300
-                  text-white dark:text-white light:text-gray-900
-                  border-white/25 dark:border-white/25 light:border-gray-300"
-                style={{ transition: "all 0.2s ease", fontSize: "1.1rem" }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background =
-                    theme === "dark" ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "";
-                }}
+                className="flex items-center justify-center gap-2 px-10 py-5 rounded-2xl font-semibold border transition-all duration-300 text-gray-900 dark:text-white border-gray-300 dark:border-white/25 hover:bg-gray-200 dark:hover:bg-white/10"
+                style={{ fontSize: "1.1rem" }}
               >
                 Hablar con el equipo
               </Link>
-            </div>
-
-            {/* Trust signals */}
-            <div className="mt-12 flex flex-wrap justify-center gap-6 text-sm text-white/40">
-              {[
-                "✅ Sin compromiso",
-                "✅ 100% gratuito",
-                "✅ Respuesta en minutos",
-                "✅ Atención personalizada",
-              ].map((item) => (
-                <span key={item}>{item}</span>
-              ))}
             </div>
           </AnimatedSection>
         </div>

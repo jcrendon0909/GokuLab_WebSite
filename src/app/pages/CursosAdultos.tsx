@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import { AnimatedSection } from "../components/AnimatedSection";
+import { useTheme } from "next-themes";
 import { ChevronRight, Clock, Users, BarChart2, Monitor, MessageCircle, Filter, Award, Globe, TrendingUp, Briefcase } from "lucide-react";
 import algorithmicsLogo from "../../imports/image-0.png";
 import heroImage from "figma:asset/b9b6a31b6ab0f80fc7f803edaca8cd213b948276.png";
@@ -109,21 +110,22 @@ const categories: { id: Category | "todos"; label: string; emoji: string }[] = [
 
 export function CursosAdultos() {
   const [activeCategory, setActiveCategory] = useState<Category | "todos">("todos");
+  const { theme } = useTheme();
 
   const filtered = courses.filter((c) => {
     return activeCategory === "todos" || c.category === activeCategory;
   });
 
   return (
-    <div className="min-h-screen bg-[#0e1821]">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#0e1821] transition-colors duration-300">
       {/* HERO PROFESIONAL */}
-      <section className="pt-32 pb-20 px-4 relative overflow-hidden bg-[#0e1821]">
+      <section className="pt-32 pb-20 px-4 relative overflow-hidden bg-white dark:bg-[#0e1821] transition-colors duration-300">
         {/* Subtle background pattern */}
         <div
-          className="absolute inset-0 opacity-5"
+          className="absolute inset-0 opacity-5 dark:opacity-5 transition-opacity duration-300"
           style={{
             backgroundImage: `
-              radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0)
+              radial-gradient(circle at 2px 2px, ${theme === "dark" ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)"} 1px, transparent 0)
             `,
             backgroundSize: "32px 32px",
           }}
@@ -131,9 +133,11 @@ export function CursosAdultos() {
 
         {/* Gradient overlay */}
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 transition-colors duration-300"
           style={{
-            background: "radial-gradient(ellipse at top right, rgba(0,201,255,0.03), transparent 50%), radial-gradient(ellipse at bottom left, rgba(124,58,237,0.03), transparent 50%)"
+            background: theme === "dark" 
+              ? "radial-gradient(ellipse at top right, rgba(0,201,255,0.03), transparent 50%), radial-gradient(ellipse at bottom left, rgba(124,58,237,0.03), transparent 50%)"
+              : "radial-gradient(ellipse at top right, rgba(0,201,255,0.02), transparent 50%), radial-gradient(ellipse at bottom left, rgba(124,58,237,0.02), transparent 50%)"
           }}
         />
 
@@ -148,9 +152,9 @@ export function CursosAdultos() {
               <AnimatedSection>
                 {/* Badge profesional */}
                 <div
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm mb-6"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm mb-6 bg-blue-50 dark:bg-transparent shadow-sm dark:shadow-none transition-colors duration-300"
                   style={{
-                    background: "rgba(0,201,255,0.08)",
+                    background: theme === "dark" ? "rgba(0,201,255,0.08)" : "rgba(0,201,255,0.05)",
                     border: "1px solid rgba(0,201,255,0.2)",
                   }}
                 >
@@ -160,7 +164,7 @@ export function CursosAdultos() {
 
                 {/* Título */}
                 <h1
-                  className="text-white mb-6"
+                  className="text-gray-900 dark:text-white mb-6 transition-colors duration-300"
                   style={{
                     fontSize: "clamp(2.5rem, 5vw, 4rem)",
                     fontWeight: 800,
@@ -180,7 +184,7 @@ export function CursosAdultos() {
                   </span>
                 </h1>
 
-                <p className="text-white/60 mb-8 text-lg leading-relaxed max-w-xl">
+                <p className="text-gray-600 dark:text-white/60 mb-8 text-lg leading-relaxed max-w-xl transition-colors duration-300">
                   Programas diseñados para profesionales que buscan actualizarse,
                   cambiar de carrera o potenciar sus habilidades digitales en el mercado actual.
                 </p>
@@ -194,15 +198,15 @@ export function CursosAdultos() {
                   ].map((stat) => (
                     <div
                       key={stat.label}
-                      className="p-4 rounded-lg"
+                      className="p-4 rounded-lg bg-gray-50 dark:bg-transparent transition-colors duration-300"
                       style={{
-                        background: "rgba(255,255,255,0.02)",
-                        border: "1px solid rgba(255,255,255,0.06)",
+                        background: theme === "dark" ? "rgba(255,255,255,0.02)" : "rgba(0,0,0,0.02)",
+                        border: theme === "dark" ? "1px solid rgba(255,255,255,0.06)" : "1px solid rgba(0,0,0,0.06)",
                       }}
                     >
                       <stat.icon size={16} className="text-[#00C9FF] mb-2" />
                       <div
-                        className="text-white mb-1"
+                        className="text-gray-900 dark:text-white mb-1 transition-colors duration-300"
                         style={{
                           fontSize: "1.5rem",
                           fontWeight: 700,
@@ -210,7 +214,7 @@ export function CursosAdultos() {
                       >
                         {stat.number}
                       </div>
-                      <div className="text-white/50 text-xs">
+                      <div className="text-gray-500 dark:text-white/50 text-xs transition-colors duration-300">
                         {stat.label}
                       </div>
                     </div>
@@ -231,9 +235,9 @@ export function CursosAdultos() {
                       style={{
                         background: item.id === "adultos"
                           ? "linear-gradient(135deg, #00C9FF, #7C3AED)"
-                          : "rgba(255,255,255,0.04)",
-                        color: item.id === "adultos" ? "#fff" : "rgba(255,255,255,0.5)",
-                        border: item.id === "adultos" ? "1px solid #00C9FF" : "1px solid rgba(255,255,255,0.08)",
+                          : (theme === "dark" ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.05)"),
+                        color: item.id === "adultos" ? "#fff" : (theme === "dark" ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.6)"),
+                        border: item.id === "adultos" ? "1px solid #00C9FF" : (theme === "dark" ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(0,0,0,0.1)"),
                       }}
                     >
                       {item.label}
@@ -259,11 +263,11 @@ export function CursosAdultos() {
                   </a>
                   <Link
                     to="/test"
-                    className="flex items-center gap-2 px-8 py-4 rounded-lg font-semibold transition-all duration-300"
+                    className="flex items-center gap-2 px-8 py-4 rounded-lg font-semibold transition-all duration-300 bg-gray-50 dark:bg-transparent"
                     style={{
-                      background: "rgba(255,255,255,0.04)",
-                      color: "#fff",
-                      border: "1px solid rgba(255,255,255,0.12)"
+                      background: theme === "dark" ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.02)",
+                      color: theme === "dark" ? "#fff" : "#111827",
+                      border: theme === "dark" ? "1px solid rgba(255,255,255,0.12)" : "1px solid rgba(0,0,0,0.1)"
                     }}
                   >
                     Test Vocacional
@@ -288,8 +292,8 @@ export function CursosAdultos() {
                   alt="Educación Profesional"
                   className="relative rounded-2xl w-full"
                   style={{
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    boxShadow: "0 20px 60px rgba(0,0,0,0.4)"
+                    border: theme === "dark" ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(0,0,0,0.05)",
+                    boxShadow: theme === "dark" ? "0 20px 60px rgba(0,0,0,0.4)" : "0 20px 60px rgba(0,0,0,0.1)"
                   }}
                 />
               </div>
@@ -299,18 +303,18 @@ export function CursosAdultos() {
       </section>
 
       {/* VALUE PROPOSITION */}
-      <section className="py-16 px-4" style={{
-        background: "rgba(255,255,255,0.02)",
-        borderTop: "1px solid rgba(255,255,255,0.06)",
-        borderBottom: "1px solid rgba(255,255,255,0.06)"
+      <section className="py-16 px-4 bg-gray-50 dark:bg-transparent transition-colors duration-300" style={{
+        background: theme === "dark" ? "rgba(255,255,255,0.02)" : "#f9fafb",
+        borderTop: theme === "dark" ? "1px solid rgba(255,255,255,0.06)" : "1px solid rgba(0,0,0,0.05)",
+        borderBottom: theme === "dark" ? "1px solid rgba(255,255,255,0.06)" : "1px solid rgba(0,0,0,0.05)"
       }}>
         <div className="max-w-7xl mx-auto">
           <AnimatedSection>
             <div className="text-center mb-12">
-              <h2 className="text-white mb-4" style={{ fontSize: "clamp(1.8rem, 3vw, 2.5rem)", fontWeight: 700 }}>
+              <h2 className="text-gray-900 dark:text-white mb-4 transition-colors duration-300" style={{ fontSize: "clamp(1.8rem, 3vw, 2.5rem)", fontWeight: 700 }}>
                 ¿Por qué elegir GOKU LAB?
               </h2>
-              <p className="text-white/60 max-w-2xl mx-auto">
+              <p className="text-gray-600 dark:text-white/60 max-w-2xl mx-auto transition-colors duration-300">
                 Programas enfocados en resultados reales para tu carrera profesional
               </p>
             </div>
@@ -340,15 +344,15 @@ export function CursosAdultos() {
               ].map((item, i) => (
                 <div
                   key={i}
-                  className="p-6 rounded-lg transition-all duration-300"
+                  className="p-6 rounded-lg transition-all duration-300 bg-white dark:bg-transparent shadow-sm dark:shadow-none"
                   style={{
-                    background: "rgba(255,255,255,0.02)",
-                    border: "1px solid rgba(255,255,255,0.06)"
+                    background: theme === "dark" ? "rgba(255,255,255,0.02)" : "#ffffff",
+                    border: theme === "dark" ? "1px solid rgba(255,255,255,0.06)" : "1px solid rgba(0,0,0,0.05)"
                   }}
                 >
                   <div className="text-4xl mb-4">{item.icon}</div>
-                  <h3 className="text-white font-semibold mb-2">{item.title}</h3>
-                  <p className="text-white/50 text-sm leading-relaxed">{item.desc}</p>
+                  <h3 className="text-gray-900 dark:text-white font-semibold mb-2 transition-colors duration-300">{item.title}</h3>
+                  <p className="text-gray-500 dark:text-white/50 text-sm leading-relaxed transition-colors duration-300">{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -357,7 +361,7 @@ export function CursosAdultos() {
       </section>
 
       {/* ALGORITHMICS SECTION */}
-      <section className="py-16 px-4">
+      <section className="py-16 px-4 bg-white dark:bg-transparent transition-colors duration-300">
         <div className="max-w-6xl mx-auto">
           <AnimatedSection>
             <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -367,22 +371,22 @@ export function CursosAdultos() {
                     src={algorithmicsLogo}
                     alt="Algorithmics International School of Programming"
                     className="h-10 mb-4"
-                    style={{ filter: "brightness(1.1)" }}
+                    style={{ filter: theme === "dark" ? "brightness(1.1)" : "brightness(0.9) grayscale(100%)" }}
                   />
                   <div className="flex items-center gap-2 mb-2">
                     <Globe size={16} className="text-[#00C9FF]" />
-                    <span className="text-white/70 font-medium text-sm">International School of Programming</span>
+                    <span className="text-gray-900 dark:text-white/70 font-medium text-sm transition-colors duration-300">International School of Programming</span>
                   </div>
                 </div>
 
                 <h3
-                  className="text-white mb-4"
+                  className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
                   style={{ fontSize: "clamp(1.3rem, 2.5vw, 1.8rem)", fontWeight: 700 }}
                 >
                   Metodología Internacional Algorithmics
                 </h3>
 
-                <p className="text-white/60 mb-6 leading-relaxed">
+                <p className="text-gray-600 dark:text-white/60 mb-6 leading-relaxed transition-colors duration-300">
                   Varios programas utilizan la metodología de Algorithmics, presente en más de 70 países,
                   con enfoque en aprendizaje práctico y resultados medibles.
                 </p>
@@ -403,7 +407,7 @@ export function CursosAdultos() {
                       >
                         <item.icon size={16} style={{ color: item.color }} />
                       </div>
-                      <p className="text-white/70 pt-2 text-sm">{item.text}</p>
+                      <p className="text-gray-700 dark:text-white/70 pt-2 text-sm transition-colors duration-300">{item.text}</p>
                     </div>
                   ))}
                 </div>
@@ -411,13 +415,13 @@ export function CursosAdultos() {
 
               <div>
                 <div
-                  className="p-6 rounded-lg"
+                  className="p-6 rounded-lg bg-gray-50 dark:bg-transparent shadow-sm dark:shadow-none transition-colors duration-300"
                   style={{
-                    background: "rgba(255,255,255,0.02)",
-                    border: "1px solid rgba(255,255,255,0.08)"
+                    background: theme === "dark" ? "rgba(255,255,255,0.02)" : "#f9fafb",
+                    border: theme === "dark" ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(0,0,0,0.05)"
                   }}
                 >
-                  <h4 className="text-white/60 font-semibold mb-4 text-xs uppercase tracking-wider">
+                  <h4 className="text-gray-500 dark:text-white/60 font-semibold mb-4 text-xs uppercase tracking-wider transition-colors duration-300">
                     Cursos con Algorithmics
                   </h4>
                   <div className="space-y-2">
@@ -426,17 +430,17 @@ export function CursosAdultos() {
                       .map(course => (
                         <div
                           key={course.id}
-                          className="flex items-center justify-between p-3 rounded-lg"
+                          className="flex items-center justify-between p-3 rounded-lg bg-white dark:bg-transparent shadow-sm dark:shadow-none transition-colors duration-300"
                           style={{
-                            background: "rgba(255,255,255,0.03)",
-                            border: "1px solid rgba(255,255,255,0.05)"
+                            background: theme === "dark" ? "rgba(255,255,255,0.03)" : "#ffffff",
+                            border: theme === "dark" ? "1px solid rgba(255,255,255,0.05)" : "1px solid rgba(0,0,0,0.05)"
                           }}
                         >
                           <div className="flex items-center gap-3">
                             <span className="text-xl">{course.emoji}</span>
                             <div>
-                              <p className="text-white font-medium text-sm">{course.title}</p>
-                              <p className="text-white/40 text-xs">{course.duration}</p>
+                              <p className="text-gray-900 dark:text-white font-medium text-sm transition-colors duration-300">{course.title}</p>
+                              <p className="text-gray-400 dark:text-white/40 text-xs transition-colors duration-300">{course.duration}</p>
                             </div>
                           </div>
                           <Link
@@ -461,14 +465,14 @@ export function CursosAdultos() {
       </section>
 
       {/* FILTERS */}
-      <section className="py-6 px-4 sticky top-16 z-30" style={{
-        background: "rgba(14,24,33,0.98)",
+      <section className="py-6 px-4 sticky top-16 z-30 transition-colors duration-300" style={{
+        background: theme === "dark" ? "rgba(14,24,33,0.98)" : "rgba(255,255,255,0.98)",
         backdropFilter: "blur(12px)",
-        borderBottom: "1px solid rgba(255,255,255,0.08)"
+        borderBottom: theme === "dark" ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(0,0,0,0.08)"
       }}>
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-3 overflow-x-auto pb-1">
-            <Filter size={16} className="text-white/40 shrink-0" />
+            <Filter size={16} className="text-gray-400 dark:text-white/40 shrink-0 transition-colors duration-300" />
             {categories.map((cat) => (
               <button
                 key={cat.id}
@@ -477,11 +481,11 @@ export function CursosAdultos() {
                 style={{
                   background: activeCategory === cat.id
                     ? "linear-gradient(135deg, #00C9FF, #7C3AED)"
-                    : "rgba(255,255,255,0.04)",
-                  color: activeCategory === cat.id ? "#fff" : "rgba(255,255,255,0.5)",
+                    : (theme === "dark" ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.05)"),
+                  color: activeCategory === cat.id ? "#fff" : (theme === "dark" ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.6)"),
                   border: activeCategory === cat.id
                     ? "1px solid #00C9FF"
-                    : "1px solid rgba(255,255,255,0.08)",
+                    : (theme === "dark" ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(0,0,0,0.1)"),
                 }}
               >
                 <span>{cat.emoji}</span>
@@ -493,33 +497,33 @@ export function CursosAdultos() {
       </section>
 
       {/* COURSES GRID */}
-      <section className="py-16 px-4">
+      <section className="py-16 px-4 bg-white dark:bg-[#0e1821] transition-colors duration-300">
         <div className="max-w-7xl mx-auto">
           {filtered.length === 0 ? (
             <div className="text-center py-20">
               <div className="text-5xl mb-4">🔍</div>
-              <p className="text-white/50">No se encontraron cursos con esos filtros.</p>
+              <p className="text-gray-500 dark:text-white/50 transition-colors duration-300">No se encontraron cursos con esos filtros.</p>
             </div>
           ) : (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
               {filtered.map((course, i) => (
                 <AnimatedSection key={course.id} delay={i * 60}>
                   <div
-                    className="rounded-lg overflow-hidden flex flex-col h-full group"
+                    className="rounded-lg overflow-hidden flex flex-col h-full group bg-white dark:bg-transparent shadow-md dark:shadow-none transition-all duration-300"
                     style={{
-                      background: "rgba(255,255,255,0.02)",
-                      border: "1px solid rgba(255,255,255,0.08)",
+                      background: theme === "dark" ? "rgba(255,255,255,0.02)" : "#ffffff",
+                      border: theme === "dark" ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(0,0,0,0.08)",
                       transition: "all 0.3s ease",
                     }}
                     onMouseEnter={(e) => {
                       (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)";
-                      (e.currentTarget as HTMLElement).style.boxShadow = `0 12px 40px ${course.color}20`;
-                      (e.currentTarget as HTMLElement).style.borderColor = course.color + "40";
+                      (e.currentTarget as HTMLElement).style.boxShadow = theme === "dark" ? `0 12px 40px ${course.color}20` : `0 12px 25px rgba(0,0,0,0.1)`;
+                      (e.currentTarget as HTMLElement).style.borderColor = theme === "dark" ? course.color + "40" : course.color + "60";
                     }}
                     onMouseLeave={(e) => {
                       (e.currentTarget as HTMLElement).style.transform = "none";
-                      (e.currentTarget as HTMLElement).style.boxShadow = "none";
-                      (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.08)";
+                      (e.currentTarget as HTMLElement).style.boxShadow = theme === "dark" ? "none" : "0 4px 6px -1px rgba(0, 0, 0, 0.1)";
+                      (e.currentTarget as HTMLElement).style.borderColor = theme === "dark" ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)";
                     }}
                   >
                     {/* Image */}
@@ -531,8 +535,8 @@ export function CursosAdultos() {
                         style={{ transition: "transform 0.5s ease" }}
                       />
                       <div
-                        className="absolute inset-0"
-                        style={{ background: `linear-gradient(to top, rgba(14,24,33,0.95), transparent)` }}
+                        className="absolute inset-0 transition-colors duration-300"
+                        style={{ background: theme === "dark" ? `linear-gradient(to top, rgba(14,24,33,0.95), transparent)` : `linear-gradient(to top, rgba(255,255,255,0.9), transparent)` }}
                       />
                       <div className="absolute top-3 left-3 flex flex-col gap-1">
                         <span
@@ -543,7 +547,7 @@ export function CursosAdultos() {
                         </span>
                         {course.algorithmics && (
                           <span
-                            className="text-xs px-2 py-1 rounded-md font-semibold flex items-center gap-1"
+                            className="text-xs px-2 py-1 rounded-md font-semibold flex items-center gap-1 shadow-sm"
                             style={{
                               background: "linear-gradient(135deg, #7C3AED, #00C9FF)",
                               color: "#fff"
@@ -554,20 +558,20 @@ export function CursosAdultos() {
                           </span>
                         )}
                       </div>
-                      <div className="absolute bottom-3 right-3 text-2xl">
+                      <div className="absolute bottom-3 right-3 text-2xl drop-shadow-md">
                         {course.emoji}
                       </div>
                     </div>
 
                     {/* Content */}
-                    <div className="p-5 flex flex-col flex-1">
+                    <div className="p-5 flex flex-col flex-1 relative z-10">
                       <h3
-                        className="text-white mb-2"
+                        className="text-gray-900 dark:text-white mb-2 transition-colors duration-300"
                         style={{ fontWeight: 600, fontSize: "0.95rem" }}
                       >
                         {course.title}
                       </h3>
-                      <p className="text-white/50 text-xs leading-relaxed mb-4 flex-1">
+                      <p className="text-gray-500 dark:text-white/50 text-xs leading-relaxed mb-4 flex-1 transition-colors duration-300">
                         {course.desc}
                       </p>
 
@@ -580,8 +584,8 @@ export function CursosAdultos() {
                           { icon: Users, text: "Grupos reducidos" },
                         ].map(({ icon: Icon, text }) => (
                           <div key={text} className="flex items-center gap-1.5">
-                            <Icon size={12} className="text-white/30" />
-                            <span className="text-white/40 text-xs">{text}</span>
+                            <Icon size={12} className="text-gray-400 dark:text-white/30 transition-colors duration-300" />
+                            <span className="text-gray-500 dark:text-white/40 text-xs transition-colors duration-300">{text}</span>
                           </div>
                         ))}
                       </div>
@@ -591,9 +595,9 @@ export function CursosAdultos() {
                         {course.techs.slice(0, 3).map((tech) => (
                           <span
                             key={tech}
-                            className="text-xs px-2 py-0.5 rounded-md"
+                            className="text-xs px-2 py-0.5 rounded-md transition-colors duration-300"
                             style={{
-                              background: `${course.color}15`,
+                              background: theme === "dark" ? `${course.color}15` : `${course.color}10`,
                               color: course.color,
                               border: `1px solid ${course.color}20`
                             }}
@@ -619,12 +623,20 @@ export function CursosAdultos() {
                           href={`https://wa.me/5612668168?text=Hola,%20me%20interesa%20el%20curso%20${encodeURIComponent(course.title)}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-2.5 rounded-lg flex items-center justify-center"
+                          className="p-2.5 rounded-lg flex items-center justify-center bg-green-50 dark:bg-transparent transition-colors duration-300"
                           style={{
-                            background: "rgba(37,211,102,0.15)",
+                            background: theme === "dark" ? "rgba(37,211,102,0.15)" : "rgba(37,211,102,0.1)",
                             color: "#25D366",
-                            border: "1px solid rgba(37,211,102,0.2)",
+                            border: theme === "dark" ? "1px solid rgba(37,211,102,0.2)" : "1px solid rgba(37,211,102,0.1)",
                             transition: "all 0.2s ease",
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.background = "#25D366";
+                            e.currentTarget.style.color = "#fff";
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.background = theme === "dark" ? "rgba(37,211,102,0.15)" : "rgba(37,211,102,0.1)";
+                            e.currentTarget.style.color = "#25D366";
                           }}
                         >
                           <MessageCircle size={15} />
@@ -641,21 +653,21 @@ export function CursosAdultos() {
 
       {/* CTA BANNER */}
       <section
-        className="py-20 px-4"
+        className="py-20 px-4 bg-gray-50 dark:bg-transparent transition-colors duration-300"
         style={{
-          background: "rgba(255,255,255,0.02)",
-          borderTop: "1px solid rgba(255,255,255,0.06)",
+          background: theme === "dark" ? "rgba(255,255,255,0.02)" : "#f9fafb",
+          borderTop: theme === "dark" ? "1px solid rgba(255,255,255,0.06)" : "1px solid rgba(0,0,0,0.05)",
         }}
       >
         <div className="max-w-4xl mx-auto text-center">
           <AnimatedSection>
             <h2
-              className="text-white mb-4"
+              className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
               style={{ fontSize: "clamp(1.6rem, 4vw, 2.5rem)", fontWeight: 700 }}
             >
               Invierte en tu Futuro Profesional
             </h2>
-            <p className="text-white/60 mb-8 max-w-xl mx-auto">
+            <p className="text-gray-600 dark:text-white/60 mb-8 max-w-xl mx-auto transition-colors duration-300">
               Agenda una consulta gratuita y descubre cuál es el programa ideal
               para tus objetivos profesionales.
             </p>
@@ -677,11 +689,11 @@ export function CursosAdultos() {
               </a>
               <Link
                 to="/test"
-                className="flex items-center justify-center gap-2 px-8 py-4 rounded-lg font-semibold"
+                className="flex items-center justify-center gap-2 px-8 py-4 rounded-lg font-semibold bg-white dark:bg-transparent transition-colors duration-300"
                 style={{
-                  background: "rgba(255,255,255,0.04)",
-                  color: "#fff",
-                  border: "1px solid rgba(255,255,255,0.12)",
+                  background: theme === "dark" ? "rgba(255,255,255,0.04)" : "#ffffff",
+                  color: theme === "dark" ? "#fff" : "#111827",
+                  border: theme === "dark" ? "1px solid rgba(255,255,255,0.12)" : "1px solid rgba(0,0,0,0.1)",
                   transition: "all 0.2s ease"
                 }}
               >

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import { AnimatedSection } from "../components/AnimatedSection";
+import { useTheme } from "next-themes";
 import { ChevronRight, Clock, Users, BarChart2, Monitor, MessageCircle, Filter, Award, Globe, Zap } from "lucide-react";
 import algorithmicsLogo from "../../imports/image-0.png";
 
@@ -108,21 +109,25 @@ const categories: { id: Category | "todos"; label: string; emoji: string }[] = [
 
 export function CursosAdolescentes() {
   const [activeCategory, setActiveCategory] = useState<Category | "todos">("todos");
+  const { theme } = useTheme();
 
   const filtered = courses.filter((c) => {
     return activeCategory === "todos" || c.category === activeCategory;
   });
 
   return (
-    <div className="min-h-screen" style={{ background: "#0A0F1E" }}>
+    <div className="min-h-screen transition-colors duration-500 bg-white dark:bg-[#0A0F1E]">
       {/* HERO ESTILO NASA/TESLA */}
-      <section className="pt-32 pb-16 px-4 relative overflow-hidden" style={{
-        background: "linear-gradient(180deg, #0A0F1E 0%, #141820 50%, #0A0F1E 100%)"
+      <section className="pt-32 pb-16 px-4 relative overflow-hidden transition-colors duration-300" style={{
+        background: theme === "dark" 
+          ? "linear-gradient(180deg, #0A0F1E 0%, #141820 50%, #0A0F1E 100%)"
+          : "linear-gradient(180deg, #f8fafc 0%, #e0f2fe 50%, #f8fafc 100%)"
       }}>
         {/* Grid pattern tech */}
         <div
-          className="absolute inset-0 pointer-events-none opacity-20"
+          className="absolute inset-0 pointer-events-none transition-opacity duration-300"
           style={{
+            opacity: theme === "dark" ? 0.2 : 0.4,
             backgroundImage: `
               linear-gradient(rgba(0,201,255,0.4) 1px, transparent 1px),
               linear-gradient(90deg, rgba(0,201,255,0.4) 1px, transparent 1px)
@@ -132,7 +137,7 @@ export function CursosAdolescentes() {
         />
 
         {/* Líneas diagonales tech */}
-        <div className="absolute inset-0 pointer-events-none opacity-10">
+        <div className="absolute inset-0 pointer-events-none transition-opacity duration-300" style={{ opacity: theme === "dark" ? 0.1 : 0.25 }}>
           {[...Array(20)].map((_, i) => (
             <div
               key={i}
@@ -152,21 +157,21 @@ export function CursosAdolescentes() {
 
         {/* Elementos tech flotantes */}
         <div
-          className="absolute top-20 right-10 w-32 h-32 rounded-xl pointer-events-none"
+          className="absolute top-20 right-10 w-32 h-32 rounded-xl pointer-events-none transition-colors duration-300"
           style={{
-            background: "linear-gradient(135deg, rgba(0,201,255,0.2), transparent)",
-            border: "2px solid rgba(0,201,255,0.3)",
+            background: theme === "dark" ? "linear-gradient(135deg, rgba(0,201,255,0.2), transparent)" : "linear-gradient(135deg, rgba(0,201,255,0.1), transparent)",
+            border: theme === "dark" ? "2px solid rgba(0,201,255,0.3)" : "2px solid rgba(0,201,255,0.5)",
             animation: "float 8s ease-in-out infinite",
-            boxShadow: "0 0 60px rgba(0,201,255,0.3)"
+            boxShadow: theme === "dark" ? "0 0 60px rgba(0,201,255,0.3)" : "0 0 40px rgba(0,201,255,0.2)"
           }}
         />
         <div
-          className="absolute bottom-20 left-10 w-24 h-24 pointer-events-none"
+          className="absolute bottom-20 left-10 w-24 h-24 pointer-events-none transition-colors duration-300"
           style={{
-            border: "3px solid rgba(124,58,237,0.4)",
+            border: theme === "dark" ? "3px solid rgba(124,58,237,0.4)" : "3px solid rgba(124,58,237,0.6)",
             borderRadius: "50%",
             animation: "spin 20s linear infinite",
-            boxShadow: "0 0 40px rgba(124,58,237,0.3)"
+            boxShadow: theme === "dark" ? "0 0 40px rgba(124,58,237,0.3)" : "0 0 20px rgba(124,58,237,0.2)"
           }}
         />
 
@@ -175,21 +180,21 @@ export function CursosAdolescentes() {
           <AnimatedSection>
             {/* Badge tech */}
             <div
-              className="inline-flex items-center gap-2 px-5 py-2 rounded-xl text-sm mb-6 relative"
+              className="inline-flex items-center gap-2 px-5 py-2 rounded-xl text-sm mb-6 relative bg-white/40 dark:bg-transparent backdrop-blur-sm transition-colors duration-300"
               style={{
-                background: "rgba(0,201,255,0.1)",
+                background: theme === "dark" ? "rgba(0,201,255,0.1)" : "rgba(0,201,255,0.15)",
                 border: "1px solid rgba(0,201,255,0.3)",
-                boxShadow: "0 0 30px rgba(0,201,255,0.2)"
+                boxShadow: theme === "dark" ? "0 0 30px rgba(0,201,255,0.2)" : "0 4px 15px rgba(0,201,255,0.2)"
               }}
             >
               <Zap size={16} className="text-[#00C9FF]" />
-              <span className="text-white font-bold">13 – 17 años</span>
+              <span className="text-gray-900 dark:text-white font-bold transition-colors duration-300">13 – 17 años</span>
               <div className="w-2 h-2 rounded-full bg-[#00C9FF] animate-pulse" />
             </div>
 
             {/* Título tech */}
             <h1
-              className="text-white mb-6 relative"
+              className="text-gray-900 dark:text-white mb-6 relative transition-colors duration-300"
               style={{
                 fontSize: "clamp(2.2rem, 6vw, 4.5rem)",
                 fontWeight: 900,
@@ -207,12 +212,12 @@ export function CursosAdolescentes() {
               >
                 BUILD THE FUTURE
               </span>
-              <div className="text-white/90 mt-2" style={{ fontSize: "clamp(1.3rem, 3vw, 2rem)", fontWeight: 700 }}>
+              <div className="text-gray-800 dark:text-white/90 mt-2 transition-colors duration-300" style={{ fontSize: "clamp(1.3rem, 3vw, 2rem)", fontWeight: 700 }}>
                 Cursos Tech para Adolescentes
               </div>
             </h1>
 
-            <p className="text-white/65 max-w-2xl mx-auto mb-8 text-base leading-relaxed font-medium">
+            <p className="text-gray-700 dark:text-white/65 max-w-2xl mx-auto mb-8 text-base leading-relaxed font-medium transition-colors duration-300">
               De creador de contenido a creador de tecnología. Domina las habilidades
               que las empresas tech están buscando ahora.
             </p>
@@ -231,10 +236,10 @@ export function CursosAdolescentes() {
                   style={{
                     background: item.id === "adolescentes"
                       ? `linear-gradient(135deg, ${item.color}, #7C3AED)`
-                      : "rgba(255,255,255,0.04)",
-                    color: "#fff",
-                    border: item.id === "adolescentes" ? `1px solid ${item.color}` : "1px solid rgba(255,255,255,0.1)",
-                    boxShadow: item.id === "adolescentes" ? `0 0 30px ${item.color}40` : "none",
+                      : (theme === "dark" ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.05)"),
+                    color: item.id === "adolescentes" ? "#fff" : (theme === "dark" ? "#fff" : "#111827"),
+                    border: item.id === "adolescentes" ? `1px solid ${item.color}` : (theme === "dark" ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(0,0,0,0.1)"),
+                    boxShadow: item.id === "adolescentes" ? `0 4px 15px ${item.color}40` : "none",
                   }}
                 >
                   {item.label}
@@ -251,14 +256,14 @@ export function CursosAdolescentes() {
               ].map((stat) => (
                 <div
                   key={stat.label}
-                  className="text-center p-4 rounded-xl"
+                  className="text-center p-4 rounded-xl bg-white dark:bg-transparent shadow-sm dark:shadow-none transition-colors duration-300"
                   style={{
-                    background: "rgba(0,201,255,0.05)",
-                    border: "1px solid rgba(0,201,255,0.15)",
+                    background: theme === "dark" ? "rgba(0,201,255,0.05)" : "rgba(255,255,255,0.6)",
+                    border: theme === "dark" ? "1px solid rgba(0,201,255,0.15)" : "1px solid rgba(0,201,255,0.2)",
                   }}
                 >
                   <div
-                    className="text-white mb-1"
+                    className="mb-1 transition-colors duration-300"
                     style={{
                       fontSize: "1.5rem",
                       fontWeight: 800,
@@ -269,7 +274,7 @@ export function CursosAdolescentes() {
                   >
                     {stat.number}
                   </div>
-                  <div className="text-white/50 text-xs font-medium">
+                  <div className="text-gray-500 dark:text-white/50 text-xs font-medium transition-colors duration-300">
                     {stat.label}
                   </div>
                 </div>
@@ -280,10 +285,10 @@ export function CursosAdolescentes() {
       </section>
 
       {/* ALGORITHMICS SECTION */}
-      <section className="py-16 px-4 relative" style={{
-        background: "linear-gradient(135deg, rgba(124,58,237,0.08), rgba(0,201,255,0.08))",
-        borderTop: "1px solid rgba(124,58,237,0.2)",
-        borderBottom: "1px solid rgba(0,201,255,0.2)"
+      <section className="py-16 px-4 relative transition-colors duration-300" style={{
+        background: theme === "dark" ? "linear-gradient(135deg, rgba(124,58,237,0.08), rgba(0,201,255,0.08))" : "linear-gradient(135deg, rgba(124,58,237,0.04), rgba(0,201,255,0.04))",
+        borderTop: theme === "dark" ? "1px solid rgba(124,58,237,0.2)" : "1px solid rgba(124,58,237,0.1)",
+        borderBottom: theme === "dark" ? "1px solid rgba(0,201,255,0.2)" : "1px solid rgba(0,201,255,0.1)"
       }}>
         <div className="max-w-6xl mx-auto">
           <AnimatedSection>
@@ -294,16 +299,16 @@ export function CursosAdolescentes() {
                     src={algorithmicsLogo}
                     alt="Algorithmics International School of Programming"
                     className="h-12 mb-4"
-                    style={{ filter: "brightness(1.1)" }}
+                    style={{ filter: theme === "dark" ? "brightness(1.1)" : "brightness(0.9) grayscale(100%)" }}
                   />
                   <div className="flex items-center gap-2 mb-2">
                     <Globe size={18} className="text-[#7C3AED]" />
-                    <span className="text-white/80 font-semibold">International School of Programming</span>
+                    <span className="text-gray-900 dark:text-white/80 font-semibold transition-colors duration-300">International School of Programming</span>
                   </div>
                 </div>
 
                 <h3
-                  className="text-white mb-4"
+                  className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
                   style={{ fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 800 }}
                 >
                   Metodología{" "}
@@ -316,7 +321,7 @@ export function CursosAdolescentes() {
                   </span>
                 </h3>
 
-                <p className="text-white/65 mb-6 leading-relaxed">
+                <p className="text-gray-600 dark:text-white/65 mb-6 leading-relaxed transition-colors duration-300">
                   Varios cursos utilizan el método de Algorithmics, reconocido globalmente
                   en más de 70 países por su enfoque práctico y orientado a resultados.
                 </p>
@@ -335,7 +340,7 @@ export function CursosAdolescentes() {
                         <item.icon size={18} style={{ color: item.color }} />
                       </div>
                       <div className="pt-2">
-                        <p className="text-white/80 font-medium">{item.text}</p>
+                        <p className="text-gray-700 dark:text-white/80 font-medium transition-colors duration-300">{item.text}</p>
                       </div>
                     </div>
                   ))}
@@ -344,14 +349,15 @@ export function CursosAdolescentes() {
 
               <div>
                 <div
-                  className="p-6 rounded-2xl"
+                  className="p-6 rounded-2xl bg-white dark:bg-transparent shadow-sm dark:shadow-none transition-colors duration-300"
                   style={{
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.1)"
+                    background: theme === "dark" ? "rgba(255,255,255,0.03)" : "#ffffff",
+                    border: theme === "dark" ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(0,0,0,0.05)",
+                    boxShadow: theme === "dark" ? "0 0 40px rgba(124,58,237,0.3)" : "0 10px 40px rgba(124,58,237,0.1)"
                   }}
                 >
-                  <h4 className="text-white font-bold mb-4 text-sm uppercase tracking-wider opacity-60">
-                    Cursos con Algorithmics
+                  <h4 className="text-gray-500 dark:text-white font-bold mb-4 text-sm uppercase tracking-wider opacity-80 flex items-center gap-2 transition-colors duration-300">
+                    <span>✨</span> Cursos con Algorithmics
                   </h4>
                   <div className="space-y-2">
                     {courses
@@ -359,22 +365,21 @@ export function CursosAdolescentes() {
                       .map(course => (
                         <div
                           key={course.id}
-                          className="flex items-center justify-between p-3 rounded-xl"
+                          className="flex items-center justify-between p-3 rounded-xl transition-all duration-300 bg-white dark:bg-transparent border border-gray-100 dark:border-white/10 shadow-sm dark:shadow-none"
                           style={{
-                            background: "rgba(255,255,255,0.04)",
-                            border: "1px solid rgba(255,255,255,0.06)"
+                            background: theme === "dark" ? "rgba(255,255,255,0.04)" : "#ffffff",
                           }}
                         >
                           <div className="flex items-center gap-3">
                             <span className="text-2xl">{course.emoji}</span>
                             <div>
-                              <p className="text-white/90 font-semibold text-sm">{course.title}</p>
-                              <p className="text-white/40 text-xs">{course.age}</p>
+                              <p className="text-gray-900 dark:text-white/90 font-semibold text-sm transition-colors duration-300">{course.title}</p>
+                              <p className="text-gray-500 dark:text-white/40 text-xs transition-colors duration-300">{course.age}</p>
                             </div>
                           </div>
                           <Link
                             to={`/cursos/adolescentes/${course.id}`}
-                            className="text-xs px-3 py-1.5 rounded-lg font-semibold"
+                            className="text-xs px-3 py-1.5 rounded-lg font-semibold shadow-sm transition-shadow duration-300"
                             style={{
                               background: course.color,
                               color: "#fff"
@@ -394,14 +399,15 @@ export function CursosAdolescentes() {
       </section>
 
       {/* FILTERS */}
-      <section className="py-6 px-4 sticky top-16 z-30" style={{
-        background: "rgba(10,15,30,0.98)",
+      <section className="py-6 px-4 sticky top-16 z-30 transition-colors duration-300" style={{
+        background: theme === "dark" ? "rgba(10,15,30,0.98)" : "rgba(255,255,255,0.98)",
         backdropFilter: "blur(12px)",
-        borderBottom: "1px solid rgba(0,201,255,0.2)"
+        borderBottom: theme === "dark" ? "1px solid rgba(0,201,255,0.2)" : "1px solid rgba(0,201,255,0.1)",
+        boxShadow: theme === "dark" ? "0 4px 20px rgba(255,107,53,0.2)" : "0 4px 15px rgba(0,0,0,0.05)"
       }}>
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-3 overflow-x-auto pb-1">
-            <Filter size={16} className="text-white/40 shrink-0" />
+            <Filter size={16} className="text-gray-400 dark:text-white/40 shrink-0 transition-colors duration-300" />
             {categories.map((cat) => (
               <button
                 key={cat.id}
@@ -410,11 +416,11 @@ export function CursosAdolescentes() {
                 style={{
                   background: activeCategory === cat.id
                     ? "linear-gradient(135deg, #00C9FF, #7C3AED)"
-                    : "rgba(255,255,255,0.05)",
-                  color: "#fff",
+                    : (theme === "dark" ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"),
+                  color: activeCategory === cat.id ? "#fff" : (theme === "dark" ? "#fff" : "#111827"),
                   border: activeCategory === cat.id
                     ? "1px solid #00C9FF"
-                    : "1px solid rgba(255,255,255,0.08)",
+                    : (theme === "dark" ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(0,0,0,0.08)"),
                   boxShadow: activeCategory === cat.id ? "0 0 20px rgba(0,201,255,0.4)" : "none"
                 }}
               >
@@ -432,33 +438,35 @@ export function CursosAdolescentes() {
           {filtered.length === 0 ? (
             <div className="text-center py-20">
               <div className="text-5xl mb-4">🔍</div>
-              <p className="text-white/50">No se encontraron cursos con esos filtros.</p>
+              <p className="text-gray-500 dark:text-white/50 transition-colors duration-300">No se encontraron cursos con esos filtros.</p>
             </div>
           ) : (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filtered.map((course, i) => (
                 <AnimatedSection key={course.id} delay={i * 60}>
                   <div
-                    className="rounded-2xl overflow-hidden flex flex-col h-full group relative"
+                    className="rounded-2xl overflow-hidden flex flex-col h-full group relative bg-white dark:bg-transparent shadow-md dark:shadow-none transition-all duration-300"
                     style={{
-                      background: "linear-gradient(135deg, rgba(20,20,30,0.95), rgba(10,15,30,0.95))",
-                      border: `1px solid ${course.color}30`,
-                      transition: "all 0.3s ease",
+                      background: theme === "dark" 
+                        ? `linear-gradient(135deg, ${course.color}20, rgba(10,15,30,0.95))`
+                        : `linear-gradient(135deg, ${course.color}15, rgba(255,255,255,0.95))`,
+                      border: theme === "dark" ? `2px solid ${course.color}50` : `1px solid ${course.color}30`,
+                      boxShadow: theme === "dark" ? `0 0 30px ${course.color}30` : `0 10px 25px ${course.color}15`
                     }}
                     onMouseEnter={(e) => {
                       (e.currentTarget as HTMLElement).style.transform = "translateY(-8px)";
-                      (e.currentTarget as HTMLElement).style.boxShadow = `0 25px 60px ${course.color}40, 0 0 40px ${course.color}20`;
+                      (e.currentTarget as HTMLElement).style.boxShadow = theme === "dark" ? `0 25px 60px ${course.color}40, 0 0 40px ${course.color}20` : `0 20px 40px ${course.color}30`;
                       (e.currentTarget as HTMLElement).style.borderColor = course.color + "60";
                     }}
                     onMouseLeave={(e) => {
                       (e.currentTarget as HTMLElement).style.transform = "none";
-                      (e.currentTarget as HTMLElement).style.boxShadow = "none";
-                      (e.currentTarget as HTMLElement).style.borderColor = course.color + "30";
+                      (e.currentTarget as HTMLElement).style.boxShadow = theme === "dark" ? `0 0 30px ${course.color}30` : `0 10px 25px ${course.color}15`;
+                      (e.currentTarget as HTMLElement).style.borderColor = theme === "dark" ? course.color + "30" : course.color + "30";
                     }}
                   >
                     {/* Grid pattern */}
                     <div
-                      className="absolute inset-0 pointer-events-none opacity-10"
+                      className="absolute inset-0 pointer-events-none opacity-10 transition-colors duration-300"
                       style={{
                         backgroundImage: `
                           linear-gradient(${course.color}50 1px, transparent 1px),
@@ -467,6 +475,11 @@ export function CursosAdolescentes() {
                         backgroundSize: "20px 20px",
                       }}
                     />
+
+                    {/* Estrellas decorativas */}
+                    <div className="absolute top-3 right-3 pointer-events-none">
+                      <div className="text-yellow-400 dark:text-yellow-300 text-2xl animate-pulse">✨</div>
+                    </div>
 
                     {/* Image */}
                     <div className="relative h-40 overflow-hidden">
@@ -477,19 +490,19 @@ export function CursosAdolescentes() {
                         style={{ transition: "transform 0.5s ease" }}
                       />
                       <div
-                        className="absolute inset-0"
-                        style={{ background: `linear-gradient(to top, rgba(10,15,30,0.9), transparent)` }}
+                        className="absolute inset-0 transition-colors duration-300"
+                        style={{ background: theme === "dark" ? `linear-gradient(to top, rgba(10,15,30,0.9), transparent)` : `linear-gradient(to top, rgba(255,255,255,0.9), transparent)` }}
                       />
                       <div className="absolute top-3 left-3 flex flex-col gap-1">
                         <span
-                          className="text-xs px-2 py-1 rounded-lg font-semibold"
+                          className="text-xs px-2 py-1 rounded-lg font-semibold shadow-sm"
                           style={{ background: course.color, color: "#fff" }}
                         >
                           {course.level}
                         </span>
                         {course.algorithmics && (
                           <span
-                            className="text-xs px-2 py-1 rounded-lg font-semibold flex items-center gap-1"
+                            className="text-xs px-2 py-1 rounded-lg font-semibold flex items-center gap-1 shadow-sm"
                             style={{
                               background: "linear-gradient(135deg, #7C3AED, #00C9FF)",
                               color: "#fff"
@@ -500,20 +513,19 @@ export function CursosAdolescentes() {
                           </span>
                         )}
                       </div>
-                      <div className="absolute bottom-3 right-3 text-2xl">
+                      <div className="absolute bottom-3 right-3 text-2xl drop-shadow-md">
                         {course.emoji}
                       </div>
                     </div>
 
                     {/* Content */}
-                    <div className="p-5 flex flex-col flex-1">
+                    <div className="p-5 flex flex-col flex-1 relative z-10">
                       <h3
-                        className="text-white mb-2"
-                        style={{ fontWeight: 700, fontSize: "0.95rem" }}
+                        className="text-gray-900 dark:text-white mb-2 font-black text-base transition-colors duration-300"
                       >
                         {course.title}
                       </h3>
-                      <p className="text-white/55 text-xs leading-relaxed mb-4 flex-1">
+                      <p className="text-gray-600 dark:text-white/55 text-xs leading-relaxed mb-4 flex-1 transition-colors duration-300">
                         {course.desc}
                       </p>
 
@@ -526,8 +538,8 @@ export function CursosAdolescentes() {
                           { icon: Monitor, text: course.modality.split(" / ")[0] },
                         ].map(({ icon: Icon, text }) => (
                           <div key={text} className="flex items-center gap-1.5">
-                            <Icon size={12} className="text-white/30" />
-                            <span className="text-white/45 text-xs">{text}</span>
+                            <Icon size={12} className="text-gray-400 dark:text-white/30" />
+                            <span className="text-gray-600 dark:text-white/45 text-xs transition-colors duration-300">{text}</span>
                           </div>
                         ))}
                       </div>
@@ -537,11 +549,11 @@ export function CursosAdolescentes() {
                         {course.techs.map((tech) => (
                           <span
                             key={tech}
-                            className="text-xs px-2 py-0.5 rounded-lg"
+                            className="text-xs px-3 py-1 rounded-full font-bold transition-colors duration-300"
                             style={{
-                              background: `${course.color}15`,
+                              background: theme === "dark" ? `${course.color}25` : `${course.color}15`,
                               color: course.color,
-                              border: `1px solid ${course.color}30`
+                              border: `1px solid ${course.color}50`
                             }}
                           >
                             {tech}
@@ -553,10 +565,17 @@ export function CursosAdolescentes() {
                       <div className="flex gap-2">
                         <Link
                           to={`/cursos/adolescentes/${course.id}`}
-                          className="flex-1 py-2.5 rounded-xl text-center text-sm font-semibold text-white"
+                          className="flex-1 py-2.5 rounded-xl text-center text-sm font-black text-white"
                           style={{
-                            background: course.color,
+                            background: `linear-gradient(135deg, ${course.color}, ${course.color}dd)`,
+                            boxShadow: `0 4px 15px ${course.color}40`,
                             transition: "all 0.2s ease",
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.opacity = "0.88";
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.opacity = "1";
                           }}
                         >
                           Ver curso
@@ -565,11 +584,19 @@ export function CursosAdolescentes() {
                           href={`https://wa.me/5612668168?text=Hola,%20me%20interesa%20el%20curso%20${encodeURIComponent(course.title)}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-2.5 rounded-xl flex items-center justify-center"
+                          className="p-2.5 rounded-xl flex items-center justify-center bg-green-50 dark:bg-transparent"
                           style={{
-                            background: "#25D36620",
+                            background: theme === "dark" ? "#25D36620" : "#25D36615",
                             color: "#25D366",
                             transition: "all 0.2s ease",
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.background = "#25D366";
+                            e.currentTarget.style.color = "#fff";
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.background = theme === "dark" ? "#25D36620" : "#25D36615";
+                            e.currentTarget.style.color = "#25D366";
                           }}
                         >
                           <MessageCircle size={15} />
@@ -586,21 +613,23 @@ export function CursosAdolescentes() {
 
       {/* CTA BANNER */}
       <section
-        className="py-20 px-4"
+        className="py-20 px-4 relative overflow-hidden transition-colors duration-300"
         style={{
-          background: "linear-gradient(135deg, rgba(0,201,255,0.08), rgba(124,58,237,0.08))",
-          borderTop: "1px solid rgba(0,201,255,0.2)",
+          background: theme === "dark" 
+            ? "linear-gradient(135deg, rgba(0,201,255,0.08), rgba(124,58,237,0.08))"
+            : "linear-gradient(135deg, rgba(0,201,255,0.04), rgba(124,58,237,0.04))",
+          borderTop: theme === "dark" ? "1px solid rgba(0,201,255,0.2)" : "1px solid rgba(0,201,255,0.1)",
         }}
       >
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <AnimatedSection>
             <h2
-              className="text-white mb-4"
+              className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
               style={{ fontSize: "clamp(1.6rem, 4vw, 2.5rem)", fontWeight: 800 }}
             >
               ¿Listo para el siguiente nivel?
             </h2>
-            <p className="text-white/60 mb-8 max-w-xl mx-auto">
+            <p className="text-gray-600 dark:text-white/60 mb-8 max-w-xl mx-auto transition-colors duration-300">
               Agenda una sesión de orientación gratuita. Te ayudamos a elegir el camino perfecto
               según tus objetivos.
             </p>
@@ -623,8 +652,7 @@ export function CursosAdolescentes() {
               </a>
               <Link
                 to="/test"
-                className="flex items-center justify-center gap-2 px-8 py-4 rounded-xl text-white font-semibold border border-white/25"
-                style={{ transition: "all 0.2s ease" }}
+                className="flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-semibold border transition-all duration-300 text-gray-900 dark:text-white border-gray-300 dark:border-white/25 hover:bg-gray-100 dark:hover:bg-white/10"
               >
                 Test de orientación
                 <ChevronRight size={16} />

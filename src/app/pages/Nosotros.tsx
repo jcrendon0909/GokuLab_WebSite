@@ -111,8 +111,8 @@ export function Nosotros() {
     <div>
       {/* HERO */}
       <section
-        className="relative py-32 px-4 overflow-hidden"
-        style={{ paddingTop: "120px", background: "#050A14" }}
+        className="relative py-32 px-4 overflow-hidden bg-slate-50 dark:bg-[#050A14] transition-colors duration-300"
+        style={{ paddingTop: "120px" }}
       >
         <div
           className="absolute inset-0 pointer-events-none"
@@ -123,16 +123,15 @@ export function Nosotros() {
         />
 
         {/* Polaroid-style collage bg */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20 dark:opacity-10">
           {[...Array(6)].map((_, i) => (
             <div
               key={i}
-              className="absolute w-32 h-40 rounded-lg overflow-hidden"
+              className="absolute w-32 h-40 rounded-lg overflow-hidden bg-gray-300 dark:bg-white/10"
               style={{
                 top: `${10 + (i % 3) * 30}%`,
                 left: `${5 + i * 16}%`,
                 transform: `rotate(${-8 + i * 3}deg)`,
-                background: "rgba(255,255,255,0.1)",
                 animation: `floatCard ${4 + i}s ease-in-out infinite ${i * 0.5}s`,
               }}
             />
@@ -142,9 +141,8 @@ export function Nosotros() {
         <div className="max-w-5xl mx-auto text-center relative">
           <AnimatedSection>
             <div
-              className="inline-block px-4 py-1.5 rounded-full text-sm mb-6"
+              className="inline-block px-4 py-1.5 rounded-full text-sm mb-6 bg-blue-50 dark:bg-blue-900/20"
               style={{
-                background: "rgba(0,201,255,0.1)",
                 color: "#00C9FF",
                 border: "1px solid rgba(0,201,255,0.25)",
               }}
@@ -152,7 +150,7 @@ export function Nosotros() {
               Nuestra historia
             </div>
             <h1
-              className="text-white mb-6"
+              className="text-gray-900 dark:text-white mb-6 transition-colors duration-300"
               style={{
                 fontSize: "clamp(2rem, 5vw, 4rem)",
                 fontWeight: 900,
@@ -171,10 +169,10 @@ export function Nosotros() {
               </span>
               <br />
               para un{" "}
-              <span style={{ color: "#FFE134" }}>superfuturo</span>
+              <span style={{ color: "#FFE134", textShadow: "0px 1px 2px rgba(0,0,0,0.1)" }}>superfuturo</span>
             </h1>
             <p
-              className="text-white/65 max-w-2xl mx-auto"
+              className="text-gray-600 dark:text-white/65 max-w-2xl mx-auto transition-colors duration-300"
               style={{ fontSize: "1.15rem", lineHeight: 1.75 }}
             >
               GOKU LAB nació de la convicción de que la tecnología puede y debe
@@ -186,14 +184,13 @@ export function Nosotros() {
       </section>
 
       {/* PHILOSOPHY */}
-      <section className="py-24 px-4">
+      <section className="py-24 px-4 bg-white dark:bg-[#0A0F1E] transition-colors duration-300">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <AnimatedSection direction="left">
               <div
-                className="inline-block px-4 py-1.5 rounded-full text-sm mb-6"
+                className="inline-block px-4 py-1.5 rounded-full text-sm mb-6 bg-orange-50 dark:bg-orange-900/20"
                 style={{
-                  background: "rgba(255,107,53,0.1)",
                   color: "#FF6B35",
                   border: "1px solid rgba(255,107,53,0.25)",
                 }}
@@ -201,7 +198,7 @@ export function Nosotros() {
                 Nuestra filosofía
               </div>
               <h2
-                className="text-white mb-6"
+                className="text-gray-900 dark:text-white mb-6 transition-colors duration-300"
                 style={{
                   fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
                   fontWeight: 800,
@@ -212,7 +209,7 @@ export function Nosotros() {
                 <span style={{ color: "#FF6B35" }}>desarrollo humano</span>
               </h2>
               <p
-                className="text-white/65 mb-6 leading-relaxed"
+                className="text-gray-600 dark:text-white/65 mb-6 leading-relaxed transition-colors duration-300"
                 style={{ fontSize: "1.05rem" }}
               >
                 No enseñamos tecnología por enseñar tecnología. La usamos como
@@ -220,7 +217,7 @@ export function Nosotros() {
                 colaboración y resiliencia.
               </p>
               <p
-                className="text-white/65 mb-8 leading-relaxed"
+                className="text-gray-600 dark:text-white/65 mb-8 leading-relaxed transition-colors duration-300"
                 style={{ fontSize: "1.05rem" }}
               >
                 Cada alumno que sale de GOKU LAB no solo sabe programar. Sabe
@@ -251,23 +248,14 @@ export function Nosotros() {
                 {values.map((val) => (
                   <div
                     key={val.title}
-                    className="p-5 rounded-2xl"
-                    style={{
-                      background: "rgba(255,255,255,0.03)",
-                      border: "1px solid rgba(255,255,255,0.07)",
-                      transition: "all 0.3s ease",
-                    }}
+                    className="p-5 rounded-2xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 transition-all duration-300"
                     onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLElement).style.borderColor =
-                        val.color + "40";
-                      (e.currentTarget as HTMLElement).style.background =
-                        val.color + "08";
+                      (e.currentTarget as HTMLElement).style.borderColor = val.color + "40";
+                      (e.currentTarget as HTMLElement).style.background = val.color + "08";
                     }}
                     onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLElement).style.borderColor =
-                        "rgba(255,255,255,0.07)";
-                      (e.currentTarget as HTMLElement).style.background =
-                        "rgba(255,255,255,0.03)";
+                      (e.currentTarget as HTMLElement).style.borderColor = "";
+                      (e.currentTarget as HTMLElement).style.background = "";
                     }}
                   >
                     <val.icon
@@ -276,12 +264,12 @@ export function Nosotros() {
                       style={{ color: val.color }}
                     />
                     <h4
-                      className="text-white mb-1"
+                      className="text-gray-900 dark:text-white mb-1 transition-colors duration-300"
                       style={{ fontSize: "0.9rem", fontWeight: 700 }}
                     >
                       {val.title}
                     </h4>
-                    <p className="text-white/50 text-xs leading-relaxed">
+                    <p className="text-gray-500 dark:text-white/50 text-xs leading-relaxed transition-colors duration-300">
                       {val.desc}
                     </p>
                   </div>
@@ -294,10 +282,9 @@ export function Nosotros() {
 
       {/* INSTITUTIONAL */}
       <section
-        className="py-24 px-4"
+        className="py-24 px-4 transition-colors duration-300 bg-white dark:bg-transparent"
         style={{
-          background:
-            "linear-gradient(135deg, rgba(0,201,255,0.05), rgba(124,58,237,0.05))",
+          background: "linear-gradient(135deg, rgba(0,201,255,0.05), rgba(124,58,237,0.05))",
           borderTop: "1px solid rgba(0,201,255,0.1)",
           borderBottom: "1px solid rgba(0,201,255,0.1)",
         }}
@@ -305,7 +292,7 @@ export function Nosotros() {
         <div className="max-w-5xl mx-auto">
           <AnimatedSection className="text-center mb-16">
             <h2
-              className="text-white mb-4"
+              className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
               style={{ fontSize: "clamp(1.8rem, 4vw, 2.8rem)", fontWeight: 800 }}
             >
               Texto institucional
@@ -337,20 +324,16 @@ export function Nosotros() {
             ].map((item, i) => (
               <AnimatedSection key={item.title} delay={i * 80}>
                 <div
-                  className="p-7 rounded-3xl"
-                  style={{
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                  }}
+                  className="p-7 rounded-3xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-sm dark:shadow-none transition-all duration-300"
                 >
                   <div className="text-3xl mb-4">{item.icon}</div>
                   <h3
-                    className="text-white mb-3"
+                    className="text-gray-900 dark:text-white mb-3 transition-colors duration-300"
                     style={{ fontWeight: 700, fontSize: "1.1rem" }}
                   >
                     {item.title}
                   </h3>
-                  <p className="text-white/60 leading-relaxed">{item.text}</p>
+                  <p className="text-gray-600 dark:text-white/60 leading-relaxed transition-colors duration-300">{item.text}</p>
                 </div>
               </AnimatedSection>
             ))}
@@ -359,16 +342,16 @@ export function Nosotros() {
       </section>
 
       {/* FINAL CTA */}
-      <section className="py-24 px-4">
+      <section className="py-24 px-4 bg-white dark:bg-[#0A0F1E] transition-colors duration-300">
         <div className="max-w-4xl mx-auto text-center">
           <AnimatedSection>
             <h2
-              className="text-white mb-4"
+              className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
               style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 800 }}
             >
               ¿Quieres ser parte de la historia?
             </h2>
-            <p className="text-white/60 mb-8 max-w-xl mx-auto" style={{ fontSize: "1.1rem" }}>
+            <p className="text-gray-600 dark:text-white/60 mb-8 max-w-xl mx-auto transition-colors duration-300" style={{ fontSize: "1.1rem" }}>
               Agenda tu masterclass gratuita y conoce en persona a nuestro
               equipo. Estamos listos para acompañarte.
             </p>
