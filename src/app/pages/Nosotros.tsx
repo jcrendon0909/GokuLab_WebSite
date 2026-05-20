@@ -4,13 +4,13 @@ import { MessageCircle, Heart, Zap, Globe, Award, ChevronRight, Users } from "lu
 import { useTheme } from "next-themes";
 
 // Placeholders de avatares neutros para las fotos circulares
-const AVATAR_PLACEHOLDER = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=200";
+const AVATAR_PLACEHOLDER = "https://1drv.ms/i/c/64597daee464421f/IQBjZyJwmFgdQaJJYXUFNBDtAXrNnA2TCVg3ZEtFvVxGAc0?e=B3hytT";
 
 const team = [
   {
-    name: "Profesor Ejemplo 1",
-    role: "Especialidad Tech",
-    bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    name: "Juan Carlos Rendón Aguilar",
+    role: "Lic. en Matemáticas Aplicadas, Fundador y Director Académico",
+    bio: "Líder tecnológico visionario con 25+ años de experiencia global en Microsoft, IBM y Softtek, combinado con 30+ años de excelencia académica en la UNAM. Actualmente COO de Gōkulab Academia de Innovación, transformando la educación a través de STEM, emprendimiento e integración tecnológica para niños, adolescentes y adultos. Múltiples certificaciones internacionales de Harvard Business School, Wharton School y CICC Japan.",
     img: AVATAR_PLACEHOLDER,
     emoji: "💻",
   },
