@@ -4,8 +4,8 @@ import { MessageCircle, Heart, Zap, Globe, Award, ChevronRight, Users } from "lu
 import { useTheme } from "next-themes";
 
 // Placeholders de avatares neutros para las fotos circulares
-const AVATAR_PLACEHOLDER = "/images/team/jcrendon.JPG";
-const AVATAR_PLACEHOLDER2 = "/images/team/csierra.JPG";
+const AVATAR_PLACEHOLDER = "/images/team/JCRendon.JPG";
+const AVATAR_PLACEHOLDER2 = "/images/team/CSierra.JPG";
 const team = [
   {
     name: "Juan Carlos Rendón Aguilar",
