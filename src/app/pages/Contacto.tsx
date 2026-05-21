@@ -146,9 +146,9 @@ export function Contacto() {
                     {
                       icon: Mail,
                       label: "Correo",
-                      value: "algorithmicsnc@outlook.com",
+                      value: "contacto@gokulab.mx",
                       color: "#7C3AED",
-                      href: "mailto:algorithmicsnc@outlook.com",
+                      href: "mailto:contacto@gokulab.mx",
                       action: "Enviar email",
                     },
                   ].map(({ icon: Icon, label, value, color, href, action }) => (
@@ -220,8 +220,8 @@ export function Contacto() {
                         GŌKU LAB – Sede Principal
                       </div>
                       <div className="text-gray-500 dark:text-white/50 text-sm mt-0.5 transition-colors duration-300">
-                        Av. Insurgentes Sur 1234, Col. Del Valle,<br />
-                        Ciudad de México, CDMX, 03100
+                        Av. Vía Adolfo López Mateos 201-local 418,<br />
+                        Sta Cruz Acatlan, 53150 Naucalpan de Juárez, Méx.
                       </div>
                     </div>
                   </div>
@@ -233,7 +233,7 @@ export function Contacto() {
                   </div>
                   <div className="flex gap-2 mt-3">
                     <a
-                      href="https://waze.com/ul?ll=19.3728,-99.1707&navigate=yes"
+                      href="https://waze.com/ul/h9g3qv6xg6"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-semibold bg-white dark:bg-transparent"
@@ -255,7 +255,7 @@ export function Contacto() {
                       Waze
                     </a>
                     <a
-                      href="https://maps.google.com/?q=19.3728,-99.1707"
+                      href="https://maps.app.goo.gl/UnBSDa9TUgFtJWDe7"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-semibold bg-white dark:bg-transparent"
