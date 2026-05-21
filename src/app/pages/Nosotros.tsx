@@ -4,21 +4,22 @@ import { MessageCircle, Heart, Zap, Globe, Award, ChevronRight, Users } from "lu
 import { useTheme } from "next-themes";
 
 // Placeholders de avatares neutros para las fotos circulares
-const AVATAR_PLACEHOLDER = "https://1drv.ms/i/c/64597daee464421f/IQBjZyJwmFgdQaJJYXUFNBDtAXrNnA2TCVg3ZEtFvVxGAc0?e=B3hytT";
+const AVATAR_PLACEHOLDER = "const AVATAR_PLACEHOLDER = "/images/team/jcrendon.jpg";";
+const AVATAR_PLACEHOLDER2 = "const AVATAR_PLACEHOLDER = "/images/team/csierra.jpg";";
 
 const team = [
   {
     name: "Juan Carlos Rendón Aguilar",
-    role: "Lic. en Matemáticas Aplicadas, Fundador y Director Académico",
+    role: "Lic. en Matemáticas Aplicadas, Fundador, COO y Director Académico",
     bio: "Líder tecnológico visionario con 25+ años de experiencia global en Microsoft, IBM y Softtek, combinado con 30+ años de excelencia académica en la UNAM. Actualmente COO de Gōkulab Academia de Innovación, transformando la educación a través de STEM, emprendimiento e integración tecnológica para niños, adolescentes y adultos. Múltiples certificaciones internacionales de Harvard Business School, Wharton School y CICC Japan.",
     img: AVATAR_PLACEHOLDER,
     emoji: "💻",
   },
   {
-    name: "Profesor Ejemplo 2",
-    role: "Especialidad Robótica",
-    bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    img: AVATAR_PLACEHOLDER,
+    name: "Claudia Sierra Magaña",
+    role: "Lic. en Actuaría, Fundadora, CEO",
+    bio: "Especialización en Innovación y mercado – Babson College, Boston Ma. - Técnicas y análisis de información en Investigación de Mercados, P&G - Certificación en metodología Lean Startup por los autores de la misma: Steve Blank y Bob Dorf y la Secretaría de Economía (INADEM) - Conferencista, internacional| Red internacional de conferencistas Munich, Socia Fundadora y directora general GOKULAB - Socia Fundadora Guardare Mercati",
+    img: AVATAR_PLACEHOLDER2,
     emoji: "🦾",
   },
   {
