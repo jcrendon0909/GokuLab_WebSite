@@ -51,7 +51,7 @@ export function CourseSearch() {
   return (
     <div className="relative">
       <div className="relative">
-        <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" />
+        <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
         <input
           type="text"
           placeholder="Buscar cursos..."
@@ -61,21 +61,21 @@ export function CourseSearch() {
             setIsOpen(true);
           }}
           onFocus={() => setIsOpen(true)}
-          className="w-full pl-10 pr-10 py-2 rounded-lg text-sm text-white placeholder-white/40"
+          className="w-full pl-10 pr-10 py-2 rounded-lg text-sm text-gray-800 placeholder-gray-400"
           style={{
-            background: "rgba(255,255,255,0.08)",
-            border: "1px solid rgba(255,255,255,0.12)",
+            background: "#ffffff",
+            border: "1px solid #e2e8f0",
             outline: "none",
             transition: "all 0.2s ease",
           }}
           onFocusCapture={(e) => {
             e.target.style.borderColor = "#00C9FF";
-            e.target.style.background = "rgba(255,255,255,0.12)";
+            e.target.style.background = "#ffffff";
           }}
           onBlur={(e) => {
             setTimeout(() => setIsOpen(false), 200);
-            e.target.style.borderColor = "rgba(255,255,255,0.12)";
-            e.target.style.background = "rgba(255,255,255,0.08)";
+            e.target.style.borderColor = "#e2e8f0";
+            e.target.style.background = "#ffffff";
           }}
         />
         {query && (
@@ -84,7 +84,7 @@ export function CourseSearch() {
               setQuery("");
               setIsOpen(false);
             }}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700"
           >
             <X size={16} />
           </button>
@@ -94,11 +94,11 @@ export function CourseSearch() {
       {/* Results dropdown */}
       {isOpen && filteredCourses.length > 0 && (
         <div
-          className="absolute top-full left-0 right-0 mt-2 rounded-xl overflow-hidden shadow-2xl z-50"
+          className="absolute top-full left-0 right-0 mt-2 rounded-xl overflow-hidden z-50"
           style={{
-            background: "rgba(14, 24, 33, 0.98)",
-            border: "1px solid rgba(0,201,255,0.2)",
-            backdropFilter: "blur(12px)",
+            background: "#ffffff",
+            border: "1px solid #e2e8f0",
+            boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
             animation: "dropIn 0.2s ease",
           }}
         >
@@ -106,7 +106,7 @@ export function CourseSearch() {
             <Link
               key={course.id}
               to={`/cursos/${course.segment}/${course.id}`}
-              className="flex items-center gap-3 px-4 py-3 hover:bg-white/10 transition-colors duration-200"
+              className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors duration-200"
               onClick={() => {
                 setQuery("");
                 setIsOpen(false);
@@ -114,8 +114,8 @@ export function CourseSearch() {
             >
               <span className="text-2xl">{course.emoji}</span>
               <div className="flex-1 min-w-0">
-                <div className="text-white text-sm font-semibold truncate">{course.title}</div>
-                <div className="text-white/50 text-xs">
+                <div className="text-gray-800 text-sm font-semibold truncate">{course.title}</div>
+                <div className="text-gray-500 text-xs">
                   {course.category} · {course.age}
                 </div>
               </div>
@@ -137,12 +137,12 @@ export function CourseSearch() {
         <div
           className="absolute top-full left-0 right-0 mt-2 px-4 py-6 rounded-xl text-center"
           style={{
-            background: "rgba(14, 24, 33, 0.98)",
-            border: "1px solid rgba(255,255,255,0.1)",
-            backdropFilter: "blur(12px)",
+            background: "#ffffff",
+            border: "1px solid #e2e8f0",
+            boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
           }}
         >
-          <div className="text-white/40 text-sm">No se encontraron cursos</div>
+          <div className="text-gray-400 text-sm">No se encontraron cursos</div>
           <Link
             to="/cursos"
             className="text-[#00C9FF] text-xs hover:underline mt-2 inline-block"

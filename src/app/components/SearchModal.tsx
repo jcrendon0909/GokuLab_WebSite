@@ -61,7 +61,6 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
     } else {
       document.body.style.overflow = "";
     }
-
     return () => {
       document.body.style.overflow = "";
     };
@@ -69,11 +68,8 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        onClose();
-      }
+      if (e.key === "Escape") onClose();
     };
-
     if (isOpen) {
       window.addEventListener("keydown", handleEscape);
       return () => window.removeEventListener("keydown", handleEscape);
@@ -86,8 +82,8 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
     <div
       className="fixed inset-0 z-50 flex items-start justify-center pt-20"
       style={{
-        background: "rgba(0, 0, 0, 0.85)",
-        backdropFilter: "blur(8px)",
+        background: "rgba(0, 0, 0, 0.4)",
+        backdropFilter: "blur(6px)",
         animation: "fadeIn 0.2s ease",
       }}
       onClick={onClose}
@@ -98,33 +94,32 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
         style={{ animation: "slideDown 0.3s ease" }}
       >
         {/* Search Input */}
-        <div className="relative mb-6">
-          <Search size={24} className="absolute left-5 top-1/2 -translate-y-1/2 text-white/40" />
+        <div className="relative mb-4">
+          <Search size={24} className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" />
           <input
             ref={inputRef}
             type="text"
             placeholder="Buscar cursos, categorías, edades..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full pl-16 pr-16 py-5 rounded-2xl text-lg text-white placeholder-white/40"
+            className="w-full pl-16 pr-16 py-5 rounded-2xl text-lg text-gray-800 placeholder-gray-400"
             style={{
-              background: "rgba(255,255,255,0.08)",
-              border: "2px solid rgba(0,201,255,0.3)",
+              background: "#ffffff",
+              border: "2px solid #e2e8f0",
               outline: "none",
               transition: "all 0.2s ease",
+              boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
             }}
             onFocus={(e) => {
               e.target.style.borderColor = "#00C9FF";
-              e.target.style.background = "rgba(255,255,255,0.12)";
             }}
             onBlur={(e) => {
-              e.target.style.borderColor = "rgba(0,201,255,0.3)";
-              e.target.style.background = "rgba(255,255,255,0.08)";
+              e.target.style.borderColor = "#e2e8f0";
             }}
           />
           <button
             onClick={onClose}
-            className="absolute right-5 top-1/2 -translate-y-1/2 text-white/60 hover:text-white transition-colors duration-200"
+            className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 transition-colors duration-200"
           >
             <X size={24} />
           </button>
@@ -133,10 +128,11 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
         {/* Results */}
         {query.trim() && (
           <div
-            className="rounded-2xl overflow-hidden shadow-2xl max-h-[60vh] overflow-y-auto"
+            className="rounded-2xl overflow-hidden max-h-[60vh] overflow-y-auto"
             style={{
-              background: "rgba(14, 24, 33, 0.98)",
-              border: "1px solid rgba(0,201,255,0.2)",
+              background: "#ffffff",
+              border: "1px solid #e2e8f0",
+              boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
             }}
           >
             {filteredCourses.length > 0 ? (
@@ -145,30 +141,30 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   <Link
                     key={course.id}
                     to={`/cursos/${course.segment}/${course.id}`}
-                    className="flex items-center gap-4 px-4 py-4 rounded-xl hover:bg-white/10 transition-all duration-200"
+                    className="flex items-center gap-4 px-4 py-4 rounded-xl hover:bg-gray-50 transition-all duration-200"
                     onClick={onClose}
                   >
                     <div
                       className="w-14 h-14 rounded-xl flex items-center justify-center text-3xl"
                       style={{
-                        background: "rgba(0,201,255,0.1)",
+                        background: "rgba(0,201,255,0.08)",
                         border: "1px solid rgba(0,201,255,0.2)",
                       }}
                     >
                       {course.emoji}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-white text-base font-semibold truncate mb-1">
+                      <div className="text-gray-800 text-base font-semibold truncate mb-1">
                         {course.title}
                       </div>
-                      <div className="text-white/50 text-sm">
+                      <div className="text-gray-500 text-sm">
                         {course.category} · {course.age}
                       </div>
                     </div>
                     <div
                       className="text-xs px-3 py-1.5 rounded-lg font-semibold"
                       style={{
-                        background: "rgba(0,201,255,0.15)",
+                        background: "rgba(0,201,255,0.12)",
                         color: "#00C9FF",
                       }}
                     >
@@ -179,7 +175,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
               </div>
             ) : (
               <div className="px-6 py-12 text-center">
-                <div className="text-white/40 text-base mb-3">
+                <div className="text-gray-400 text-base mb-3">
                   No se encontraron cursos para "{query}"
                 </div>
                 <Link
@@ -199,11 +195,12 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
           <div
             className="rounded-2xl p-6"
             style={{
-              background: "rgba(14, 24, 33, 0.98)",
-              border: "1px solid rgba(0,201,255,0.2)",
+              background: "#ffffff",
+              border: "1px solid #e2e8f0",
+              boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
             }}
           >
-            <div className="text-white/60 text-sm mb-4">Accesos rápidos</div>
+            <div className="text-gray-400 text-sm mb-4">Accesos rápidos</div>
             <div className="grid sm:grid-cols-3 gap-3">
               {[
                 { label: "Niñas, niños y adolescentes", href: "/cursos/ninos", emoji: "🧒" },
@@ -213,11 +210,11 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                 <Link
                   key={link.href}
                   to={link.href}
-                  className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 transition-all duration-200"
+                  className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-all duration-200"
                   onClick={onClose}
                 >
                   <span className="text-2xl">{link.emoji}</span>
-                  <span className="text-white text-sm font-medium">{link.label}</span>
+                  <span className="text-gray-700 text-sm font-medium">{link.label}</span>
                 </Link>
               ))}
             </div>
