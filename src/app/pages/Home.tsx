@@ -23,10 +23,13 @@ import imgKidsHero from "../../imports/03HomepageV3/94c9da7f14245899ba192ebc2e34
 import imgKidsSection from "../../imports/03HomepageV3/bddc569ae394f99d6e20497e0ca7b59d36c54997.png";
 import imgKidsBottom from "../../imports/03HomepageV3/044b589933d402106ef8541547b60fdeff9c753f.png";
 
+// Importar imágenes de assets con los nuevos nombres seguros para Vercel
+import heroBackground from "../../assets/hero-imagen.jpg";
+import ninosImg from "../../assets/ninas-ninos-adolescentes.jpg";
+import adultosImg from "../../assets/para-adultos.jpg";
+import corporativoImg from "../../assets/empresas-y-gobierno.jpeg";
+
 const HERO_IMG = imgKidsHero;
-const TEEN_IMG = "https://images.unsplash.com/photo-1635959952534-d99f969554a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0ZWVuYWdlciUyMHByb2dyYW1taW5nJTIwbGFwdG9wJTIwdGVjaCUyMGNyZWF0aXZlfGVufDF8fHx8MT75ODU2MjQwfHA&ixlib=rb-4.1.0&q=80&w=1080";
-const ADULT_IMG = "https://images.unsplash.com/photo-1724260793422-7754e5d06fbe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhZHVsdCUyMHByb2Zlc3Npb25hbCUyMGNvZGluZyUyMGNvbXB1dGVyJTIwd29ya3NwYWNlfGVufDF8fHx8MTc3NTg1NjI0MXww&ixlib=rb-4.1.0&q=80&w=1080";
-const CORP_IMG = "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb3Jwb3JhdGUlMjB0ZWNobm9sb2d5JTIwdHJhaW5pbmclMjB0ZWFtJTIwbWVldGluZ3xlbnwxfHx8fDE3NzU4NTYyNDF8MA&ixlib=rb-4.1.0&q=80&w=1080";
 
 function SegmentCards() {
   const { t } = useLanguage();
@@ -39,7 +42,7 @@ function SegmentCards() {
       bg: "rgba(255,107,53,0.08)",
       border: "rgba(255,107,53,0.25)",
       href: "/cursos/ninos",
-      img: imgKidsSection,
+      img: ninosImg,
       tags: ["Programación", "Robótica", "Diseño", "IA"],
       emoji: "🧒",
     },
@@ -51,7 +54,7 @@ function SegmentCards() {
       bg: "rgba(0,201,255,0.08)",
       border: "rgba(0,201,255,0.25)",
       href: "/cursos/adultos",
-      img: ADULT_IMG,
+      img: adultosImg,
       tags: ["Alfabetización", "Inclusión Digital", "IA Consultoría"],
       emoji: "👨‍💼",
     },
@@ -63,7 +66,7 @@ function SegmentCards() {
       bg: "rgba(124,58,237,0.08)",
       border: "rgba(124,58,237,0.25)",
       href: "/capacitaciones",
-      img: CORP_IMG,
+      img: corporativoImg,
       tags: ["Corporativo", "In-company", "Custom"],
       emoji: "🏢",
     },
@@ -230,7 +233,7 @@ export function Home() {
           <div
             className="absolute inset-0"
             style={{
-              backgroundImage: `url('src/assets/hero imagen.jpg')`,
+              backgroundImage: `url(${heroBackground})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",

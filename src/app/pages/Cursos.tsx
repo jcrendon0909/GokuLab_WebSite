@@ -2,9 +2,21 @@ import { useState } from "react";
 import { Link, useParams } from "react-router";
 import { AnimatedSection } from "../components/AnimatedSection";
 import { useTheme } from "next-themes";
-import { ChevronRight, Clock, Users, BarChart2, Monitor, MessageCircle, Filter, Award, Globe, Rocket, Star } from "lucide-react";
+import { ChevronRight, Clock, Users, Monitor, MessageCircle, Filter, Award, Globe, Rocket, Star } from "lucide-react";
 import algorithmicsLogo from "../../imports/image-0.png";
 
+// ── Imágenes locales (nombre coincide con el curso) ──────────────────────
+import imgFundamentos from "../../assets/cursos/Fundamentos de la programación.jpeg";
+import imgAlfabetizacionPeques from "../../assets/cursos/Alfabetización digital (Peques).JPG";
+import imgProgramacionVisual from "../../assets/cursos/Programación visual.JPG";
+import imgDisenoGrafico from "../../assets/cursos/Diseño gráfico.jpeg";
+import imgRobotica from "../../assets/cursos/Robótica I.JPG";
+import imgAnimacion from "../../assets/cursos/Animación Digital.JPG";
+import imgIngles from "../../assets/cursos/Inglés.jpeg";
+import imgAlfabetizacionAdultos from "../../assets/cursos/Alfabetización Digital (Adultos).jpg";
+import imgCorporativo from "../../assets/cursos/Capacitación Corporativa.jpeg";
+
+// ── Genéricas para cursos sin imagen propia ───────────────────────────────
 const KIDS_IMG = "https://images.unsplash.com/photo-1603354350266-a8de3496163b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaGlsZCUyMHJvYm90JTIwc2NpZW5jZSUyMFNURU0lMjBsZWFybmluZyUyMGZ1bnxlbnwxfHx8fDE3NzU4NTYyNDF8MA&ixlib=rb-4.1.0&q=80&w=600";
 const ADULT_IMG = "https://images.unsplash.com/photo-1724260793422-7754e5d06fbe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=600";
 const TEEN_IMG = "https://images.unsplash.com/photo-1635959952534-d99f969554a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=600";
@@ -27,7 +39,7 @@ const allCourses = [
     techs: ["Scratch Jr", "Lógica", "Algorithmics"],
     category: "ninos" as Category,
     color: "#FF6B35",
-    img: KIDS_IMG,
+    img: imgFundamentos,
     emoji: "🧩",
     algorithmics: true,
     isTeen: false,
@@ -44,7 +56,7 @@ const allCourses = [
     techs: ["Google Suite", "Mecanografía", "Ciberseguridad"],
     category: "ninos" as Category,
     color: "#4CAF50",
-    img: KIDS_IMG,
+    img: imgAlfabetizacionPeques,
     emoji: "🖱️",
     algorithmics: true,
     isTeen: false,
@@ -61,7 +73,7 @@ const allCourses = [
     techs: ["Scratch", "Bloques", "Animación"],
     category: "ninos" as Category,
     color: "#1E88E5",
-    img: KIDS_IMG,
+    img: imgProgramacionVisual,
     emoji: "🐱",
     algorithmics: true,
     isTeen: false,
@@ -78,7 +90,7 @@ const allCourses = [
     techs: ["Vectores", "3D", "Collage", "Diseño"],
     category: "ninos" as Category,
     color: "#E91E63",
-    img: TEEN_IMG,
+    img: imgDisenoGrafico,
     emoji: "🎨",
     algorithmics: true,
     isTeen: true,
@@ -133,7 +145,7 @@ const allCourses = [
     emoji: "🤖",
     algorithmics: true,
     isTeen: true,
-    price: "$1800", // <-- Precio agregado
+    price: "$1800",
   },
   {
     id: "diseno-web",
@@ -164,7 +176,7 @@ const allCourses = [
     techs: ["Sensores", "Mecánica", "Programación"],
     category: "ninos" as Category,
     color: "#FF9800",
-    img: KIDS_IMG,
+    img: imgRobotica,
     emoji: "🦾",
     isTeen: false,
   },
@@ -180,7 +192,7 @@ const allCourses = [
     techs: ["Fotogramas", "Dibujo digital", "Movimiento"],
     category: "ninos" as Category,
     color: "#F44336",
-    img: TEEN_IMG,
+    img: imgAnimacion,
     emoji: "🎬",
     isTeen: true,
   },
@@ -247,7 +259,7 @@ const allCourses = [
     techs: ["Gramática", "Conversación", "Comprensión"],
     category: "ninos" as Category,
     color: "#3F51B5",
-    img: TEEN_IMG,
+    img: imgIngles,
     emoji: "🗣️",
     algorithmics: true,
     isTeen: true,
@@ -302,7 +314,7 @@ const allCourses = [
     techs: ["Navegación", "Correo", "Apps"],
     category: "adultos" as Category,
     color: "#FF6B35",
-    img: ADULT_IMG,
+    img: imgAlfabetizacionAdultos,
     emoji: "💻",
   },
   {
@@ -336,7 +348,7 @@ const allCourses = [
     techs: ["A medida", "Certificación", "Tecnología"],
     category: "empresas" as Category,
     color: "#607D8B",
-    img: ADULT_IMG,
+    img: imgCorporativo,
     emoji: "🏢",
   },
 ];
@@ -557,7 +569,6 @@ export function Cursos() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
               {filtered.map((course, i) => {
                 const isKids = course.segment === "ninos";
-                // Lógica corregida: Usamos la propiedad isTeen que está en los datos.
                 const isTeen = isKids && (course as any).isTeen;
 
                 return (
@@ -636,7 +647,6 @@ export function Cursos() {
                             >
                               {course.level}
                             </span>
-                            {/* Mostrar el precio si existe */}
                             {(course as any).price && (
                               <span className="text-xs px-2 py-1 rounded-full font-semibold shadow-sm bg-gray-900 text-white dark:bg-white dark:text-black">
                                 {(course as any).price}
