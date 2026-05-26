@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { MessageCircle, Phone, FileText, X, ChevronUp } from "lucide-react";
+import { MessageCircle, Phone, X, ChevronUp, Bot } from "lucide-react";
 import { useTheme } from "next-themes";
 
 export function FloatingCTA() {
   const [open, setOpen] = useState(false);
-  const [chatOpen, setChatOpen] = useState(false); // Nuevo estado para el chatbot
+  const [chatOpen, setChatOpen] = useState(false); // Estado para el chatbot
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
@@ -24,7 +24,7 @@ export function FloatingCTA() {
   };
 
   const handleForm = () => {
-    // En lugar de redirigir, abrimos el chatbot y cerramos el menú principal
+    // Abrimos el chatbot y cerramos el menú principal
     setChatOpen(true);
     setOpen(false);
   };
@@ -69,16 +69,34 @@ export function FloatingCTA() {
             <span className="text-sm whitespace-nowrap">Llamar ahora</span>
           </button>
 
-          {/* Formulario (Ahora abre el Chatbot) */}
+          {/* Chatbot Goku Lab (Botón Modernizado) */}
           <button
             onClick={handleForm}
-            className="flex items-center gap-3 bg-[#7C3AED] text-white px-4 py-3 rounded-2xl shadow-xl hover:scale-105 active:scale-95"
-            style={{ transition: "transform 0.2s ease, box-shadow 0.2s ease" }}
-            onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 8px 30px rgba(124,58,237,0.4)")}
-            onMouseLeave={e => (e.currentTarget.style.boxShadow = "")}
+            className="group relative overflow-hidden flex items-center gap-3 px-5 py-3 rounded-2xl shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 border border-purple-500/30"
+            style={{ 
+              background: "linear-gradient(135deg, #8B5CF6 0%, #5B21B6 100%)", 
+              boxShadow: "0 4px 15px rgba(124, 58, 237, 0.3)" 
+            }}
+            onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 8px 30px rgba(124, 58, 237, 0.6)")}
+            onMouseLeave={e => (e.currentTarget.style.boxShadow = "0 4px 15px rgba(124, 58, 237, 0.3)")}
           >
-            <FileText size={20} />
-            <span className="text-sm whitespace-nowrap">Chatbot Goku Lab</span>
+            {/* Efecto de brillo animado al pasar el mouse (Sin config extra) */}
+            <div 
+              className="absolute inset-0 -translate-x-full group-hover:translate-x-[200%] bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none" 
+              style={{ transition: "transform 0.8s ease-in-out" }} 
+            />
+
+            <Bot size={20} className="text-white relative z-10 drop-shadow-md" />
+            
+            <span className="text-sm font-semibold whitespace-nowrap text-white relative z-10 tracking-wide">
+              Chatbot Goku Lab
+            </span>
+
+            {/* Punto verde animado de "En línea" */}
+            <div className="relative flex h-2.5 w-2.5 ml-1 z-10">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500 border border-white/20"></span>
+            </div>
           </button>
         </div>
 
