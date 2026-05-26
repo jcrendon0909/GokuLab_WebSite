@@ -7,26 +7,14 @@ import algorithmicsLogo from "../../imports/image-0.png";
 
 // ── Imágenes locales (nombre coincide con el curso) ──────────────────────
 import imgFundamentos from "../../assets/cursos/Fundamentos de la programación.jpeg";
-import imgAlfabetizacionPeques from "../../assets/cursos/Alfabetización digital (Peques).png";
-import imgProgramacionVisual from "../../assets/cursos/Programación visual.jpg";
+import imgAlfabetizacionPeques from "../../assets/cursos/Alfabetización digital (Peques).JPG";
+import imgProgramacionVisual from "../../assets/cursos/Programación visual.JPG";
 import imgDisenoGrafico from "../../assets/cursos/Diseño gráfico.jpeg";
-import imgRobotica from "../../assets/cursos/Robótica I.jpeg";
+import imgRobotica from "../../assets/cursos/Robótica I.JPG";
 import imgAnimacion from "../../assets/cursos/Animación Digital.JPG";
 import imgIngles from "../../assets/cursos/Inglés.jpeg";
 import imgAlfabetizacionAdultos from "../../assets/cursos/Alfabetización Digital (Adultos).jpg";
 import imgCorporativo from "../../assets/cursos/Capacitación Corporativa.jpeg";
-
-// ── Nuevas imágenes agregadas (ahora en la carpeta raíz de cursos) ─────────
-import imgCreacionContenido from "../../assets/cursos/creacion-contenido-video.jpg";
-import imgDisenoVideojuegos from "../../assets/cursos/diseno-videojuegos.jpg";
-import imgDisenoWeb from "../../assets/cursos/diseno-web.jpg";
-import imgEmprendimiento from "../../assets/cursos/emprendimiento.jpg";
-import imgIaAdultos from "../../assets/cursos/ia-adultos.png";
-import imgIaNinos from "../../assets/cursos/ia-ninos.jpg";
-import imgPreparacionUni from "../../assets/cursos/preparacion-uni.jpg";
-import imgPythonStart from "../../assets/cursos/python-start.jpg";
-import imgRegularizacionMate from "../../assets/cursos/regularizacion-mate.jpg";
-import imgUnity from "../../assets/cursos/unity.jpg";
 
 // ── Genéricas para cursos sin imagen propia ───────────────────────────────
 const KIDS_IMG = "https://images.unsplash.com/photo-1603354350266-a8de3496163b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaGlsZCUyMHJvYm90JTIwc2NpZW5jZSUyMFNURU0lMjBsZWFybmluZyUyMGZ1bnxlbnwxfHx8fDE3NzU4NTYyNDF8MA&ixlib=rb-4.1.0&q=80&w=600";
@@ -119,7 +107,7 @@ const allCourses = [
     techs: ["Roblox Studio", "Lua", "Diseño 3D"],
     category: "ninos" as Category,
     color: "#E53E3E",
-    img: imgDisenoVideojuegos,
+    img: TEEN_IMG,
     emoji: "🎮",
     algorithmics: true,
     isTeen: true,
@@ -136,7 +124,7 @@ const allCourses = [
     techs: ["Unity", "C#", "Animator", "Android"],
     category: "ninos" as Category,
     color: "#9C27B0",
-    img: imgUnity,
+    img: TEEN_IMG,
     emoji: "👾",
     algorithmics: true,
     isTeen: true,
@@ -153,7 +141,7 @@ const allCourses = [
     techs: ["Prompts", "Blender", "IA Generativa", "Código"],
     category: "ninos" as Category,
     color: "#00C9FF",
-    img: imgIaNinos,
+    img: TEEN_IMG,
     emoji: "🤖",
     algorithmics: true,
     isTeen: true,
@@ -171,7 +159,7 @@ const allCourses = [
     techs: ["UX/UI", "Portafolio", "Diseño web"],
     category: "ninos" as Category,
     color: "#7C3AED",
-    img: imgDisenoWeb,
+    img: TEEN_IMG,
     emoji: "🌐",
     algorithmics: true,
     isTeen: true,
@@ -220,7 +208,7 @@ const allCourses = [
     techs: ["Edición", "Guión", "Storyboard"],
     category: "ninos" as Category,
     color: "#E91E63",
-    img: imgCreacionContenido,
+    img: TEEN_IMG,
     emoji: "📱",
     algorithmics: true,
     isTeen: true,
@@ -237,7 +225,7 @@ const allCourses = [
     techs: ["Python", "PyGame", "Turtle"],
     category: "ninos" as Category,
     color: "#4CAF50",
-    img: imgPythonStart,
+    img: TEEN_IMG,
     emoji: "🐍",
     algorithmics: true,
     isTeen: true,
@@ -254,7 +242,7 @@ const allCourses = [
     techs: ["Lean Startup", "Modelo de negocios", "Ventas"],
     category: "ninos" as Category,
     color: "#FFC107",
-    img: imgEmprendimiento,
+    img: TEEN_IMG,
     emoji: "🚀",
     algorithmics: true,
     isTeen: true,
@@ -288,7 +276,7 @@ const allCourses = [
     techs: ["Álgebra", "Geometría", "Fracciones"],
     category: "ninos" as Category,
     color: "#00BCD4",
-    img: imgRegularizacionMate,
+    img: TEEN_IMG,
     emoji: "➗",
     algorithmics: true,
     isTeen: true,
@@ -305,7 +293,7 @@ const allCourses = [
     techs: ["Simulacros", "Razonamiento", "Matemáticas"],
     category: "ninos" as Category,
     color: "#8BC34A",
-    img: imgPreparacionUni,
+    img: TEEN_IMG,
     emoji: "🎓",
     algorithmics: true,
     isTeen: true,
@@ -341,7 +329,7 @@ const allCourses = [
     techs: ["Herramientas IA", "Prompts", "Consultoría"],
     category: "adultos" as Category,
     color: "#10B981",
-    img: imgIaAdultos,
+    img: ADULT_IMG,
     emoji: "🧠",
   },
 
