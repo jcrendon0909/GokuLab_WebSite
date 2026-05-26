@@ -7,10 +7,10 @@ import algorithmicsLogo from "../../imports/image-0.png";
 
 // ── Imágenes locales (nombre coincide con el curso) ──────────────────────
 import imgFundamentos from "../../assets/cursos/Fundamentos de la programación.jpeg";
-import imgAlfabetizacionPeques from "../../assets/cursos/Alfabetización digital (Peques).JPG";
-import imgProgramacionVisual from "../../assets/cursos/Programación visual.JPG";
+import imgAlfabetizacionPeques from "../../assets/cursos/adn.png";
+import imgProgramacionVisual from "../../assets/cursos/pv.JPG";
 import imgDisenoGrafico from "../../assets/cursos/Diseño gráfico.jpeg";
-import imgRobotica from "../../assets/cursos/Robótica I.JPG";
+import imgRobotica from "../../assets/cursos/r1.jpeg";
 import imgAnimacion from "../../assets/cursos/Animación Digital.JPG";
 import imgIngles from "../../assets/cursos/Inglés.jpeg";
 import imgAlfabetizacionAdultos from "../../assets/cursos/Alfabetización Digital (Adultos).jpg";
