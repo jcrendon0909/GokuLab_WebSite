@@ -173,7 +173,9 @@ export function FloatingCTA() {
         </div>
         
         <iframe 
-          src="https://chatbot-gokulab-valeria.onrender.com" 
+         { src="https://chatbot-gokulab-valeria.onrender.com" }
+           src="https://chat.gokulab.mx/"
+
           className="w-full flex-1 border-none bg-white"
           title="Goku Lab Chatbot"
         />
