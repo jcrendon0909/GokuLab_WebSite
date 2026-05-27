@@ -89,7 +89,7 @@ export function FloatingCTA() {
             <Bot size={20} className="text-white relative z-10 drop-shadow-md" />
             
             <span className="text-sm font-semibold whitespace-nowrap text-white relative z-10 tracking-wide">
-              Chatbot Goku Lab
+              Chatea con Gōku
             </span>
 
             {/* Punto verde animado de "En línea" */}
@@ -145,9 +145,9 @@ export function FloatingCTA() {
         className="fixed bottom-28 right-6 z-40 bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col"
         style={{
           width: "calc(100vw - 48px)",
-          maxWidth: "380px",
-          height: "70vh",
-          maxHeight: "550px",
+          maxWidth: "520px",
+          height: "75vh",
+          maxHeight: "650px",
           opacity: chatOpen ? 1 : 0,
           transform: chatOpen ? "translateY(0) scale(1)" : "translateY(20px) scale(0.95)",
           pointerEvents: chatOpen ? "all" : "none",
@@ -162,7 +162,7 @@ export function FloatingCTA() {
         >
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            <h3 className="font-semibold text-sm">Chatea con Goku</h3>
+            <h3 className="font-semibold text-sm">Hola, Soy Gōku...¿Cómo te ayudo?</h3>
           </div>
           <button 
             onClick={() => setChatOpen(false)}
