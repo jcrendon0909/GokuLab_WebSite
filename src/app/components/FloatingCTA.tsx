@@ -162,7 +162,7 @@ export function FloatingCTA() {
         >
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            <h3 className="font-semibold text-sm">Asistente Virtual Goku Lab</h3>
+            <h3 className="font-semibold text-sm">Chatea con Goku</h3>
           </div>
           <button 
             onClick={() => setChatOpen(false)}
