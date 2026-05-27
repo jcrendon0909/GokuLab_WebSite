@@ -24,8 +24,8 @@ import imgKidsSection from "../../imports/03HomepageV3/bddc569ae394f99d6e20497e0
 import imgKidsBottom from "../../imports/03HomepageV3/044b589933d402106ef8541547b60fdeff9c753f.png";
 
 // Importar imágenes de assets con los nuevos nombres seguros para Vercel
-import heroBackground from "../../assets/hero-imagen.jpg";
-import ninosImg from "../../assets/ninas-ninos-adolescentes.jpg";
+import heroBackground from "../../assets/imagen de inicio.jpg";
+import ninosImg from "../../assets/pnnya.jpeg";
 import adultosImg from "../../assets/para-adultos.jpg";
 import corporativoImg from "../../assets/empresas-y-gobierno.jpeg";
 
