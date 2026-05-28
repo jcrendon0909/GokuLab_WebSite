@@ -758,9 +758,6 @@ export function Home() {
                     src={img.src}   // ← antes era img.url
                     alt={img.alt}   // también puedes usar img.alt en lugar del texto genérico
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-/>
-                    alt={`Galería GOKU LAB ${index + 1}`}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-purple-950/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
