@@ -746,11 +746,11 @@ export function Home() {
           {/* Grid de mosaico moderno con alturas controladas por spans de Tailwind */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {[
-              { url: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?crop=entropy&cs=tinysrgb&fit=crop&w=600&h=450", span: "md:col-span-2 md:row-span-2" },
-              { url: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?crop=entropy&cs=tinysrgb&fit=crop&w=600&h=600", span: "" },
-              { url: "https://images.unsplash.com/photo-1577896851231-70ef18881754?crop=entropy&cs=tinysrgb&fit=crop&w=600&h=600", span: "" },
-              { url: "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?crop=entropy&cs=tinysrgb&fit=crop&w=600&h=450", span: "" },
-              { url: "https://images.unsplash.com/photo-1509062522246-3755977927d7?crop=entropy&cs=tinysrgb&fit=crop&w=600&h=450", span: "md:col-span-2" }
+              { src: "/images/galeria/Clases de PV.jpg", span: "md:col-span-2 md:row-span-2", alt: "Taller de robótica" },
+              { src: "/images/galeria/Clases de Robotica.jpg", span: "", alt: "Niños programando" },
+              { src: "/images/galeria/Diseño.jpg", span: "", alt: "Clase demo" },
+              { src: "/images/galeria/Clases Adultos.jpg", span: "", alt: "Hackathon GOKU LAB" },
+              { src: "/images/galeria/Clases de Python.jpg", span: "md:col-span-2", alt: "Comunidad GOKU LAB" }
             ].map((img, index) => (
               <AnimatedSection key={index} className={img.span} delay={index * 80}>
                 <div className="relative rounded-3xl overflow-hidden h-full min-h-[240px] group shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-white/5 bg-white dark:bg-white/5">
