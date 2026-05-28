@@ -11,56 +11,85 @@ type Answer = {
   step3?: string;
 };
 
-const questions = [
-  {
-    id: "step0",
-    title: "¿Para quién es este curso?",
-    subtitle: "Cuéntanos sobre ti para orientarte mejor.",
-    emoji: "👤",
-    options: [
-      { id: "kids", label: "Para mis hijos", emoji: "🧒", color: "#FF6B35" },
-      { id: "teen", label: "Para mí (soy joven, 13-17)", emoji: "🎮", color: "#FFE134" },
-      { id: "adult", label: "Para mí (soy adulto, 18+)", emoji: "👨‍💼", color: "#00C9FF" },
-      { id: "company", label: "Para mi empresa/equipo", emoji: "🏢", color: "#7C3AED" },
-    ],
-  },
-  {
-    id: "step1",
-    title: "¿Cuál es el nivel de experiencia?",
-    subtitle: "Esto nos ayuda a recomendar el nivel adecuado.",
-    emoji: "📊",
-    options: [
-      { id: "zero", label: "Cero experiencia", emoji: "🌱", color: "#4CAF50" },
-      { id: "basic", label: "Sé algunas cosas básicas", emoji: "📚", color: "#00C9FF" },
-      { id: "inter", label: "Tengo nivel intermedio", emoji: "💪", color: "#7C3AED" },
-      { id: "adv", label: "Quiero especializarme", emoji: "🚀", color: "#FF6B35" },
-    ],
-  },
-  {
-    id: "step2",
-    title: "¿Qué área te interesa más?",
-    subtitle: "Puedes elegir la que más te emocione.",
-    emoji: "✨",
-    options: [
-      { id: "prog", label: "Programación / Apps", emoji: "💻", color: "#00C9FF" },
-      { id: "robot", label: "Robótica / Hardware", emoji: "🤖", color: "#FF6B35" },
-      { id: "design", label: "Diseño / Creatividad", emoji: "🎨", color: "#9C27B0" },
-      { id: "ai", label: "Inteligencia Artificial", emoji: "🧠", color: "#10B981" },
-    ],
-  },
-  {
-    id: "step3",
-    title: "¿Cuál es tu objetivo principal?",
-    subtitle: "Esto nos ayuda a darte la mejor orientación.",
-    emoji: "🎯",
-    options: [
-      { id: "fun", label: "Aprender y divertirme", emoji: "🎉", color: "#FFE134" },
-      { id: "job", label: "Conseguir trabajo o freelance", emoji: "💼", color: "#00C9FF" },
-      { id: "biz", label: "Mejorar mi empresa", emoji: "📈", color: "#7C3AED" },
-      { id: "study", label: "Prepararme para la universidad", emoji: "🎓", color: "#10B981" },
-    ],
-  },
-];
+// Convertimos las preguntas en una función dinámica que recibe las respuestas actuales
+const getQuestions = (answers: Answer) => {
+  // Configuración dinámica del Paso 3 según quién sea el usuario
+  let step3Title = "¿Cuál es tu objetivo principal?";
+  let step3Subtitle = "Esto nos ayuda a darte la mejor orientación.";
+  let step3Options = [
+    { id: "fun", label: "Aprender algo nuevo por gusto", emoji: "🎉", color: "#FFE134" },
+    { id: "job", label: "Impulso profesional / Emprender", emoji: "💼", color: "#00C9FF" },
+    { id: "school", label: "Mejorar en la escuela / Idiomas", emoji: "📚", color: "#10B981" },
+    { id: "study", label: "Prepararme para la universidad", emoji: "🎓", color: "#7C3AED" },
+  ];
+
+  if (answers.step0 === "kids") {
+    step3Title = "¿Qué buscas para tu hijo/a?";
+    step3Subtitle = "Selecciona la meta que tienes en mente.";
+    step3Options = [
+      { id: "fun", label: "Que aprenda jugando", emoji: "🎉", color: "#FFE134" },
+      { id: "school", label: "Herramientas útiles para la escuela", emoji: "📚", color: "#10B981" },
+      { id: "logic", label: "Desarrollo lógico / Matemático", emoji: "🧩", color: "#00C9FF" },
+      { id: "create", label: "Que exprese su creatividad", emoji: "🎨", color: "#9C27B0" },
+    ];
+  } else if (answers.step0 === "company") {
+    step3Title = "¿Qué objetivo tiene tu empresa?";
+    step3Subtitle = "Para entender mejor sus necesidades.";
+    step3Options = [
+      { id: "train", label: "Capacitar al personal", emoji: "📈", color: "#00C9FF" },
+      { id: "innovate", label: "Innovación / Nuevas tecnologías", emoji: "🚀", color: "#7C3AED" },
+      { id: "digital", label: "Inclusión / Alfabetización digital", emoji: "💻", color: "#4CAF50" },
+      { id: "other", label: "Otro objetivo en específico", emoji: "🎯", color: "#FF6B35" },
+    ];
+  }
+
+  return [
+    {
+      id: "step0",
+      title: "¿Para quién es este curso?",
+      subtitle: "Cuéntanos sobre ti para orientarte mejor.",
+      emoji: "👤",
+      options: [
+        { id: "kids", label: "Para mis hijos (5-11 años)", emoji: "🧒", color: "#FF6B35" },
+        { id: "teen", label: "Para mí (soy joven, 12-17)", emoji: "🎮", color: "#FFE134" },
+        { id: "adult", label: "Para mí (soy adulto, 18+)", emoji: "👨‍💼", color: "#00C9FF" },
+        { id: "company", label: "Para mi empresa/equipo", emoji: "🏢", color: "#7C3AED" },
+      ],
+    },
+    {
+      id: "step1",
+      title: "¿Cuál es el nivel de experiencia?",
+      subtitle: "Esto nos ayuda a recomendar el nivel adecuado.",
+      emoji: "📊",
+      options: [
+        { id: "zero", label: "Cero experiencia", emoji: "🌱", color: "#4CAF50" },
+        { id: "basic", label: "Sé algunas cosas básicas", emoji: "📚", color: "#00C9FF" },
+        { id: "inter", label: "Tengo nivel intermedio", emoji: "💪", color: "#7C3AED" },
+        { id: "adv", label: "Quiero especializarme", emoji: "🚀", color: "#FF6B35" },
+      ],
+    },
+    {
+      id: "step2",
+      title: "¿Qué área te interesa más?",
+      subtitle: "Puedes elegir la que más te emocione.",
+      emoji: "✨",
+      options: [
+        { id: "prog", label: "Programación / Web", emoji: "💻", color: "#00C9FF" },
+        { id: "games", label: "Crear Videojuegos", emoji: "🕹️", color: "#FFE134" },
+        { id: "design", label: "Diseño / Contenido", emoji: "🎨", color: "#9C27B0" },
+        { id: "ai", label: "Inteligencia Artificial", emoji: "🧠", color: "#10B981" },
+        { id: "robot", label: "Robótica / Hardware", emoji: "🤖", color: "#FF6B35" },
+      ],
+    },
+    {
+      id: "step3",
+      title: step3Title,
+      subtitle: step3Subtitle,
+      emoji: "🎯",
+      options: step3Options,
+    },
+  ];
+};
 
 type CourseResult = {
   title: string;
@@ -71,69 +100,199 @@ type CourseResult = {
   hrefLabel: string;
 };
 
+// Función refactorizada para cubrir todo el catálogo de la academia
 function getResult(answers: Answer): CourseResult {
-  const { step0, step2, step3 } = answers;
+  const { step0, step1, step2, step3 } = answers;
 
+  // 1. Ruta Corporativa
   if (step0 === "company") {
     return {
-      title: "Capacitación Empresarial Personalizada",
-      desc: "Diseñamos un programa 100% a la medida de tu equipo. Diagnóstico previo, contenido relevante y métricas de impacto.",
+      title: "Capacitación corporativa",
+      desc: "Diseñamos un programa con horarios y duración personalizados a las necesidades de tu empresa o entidad.",
       color: "#7C3AED",
       emoji: "🏢",
       href: "/capacitaciones",
       hrefLabel: "Ver capacitaciones",
     };
   }
+
+  // 2. Ruta Niños (5-11 años)
   if (step0 === "kids") {
+    if (step3 === "school") {
+      return {
+        title: "Alfabetización digital (Peques)",
+        desc: "Aprenderán a usar dispositivos de forma segura aplicando herramientas útiles para la escuela, como la Suite de Google.",
+        color: "#10B981",
+        emoji: "📱",
+        href: "/cursos/ninos/alfabetizacion",
+        hrefLabel: "Ver curso",
+      };
+    }
     if (step2 === "robot") {
       return {
-        title: "Robótica con Micro:bit",
-        desc: "Tu hijo aprenderá a construir y programar robots reales. ¡La aventura más emocionante de la tecnología!",
-        color: "#1E88E5",
+        title: "Robótica I",
+        desc: "Construyen y programan robots iniciales, aprendiendo principios de mecánica y sensores.",
+        color: "#FF6B35",
         emoji: "🤖",
-        href: "/cursos/ninos/robotica-basica",
+        href: "/cursos/ninos/robotica",
+        hrefLabel: "Ver curso",
+      };
+    }
+    if (step2 === "design" || step3 === "create") {
+      return {
+        title: "Diseño gráfico",
+        desc: "Crean proyectos visuales con ilustraciones, vectores y gráficos 3D desde la primera clase.",
+        color: "#9C27B0",
+        emoji: "🎨",
+        href: "/cursos/ninos/diseno",
+        hrefLabel: "Ver curso",
+      };
+    }
+    if (step1 === "zero") {
+      return {
+        title: "Fundamentos de la programación",
+        desc: "Se inician mediante ejercicios y retos gamificados en Scratch Jr. y cuadernillos de Algorithmics.",
+        color: "#00C9FF",
+        emoji: "🧩",
+        href: "/cursos/ninos/fundamentos",
         hrefLabel: "Ver curso",
       };
     }
     return {
-      title: "Scratch para Principiantes",
-      desc: "El primer paso perfecto para tu hijo. Crea animaciones, historias y videojuegos de manera divertida.",
-      color: "#FF6B35",
+      title: "Programación visual",
+      desc: "Comienzan a crear sus primeras animaciones y juegos complejos usando programación por bloques y Scratch.",
+      color: "#FFE134",
       emoji: "🐱",
-      href: "/cursos/ninos/scratch-basico",
+      href: "/cursos/ninos/programacion",
       hrefLabel: "Ver curso",
     };
   }
-  if (step2 === "ai") {
+
+  // 3. Ruta Jóvenes (12-17 años)
+  if (step0 === "teen") {
+    if (step3 === "study") {
+      return {
+        title: "Preparación para Universidad",
+        desc: "Resuelven guías y simulacros de exámenes de admisión (UNAM, IPN, UAM) trabajando por áreas clave.",
+        color: "#7C3AED",
+        emoji: "🎓",
+        href: "/cursos/universidad",
+        hrefLabel: "Ver preparación",
+      };
+    }
+    if (step3 === "school") {
+      return {
+        title: "Regularización en Matemáticas o Inglés",
+        desc: "Resuelven problemas de matemáticas de acuerdo con su grado o aprenden inglés con dinámicas orales y visuales.",
+        color: "#10B981",
+        emoji: "📚",
+        href: "/cursos/academico",
+        hrefLabel: "Ver apoyo escolar",
+      };
+    }
+    if (step2 === "games") {
+      return {
+        title: "Diseño de videojuegos: Roblox o Unity",
+        desc: "Crean mundos programando en Lua con Roblox Studio, o publican juegos usando C# y Animator en Unity.",
+        color: "#FFE134",
+        emoji: "🕹️",
+        href: "/cursos/jovenes/videojuegos",
+        hrefLabel: "Ver videojuegos",
+      };
+    }
+    if (step2 === "design") {
+      return {
+        title: "Animación Digital o Creación de video",
+        desc: "Dibujo digital y fotogramas, o grabación y edición de videos para TikTok, Shorts y Reels de forma guiada.",
+        color: "#9C27B0",
+        emoji: "🎬",
+        href: "/cursos/jovenes/creativo",
+        hrefLabel: "Ver cursos creativos",
+      };
+    }
+    if (step2 === "ai") {
+      return {
+        title: "Inteligencia artificial (niños)",
+        desc: "Desarrollan proyectos usando IA para generar texto, código, audio, video y modelos 3D.",
+        color: "#10B981",
+        emoji: "✨",
+        href: "/cursos/jovenes/ia",
+        hrefLabel: "Ver curso de IA",
+      };
+    }
+    if (step3 === "job") {
+      return {
+        title: "Emprendimiento (intrapreneurship)",
+        desc: "Desarrollan actitud emprendedora, generan modelos de negocio y aplican la metodología ágil lean startup.",
+        color: "#FF6B35",
+        emoji: "🚀",
+        href: "/cursos/emprendimiento",
+        hrefLabel: "Ver emprendimiento",
+      };
+    }
     return {
-      title: "IA Aplicada con ChatGPT",
-      desc: "Aprende a usar las herramientas de IA más importantes del mercado para potenciar tu trabajo y carrera.",
-      color: "#10B981",
-      emoji: "🧠",
-      href: "/cursos/adultos/ia-aplicada",
-      hrefLabel: "Ver curso",
-    };
-  }
-  if (step2 === "prog" && (step3 === "job" || step3 === "study")) {
-    return {
-      title: "Python para Principiantes",
-      desc: "El lenguaje más demandado del mercado. Aprende desde cero hasta crear proyectos reales.",
+      title: "Diseño web o Python Start I",
+      desc: "Crean sus propias páginas web con foco en UX/UI sin programar, o aprenden algoritmos modernos y PyGame en Python.",
       color: "#00C9FF",
-      emoji: "🐍",
-      href: "/cursos/adultos/python-basico",
-      hrefLabel: "Ver curso",
+      emoji: "💻",
+      href: "/cursos/jovenes/programacion",
+      hrefLabel: "Ver programación",
     };
   }
-  if (step2 === "prog") {
+
+  // 4. Ruta Adultos (18+)
+  if (step0 === "adult") {
+    if (step1 === "zero" && step2 !== "ai") {
+      return {
+        title: "Alfabetización Digital (Adultos)",
+        desc: "Se familiarizan paso a paso con computadoras, celulares y herramientas digitales en un ambiente seguro y paciente.",
+        color: "#4CAF50",
+        emoji: "📱",
+        href: "/cursos/adultos/alfabetizacion",
+        hrefLabel: "Ver curso",
+      };
+    }
+    if (step2 === "ai") {
+      return {
+        title: "Inteligencia artificial (adultos)",
+        desc: "Son sesiones individuales y personalizadas a las necesidades de cada estudiante a modo de consultoría.",
+        color: "#10B981",
+        emoji: "🧠",
+        href: "/cursos/adultos/ia",
+        hrefLabel: "Ver consultoría",
+      };
+    }
+    if (step3 === "school") {
+      return {
+        title: "Inglés",
+        desc: "Practican escuchar, hablar, leer y escribir, y avanzan hasta explicar temas y dar miniclases en inglés.",
+        color: "#7C3AED",
+        emoji: "🌍",
+        href: "/cursos/adultos/ingles",
+        hrefLabel: "Ver curso de inglés",
+      };
+    }
+    if (step2 === "design") {
+       return {
+        title: "Creación de contenido y video",
+        desc: "Aprende a planear, grabar y editar contenido para redes sociales desde la idea inicial hasta la edición final.",
+        color: "#9C27B0",
+        emoji: "🎥",
+        href: "/cursos/adultos/contenido",
+        hrefLabel: "Ver curso",
+      };
+    }
     return {
-      title: "Desarrollo Web: HTML, CSS y JS",
-      desc: "Crea sitios web modernos desde cero. El camino más directo hacia una carrera digital.",
-      color: "#7C3AED",
-      emoji: "🌐",
-      href: "/cursos/adultos/web-html-css",
-      hrefLabel: "Ver curso",
+      title: "Python Start I o Emprendimiento",
+      desc: "Aplica conocimientos prácticos en programación moderna o desarrolla planes y modelos de negocios efectivos.",
+      color: "#00C9FF",
+      emoji: "💼",
+      href: "/cursos/adultos/profesional",
+      hrefLabel: "Ver cursos profesionales",
     };
   }
+
+  // Fallback final
   return {
     title: "Diagnóstico personalizado gratuito",
     desc: "Habla directamente con nuestro equipo para que diseñemos el camino perfecto para ti.",
@@ -145,13 +304,15 @@ function getResult(answers: Answer): CourseResult {
 }
 
 export function TestPage() {
-  const [step, setStep] = useState(-1); // -1 = intro
+  const [step, setStep] = useState(-1);
   const [answers, setAnswers] = useState<Answer>({});
   const [done, setDone] = useState(false);
   const { theme } = useTheme();
 
-  const currentQ = questions[step];
-  const progress = step < 0 ? 0 : ((step + 1) / questions.length) * 100;
+  // Llamamos a la función dinámica pasándole el estado actual de las respuestas
+  const questionsList = getQuestions(answers);
+  const currentQ = questionsList[step];
+  const progress = step < 0 ? 0 : ((step + 1) / questionsList.length) * 100;
 
   const handleAnswer = (value: string) => {
     const key = currentQ.id as keyof Answer;
@@ -159,7 +320,7 @@ export function TestPage() {
     setAnswers(newAnswers);
 
     setTimeout(() => {
-      if (step < questions.length - 1) {
+      if (step < questionsList.length - 1) {
         setStep(step + 1);
       } else {
         setDone(true);
@@ -178,9 +339,7 @@ export function TestPage() {
   return (
     <div className="bg-gray-50 dark:bg-[#0A0F1E] min-h-screen transition-colors duration-300">
       {/* HERO */}
-      <section
-        className="pt-32 pb-16 px-4 relative overflow-hidden bg-white dark:bg-[#050A14] transition-colors duration-300"
-      >
+      <section className="pt-32 pb-16 px-4 relative overflow-hidden bg-white dark:bg-[#050A14] transition-colors duration-300">
         <div
           className="absolute inset-0 pointer-events-none transition-colors duration-300"
           style={{
@@ -235,7 +394,7 @@ export function TestPage() {
             <div className="mb-8">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-gray-500 dark:text-white/40 text-sm transition-colors duration-300">
-                  Pregunta {step + 1} de {questions.length}
+                  Pregunta {step + 1} de {questionsList.length}
                 </span>
                 <span className="text-gray-500 dark:text-white/40 text-sm transition-colors duration-300">
                   {Math.round(progress)}%
@@ -266,12 +425,7 @@ export function TestPage() {
                 border: theme === "dark" ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(0,0,0,0.08)",
               }}
             >
-              <div
-                style={{ fontSize: "4rem" }}
-                className="mb-6 drop-shadow-sm"
-              >
-                🎮
-              </div>
+              <div style={{ fontSize: "4rem" }} className="mb-6 drop-shadow-sm">🎮</div>
               <h2
                 className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
                 style={{ fontWeight: 800, fontSize: "1.5rem" }}
@@ -280,14 +434,12 @@ export function TestPage() {
               </h2>
               <p className="text-gray-600 dark:text-white/60 mb-8 leading-relaxed transition-colors duration-300">
                 Responde 4 preguntas rápidas y te diremos exactamente qué curso
-                de GŌKU LAB es el indicado para ti o para tu familia.
+                de GOKU LAB es el indicado para ti o para tu familia.
               </p>
               <div className="flex flex-col gap-3 text-sm text-gray-500 dark:text-white/50 mb-8 transition-colors duration-300">
-                {["✅ Solo 4 preguntas", "✅ Resultado inmediato", "✅ 100% personalizado"].map(
-                  (i) => (
-                    <span key={i}>{i}</span>
-                  )
-                )}
+                {["✅ Solo 4 preguntas", "✅ Resultado dinámico e inmediato", "✅ 100% personalizado"].map((i) => (
+                  <span key={i}>{i}</span>
+                ))}
               </div>
               <button
                 onClick={() => setStep(0)}
@@ -454,7 +606,7 @@ export function TestPage() {
                 <div className="flex items-center gap-3 p-4 rounded-2xl transition-colors duration-300 bg-gray-50 dark:bg-transparent" style={{ background: theme === "dark" ? "rgba(255,255,255,0.03)" : "#f9fafb" }}>
                   <CheckCircle size={18} className="text-[#10B981] shrink-0" />
                   <p className="text-gray-600 dark:text-white/55 text-sm transition-colors duration-300">
-                    Alguien del equipo GŌKU LAB revisará tus respuestas y te dará orientación personalizada.
+                    Alguien del equipo GOKU LAB revisará tus respuestas y te dará orientación personalizada.
                   </p>
                 </div>
 

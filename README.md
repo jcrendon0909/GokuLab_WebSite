@@ -15,15 +15,13 @@ El sitio funciona como principal canal de captación de alumnos, comunicando de 
 - Tailwind CSS 4
 - React Router v7
 - Framer Motion (animaciones)
-- next-themes (modo oscuro y claro)
 - shadcn/ui
 
 ## Características
 
-- Modo oscuro y modo claro
 - Diseño responsive (Mobile First)
 - Animaciones fluidas
-- Multiidioma (español, inglés y portugués)
+- Idioma (español)
 - Botón flotante de WhatsApp
 - Diagnóstico de orientación vocacional interactivo
 

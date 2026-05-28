@@ -210,9 +210,9 @@ export function Footer() {
             <div className="flex flex-col gap-3">
               {[
                 { icon: Phone, text: "5612668168" },
-                { icon: Mail, text: "algorithmicsnc@outlook.com" },
+                { icon: Mail, text: "contacto@gokulab.mx" },
                 { icon: MapPin, text: "GŌKU LAB – Sede Principal", isBold: true }, // 👈 Corregido: Nombre oficial de la sede
-                { icon: MapPin, text: "Av. Insurgentes Sur 1234, Col. Del Valle, Ciudad de México, CDMX, 03100", noIcon: true }, // 👈 Corregido: Dirección completa del centro
+                { icon: MapPin, text: "Av. Vía Adolfo López Mateos 201-local 418, Sta Cruz Acatlan, 53150 Naucalpan de Juárez, Méx.", noIcon: true }, // 👈 Corregido: Dirección completa del centro
               ].map(({ icon: Icon, text, isBold, noIcon }) => (
                 <div key={text} className="flex items-start gap-3">
                   {!noIcon && <Icon size={16} className="text-[#00C9FF] mt-0.5 shrink-0" />}
