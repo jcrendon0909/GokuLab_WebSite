@@ -755,7 +755,10 @@ export function Home() {
               <AnimatedSection key={index} className={img.span} delay={index * 80}>
                 <div className="relative rounded-3xl overflow-hidden h-full min-h-[240px] group shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-white/5 bg-white dark:bg-white/5">
                   <img
-                    src={img.url}
+                    src={img.src}   // ← antes era img.url
+                    alt={img.alt}   // también puedes usar img.alt en lugar del texto genérico
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+/>
                     alt={`Galería GOKU LAB ${index + 1}`}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
