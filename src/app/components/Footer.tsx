@@ -196,9 +196,18 @@ export function Footer() {
                   {item.label}
                 </Link>
               ))}
+              <a
+                href="https://horarios.gokulab.mx"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-white/50 dark:text-white/50 light:text-gray-600 hover:text-white/90 dark:hover:text-white/90 light:hover:text-gray-900 transition-colors duration-300"
+                style={{ transition: "color 0.2s ease" }}
+              >
+
+                Horarios
+              </a>
             </div>
           </div>
-
           {/* Contacto */}
           <div>
             <h4
