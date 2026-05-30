@@ -186,16 +186,30 @@ export function Footer() {
                 { label: "Eventos", href: "/eventos" },
                 { label: "Apoyos", href: "/becas" },
                 { label: "Contacto", href: "/contacto" },
-              ].map((item) => (
-                <Link
-                  key={item.href}
-                  to={item.href}
-                  className="text-sm text-white/50 dark:text-white/50 light:text-gray-600 hover:text-white/90 dark:hover:text-white/90 light:hover:text-gray-900 transition-colors duration-300"
-                  style={{ transition: "color 0.2s ease" }}
-                >
-                  {item.label}
-                </Link>
-              ))}
+                { label: "Sistema de gestión académica", href: "https://goku-lab-academic-management-system-murex.vercel.app" },
+              ].map((item) => 
+                item.href.startsWith("http") ? (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-white/50 dark:text-white/50 light:text-gray-600 hover:text-white/90 dark:hover:text-white/90 light:hover:text-gray-900 transition-colors duration-300"
+                    style={{ transition: "color 0.2s ease" }}
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={item.href}
+                    to={item.href}
+                    className="text-sm text-white/50 dark:text-white/50 light:text-gray-600 hover:text-white/90 dark:hover:text-white/90 light:hover:text-gray-900 transition-colors duration-300"
+                    style={{ transition: "color 0.2s ease" }}
+                  >
+                    {item.label}
+                  </Link>
+                )
+              )}
             </div>
           </div>
 
@@ -211,8 +225,8 @@ export function Footer() {
               {[
                 { icon: Phone, text: "5612668168" },
                 { icon: Mail, text: "algorithmicsnc@outlook.com" },
-                { icon: MapPin, text: "GŌKU LAB – Sede Principal", isBold: true }, // 👈 Corregido: Nombre oficial de la sede
-                { icon: MapPin, text: "Av. Insurgentes Sur 1234, Col. Del Valle, Ciudad de México, CDMX, 03100", noIcon: true }, // 👈 Corregido: Dirección completa del centro
+                { icon: MapPin, text: "GŌKU LAB – Sede Principal", isBold: true },
+                { icon: MapPin, text: "Av. Insurgentes Sur 1234, Col. Del Valle, Ciudad de México, CDMX, 03100", noIcon: true },
               ].map(({ icon: Icon, text, isBold, noIcon }) => (
                 <div key={text} className="flex items-start gap-3">
                   {!noIcon && <Icon size={16} className="text-[#00C9FF] mt-0.5 shrink-0" />}
@@ -273,3 +287,4 @@ export function Footer() {
     </footer>
   );
 }
+

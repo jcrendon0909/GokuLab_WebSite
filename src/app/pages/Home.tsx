@@ -770,7 +770,30 @@ export function Home() {
             </p>
           </AnimatedSection>
 
-          {/* Grid de mosaico moderno con alturas controladas por spans de Tailwind */}
+          {/* ========================================================================
+            TODO: INTEGRACIÓN DE REDES SOCIALES (PENDIENTE DE VERIFICACIÓN)
+            ========================================================================
+            Aquí es donde se conectará el feed dinámico de las redes sociales de la empresa.
+            Actualmente estamos en espera de la verificación de la cuenta y aprobación de 
+            la API por parte de la plataforma (ej. Instagram Graph API / Facebook).
+
+            Instrucciones para el futuro:
+            1. Una vez verificada la cuenta, generar el Token de Acceso.
+            2. Guardar el token en las variables de entorno de Vercel (ej. VITE_SOCIAL_TOKEN).
+            3. Eliminar el grid de imágenes estático (mockup) que está debajo.
+            4. Descomentar e implementar el componente del feed.
+            
+            Ejemplo de implementación futura:
+            
+            <SocialMediaFeed 
+              provider="instagram" 
+              accessToken={import.meta.env.VITE_SOCIAL_TOKEN} 
+              limit={6} 
+            />
+            ========================================================================
+          */}
+
+          {/* Mockup temporal: Grid de mosaico moderno con alturas controladas por spans de Tailwind */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {[
               { url: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?crop=entropy&cs=tinysrgb&fit=crop&w=600&h=450", span: "md:col-span-2 md:row-span-2" },
