@@ -210,14 +210,19 @@ export function Home() {
           style={{
             backgroundImage: `url(${heroBackground})`,
             backgroundSize: "cover",
-            backgroundPosition: "center",
+            // Ajustamos la posición para que en móvil enfoque a las personas (derecha) en lugar del muro
+            backgroundPosition: "80% center", 
             backgroundRepeat: "no-repeat",
           }}
         />
 
-        {/* 1. Degradado lineal SUAVIZADO (Fade más largo y elegante) */}
+        {/* ===============================
+            DEGRADADOS RESPONSIVOS
+        =================================== */}
+
+        {/* 1. Degradado para DESKTOP (Oculto en celulares) */}
         <div
-          className="absolute inset-0 transition-colors duration-300 pointer-events-none"
+          className="absolute inset-0 hidden md:block transition-colors duration-300 pointer-events-none"
           style={{
             background: theme === "dark" 
               ? "linear-gradient(to right, rgba(10,15,30,1) 0%, rgba(10,15,30,0.85) 30%, rgba(10,15,30,0.2) 65%, transparent 100%)"
@@ -225,12 +230,22 @@ export function Home() {
           }}
         />
 
-        {/* 2. Resplandor radial de anclaje (Garantiza legibilidad en monitores ultrawide) */}
+        {/* 2. Resplandor radial de anclaje para DESKTOP (Oculto en celulares) */}
         <div
-          className="absolute top-1/2 left-0 w-[800px] h-[1200px] rounded-full blur-[120px] pointer-events-none transition-colors duration-300"
+          className="absolute top-1/2 left-0 w-[800px] h-[1200px] rounded-full blur-[120px] pointer-events-none transition-colors duration-300 hidden md:block"
           style={{
             background: theme === "dark" ? "rgba(10,15,30,0.75)" : "rgba(255,255,255,0.85)",
             transform: "translate(-20%, -50%)", 
+          }}
+        />
+
+        {/* 3. Degradado para MÓVILES (Oculto en Desktop) - De arriba hacia abajo */}
+        <div
+          className="absolute inset-0 md:hidden transition-colors duration-300 pointer-events-none"
+          style={{
+            background: theme === "dark" 
+              ? "linear-gradient(to bottom, rgba(10,15,30,1) 0%, rgba(10,15,30,0.95) 45%, rgba(10,15,30,0.4) 100%)"
+              : "linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0.95) 45%, rgba(255,255,255,0.4) 100%)",
           }}
         />
 
