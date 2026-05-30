@@ -198,163 +198,146 @@ export function Home() {
 
   return (
     <div className="bg-white dark:bg-[#0A0F1E] transition-colors duration-300">
-      {/* HERO */}
+      
+      {/* HERO SECTION */}
       <section
         className="relative min-h-screen flex items-center justify-center overflow-hidden"
         style={{ paddingTop: "80px" }}
       >
+        {/* Imagen de fondo principal */}
         <div
-          className="absolute inset-0 transition-colors duration-300"
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `url(${heroBackground})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
+        />
+
+        {/* 1. Degradado lineal SUAVIZADO (Fade más largo y elegante) */}
+        <div
+          className="absolute inset-0 transition-colors duration-300 pointer-events-none"
           style={{
             background: theme === "dark" 
-              ? "radial-gradient(ellipse at center, rgba(0,201,255,0.08) 0%, rgba(10,15,30,0.98) 70%)"
-              : "radial-gradient(ellipse at center, rgba(0,201,255,0.05) 0%, rgba(255,255,255,0.98) 70%)",
+              ? "linear-gradient(to right, rgba(10,15,30,1) 0%, rgba(10,15,30,0.85) 30%, rgba(10,15,30,0.2) 65%, transparent 100%)"
+              : "linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,0.85) 30%, rgba(255,255,255,0.2) 65%, transparent 100%)",
+          }}
+        />
+
+        {/* 2. Resplandor radial de anclaje (Garantiza legibilidad en monitores ultrawide) */}
+        <div
+          className="absolute top-1/2 left-0 w-[800px] h-[1200px] rounded-full blur-[120px] pointer-events-none transition-colors duration-300"
+          style={{
+            background: theme === "dark" ? "rgba(10,15,30,0.75)" : "rgba(255,255,255,0.85)",
+            transform: "translate(-20%, -50%)", 
           }}
         />
 
         {/* Floating orbs */}
         <div
-          className="absolute top-20 right-10 w-80 h-80 rounded-full pointer-events-none"
+          className="absolute top-20 right-10 w-80 h-80 rounded-full pointer-events-none mix-blend-multiply dark:mix-blend-screen"
           style={{
-            background: "radial-gradient(circle, rgba(0,201,255,0.12), transparent 70%)",
+            background: "radial-gradient(circle, rgba(0,201,255,0.15), transparent 70%)",
             animation: "floatOrb 8s ease-in-out infinite",
           }}
         />
         <div
-          className="absolute bottom-20 left-10 w-60 h-60 rounded-full pointer-events-none"
+          className="absolute bottom-20 left-10 w-60 h-60 rounded-full pointer-events-none mix-blend-multiply dark:mix-blend-screen"
           style={{
-            background: "radial-gradient(circle, rgba(124,58,237,0.1), transparent 70%)",
+            background: "radial-gradient(circle, rgba(124,58,237,0.15), transparent 70%)",
             animation: "floatOrb 10s ease-in-out infinite reverse",
           }}
         />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          {/* Background image */}
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `url(${heroBackground})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-              opacity: 0.5,
-            }}
-          />
-          {/* Badge */}
-          <div
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 bg-blue-50 dark:bg-blue-990/10"
-            style={{
-              border: "1px solid rgba(0,201,255,0.3)",
-              animation: "fadeUp 0.6s ease both",
-            }}
-          >
-            <Zap size={14} className="text-[#00C9FF]" />
-            <span className="text-[#00C9FF] text-sm font-medium">
-              {t("hero.badge")}
-            </span>
-          </div>
-
-          {/* Headline */}
-          <h1
-            className="text-gray-900 dark:text-white mb-6 transition-colors duration-300"
-            style={{
-              fontSize: "clamp(2.2rem, 6vw, 5rem)",
-              fontWeight: 900,
-              lineHeight: 1.2,
-              letterSpacing: "-0.03em",
-              animation: "fadeUp 0.6s ease 0.1s both",
-              fontFamily: "'Inter', sans-serif",
-            }}
-          >
-            <span style={{ color: "#f8b50e" }}>
-              Juega,
-            </span>
-            <br />
-            <span style={{ color: "#d61a1f" }}>
-              Aprende y
-            </span>
-            <br />
-            <span style={{ color: "#67a934" }}>
-              Emprende
-            </span>
-          </h1>
-
-          <p
-            className="text-gray-600 dark:text-white/70 mb-10 max-w-2xl transition-colors duration-300"
-            style={{
-              fontSize: "clamp(1rem, 2vw, 1.25rem)",
-              lineHeight: 1.7,
-              animation: "fadeUp 0.6s ease 0.2s both",
-            }}
-          >
-            {t("hero.subtitle")}
-          </p>
-
-          {/* CTAs */}
-          <div
-            className="flex flex-col sm:flex-row gap-4 items-center mb-12"
-            style={{ animation: "fadeUp 0.6s ease 0.3s both" }}
-          >
-            <a
-              href="https://wa.me/5612668168?text=Hola,%20quiero%20agendar%20mi%20clase%20muestra%20gratuita"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-3 px-8 py-4 rounded-2xl text-white font-bold"
+        {/* Contenido del Hero */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 flex flex-col justify-center">
+          
+          <div className="max-w-2xl relative">
+            {/* Badge */}
+            <div
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 bg-blue-50 dark:bg-blue-900/20 backdrop-blur-sm"
               style={{
-                background: "linear-gradient(135deg, #00C9FF, #7C3AED)",
-                boxShadow: "0 8px 30px rgba(0,201,255,0.35)",
-                transition: "all 0.2s ease",
-                fontSize: "1.05rem",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "scale(1.03)";
-                e.currentTarget.style.boxShadow = "0 12px 40px rgba(0,201,255,0.5)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "scale(1)";
-                e.currentTarget.style.boxShadow = "0 8px 30px rgba(0,201,255,0.35)";
+                border: "1px solid rgba(0,201,255,0.3)",
+                animation: "fadeUp 0.6s ease both",
               }}
             >
-              <MessageCircle size={20} />
-              {t("hero.cta.whatsapp")}
-            </a>
-            <Link
-              to="/test"
-              className="flex items-center gap-2 px-8 py-4 rounded-2xl font-semibold border transition-all duration-300 text-gray-900 dark:text-white border-gray-300 dark:border-white/25 hover:bg-gray-100 dark:hover:bg-white/10"
-              style={{ fontSize: "1.05rem" }}
-            >
-              {t("hero.cta.test")}
-              <ArrowRight size={18} />
-            </Link>
-          </div>
+              <Zap size={14} className="text-[#00C9FF]" />
+              <span className="text-[#00C9FF] text-sm font-medium">
+                {t("hero.badge")}
+              </span>
+            </div>
 
-          {/* TECHNOLOGIES */}
-          <div className="mt-20 max-w-7xl mx-auto">
-            <AnimatedSection className="text-center mb-12">
-              <div
-                className="inline-block px-4 py-1.5 rounded-full text-sm mb-4 bg-purple-50 dark:bg-purple-900/10"
+            {/* Headline */}
+            <h1
+              className="text-gray-900 dark:text-white mb-6 transition-colors duration-300"
+              style={{
+                fontSize: "clamp(2.2rem, 6vw, 5rem)",
+                fontWeight: 900,
+                lineHeight: 1.2,
+                letterSpacing: "-0.03em",
+                animation: "fadeUp 0.6s ease 0.1s both",
+                fontFamily: "'Inter', sans-serif",
+              }}
+            >
+              <span style={{ color: "#f8b50e" }}>Juega,</span>
+              <br />
+              <span style={{ color: "#d61a1f" }}>Aprende y</span>
+              <br />
+              <span style={{ color: "#67a934" }}>Emprende</span>
+            </h1>
+
+            <p
+              className="text-gray-700 dark:text-white/80 mb-10 transition-colors duration-300 font-medium"
+              style={{
+                fontSize: "clamp(1rem, 2vw, 1.25rem)",
+                lineHeight: 1.7,
+                animation: "fadeUp 0.6s ease 0.2s both",
+              }}
+            >
+              {t("hero.subtitle")}
+            </p>
+
+            {/* CTAs */}
+            <div
+              className="flex flex-col sm:flex-row gap-4 items-start mb-12"
+              style={{ animation: "fadeUp 0.6s ease 0.3s both" }}
+            >
+              <a
+                href="https://wa.me/5612668168?text=Hola,%20quiero%20agendar%20mi%20clase%20muestra%20gratuita"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 px-8 py-4 rounded-2xl text-white font-bold"
                 style={{
-                  color: "#7C3AED",
-                  border: "1px solid rgba(124,58,237,0.25)",
+                  background: "linear-gradient(135deg, #00C9FF, #7C3AED)",
+                  boxShadow: "0 8px 30px rgba(0,201,255,0.35)",
+                  transition: "all 0.2s ease",
+                  fontSize: "1.05rem",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "scale(1.03)";
+                  e.currentTarget.style.boxShadow = "0 12px 40px rgba(0,201,255,0.5)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "scale(1)";
+                  e.currentTarget.style.boxShadow = "0 8px 30px rgba(0,201,255,0.35)";
                 }}
               >
-                Tecnologías
-              </div>
-              <h2
-                className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
-                style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 800 }}
+                <MessageCircle size={20} />
+                {t("hero.cta.whatsapp")}
+              </a>
+              <Link
+                to="/test"
+                className="flex items-center gap-2 px-8 py-4 rounded-2xl font-semibold border transition-all duration-300 text-gray-900 dark:text-white border-gray-300 dark:border-white/25 hover:bg-gray-100 dark:hover:bg-white/10 backdrop-blur-sm"
+                style={{ 
+                  fontSize: "1.05rem", 
+                  backgroundColor: theme === 'light' ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.2)' 
+                }}
               >
-                No solo consumen tecnología,{" "}
-                <span style={{ color: "#26aaa3" }}>
-                  la crean
-                </span>
-              </h2>
-              <p className="text-gray-600 dark:text-white/60 max-w-xl mx-auto transition-colors duration-300">
-                15+ tecnologías reales usadas en la industria, adaptadas a cada
-                nivel de aprendizaje.
-              </p>
-            </AnimatedSection>
-            <TechScroll />
+                {t("hero.cta.test")}
+                <ArrowRight size={18} />
+              </Link>
+            </div>
           </div>
         </div>
 
@@ -363,12 +346,41 @@ export function Home() {
           className="absolute bottom-8 left-1/2 -translate-x-1/2"
           style={{ animation: "bounce 2s infinite" }}
         >
-          <div className="w-6 h-10 rounded-full border-2 border-gray-400 dark:border-white/20 flex items-start justify-center p-1">
+          <div className="w-6 h-10 rounded-full border-2 border-gray-400 dark:border-white/20 flex items-start justify-center p-1 backdrop-blur-sm">
             <div
               className="w-1.5 h-3 rounded-full bg-[#00C9FF]"
               style={{ animation: "scrollDot 2s infinite" }}
             />
           </div>
+        </div>
+      </section>
+
+      {/* SECCIÓN DE TECNOLOGÍAS */}
+      <section className="py-20 bg-white dark:bg-[#0A0F1E] transition-colors duration-300 relative z-20 shadow-sm border-t border-gray-100 dark:border-white/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AnimatedSection className="text-center mb-12">
+            <div
+              className="inline-block px-4 py-1.5 rounded-full text-sm mb-4 bg-purple-50 dark:bg-purple-900/10"
+              style={{
+                color: "#7C3AED",
+                border: "1px solid rgba(124,58,237,0.25)",
+              }}
+            >
+              Tecnologías
+            </div>
+            <h2
+              className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
+              style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 800 }}
+            >
+              No solo consumen tecnología,{" "}
+              <span style={{ color: "#26aaa3" }}>la crean</span>
+            </h2>
+            <p className="text-gray-600 dark:text-white/60 max-w-xl mx-auto transition-colors duration-300">
+              15+ tecnologías reales usadas en la industria, adaptadas a cada
+              nivel de aprendizaje.
+            </p>
+          </AnimatedSection>
+          <TechScroll />
         </div>
       </section>
 
@@ -719,7 +731,7 @@ export function Home() {
         </div>
       </section>
 
-      {/* GALLERY SECTION — ✅ Seccion Mosaico/Grid Asimetrico Moderno */}
+      {/* GALLERY SECTION */}
       <section className="py-24 px-4 bg-gray-50 dark:bg-[#050A14] transition-colors duration-300 border-t border-gray-100 dark:border-white/5">
         <div className="max-w-7xl mx-auto">
           <AnimatedSection className="text-center mb-16">
@@ -861,3 +873,4 @@ export function Home() {
     </div>
   );
 }
+
