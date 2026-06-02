@@ -239,16 +239,17 @@ export function Footer() {
                   </span>
                 </div>
               ))}
-            </div>
-              href="https://wa.me/5612668168"
-              target="_blank"
-              rel="noopener noreferrer"
-              }}
-            >
-              <MessageCircle size={15} />
-              WhatsApp
-            </a>
-          </div>
+            <div className="flex items-start gap-3">
+              <MessageCircle size={16} className="text-[#00C9FF] mt-0.5 shrink-0" />
+              <a
+                href="https://wa.me/5612668168"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-white/50 dark:text-white/50 light:text-gray-600 hover:text-white/90 transition-colors duration-300"
+                >
+                  WhatsApp
+                </a>
+              </div>
         </div>
 
         {/* Bottom */}
