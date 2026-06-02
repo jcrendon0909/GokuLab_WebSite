@@ -186,26 +186,30 @@ export function Footer() {
                 { label: "Eventos", href: "/eventos" },
                 { label: "Apoyos", href: "/becas" },
                 { label: "Contacto", href: "/contacto" },
-              ].map((item) => (
-                <Link
-                  key={item.href}
-                  to={item.href}
-                  className="text-sm text-white/50 dark:text-white/50 light:text-gray-600 hover:text-white/90 dark:hover:text-white/90 light:hover:text-gray-900 transition-colors duration-300"
-                  style={{ transition: "color 0.2s ease" }}
-                >
-                  {item.label}
-                </Link>
-              ))}
-              <a
-                href="https://horarios.gokulab.mx"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-white/50 dark:text-white/50 light:text-gray-600 hover:text-white/90 dark:hover:text-white/90 light:hover:text-gray-900 transition-colors duration-300"
-                style={{ transition: "color 0.2s ease" }}
-              >
-
-                Horarios
-              </a>
+                { label: "Sistema de gestión académica", href: "https://goku-lab-academic-management-system-murex.vercel.app" },
+              ].map((item) => 
+                item.href.startsWith("http") ? (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-white/50 dark:text-white/50 light:text-gray-600 hover:text-white/90 dark:hover:text-white/90 light:hover:text-gray-900 transition-colors duration-300"
+                    style={{ transition: "color 0.2s ease" }}
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={item.href}
+                    to={item.href}
+                    className="text-sm text-white/50 dark:text-white/50 light:text-gray-600 hover:text-white/90 dark:hover:text-white/90 light:hover:text-gray-900 transition-colors duration-300"
+                    style={{ transition: "color 0.2s ease" }}
+                  >
+                    {item.label}
+                  </Link>
+                )
+              )}
             </div>
           </div>
           {/* Contacto */}
@@ -236,15 +240,9 @@ export function Footer() {
                 </div>
               ))}
             </div>
-            <a
               href="https://wa.me/5612668168"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-5 flex items-center gap-2 px-4 py-2 rounded-xl text-sm text-white font-semibold"
-              style={{
-                background: "#25D366",
-                width: "fit-content",
-                transition: "all 0.2s ease",
               }}
             >
               <MessageCircle size={15} />
@@ -282,3 +280,4 @@ export function Footer() {
     </footer>
   );
 }
+

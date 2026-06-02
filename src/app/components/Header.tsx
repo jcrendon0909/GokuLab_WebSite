@@ -37,6 +37,11 @@ export function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const location = useLocation();
 
+  const isActive = (href: string) => {
+    if (href === "/") return location.pathname === "/";
+    return location.pathname.startsWith(href);
+  };
+
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handler);
@@ -86,8 +91,11 @@ export function Header() {
                 >
                   <Link
                     to={link.href}
-                    className="flex items-center gap-1 px-3 py-2 rounded-lg text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100"
-                    style={{ transition: "all 0.2s ease" }}
+                    className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                      isActive(link.href)
+                        ? "text-[#26aaa3] bg-[#26aaa3]/10"
+                        : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
+                    }`}
                   >
                     {link.label}
                     {link.dropdown && (
@@ -95,9 +103,10 @@ export function Header() {
                         size={14}
                         style={{
                           transition: "transform 0.2s",
-                          transform: dropdown === link.labelKey
-                            ? "rotate(180deg)"
-                            : "rotate(0deg)",
+                          transform:
+                            dropdown === link.labelKey
+                              ? "rotate(180deg)"
+                              : "rotate(0deg)",
                         }}
                       />
                     )}
@@ -123,8 +132,11 @@ export function Header() {
                           <Link
                             key={item.href}
                             to={item.href}
-                            className="block px-4 py-3 text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-100"
-                            style={{ transition: "all 0.2s ease" }}
+                            className={`block px-4 py-3 text-sm transition-all duration-200 ${
+                              location.pathname === item.href
+                                ? "text-[#26aaa3] bg-[#26aaa3]/10 font-medium"
+                                : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
+                            }`}
                           >
                             {item.label}
                           </Link>
@@ -202,8 +214,11 @@ export function Header() {
               <div key={link.href}>
                 <Link
                   to={link.href}
-                  className="block px-4 py-3 rounded-xl text-gray-700 hover:text-gray-900 hover:bg-gray-100"
-                  style={{ transition: "all 0.2s ease" }}
+                  className={`block px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                    isActive(link.href)
+                      ? "text-[#26aaa3] bg-[#26aaa3]/10"
+                      : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
+                  }`}
                 >
                   {link.label}
                 </Link>
@@ -213,7 +228,11 @@ export function Header() {
                       <Link
                         key={item.href}
                         to={item.href}
-                        className="block px-4 py-2 text-sm text-gray-600 hover:text-gray-900"
+                        className={`block px-4 py-2 text-sm transition-all duration-200 ${
+                          location.pathname === item.href
+                            ? "text-[#26aaa3] font-medium"
+                            : "text-gray-600 hover:text-gray-900"
+                        }`}
                       >
                         {item.label}
                       </Link>
