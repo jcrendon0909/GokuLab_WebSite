@@ -3,35 +3,12 @@ import { Link, useParams } from "react-router";
 import { AnimatedSection } from "../components/AnimatedSection";
 import { useTheme } from "next-themes";
 import { ChevronRight, Clock, Users, Monitor, MessageCircle, Filter, Award, Globe, Rocket, Star } from "lucide-react";
-import algorithmicsLogo from "../../imports/image-0.png";
-
-// ── Imágenes locales originales ──────────────────────
-import imgFundamentos from "../../assets/cursos/Fundamentos de la programación.jpeg";
-import imgAlfabetizacionPeques from "../../assets/cursos/adn.png";
-import imgProgramacionVisual from "../../assets/cursos/pv.JPG";
-import imgDisenoGrafico from "../../assets/cursos/Diseño gráfico.jpeg";
-import imgRobotica from "../../assets/cursos/r1.jpeg";
-import imgAnimacion from "../../assets/cursos/Animación Digital.JPG";
-import imgIngles from "../../assets/cursos/Inglés.jpeg";
-import imgAlfabetizacionAdultos from "../../assets/cursos/Alfabetización Digital (Adultos).jpg";
-import imgCorporativo from "../../assets/cursos/Capacitación Corporativa.jpeg";
-
-// ── Nuevas Imágenes locales (desde la captura) ──────────────────────
-import imgCreacionContenido from "../../assets/cursos/creacion-contenido-video.jpg";
-import imgDisenoVideojuegos from "../../assets/cursos/diseno-videojuegos.jpg";
-import imgDisenoWeb from "../../assets/cursos/diseno-web.jpg";
-import imgEmprendimiento from "../../assets/cursos/emprendimiento.jpg";
-import imgIaAdultos from "../../assets/cursos/ia-adultos.png";
-import imgIaNinos from "../../assets/cursos/ia-ninos.jpg";
-import imgPreparacionUni from "../../assets/cursos/preparacion-uni.jpg";
-import imgPythonStart from "../../assets/cursos/python-start.jpg";
-import imgRegularizacionMate from "../../assets/cursos/regularizacion-mate.jpg";
-import imgUnity from "../../assets/cursos/unity.jpg";
+import { CURSOS, ALGORITHMICS_LOGO } from "../../Data/images";
 
 // ── Genéricas para cursos sin imagen propia ───────────────────────────────
-const KIDS_IMG = "https://images.unsplash.com/photo-1603354350266-a8de3496163b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaGlsZCUyMHJvYm90JTIwc2NpZW5jZSUyMFNURU0lMjBsZWFybmluZyUyMGZ1bnxlbnwxfHx8fDE3NzU4NTYyNDF8MA&ixlib=rb-4.1.0&q=80&w=600";
-const ADULT_IMG = "https://images.unsplash.com/photo-1724260793422-7754e5d06fbe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=600";
-const TEEN_IMG = "https://images.unsplash.com/photo-1635959952534-d99f969554a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=600";
+// const KIDS_IMG = "https://images.unsplash.com/photo-1603354350266-a8de3496163b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaGlsZCUyMHJvYm90JTIwc2NpZW5jZSUyMFNURU0lMjBsZWFybmluZyUyMGZ1bnxlbnwxfHx8fDE3NzU4NTYyNDF8MA&ixlib=rb-4.1.0&q=80&w=600";
+// const ADULT_IMG = "https://images.unsplash.com/photo-1724260793422-7754e5d06fbe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=600";
+// const TEEN_IMG = "https://images.unsplash.com/photo-1635959952534-d99f969554a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=600";
 
 type Category = "todos" | "ninos" | "adultos" | "empresas";
 
@@ -51,7 +28,7 @@ const allCourses = [
     techs: ["Scratch Jr", "Lógica", "Algorithmics"],
     category: "ninos" as Category,
     color: "#FF6B35",
-    img: imgFundamentos,
+    img: CURSOS.fundamentos,
     emoji: "🧩",
     algorithmics: true,
     isTeen: false,
@@ -68,7 +45,7 @@ const allCourses = [
     techs: ["Google Suite", "Mecanografía", "Ciberseguridad"],
     category: "ninos" as Category,
     color: "#4CAF50",
-    img: imgAlfabetizacionPeques,
+    img: CURSOS.alfabetizacion,
     emoji: "🖱️",
     algorithmics: true,
     isTeen: false,
@@ -85,7 +62,7 @@ const allCourses = [
     techs: ["Scratch", "Bloques", "Animación"],
     category: "ninos" as Category,
     color: "#1E88E5",
-    img: imgProgramacionVisual,
+    img: CURSOS.programacionVisual,
     emoji: "🐱",
     algorithmics: true,
     isTeen: false,
@@ -102,7 +79,7 @@ const allCourses = [
     techs: ["Vectores", "3D", "Collage", "Diseño"],
     category: "ninos" as Category,
     color: "#E91E63",
-    img: imgDisenoGrafico,
+    img: CURSOS.disenoGrafico,
     emoji: "🎨",
     algorithmics: true,
     isTeen: true,
@@ -119,7 +96,7 @@ const allCourses = [
     techs: ["Roblox Studio", "Lua", "Diseño 3D"],
     category: "ninos" as Category,
     color: "#E53E3E",
-    img: imgDisenoVideojuegos,
+    img: CURSOS.disenoVideojuegos,
     emoji: "🎮",
     algorithmics: true,
     isTeen: true,
@@ -136,7 +113,7 @@ const allCourses = [
     techs: ["Unity", "C#", "Animator", "Android"],
     category: "ninos" as Category,
     color: "#9C27B0",
-    img: imgUnity,
+    img: CURSOS.unity,
     emoji: "👾",
     algorithmics: true,
     isTeen: true,
@@ -153,7 +130,7 @@ const allCourses = [
     techs: ["Prompts", "Blender", "IA Generativa", "Código"],
     category: "ninos" as Category,
     color: "#00C9FF",
-    img: imgIaNinos,
+    img: CURSOS.iaNinos,
     emoji: "🤖",
     algorithmics: true,
     isTeen: true,
@@ -171,7 +148,7 @@ const allCourses = [
     techs: ["UX/UI", "Portafolio", "Diseño web"],
     category: "ninos" as Category,
     color: "#7C3AED",
-    img: imgDisenoWeb,
+    img: CURSOS.disenoWeb,
     emoji: "🌐",
     algorithmics: true,
     isTeen: true,
@@ -188,7 +165,7 @@ const allCourses = [
     techs: ["Sensores", "Mecánica", "Programación"],
     category: "ninos" as Category,
     color: "#FF9800",
-    img: imgRobotica,
+    img: CURSOS.robotica,
     emoji: "🦾",
     isTeen: false,
   },
@@ -204,7 +181,7 @@ const allCourses = [
     techs: ["Fotogramas", "Dibujo digital", "Movimiento"],
     category: "ninos" as Category,
     color: "#F44336",
-    img: imgAnimacion,
+    img: CURSOS.animacion,
     emoji: "🎬",
     isTeen: true,
   },
@@ -220,7 +197,7 @@ const allCourses = [
     techs: ["Edición", "Guión", "Storyboard"],
     category: "ninos" as Category,
     color: "#E91E63",
-    img: imgCreacionContenido,
+    img: CURSOS.creacionContenido,
     emoji: "📱",
     algorithmics: true,
     isTeen: true,
@@ -237,7 +214,7 @@ const allCourses = [
     techs: ["Python", "PyGame", "Turtle"],
     category: "ninos" as Category,
     color: "#4CAF50",
-    img: imgPythonStart,
+    img: CURSOS.pythonStart,
     emoji: "🐍",
     algorithmics: true,
     isTeen: true,
@@ -254,7 +231,7 @@ const allCourses = [
     techs: ["Lean Startup", "Modelo de negocios", "Ventas"],
     category: "ninos" as Category,
     color: "#FFC107",
-    img: imgEmprendimiento,
+    img: CURSOS.emprendimiento,
     emoji: "🚀",
     algorithmics: true,
     isTeen: true,
@@ -271,7 +248,7 @@ const allCourses = [
     techs: ["Gramática", "Conversación", "Comprensión"],
     category: "ninos" as Category,
     color: "#3F51B5",
-    img: imgIngles,
+    img: CURSOS.ingles,
     emoji: "🗣️",
     algorithmics: true,
     isTeen: true,
@@ -288,7 +265,7 @@ const allCourses = [
     techs: ["Álgebra", "Geometría", "Fracciones"],
     category: "ninos" as Category,
     color: "#00BCD4",
-    img: imgRegularizacionMate,
+    img: CURSOS.regularizacion,
     emoji: "➗",
     algorithmics: true,
     isTeen: true,
@@ -305,7 +282,7 @@ const allCourses = [
     techs: ["Simulacros", "Razonamiento", "Matemáticas"],
     category: "ninos" as Category,
     color: "#8BC34A",
-    img: imgPreparacionUni,
+    img: CURSOS.preparacionUni,
     emoji: "🎓",
     algorithmics: true,
     isTeen: true,
@@ -326,7 +303,7 @@ const allCourses = [
     techs: ["Navegación", "Correo", "Apps"],
     category: "adultos" as Category,
     color: "#FF6B35",
-    img: imgAlfabetizacionAdultos,
+    img: CURSOS.alfabetizacion,
     emoji: "💻",
   },
   {
@@ -341,7 +318,7 @@ const allCourses = [
     techs: ["Herramientas IA", "Prompts", "Consultoría"],
     category: "adultos" as Category,
     color: "#10B981",
-    img: imgIaAdultos,
+    img: CURSOS.iaAdultos,
     emoji: "🧠",
   },
 
@@ -360,7 +337,7 @@ const allCourses = [
     techs: ["A medida", "Certificación", "Tecnología"],
     category: "empresas" as Category,
     color: "#607D8B",
-    img: imgCorporativo,
+    img: CURSOS.corporativo,
     emoji: "🏢",
   },
 ];
@@ -765,7 +742,7 @@ export function Cursos() {
                 <div>
                   <div className="mb-6">
                     <img
-                      src={algorithmicsLogo}
+                      src={ALGORITHMICS_LOGO}
                       alt="Algorithmics International School of Programming"
                       className="h-12 mb-4"
                       style={{ filter: theme === "dark" ? "brightness(1.1)" : "brightness(0.9) grayscale(100%)" }}

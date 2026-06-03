@@ -56,7 +56,7 @@ export const GALERIA_HOME = [
 export const CURSOS = {
   fundamentos:        R2("Galery", "fundamentos-programacion1.jpeg", 800),
   programacionVisual: R2("Galery", "programacion-visual-peques1.JPG", 800),
-  disenoGrafico:      R2("Galery", "diseño- gráfico1.jpeg", 800),
+  disenoGrafico:      R2("Galery", "diseno-grafico1.jpeg", 800),
   robotica:           R2("Galery", "robotica1.jpeg", 800),
   animacion:          R2("Galery", "animacion-digital1.JPG", 800),
   ingles:             R2("Galery", "regularizacion-ingles.jpeg", 800),
@@ -78,4 +78,6 @@ export const CURSOS = {
 export const ALUMNOS: { src: string; alt: string }[] = [
   // Ejemplo:
   // { src: R2("Alumnos", "nombre-alumno.jpg", 600), alt: "Descripción" },
+
 ];
+export const ALGORITHMICS_LOGO = R2("Galery", "algorithmics-logo.png", 200);
