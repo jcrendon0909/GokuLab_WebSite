@@ -3,6 +3,7 @@ import { AnimatedSection } from "../components/AnimatedSection";
 import { TechScroll } from "../components/TechScroll";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useTheme } from "next-themes";
+import { HOME_IMAGES, GALERIA_HOME_IMAGES } from "../../Data/images";
 import { useState, useEffect } from "react";
 import {
   ArrowRight,
@@ -18,16 +19,10 @@ import {
   Cpu,
 } from "lucide-react";
 
-// Importar imágenes de Figma
+// Importar imágenes de Figma (se mantienen)
 import imgKidsHero from "../../imports/03HomepageV3/94c9da7f14245899ba192ebc2e34fd7686ea710b.png";
 import imgKidsSection from "../../imports/03HomepageV3/bddc569ae394f99d6e20497e0ca7b59d36c54997.png";
 import imgKidsBottom from "../../imports/03HomepageV3/044b589933d402106ef8541547b60fdeff9c753f.png";
-
-// Importar imágenes de assets con los nuevos nombres seguros para Vercel
-import heroBackground from "../../assets/imagen de inicio.jpg";
-import ninosImg from "../../assets/pnnya.jpeg";
-import adultosImg from "../../assets/para-adultos.jpg";
-import corporativoImg from "../../assets/empresas-y-gobierno.jpeg";
 
 const HERO_IMG = imgKidsHero;
 
@@ -42,7 +37,7 @@ function SegmentCards() {
       bg: "rgba(255,107,53,0.08)",
       border: "rgba(255,107,53,0.25)",
       href: "/cursos/ninos",
-      img: ninosImg,
+      img: HOME_IMAGES.ninos,
       tags: ["Programación", "Robótica", "Diseño", "IA"],
       emoji: "🧒",
     },
@@ -54,7 +49,7 @@ function SegmentCards() {
       bg: "rgba(0,201,255,0.08)",
       border: "rgba(0,201,255,0.25)",
       href: "/cursos/adultos",
-      img: adultosImg,
+      img: HOME_IMAGES.adultos,
       tags: ["Alfabetización", "Inclusión Digital", "IA Consultoría"],
       emoji: "👨‍💼",
     },
@@ -66,7 +61,7 @@ function SegmentCards() {
       bg: "rgba(124,58,237,0.08)",
       border: "rgba(124,58,237,0.25)",
       href: "/capacitaciones",
-      img: corporativoImg,
+      img: HOME_IMAGES.corporativo,
       tags: ["Corporativo", "In-company", "Custom"],
       emoji: "🏢",
     },
@@ -196,6 +191,14 @@ export function Home() {
   const { t } = useLanguage();
   const { theme } = useTheme();
 
+  const galleryItems = [
+    { src: GALERIA_HOME_IMAGES.clasePV, span: "md:col-span-2 md:row-span-2", alt: "Clase de Programación Visual" },
+    { src: GALERIA_HOME_IMAGES.robotica, span: "", alt: "Taller de Robótica" },
+    { src: GALERIA_HOME_IMAGES.diseño, span: "", alt: "Clase de Diseño" },
+    { src: GALERIA_HOME_IMAGES.adultosClase, span: "", alt: "Clase para Adultos" },
+    { src: GALERIA_HOME_IMAGES.python, span: "md:col-span-2", alt: "Curso de Python" },
+  ];
+
   return (
     <div className="bg-white dark:bg-[#0A0F1E] transition-colors duration-300">
       
@@ -204,23 +207,17 @@ export function Home() {
         className="relative min-h-screen flex items-center justify-center overflow-hidden"
         style={{ paddingTop: "80px" }}
       >
-        {/* Imagen de fondo principal */}
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: `url(${heroBackground})`,
+            backgroundImage: `url(${HOME_IMAGES.hero})`,
             backgroundSize: "cover",
-            // Ajustamos la posición para que en móvil enfoque a las personas (derecha) en lugar del muro
-            backgroundPosition: "80% center", 
+            backgroundPosition: "80% center",
             backgroundRepeat: "no-repeat",
           }}
         />
 
-        {/* ===============================
-            DEGRADADOS RESPONSIVOS
-        =================================== */}
-
-        {/* 1. Degradado para DESKTOP (Oculto en celulares) */}
+        {/* Degradados responsivos */}
         <div
           className="absolute inset-0 hidden md:block transition-colors duration-300 pointer-events-none"
           style={{
@@ -230,7 +227,6 @@ export function Home() {
           }}
         />
 
-        {/* 2. Resplandor radial de anclaje para DESKTOP (Oculto en celulares) */}
         <div
           className="absolute top-1/2 left-0 w-[800px] h-[1200px] rounded-full blur-[120px] pointer-events-none transition-colors duration-300 hidden md:block"
           style={{
@@ -239,7 +235,6 @@ export function Home() {
           }}
         />
 
-        {/* 3. Degradado para MÓVILES (Oculto en Desktop) - De arriba hacia abajo */}
         <div
           className="absolute inset-0 md:hidden transition-colors duration-300 pointer-events-none"
           style={{
@@ -249,7 +244,6 @@ export function Home() {
           }}
         />
 
-        {/* Floating orbs */}
         <div
           className="absolute top-20 right-10 w-80 h-80 rounded-full pointer-events-none mix-blend-multiply dark:mix-blend-screen"
           style={{
@@ -265,11 +259,8 @@ export function Home() {
           }}
         />
 
-        {/* Contenido del Hero */}
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 flex flex-col justify-center">
-          
           <div className="max-w-2xl relative">
-            {/* Badge */}
             <div
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 bg-blue-50 dark:bg-blue-900/20 backdrop-blur-sm"
               style={{
@@ -283,7 +274,6 @@ export function Home() {
               </span>
             </div>
 
-            {/* Headline */}
             <h1
               className="text-gray-900 dark:text-white mb-6 transition-colors duration-300"
               style={{
@@ -313,7 +303,6 @@ export function Home() {
               {t("hero.subtitle")}
             </p>
 
-            {/* CTAs */}
             <div
               className="flex flex-col sm:flex-row gap-4 items-start mb-12"
               style={{ animation: "fadeUp 0.6s ease 0.3s both" }}
@@ -356,7 +345,6 @@ export function Home() {
           </div>
         </div>
 
-        {/* Scroll indicator */}
         <div
           className="absolute bottom-8 left-1/2 -translate-x-1/2"
           style={{ animation: "bounce 2s infinite" }}
@@ -500,7 +488,6 @@ export function Home() {
             </p>
           </AnimatedSection>
 
-          {/* Segment Cards */}
           <SegmentCards />
         </div>
       </section>
@@ -770,43 +757,13 @@ export function Home() {
             </p>
           </AnimatedSection>
 
-          {/* ========================================================================
-            TODO: INTEGRACIÓN DE REDES SOCIALES (PENDIENTE DE VERIFICACIÓN)
-            ========================================================================
-            Aquí es donde se conectará el feed dinámico de las redes sociales de la empresa.
-            Actualmente estamos en espera de la verificación de la cuenta y aprobación de 
-            la API por parte de la plataforma (ej. Instagram Graph API / Facebook).
-
-            Instrucciones para el futuro:
-            1. Una vez verificada la cuenta, generar el Token de Acceso.
-            2. Guardar el token en las variables de entorno de Vercel (ej. VITE_SOCIAL_TOKEN).
-            3. Eliminar el grid de imágenes estático (mockup) que está debajo.
-            4. Descomentar e implementar el componente del feed.
-            
-            Ejemplo de implementación futura:
-            
-            <SocialMediaFeed 
-              provider="instagram" 
-              accessToken={import.meta.env.VITE_SOCIAL_TOKEN} 
-              limit={6} 
-            />
-            ========================================================================
-          */}
-
-          {/* Mockup temporal: Grid de mosaico moderno con alturas controladas por spans de Tailwind */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {[
-              { src: "/images/galeria/Clases de PV.jpg", span: "md:col-span-2 md:row-span-2", alt: "Taller de robótica" },
-              { src: "/images/galeria/Clases de Robotica.jpg", span: "", alt: "Niños programando" },
-              { src: "/images/galeria/Diseño.jpg", span: "", alt: "Clase demo" },
-              { src: "/images/galeria/Clases Adultos.jpg", span: "", alt: "Hackathon GOKU LAB" },
-              { src: "/images/galeria/Clases de Python.jpg", span: "md:col-span-2", alt: "Comunidad GOKU LAB" }
-            ].map((img, index) => (
+            {galleryItems.map((img, index) => (
               <AnimatedSection key={index} className={img.span} delay={index * 80}>
                 <div className="relative rounded-3xl overflow-hidden h-full min-h-[240px] group shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-white/5 bg-white dark:bg-white/5">
                   <img
-                    src={img.src}   // ← antes era img.url
-                    alt={img.alt}   // también puedes usar img.alt en lugar del texto genérico
+                    src={img.src}
+                    alt={img.alt}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-purple-950/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -902,8 +859,6 @@ export function Home() {
         .animate-blink {
           animation: blink 1s infinite;
         }
-
-        /* Video background smooth transitions */
         video {
           transition: opacity 0.5s ease-in-out;
         }
@@ -911,4 +866,3 @@ export function Home() {
     </div>
   );
 }
-
