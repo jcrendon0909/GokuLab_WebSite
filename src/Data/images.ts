@@ -1,10 +1,7 @@
 // ============================================================
 // CONFIGURACIÓN CENTRAL DE IMÁGENES — GOKULAB
-// Todas las imágenes viven en Cloudflare R2 (media.gokulab.mx)
-// Para agregar fotos nuevas: sube al bucket y agrega la URL aquí
 // ============================================================
 
-// Base URL con optimización automática de Cloudflare
 const R2 = (folder: string, file: string, width = 1200) =>
   `https://media.gokulab.mx/cdn-cgi/image/width=${width},format=auto,quality=80/${folder}/${encodeURIComponent(file)}`;
 
@@ -22,8 +19,7 @@ export const HERO = {
   corporativo: R2("Galery", "empresas-gobierno1.jpg", 800),
 };
 
-// ─── GALERÍA HOME ──────────────────────────────────────────
-// Para agregar fotos: copia el formato { src, span, alt }
+// ─── GALERÍA HOME (mockup original, se mantiene)
 export const GALERIA_HOME = [
   {
     src:  R2("Galery", "programacion-visual-peques1.JPG", 1200),
@@ -60,7 +56,7 @@ export const CURSOS = {
   robotica:           R2("Galery", "robotica1.jpeg", 800),
   animacion:          R2("Galery", "animacion-digital1.JPG", 800),
   ingles:             R2("Galery", "regularizacion-ingles.jpeg", 800),
-  alfabetizacion:     R2("Galery", "alfabetizacion-digital-adultos3.jpg", 800),
+  alfabetizacion:     R2("Galery", "alfabetizacion-digital-adultos1.jpg", 800),
   corporativo:        R2("Galery", "capacitacion-orporativa.jpeg", 800),
   creacionContenido:  R2("Galery", "creacion-contenido-video1.jpg", 800),
   disenoVideojuegos:  R2("Galery", "diseno-videojuegos1.jpg", 800),
@@ -74,31 +70,26 @@ export const CURSOS = {
   iaAdultos:          R2("Galery", "ia-adultos.png", 800),
 };
 
-// ─── ALUMNOS ───────────────────────────────────────────────
-// Agrega aquí las fotos cuando subas a R2/Alumnos/
-export const ALUMNOS: { src: string; alt: string }[] = [
-  // Ejemplo:
-  // { src: R2("Alumnos", "nombre-alumno.jpg", 600), alt: "Descripción" },
-
-];
+export const ALUMNOS: { src: string; alt: string }[] = [];
 export const ALGORITHMICS_LOGO = R2("Galery", "algorithmics-logo.png", 200);
+
 // ============================================================
-// HOME - HERO Y SEGMENTOS
+// HOME - HERO Y SEGMENTOS (para Home.tsx)
 // ============================================================
 export const HOME_IMAGES = {
-  hero:               R2("Galery", "pagina-principal1.jpg", 1600),          // Nombre sin espacios, seguro
-  ninos:              R2("Galery", "ninos-programando.jpeg", 800),                     // Niños
-  adultos:            R2("Galery", "alfabetizacion-digital-adultos3..jpg", 800),               // Adultos
-  corporativo:        R2("Galery", "empresas-gobierno1.jpeg", 800),    // Empresas
+  hero:        R2("Galery", "pagina-principal1.jpg", 1600),
+  ninos:       R2("Galery", "clases-peques1.jpg", 800),     // ✅ usa la misma que HERO.ninos
+  adultos:     R2("Galery", "clases-adultos1.jpg", 800),    // ✅ usa la misma que HERO.adultos
+  corporativo: R2("Galery", "empresas-gobierno1.jpg", 800), // ✅ usa la misma que HERO.corporativo
 };
 
 // ============================================================
-// GALERÍA HOME (imágenes de la comunidad)
+// GALERÍA HOME (versión para Home.tsx)
 // ============================================================
 export const GALERIA_HOME_IMAGES = {
-  clasePV:            R2("Galery", "hero2.jpg", 1200),
-  robotica:           R2("Galery", "robotica1.jpg", 800),
-  diseño:             R2("Galery", "lumy.jpg", 800),
-  adultosClase:       R2("Galery", "alfabetizacion-digital-adultos1.jpg", 800),
-  python:             R2("Galery", "python-start1.jpg", 1200),
+  clasePV:      R2("Galery", "hero2.JPG", 1200),
+  robotica:     R2("Galery", "robotica1.jpeg", 800),
+  diseño:       R2("Galery", "lumy.jpeg", 800),
+  adultosClase: R2("Galery", "alfabetizacion-digital-adultos1.jpg", 800),
+  python:       R2("Galery", "python-start1.jpg", 1200),
 };
