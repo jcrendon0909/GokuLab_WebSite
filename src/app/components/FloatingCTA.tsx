@@ -1,7 +1,17 @@
 "use client";
-
 import { useState, useEffect, useRef, useCallback } from "react";
-import { MessageCircle, Phone, X, ChevronUp, Bot, WifiOff, RefreshCw, ExternalLink, Maximize2, Minimize2 } from "lucide-react";
+import {
+  MessageCircle,
+  Phone,
+  X,
+  ChevronUp,
+  Bot,
+  WifiOff,
+  RefreshCw,
+  ExternalLink,
+  Maximize2,
+  Minimize2,
+} from "lucide-react";
 import { useTheme } from "next-themes";
 
 // ─── Constantes ────────────────────────────────────────────────────────────────
@@ -216,7 +226,6 @@ export function FloatingCTA() {
   const handleIframeLoad = useCallback(() => {
     clearTimers();
     setChatStatus("ready");
-    // Pequeño delay para que el iframe pinte antes de ocultar el skeleton
   }, [clearTimers]);
 
   // ─── Cuando el iframe falla ────────────────────────────────────────────────
@@ -435,7 +444,6 @@ export function FloatingCTA() {
         aria-label="Asistente virtual Goku Lab"
         className="fixed z-40 rounded-2xl overflow-hidden flex flex-col"
         style={{
-          // Modo expandido: casi toda la pantalla. Modo normal: más grande que antes.
           bottom: expanded ? "16px" : "112px",
           right: expanded ? "16px" : "24px",
           left: expanded ? "16px" : "auto",
@@ -463,13 +471,9 @@ export function FloatingCTA() {
           }}
         >
           <div className="flex items-center gap-2.5">
-            {/* Avatar */}
-            </div>
-
             <div className="flex flex-col">
               <span className="font-semibold text-sm leading-tight">Asistente Virtual</span>
               <div className="flex items-center gap-1.5 mt-0.5">
-                {/* Indicador de estado */}
                 {chatStatus === "ready" ? (
                   <>
                     <span className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />
@@ -538,93 +542,90 @@ export function FloatingCTA() {
             </button>
           </div>
         </div>
-          {/* Skeleton visible mientras carga */}
-          {chatStatus !== "ready" && (
-            <div
-              className="absolute inset-0 z-10"
-              style={{
-                background: isDark ? "#111827" : "#fff",
-                animation: "fadeIn 0.2s ease",
-              }}
-            >
-              {(chatStatus === "loading" || chatStatus === "cold_start") && (
-                <ChatSkeleton />
-              )}
 
-              {chatStatus === "error" && (
+        {/* Skeleton visible mientras carga */}
+        {chatStatus !== "ready" && (
+          <div
+            className="absolute inset-0 z-10"
+            style={{
+              background: isDark ? "#111827" : "#fff",
+              animation: "fadeIn 0.2s ease",
+            }}
+          >
+            {(chatStatus === "loading" || chatStatus === "cold_start") && <ChatSkeleton />}
+
+            {chatStatus === "error" && (
+              <div
+                className="flex flex-col items-center justify-center h-full gap-4 px-6 text-center"
+                style={{ animation: "fadeIn 0.3s ease" }}
+              >
                 <div
-                  className="flex flex-col items-center justify-center h-full gap-4 px-6 text-center"
-                  style={{ animation: "fadeIn 0.3s ease" }}
+                  className="w-14 h-14 rounded-full flex items-center justify-center"
+                  style={{ background: "rgba(239,68,68,0.08)" }}
                 >
-                  <div
-                    className="w-14 h-14 rounded-full flex items-center justify-center"
-                    style={{ background: "rgba(239,68,68,0.08)" }}
-                  >
-                    <WifiOff size={24} style={{ color: "#ef4444" }} />
-                  </div>
-                  <div>
-                    <p
-                      className="font-semibold text-sm mb-1"
-                      style={{ color: isDark ? "#f3f4f6" : "#111827" }}
-                    >
-                      No se pudo conectar
-                    </p>
-                    <p
-                      className="text-xs leading-relaxed"
-                      style={{ color: isDark ? "#9ca3af" : "#6b7280" }}
-                    >
-                      El servidor puede estar iniciando. Intenta de nuevo en unos segundos.
-                    </p>
-                  </div>
-                  <div className="flex flex-col gap-2 w-full">
-                    <button
-                      onClick={retryLoad}
-                      className="fcta-btn flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-white text-sm font-medium"
-                      style={{ background: "linear-gradient(135deg, #8B5CF6, #5B21B6)" }}
-                    >
-                      <RefreshCw size={14} />
-                      Reintentar
-                    </button>
-                    <button
-                      onClick={() => {
-                        closeChat();
-                        setTimeout(() => {
-                          window.open(WHATSAPP_URL, "_blank", "noopener,noreferrer");
-                        }, 300);
-                      }}
-                      className="fcta-btn flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-white text-sm font-medium"
-                      style={{ background: "#25D366" }}
-                    >
-                      <MessageCircle size={14} />
-                      Contactar por WhatsApp
-                    </button>
-                  </div>
+                  <WifiOff size={24} style={{ color: "#ef4444" }} />
                 </div>
-              )}
-            </div>
-          )}
+                <div>
+                  <p
+                    className="font-semibold text-sm mb-1"
+                    style={{ color: isDark ? "#f3f4f6" : "#111827" }}
+                  >
+                    No se pudo conectar
+                  </p>
+                  <p
+                    className="text-xs leading-relaxed"
+                    style={{ color: isDark ? "#9ca3af" : "#6b7280" }}
+                  >
+                    El servidor puede estar iniciando. Intenta de nuevo en unos segundos.
+                  </p>
+                </div>
+                <div className="flex flex-col gap-2 w-full">
+                  <button
+                    onClick={retryLoad}
+                    className="fcta-btn flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-white text-sm font-medium"
+                    style={{ background: "linear-gradient(135deg, #8B5CF6, #5B21B6)" }}
+                  >
+                    <RefreshCw size={14} />
+                    Reintentar
+                  </button>
+                  <button
+                    onClick={() => {
+                      closeChat();
+                      setTimeout(() => {
+                        window.open(WHATSAPP_URL, "_blank", "noopener,noreferrer");
+                      }, 300);
+                    }}
+                    className="fcta-btn flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-white text-sm font-medium"
+                    style={{ background: "#25D366" }}
+                  >
+                    <MessageCircle size={14} />
+                    Contactar por WhatsApp
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
 
-          {/* Iframe */}
-          {chatStatus !== "idle" && (
-            <iframe
-              key={iframeKey}
-              ref={iframeRef}
-              src={CHATBOT_URL}
-              title="Chatbot Goku Lab"
-              onLoad={handleIframeLoad}
-              onError={handleIframeError}
-              className="w-full h-full border-none"
-              style={{
-                background: isDark ? "#111827" : "#fff",
-                // Visible solo cuando está listo (evita flash del iframe vacío)
-                opacity: chatStatus === "ready" ? 1 : 0,
-                transition: "opacity 0.3s ease",
-              }}
-              allow="microphone; camera"
-              sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"
-            />
-          )}
-        </div>
+        {/* Iframe */}
+        {chatStatus !== "idle" && (
+          <iframe
+            key={iframeKey}
+            ref={iframeRef}
+            src={CHATBOT_URL}
+            title="Chatbot Goku Lab"
+            onLoad={handleIframeLoad}
+            onError={handleIframeError}
+            className="w-full h-full border-none"
+            style={{
+              background: isDark ? "#111827" : "#fff",
+              opacity: chatStatus === "ready" ? 1 : 0,
+              transition: "opacity 0.3s ease",
+            }}
+            allow="microphone; camera"
+            sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"
+          />
+        )}
       </div>
     </>
   );
