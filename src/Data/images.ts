@@ -4,6 +4,9 @@
 
 const R2 = (folder: string, file: string, width = 1200) =>
   `https://media.gokulab.mx/cdn-cgi/image/width=${width},format=auto,quality=80/${folder}/${encodeURIComponent(file)}`;
+// Función para videos (acceso directo a R2, sin transformación)
+const R2Video = (folder: string, file: string) =>
+  `https://media.gokulab.mx/${folder}/${encodeURIComponent(file)}`;
 
 // ─── PROFESORES ────────────────────────────────────────────
 export const PROFESORES = {
@@ -90,6 +93,6 @@ export const GALERIA_HOME_IMAGES = {
   clasePV:      R2("Galery", "hero2.jpg", 1200),
   robotica:     R2("Galery", "robotica1.jpeg", 800),
   diseño:       R2("Galery", "Lumy.jpeg", 800),
-  adultosClase: R2("Galery", "caballerocodigo.mp4", 800),
+  adultosClase: R2Video("Galery", "caballerocodigo.mp4"), // Video directo sin transformación
   python:       R2("Galery", "python-start1.jpg", 1200),
 };
