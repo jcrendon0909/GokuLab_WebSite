@@ -90,6 +90,6 @@ export const GALERIA_HOME_IMAGES = {
   clasePV:      R2("Galery", "hero2.jpg", 1200),
   robotica:     R2("Galery", "robotica1.jpeg", 800),
   diseño:       R2("Galery", "Lumy.jpeg", 800),
-  adultosClase: R2("Galery", "alfabetizacion-digital-adultos1.jpg", 800),
+  adultosClase: R2("Galery", "caballerodelcodigo.mp4", 800),
   python:       R2("Galery", "python-start1.jpg", 1200),
 };

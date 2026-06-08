@@ -195,7 +195,7 @@ export function Home() {
     { src: GALERIA_HOME_IMAGES.clasePV, span: "md:col-span-2 md:row-span-2", alt: "Clase de Programación Visual" },
     { src: GALERIA_HOME_IMAGES.robotica, span: "", alt: "Taller de Robótica" },
     { src: GALERIA_HOME_IMAGES.diseño, span: "", alt: "Clase de Diseño" },
-    { src: GALERIA_HOME_IMAGES.adultosClase, span: "", alt: "Clase para Adultos" },
+    { src: GALERIA_HOME_IMAGES.adultosClase, span: "", alt: "Clase para Adultos", type: "video" }, // 👈 Video desde R2
     { src: GALERIA_HOME_IMAGES.python, span: "md:col-span-2", alt: "Curso de Python" },
   ];
 
@@ -758,14 +758,26 @@ export function Home() {
           </AnimatedSection>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {galleryItems.map((img, index) => (
-              <AnimatedSection key={index} className={img.span} delay={index * 80}>
+            {galleryItems.map((item, index) => (
+              <AnimatedSection key={index} className={item.span} delay={index * 80}>
                 <div className="relative rounded-3xl overflow-hidden h-full min-h-[240px] group shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-white/5 bg-white dark:bg-white/5">
-                  <img
-                    src={img.src}
-                    alt={img.alt}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
+                  {item.type === 'video' ? (
+                    <video
+                      src={item.src}
+                      title={item.alt}
+                      className="w-full h-full object-cover"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                    />
+                  ) : (
+                    <img
+                      src={item.src}
+                      alt={item.alt}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  )}
                   <div className="absolute inset-0 bg-purple-950/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
               </AnimatedSection>
