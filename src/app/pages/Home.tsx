@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import { AnimatedSection } from "../components/AnimatedSection";
 import { TechScroll } from "../components/TechScroll";
+import { SocialMediaFeed } from "../components/SocialMediaFeed";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useTheme } from "next-themes";
 import { HOME_IMAGES, GALERIA_HOME_IMAGES } from "../../Data/images";
@@ -195,7 +196,7 @@ export function Home() {
     { src: GALERIA_HOME_IMAGES.clasePV, span: "md:col-span-2 md:row-span-2", alt: "Clase de Programación Visual" },
     { src: GALERIA_HOME_IMAGES.robotica, span: "", alt: "Taller de Robótica" },
     { src: GALERIA_HOME_IMAGES.diseño, span: "", alt: "Clase de Diseño" },
-    { src: GALERIA_HOME_IMAGES.adultosClase, span: "", alt: "Clase para Adultos", type: "video" }, // 👈 Video desde R2
+    { src: GALERIA_HOME_IMAGES.adultosClase, span: "", alt: "Clase para Adultos", type: "video" },
     { src: GALERIA_HOME_IMAGES.python, span: "md:col-span-2", alt: "Curso de Python" },
   ];
 
@@ -733,7 +734,7 @@ export function Home() {
         </div>
       </section>
 
-      {/* GALLERY SECTION */}
+      {/* GALERÍA CON IMÁGENES/VIDEOS + FEED DE FACEBOOK */}
       <section className="py-24 px-4 bg-gray-50 dark:bg-[#050A14] transition-colors duration-300 border-t border-gray-100 dark:border-white/5">
         <div className="max-w-7xl mx-auto">
           <AnimatedSection className="text-center mb-16">
@@ -757,7 +758,8 @@ export function Home() {
             </p>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {/* Grid de imágenes y videos (como en el código del desarrollador) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-16">
             {galleryItems.map((item, index) => (
               <AnimatedSection key={index} className={item.span} delay={index * 80}>
                 <div className="relative rounded-3xl overflow-hidden h-full min-h-[240px] group shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-white/5 bg-white dark:bg-white/5">
@@ -783,6 +785,9 @@ export function Home() {
               </AnimatedSection>
             ))}
           </div>
+
+          {/* Feed de Redes Sociales (Facebook) */}
+          <SocialMediaFeed />
         </div>
       </section>
 
