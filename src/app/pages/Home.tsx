@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import { AnimatedSection } from "../components/AnimatedSection";
 import { TechScroll } from "../components/TechScroll";
+import { SocialMediaFeed } from "../components/SocialMediaFeed";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useTheme } from "next-themes";
 import { HOME_IMAGES, GALERIA_HOME_IMAGES } from "../../Data/images";
@@ -783,13 +784,9 @@ export function Home() {
               </AnimatedSection>
             ))}
           </div>
-<<<<<<< Updated upstream
-=======
 
           {/* Feed de Redes Sociales (Facebook) */}
-          
           <SocialMediaFeed />
->>>>>>> Stashed changes
         </div>
       </section>
 
