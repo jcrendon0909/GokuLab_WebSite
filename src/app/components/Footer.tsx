@@ -186,7 +186,7 @@ export function Footer() {
                 { label: "Eventos", href: "/eventos" },
                 { label: "Apoyos", href: "/becas" },
                 { label: "Contacto", href: "/contacto" },
-                { label: "Sistema de gestión académica", href: "https://goku-lab-academic-management-system-murex.vercel.app" },
+                { label: "Sistema de gestión académica", href: "https://Horarios.gokulab.mx" },
               ].map((item) => 
                 item.href.startsWith("http") ? (
                   <a
