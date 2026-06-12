@@ -783,6 +783,13 @@ export function Home() {
               </AnimatedSection>
             ))}
           </div>
+<<<<<<< Updated upstream
+=======
+
+          {/* Feed de Redes Sociales (Facebook) */}
+          
+          <SocialMediaFeed />
+>>>>>>> Stashed changes
         </div>
       </section>
 
