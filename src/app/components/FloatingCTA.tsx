@@ -350,7 +350,7 @@ export function FloatingCTA() {
               background: "linear-gradient(135deg, #8B5CF6 0%, #5B21B6 100%)",
               boxShadow: "0 4px 16px rgba(124,58,237,0.35)",
             }}
-            aria-label="Abrir chatbot Goku Lab"
+            aria-label="Abrir chatbot GokuLab"
           >
             {/* Shimmer */}
             <div
@@ -441,7 +441,7 @@ export function FloatingCTA() {
       <div
         role="dialog"
         aria-modal="true"
-        aria-label="Asistente virtual Goku Lab"
+        aria-label="Asistente virtual GokuLab"
         className="fixed z-40 rounded-2xl overflow-hidden flex flex-col"
         style={{
           bottom: expanded ? "16px" : "112px",
