@@ -187,7 +187,7 @@ export function Footer() {
                 { label: "Apoyos", href: "/becas" },
                 { label: "Contacto", href: "/contacto" },
                 { label: "Sistema de gestión académica", href: "https://Horarios.gokulab.mx" },
-                { label: "Test de Inteligencia y emprendimiento", href: "https://test.gokulab.mx" },
+                { label: "Test de Inteligencias múltiples y emprendimiento", href: "https://test.gokulab.mx" },
               ].map((item) => 
                 item.href.startsWith("http") ? (
                   <a
