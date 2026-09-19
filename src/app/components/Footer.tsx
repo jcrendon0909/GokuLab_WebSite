@@ -52,7 +52,7 @@ export function Footer() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://wa.me/5612668168?text=Hola,%20quiero%20mi%20clase%20muestra%20gratuita"
+              href=" https://tinyurl.com/AgendarCitaGokulab"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-white font-bold"
@@ -69,7 +69,7 @@ export function Footer() {
               }}
             >
               <MessageCircle size={20} />
-              Agendar por WhatsApp
+              Agendar tu cita hoy
             </a>
             <Link
               to="/cursos"
