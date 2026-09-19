@@ -15,7 +15,7 @@ import {
 import { useTheme } from "next-themes";
 
 // ─── Constantes ────────────────────────────────────────────────────────────────
-const CHATBOT_URL = "https://chatbot-gokulab-valeria.onrender.com";
+const CHATBOT_URL = "https://chat.gokulab.mx";
 const WHATSAPP_URL =
   "https://wa.me/5612668168?text=Hola,%20me%20interesa%20agendar%20una%20clase%20muestra%20gratuita%20en%20GOKU%20LAB";
 const PHONE_NUMBER = "tel:+5612668168";
