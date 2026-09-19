@@ -548,7 +548,7 @@ const defaultCourse = {
     "Portfolio real de proyectos",
     "Habilidades aplicables inmediatamente"
   ],
-  testimonials: [{ name: "Alumno GŌKU LAB", text: "La mejor inversión en mi educación.", rating: 5 }]
+  testimonials: [{ name: "Alumno GŌKULAB", text: "La mejor inversión en mi educación.", rating: 5 }]
 };
 
 function getAgeSegment(age: string): "kids" | "adults" {

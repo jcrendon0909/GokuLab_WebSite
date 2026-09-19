@@ -309,7 +309,7 @@ export function Home() {
               style={{ animation: "fadeUp 0.6s ease 0.3s both" }}
             >
               <a
-                href="https://wa.me/5612668168?text=Hola,%20quiero%20agendar%20mi%20clase%20muestra%20gratuita"
+                href="https://tinyurl.com/AgendarCitaGokulab"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 px-8 py-4 rounded-2xl text-white font-bold"
