@@ -2,883 +2,226 @@ import { Link } from "react-router";
 import { AnimatedSection } from "../components/AnimatedSection";
 import { TechScroll } from "../components/TechScroll";
 import { SocialMediaFeed } from "../components/SocialMediaFeed";
-import { useLanguage } from "../contexts/LanguageContext";
-import { useTheme } from "next-themes";
 import { HOME_IMAGES, GALERIA_HOME_IMAGES } from "../../Data/images";
-import { useState, useEffect } from "react";
 import {
   ArrowRight,
-  CheckCircle,
-  Users,
-  Award,
-  BookOpen,
-  Zap,
   MessageCircle,
-  ChevronRight,
-  Target,
-  Lightbulb,
-  Cpu,
+  Sparkles,
+  Play,
+  Code2,
+  Rocket,
+  ShieldCheck,
+  Globe,
+  MonitorPlay
 } from "lucide-react";
 
-// Importar imágenes de Figma (se mantienen)
-import imgKidsHero from "../../imports/03HomepageV3/94c9da7f14245899ba192ebc2e34fd7686ea710b.png";
-import imgKidsSection from "../../imports/03HomepageV3/bddc569ae394f99d6e20497e0ca7b59d36c54997.png";
-import imgKidsBottom from "../../imports/03HomepageV3/044b589933d402106ef8541547b60fdeff9c753f.png";
-
-const HERO_IMG = imgKidsHero;
-
-function SegmentCards() {
-  const { t } = useLanguage();
-  const segments = [
-    {
-      titleKey: "segment.kids.title",
-      subtitleKey: "segment.kids.subtitle",
-      descKey: "segment.kids.desc",
-      color: "#FF6B35",
-      bg: "rgba(255,107,53,0.08)",
-      border: "rgba(255,107,53,0.25)",
-      href: "/cursos/ninos",
-      img: HOME_IMAGES.ninos,
-      tags: ["Programación", "Robótica", "Diseño", "IA"],
-      emoji: "🧒",
-    },
-    {
-      titleKey: "segment.adults.title",
-      subtitleKey: "segment.adults.subtitle",
-      descKey: "segment.adults.desc",
-      color: "#00C9FF",
-      bg: "rgba(0,201,255,0.08)",
-      border: "rgba(0,201,255,0.25)",
-      href: "/cursos/adultos",
-      img: HOME_IMAGES.adultos,
-      tags: ["Alfabetización", "Inclusión Digital", "IA Consultoría"],
-      emoji: "👨‍💼",
-    },
-    {
-      titleKey: "segment.corporate.title",
-      subtitleKey: "segment.corporate.subtitle",
-      descKey: "segment.corporate.desc",
-      color: "#7C3AED",
-      bg: "rgba(124,58,237,0.08)",
-      border: "rgba(124,58,237,0.25)",
-      href: "/capacitaciones",
-      img: HOME_IMAGES.corporativo,
-      tags: ["Corporativo", "In-company", "Custom"],
-      emoji: "🏢",
-    },
-  ];
-
-  return (
-    <div className="grid md:grid-cols-3 gap-6">
-      {segments.map((seg, i) => (
-        <AnimatedSection key={seg.titleKey} delay={i * 120}>
-          <div
-            className="group rounded-3xl overflow-hidden h-full flex flex-col bg-white dark:bg-transparent"
-            style={{
-              background: seg.bg,
-              border: `1px solid ${seg.border}`,
-              transition: "all 0.3s ease",
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.transform = "translateY(-6px)";
-              (e.currentTarget as HTMLElement).style.boxShadow = `0 20px 50px ${seg.color}25`;
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.transform = "none";
-              (e.currentTarget as HTMLElement).style.boxShadow = "none";
-            }}
-          >
-            <div className="relative h-48 overflow-hidden">
-              <img
-                src={seg.img}
-                alt={t(seg.titleKey)}
-                className="w-full h-full object-cover"
-                style={{ transition: "transform 0.5s ease" }}
-              />
-              <div
-                className="absolute inset-0"
-                style={{
-                  background: `linear-gradient(to top, ${seg.color}90, transparent)`,
-                }}
-              />
-              <div className="absolute bottom-4 left-4">
-                <span className="text-3xl">{seg.emoji}</span>
-              </div>
-              <div
-                className="absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-semibold"
-                style={{ background: seg.color, color: "#fff" }}
-              >
-                {t(seg.subtitleKey)}
-              </div>
-            </div>
-            <div className="p-6 flex flex-col flex-1">
-              <h3
-                className="text-gray-900 dark:text-white mb-2 transition-colors duration-300"
-                style={{ fontWeight: 700, fontSize: "1.2rem" }}
-              >
-                {t(seg.titleKey)}
-              </h3>
-              <p className="text-gray-600 dark:text-white/60 text-sm leading-relaxed mb-4 flex-1 transition-colors duration-300">
-                {t(seg.descKey)}
-              </p>
-              <div className="flex flex-wrap gap-2 mb-5">
-                {seg.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="text-xs px-3 py-1 rounded-full"
-                    style={{
-                      background: `${seg.color}18`,
-                      color: seg.color,
-                      border: `1px solid ${seg.color}30`,
-                    }}
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <Link
-                to={seg.href}
-                className="flex items-center justify-center gap-2 py-3 rounded-xl text-white font-semibold"
-                style={{
-                  background: seg.color,
-                  transition: "all 0.2s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.opacity = "0.9";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.opacity = "1";
-                }}
-              >
-                {t("common.viewCourses")}
-                <ChevronRight size={16} />
-              </Link>
-            </div>
-          </div>
-        </AnimatedSection>
-      ))}
-    </div>
-  );
-}
-
-const methodSteps = [
-  {
-    icon: Target,
-    title: "Diagnóstico personalizado",
-    desc: "Analizamos tus objetivos y nivel actual para diseñar el camino ideal.",
-    color: "#FF6B35",
-  },
-  {
-    icon: Lightbulb,
-    title: "Aprendizaje activo",
-    desc: "Proyectos reales desde el primer día. La teoría refuerza la práctica, no al revés.",
-    color: "#00C9FF",
-  },
-  {
-    icon: Cpu,
-    title: "Creación con tecnología",
-    desc: "No solo consumes tecnología: la creas. Apps, juegos, robots y más.",
-    color: "#7C3AED",
-  },
-  {
-    icon: Award,
-    title: "Resultados medibles",
-    desc: "Portafolio real, certificados y seguimiento continuo de tu progreso.",
-    color: "#10B981",
-  },
-];
-
 export function Home() {
-  const { t } = useLanguage();
-  const { theme } = useTheme();
-
-  const galleryItems = [
-    { src: GALERIA_HOME_IMAGES.clasePV, span: "md:col-span-2 md:row-span-2", alt: "Clase de Programación Visual" },
-    { src: GALERIA_HOME_IMAGES.robotica, span: "", alt: "Taller de Robótica" },
-    { src: GALERIA_HOME_IMAGES.diseño, span: "", alt: "Clase de Diseño" },
-    { src: GALERIA_HOME_IMAGES.adultosClase, span: "", alt: "Clase para Adultos", type: "video" }, // 👈 Video desde R2
-    { src: GALERIA_HOME_IMAGES.python, span: "md:col-span-2", alt: "Curso de Python" },
-  ];
-
   return (
-    <div className="bg-white dark:bg-[#0A0F1E] transition-colors duration-300">
+    // Forzamos el fondo oscuro premium para toda la página
+    <div className="bg-[#050A14] text-white min-h-screen font-sans selection:bg-[#00C9FF] selection:text-black">
       
-      {/* HERO SECTION */}
-      <section
-        className="relative min-h-screen flex items-center justify-center overflow-hidden"
-        style={{ paddingTop: "80px" }}
-      >
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `url(${HOME_IMAGES.hero})`,
-            backgroundSize: "cover",
-            backgroundPosition: "80% center",
-            backgroundRepeat: "no-repeat",
-          }}
-        />
-
-        {/* Degradados responsivos */}
-        <div
-          className="absolute inset-0 hidden md:block transition-colors duration-300 pointer-events-none"
-          style={{
-            background: theme === "dark" 
-              ? "linear-gradient(to right, rgba(10,15,30,1) 0%, rgba(10,15,30,0.85) 30%, rgba(10,15,30,0.2) 65%, transparent 100%)"
-              : "linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,0.85) 30%, rgba(255,255,255,0.2) 65%, transparent 100%)",
-          }}
-        />
-
-        <div
-          className="absolute top-1/2 left-0 w-[800px] h-[1200px] rounded-full blur-[120px] pointer-events-none transition-colors duration-300 hidden md:block"
-          style={{
-            background: theme === "dark" ? "rgba(10,15,30,0.75)" : "rgba(255,255,255,0.85)",
-            transform: "translate(-20%, -50%)", 
-          }}
-        />
-
-        <div
-          className="absolute inset-0 md:hidden transition-colors duration-300 pointer-events-none"
-          style={{
-            background: theme === "dark" 
-              ? "linear-gradient(to bottom, rgba(10,15,30,1) 0%, rgba(10,15,30,0.95) 45%, rgba(10,15,30,0.4) 100%)"
-              : "linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0.95) 45%, rgba(255,255,255,0.4) 100%)",
-          }}
-        />
-
-        <div
-          className="absolute top-20 right-10 w-80 h-80 rounded-full pointer-events-none mix-blend-multiply dark:mix-blend-screen"
-          style={{
-            background: "radial-gradient(circle, rgba(0,201,255,0.15), transparent 70%)",
-            animation: "floatOrb 8s ease-in-out infinite",
-          }}
-        />
-        <div
-          className="absolute bottom-20 left-10 w-60 h-60 rounded-full pointer-events-none mix-blend-multiply dark:mix-blend-screen"
-          style={{
-            background: "radial-gradient(circle, rgba(124,58,237,0.15), transparent 70%)",
-            animation: "floatOrb 10s ease-in-out infinite reverse",
-          }}
-        />
-
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 flex flex-col justify-center">
-          <div className="max-w-2xl relative">
-            <div
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 bg-blue-50 dark:bg-blue-900/20 backdrop-blur-sm"
-              style={{
-                border: "1px solid rgba(0,201,255,0.3)",
-                animation: "fadeUp 0.6s ease both",
-              }}
-            >
-              <Zap size={14} className="text-[#00C9FF]" />
-              <span className="text-[#00C9FF] text-sm font-medium">
-                {t("hero.badge")}
+      {/* 1. HERO DISRUPTIVO (Estilo Bento Box) */}
+      <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12">
+        
+        {/* Texto Izquierda */}
+        <div className="w-full lg:w-1/2 z-10">
+          <AnimatedSection>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 bg-white/5 border border-white/10 backdrop-blur-md">
+              <span className="relative flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-[#10B981]"></span>
               </span>
+              <span className="text-sm font-bold text-gray-300 uppercase tracking-widest">Inscripciones Abiertas 2026</span>
             </div>
 
-            <h1
-              className="text-gray-900 dark:text-white mb-6 transition-colors duration-300"
-              style={{
-                fontSize: "clamp(2.2rem, 6vw, 5rem)",
-                fontWeight: 900,
-                lineHeight: 1.2,
-                letterSpacing: "-0.03em",
-                animation: "fadeUp 0.6s ease 0.1s both",
-                fontFamily: "'Inter', sans-serif",
-              }}
-            >
-              <span style={{ color: "#f8b50e" }}>Juega,</span>
-              <br />
-              <span style={{ color: "#d61a1f" }}>Aprende y</span>
-              <br />
-              <span style={{ color: "#67a934" }}>Emprende</span>
+            <h1 className="text-5xl md:text-7xl font-black mb-6 leading-[1.1] tracking-tighter">
+              No solo juegan.<br />
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#00C9FF] via-[#7C3AED] to-[#FFE134]">
+                Crean el futuro.
+              </span>
             </h1>
 
-            <p
-              className="text-gray-700 dark:text-white/80 mb-10 transition-colors duration-300 font-medium"
-              style={{
-                fontSize: "clamp(1rem, 2vw, 1.25rem)",
-                lineHeight: 1.7,
-                animation: "fadeUp 0.6s ease 0.2s both",
-              }}
-            >
-              {t("hero.subtitle")}
+            <p className="text-lg md:text-xl text-gray-400 mb-10 max-w-lg leading-relaxed">
+              La academia donde la tecnología es el superpoder. Formamos a los creadores digitales del mañana con proyectos reales, mentalidad emprendedora y las soft skills que el mundo exige.
             </p>
 
-            <div
-              className="flex flex-col sm:flex-row gap-4 items-start mb-12"
-              style={{ animation: "fadeUp 0.6s ease 0.3s both" }}
-            >
-              <a
-                href="https://tinyurl.com/AgendarCitaGokulab"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 px-8 py-4 rounded-2xl text-white font-bold"
-                style={{
-                  background: "linear-gradient(135deg, #00C9FF, #7C3AED)",
-                  boxShadow: "0 8px 30px rgba(0,201,255,0.35)",
-                  transition: "all 0.2s ease",
-                  fontSize: "1.05rem",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "scale(1.03)";
-                  e.currentTarget.style.boxShadow = "0 12px 40px rgba(0,201,255,0.5)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "scale(1)";
-                  e.currentTarget.style.boxShadow = "0 8px 30px rgba(0,201,255,0.35)";
-                }}
-              >
-                <MessageCircle size={20} />
-                {t("hero.cta.whatsapp")}
-              </a>
+            <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 to="/test"
-                className="flex items-center gap-2 px-8 py-4 rounded-2xl font-semibold border transition-all duration-300 text-gray-900 dark:text-white border-gray-300 dark:border-white/25 hover:bg-gray-100 dark:hover:bg-white/10 backdrop-blur-sm"
-                style={{ 
-                  fontSize: "1.05rem", 
-                  backgroundColor: theme === 'light' ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.2)' 
-                }}
+                className="flex items-center justify-center gap-2 px-8 py-4 bg-white text-black font-black rounded-full hover:scale-105 transition-transform text-lg"
               >
-                {t("hero.cta.test")}
-                <ArrowRight size={18} />
+                Descubrir mi curso ideal
+                <ArrowRight size={20} />
               </Link>
+              <a
+                href="https://wa.me/5612668168?text=Hola,%20quiero%20agendar%20una%20masterclass%20gratuita"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 px-8 py-4 bg-white/5 border border-white/10 text-white font-bold rounded-full hover:bg-white/10 transition-colors text-lg backdrop-blur-md"
+              >
+                <MessageCircle size={20} className="text-[#00C9FF]" />
+                Masterclass Gratis
+              </a>
             </div>
-          </div>
+          </AnimatedSection>
         </div>
 
-        <div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
-          style={{ animation: "bounce 2s infinite" }}
-        >
-          <div className="w-6 h-10 rounded-full border-2 border-gray-400 dark:border-white/20 flex items-start justify-center p-1 backdrop-blur-sm">
-            <div
-              className="w-1.5 h-3 rounded-full bg-[#00C9FF]"
-              style={{ animation: "scrollDot 2s infinite" }}
-            />
-          </div>
+        {/* Bento Box Derecha */}
+        <div className="w-full lg:w-1/2 grid grid-cols-2 gap-4 h-[500px]">
+          {/* Tarjeta 1: Imagen Grande */}
+          <AnimatedSection delay={100} className="col-span-2 row-span-2 relative rounded-3xl overflow-hidden border border-white/10 group">
+            <img src={HOME_IMAGES.hero} alt="Niños programando" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+            <div className="absolute bottom-6 left-6">
+              <div className="flex items-center gap-3 backdrop-blur-md bg-white/10 px-4 py-2 rounded-2xl border border-white/20">
+                <Play size={18} className="text-[#FFE134]" fill="#FFE134" />
+                <span className="font-bold text-sm">Conoce nuestra metodología</span>
+              </div>
+            </div>
+          </AnimatedSection>
+          
+          {/* Tarjeta 2: Estadística */}
+          <AnimatedSection delay={200} className="col-span-1 rounded-3xl bg-[#1E88E5]/10 border border-[#1E88E5]/20 p-6 flex flex-col justify-center items-center text-center">
+            <span className="text-5xl font-black text-[#1E88E5] mb-2">+2k</span>
+            <span className="text-sm font-bold text-gray-400 uppercase tracking-wider">Alumnos felices</span>
+          </AnimatedSection>
+
+          {/* Tarjeta 3: Código / Tech */}
+          <AnimatedSection delay={300} className="col-span-1 rounded-3xl bg-[#7C3AED]/10 border border-[#7C3AED]/20 p-6 flex flex-col justify-center relative overflow-hidden">
+            <Code2 size={48} className="text-[#7C3AED] mb-4" />
+            <span className="text-lg font-black text-white leading-tight">Aprende<br/>Scratch, Python<br/>y Roblox</span>
+          </AnimatedSection>
         </div>
       </section>
 
-      {/* SECCIÓN DE TECNOLOGÍAS */}
-      <section className="py-20 bg-white dark:bg-[#0A0F1E] transition-colors duration-300 relative z-20 shadow-sm border-t border-gray-100 dark:border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedSection className="text-center mb-12">
-            <div
-              className="inline-block px-4 py-1.5 rounded-full text-sm mb-4 bg-purple-50 dark:bg-purple-900/10"
-              style={{
-                color: "#7C3AED",
-                border: "1px solid rgba(124,58,237,0.25)",
-              }}
-            >
-              Tecnologías
-            </div>
-            <h2
-              className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
-              style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 800 }}
-            >
-              No solo consumen tecnología,{" "}
-              <span style={{ color: "#26aaa3" }}>la crean</span>
-            </h2>
-            <p className="text-gray-600 dark:text-white/60 max-w-xl mx-auto transition-colors duration-300">
-              15+ tecnologías reales usadas en la industria, adaptadas a cada
-              nivel de aprendizaje.
-            </p>
-          </AnimatedSection>
+      {/* 2. TECH SCROLL (Cinta de tecnologías) */}
+      <section className="py-10 border-y border-white/5 bg-[#0A0F1E]">
+        <div className="max-w-7xl mx-auto text-center px-4">
+          <p className="text-xs font-bold text-gray-500 uppercase tracking-[0.3em] mb-6">Tecnologías que dominarán el futuro</p>
           <TechScroll />
         </div>
       </section>
 
-      {/* PROBLEM */}
-      <section className="py-24 px-4 bg-gray-50 dark:bg-[#050A14] transition-colors duration-300">
-        <div className="max-w-5xl mx-auto">
-          <AnimatedSection className="text-center mb-16">
-            <div
-              className="inline-block px-4 py-1.5 rounded-full text-sm mb-4 bg-orange-50 dark:bg-orange-900/10"
-              style={{
-                color: "#FF6B35",
-                border: "1px solid rgba(255,107,53,0.25)",
-              }}
-            >
-              El problema real
-            </div>
-            <h2
-              className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
-              style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 800 }}
-            >
-              La brecha digital crece{" "}
-              <span style={{ color: "#FF6B35" }}>cada día</span>
-            </h2>
-            <p className="text-gray-600 dark:text-white/60 max-w-2xl mx-auto transition-colors duration-300" style={{ fontSize: "1.1rem" }}>
-              Millones de personas consumen tecnología sin entenderla, sin poder
-              crearla, sin poder beneficiarse de ella profesionalmente.
-            </p>
-          </AnimatedSection>
+      {/* 3. AUDIENCIAS (Cursos) */}
+      <section className="py-32 px-4 max-w-7xl mx-auto">
+        <AnimatedSection className="mb-16">
+          <h2 className="text-4xl md:text-5xl font-black mb-4 tracking-tight">
+            Un ecosistema para <span className="text-[#FFE134]">todas las edades</span>
+          </h2>
+          <p className="text-gray-400 text-lg max-w-2xl">
+            No importa si es su primer acercamiento a la tecnología o si busca especializarse. Tenemos la ruta perfecta.
+          </p>
+        </AnimatedSection>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                stat: "72%",
-                desc: "de los empleos del futuro requerirán habilidades digitales avanzadas",
-                color: "#FF6B35",
-              },
-              {
-                stat: "1 de 5",
-                desc: "jóvenes tiene acceso real a educación tecnológica de calidad en LATAM",
-                color: "#00C9FF",
-              },
-              {
-                stat: "60%",
-                desc: "de las empresas reportan falta de talento digital en sus equipos",
-                color: "#7C3AED",
-              },
-            ].map((item, i) => (
-              <AnimatedSection key={i} delay={i * 100}>
-                <div
-                  className="p-8 rounded-3xl h-full transition-colors duration-300"
-                  style={{
-                    background: theme === "dark" ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.03)",
-                    border: theme === "dark" ? "1px solid rgba(255,255,255,0.07)" : "1px solid rgba(0,0,0,0.1)",
-                  }}
-                >
-                  <div
-                    className="mb-3"
-                    style={{
-                      fontSize: "3rem",
-                      fontWeight: 900,
-                      color: item.color,
-                    }}
-                  >
-                    {item.stat}
-                  </div>
-                  <p className="text-gray-600 dark:text-white/60 leading-relaxed transition-colors duration-300">
-                    {item.desc}
-                  </p>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* SOLUTION */}
-      <section className="py-24 px-4 bg-white dark:bg-[#0A0F1E] transition-colors duration-300">
-        <div className="max-w-7xl mx-auto">
-          <AnimatedSection className="text-center mb-16">
-            <div
-              className="inline-block px-4 py-1.5 rounded-full text-sm mb-4 bg-blue-50 dark:bg-blue-900/10"
-              style={{
-                color: "#00C9FF",
-                border: "1px solid rgba(0,201,255,0.25)",
-              }}
-            >
-              Nuestra solución
-            </div>
-            <h2
-              className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
-              style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 800 }}
-            >
-              Tecnología que se{" "}
-              <span style={{ color: "#26aaa3" }}>
-                crea, no solo se consume
-              </span>
-            </h2>
-            <p className="text-gray-600 dark:text-white/60 max-w-2xl mx-auto transition-colors duration-300" style={{ fontSize: "1.1rem" }}>
-              En GŌKU LAB transformamos la manera en que aprenden las niñas, niños,
-              adolescentes, adultos y empresas con metodología práctica y
-              proyectos reales.
-            </p>
-          </AnimatedSection>
-
-          <SegmentCards />
-        </div>
-      </section>
-
-      {/* METHODOLOGY */}
-      <section className="py-24 px-4 bg-gray-50 dark:bg-[#0A0F1E] transition-colors duration-300">
-        <div className="max-w-7xl mx-auto">
-          <AnimatedSection className="text-center mb-16">
-            <div
-              className="inline-block px-4 py-1.5 rounded-full text-sm mb-4 bg-emerald-50 dark:bg-emerald-900/10"
-              style={{
-                color: "#10B981",
-                border: "1px solid rgba(16,185,129,0.25)",
-              }}
-            >
-              Metodología
-            </div>
-            <h2
-              className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
-              style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 800 }}
-            >
-              Nuestro método{" "}
-              <span style={{ color: "#10B981" }}>funciona</span>
-            </h2>
-            <p className="text-gray-600 dark:text-white/60 max-w-2xl mx-auto transition-colors duration-300" style={{ fontSize: "1.1rem" }}>
-              Un proceso claro desde el diagnóstico hasta los resultados medibles.
-            </p>
-          </AnimatedSection>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {methodSteps.map((step, i) => (
-              <AnimatedSection key={step.title} delay={i * 100}>
-                <div
-                  className="p-6 rounded-3xl h-full transition-all duration-300"
-                  style={{
-                    background: theme === "dark" ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.03)",
-                    border: theme === "dark" ? "1px solid rgba(255,255,255,0.07)" : "1px solid rgba(0,0,0,0.1)",
-                    transition: "all 0.3s ease",
-                  }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)";
-                    (e.currentTarget as HTMLElement).style.borderColor = step.color + "50";
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.transform = "none";
-                    (e.currentTarget as HTMLElement).style.borderColor =
-                      theme === "dark" ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.1)";
-                  }}
-                >
-                  <div
-                    className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4 bg-white dark:bg-transparent"
-                    style={{ background: `${step.color}18` }}
-                  >
-                    <step.icon size={22} style={{ color: step.color }} />
-                  </div>
-                  <div
-                    className="text-xs mb-3 font-bold"
-                    style={{ color: step.color }}
-                  >
-                    PASO {i + 1}
-                  </div>
-                  <h3
-                    className="text-gray-900 dark:text-white mb-2 transition-colors duration-300"
-                    style={{ fontWeight: 700, fontSize: "1rem" }}
-                  >
-                    {step.title}
-                  </h3>
-                  <p className="text-gray-600 dark:text-white/55 text-sm leading-relaxed transition-colors duration-300">
-                    {step.desc}
-                  </p>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
-
-          <AnimatedSection className="text-center mt-10" delay={400}>
-            <Link
-              to="/metodologia"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold border transition-all duration-300 text-gray-900 dark:text-white border-gray-300 dark:border-white/20 hover:bg-gray-100 dark:hover:bg-white/5"
-            >
-              Conocer la metodología completa
-              <ArrowRight size={16} />
-            </Link>
-          </AnimatedSection>
-        </div>
-      </section>
-
-      {/* EVENTS PREVIEW */}
-      <section className="py-24 px-4 bg-white dark:bg-[#0A0F1E] transition-colors duration-300">
-        <div className="max-w-4xl mx-auto">
-          <AnimatedSection className="mb-12">
-            <div
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-bold mb-6"
-              style={{ background: "#10B981", color: "#fff" }}
-            >
-              <span className="w-2 h-2 bg-white rounded-sm" />
-              Próximos eventos
-            </div>
-          </AnimatedSection>
-
-          <div className="space-y-0">
-            {[
-              {
-                day: "Lun",
-                dayNum: "27",
-                month: "Julio, 2026",
-                title: "Campamento de Verano STEM 2026",
-                time: "10:00 - 14:00hs",
-                location: "6 - 12 años",
-                type: "27 de julio al 21 de agosto",
-                color: "#FF6B35",
-                description: "IMAGINA, DISEÑA Y CREA TU PROPIO MUNDO - Experimentos de ciencia divertidos, tecnología y juegos, proyectos de arte y trabajo en equipo",
-                ctaText: "¡Mi peque quiere!",
-              },
-              {
-                day: "Sab",
-                dayNum: "4",
-                month: "Julio, 2026",
-                title: "De Imaginadores a Animadores: ¡Crea tu Propio Mundo Digital!",
-                time: "11:30 - 13:00 hrs",
-                location: "¿Tu hijo ama dibujar, inventar historias o pasar tiempo en la tablet?💡 ¡Imagina que en lugar de solo consumir contenido… pudiera CREARLO!",
-                type: "Taller:Creadores Digitales Integrales: El Arte Detrás del Código",
-                color: "#00C9FF",
-                description: "En este increíble taller, los niños se convertirán en verdaderos creadores digitales, donde aprenderán a 🎨 Diseñar personajes únicos con personalidad propia 🧠 Inventar historias llenas de magia, tecnología y emoción 📱 Dar vida a sus ideas creando animaciones reales desde cero 🎬 Presentar su propio proyecto como verdaderos artistas digitales",
-                ctaText: "Mi Peque ama Dibujar, ¡lo quiero!",
-              },
-              {
-                day: "Mie",
-                dayNum: "24",
-                month: "Junio, 2026",
-                title: "🛡️ Protegiendo a mis hijos en el mundo digital",
-                time: "17:00hrs",
-                location: "Para toda la familia",
-                type: "🛡️ CIBERSEGURIDAD ESENCIAL​",
-                color: "#7C3AED",
-                description: "Protección Digital en el Mundo Actual: Riesgos, peligros y cómo ayudarlos a usar la tecnología de forma segura​",
-                ctaText: "Asistir gratis",
-              },
-            ].map((ev, i) => (
-              <AnimatedSection key={i} delay={i * 80}>
-                <div
-                  className="flex gap-6 py-6 transition-all duration-300"
-                  style={{
-                    borderBottom: i < 2 ? (theme === "dark" ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(0,0,0,0.08)") : "none",
-                  }}
-                >
-                  <div className="flex-shrink-0 w-28">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div
-                        className="w-2 h-2 rounded-full animate-pulse"
-                        style={{
-                          background: ev.color,
-                          boxShadow: `0 0 8px ${ev.color}`,
-                          animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite"
-                        }}
-                      />
-                      <div
-                        className="inline-block px-2 py-1 rounded-md text-xs font-bold"
-                        style={{ background: ev.color, color: "#fff" }}
-                      >
-                        {ev.day}
-                      </div>
-                    </div>
-                    <div
-                      className="text-gray-900 dark:text-white transition-colors duration-300"
-                      style={{
-                        fontSize: "3.5rem",
-                        fontWeight: 900,
-                        lineHeight: 1,
-                        letterSpacing: "-0.03em"
-                      }}
-                    >
-                      {ev.dayNum}
-                    </div>
-                    <div className="text-gray-500 dark:text-white/50 text-xs mt-1 transition-colors duration-300">
-                      {ev.month}
-                    </div>
-                  </div>
-
-                  <div
-                    className="w-px flex-shrink-0 transition-colors duration-300"
-                    style={{
-                      background: theme === "dark" ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"
-                    }}
-                  />
-
-                  <div className="flex-1 pt-1">
-                    <h3
-                      className="text-gray-900 dark:text-white mb-3 transition-colors duration-300"
-                      style={{ fontWeight: 700, fontSize: "1.1rem" }}
-                    >
-                      {ev.title}
-                    </h3>
-                    <div className="space-y-1 mb-3">
-                      <div className="flex items-center gap-2 text-gray-500 dark:text-white/60 text-sm transition-colors duration-300">
-                        <span className="w-1 h-1 rounded-full bg-current" />
-                        {ev.type}
-                      </div>
-                      <div className="flex items-center gap-2 text-gray-500 dark:text-white/60 text-sm transition-colors duration-300">
-                        <span className="w-1 h-1 rounded-full bg-current" />
-                        {ev.location}
-                      </div>
-                      <div className="flex items-center gap-2 text-gray-500 dark:text-white/60 text-sm transition-colors duration-300">
-                        <span className="w-1 h-1 rounded-full bg-current" />
-                        {ev.time}
-                      </div>
-                    </div>
-                    <p className="text-gray-600 dark:text-white/70 text-sm mb-4 leading-relaxed transition-colors duration-300">
-                      {ev.description}
-                    </p>
-                    <a
-                      href={`https://wa.me/5612668168?text=Hola,%20quiero%20información%20sobre%20${encodeURIComponent(ev.title)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300"
-                      style={{ background: ev.color, color: "#fff" }}
-                      onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.9"; }}
-                      onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; }}
-                    >
-                      {ev.ctaText}
-                      <ChevronRight size={14} />
-                    </a>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            { title: "Niños", age: "5-11 años", desc: "Lógica y creación por bloques.", href: "/cursos/ninos", img: HOME_IMAGES.ninos, color: "#FF6B35" },
+            { title: "Adolescentes", age: "12-17 años", desc: "Videojuegos, código y preparación.", href: "/cursos/adolescentes", img: HOME_IMAGES.adultos, color: "#7C3AED" },
+            { title: "Adultos", age: "18+ años", desc: "Reconversión y habilidades IA.", href: "/cursos/adultos", img: HOME_IMAGES.adultos, color: "#00C9FF" },
+            { title: "Empresas", age: "Corporativo", desc: "Capacitación y transformación.", href: "/capacitaciones", img: HOME_IMAGES.corporativo, color: "#10B981" },
+          ].map((item, i) => (
+            <AnimatedSection key={item.title} delay={i * 100}>
+              <Link to={item.href} className="group relative block h-[400px] rounded-3xl overflow-hidden border border-white/10">
+                <img src={item.img} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                <div className="absolute bottom-0 left-0 p-6 w-full">
+                  <span className="text-xs font-bold text-white/70 uppercase tracking-widest mb-1 block">{item.age}</span>
+                  <h3 className="text-3xl font-black text-white mb-2">{item.title}</h3>
+                  <p className="text-sm text-gray-300 mb-6">{item.desc}</p>
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/20 group-hover:bg-white group-hover:text-black transition-colors" style={{ color: item.color }}>
+                    <ArrowRight size={20} />
                   </div>
                 </div>
-              </AnimatedSection>
-            ))}
-          </div>
-
-          <AnimatedSection className="text-center mt-10" delay={400}>
-            <Link
-              to="/eventos"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold border transition-all duration-300"
-              style={{
-                background: theme === "dark" ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.04)",
-                color: theme === "dark" ? "#fff" : "#111827",
-                border: theme === "dark" ? "1px solid rgba(255,255,255,0.12)" : "1px solid rgba(0,0,0,0.12)",
-              }}
-            >
-              Ver todos los eventos
-              <ArrowRight size={16} />
-            </Link>
-          </AnimatedSection>
-        </div>
-      </section>
-
-      {/* GALLERY SECTION */}
-      <section className="py-24 px-4 bg-gray-50 dark:bg-[#050A14] transition-colors duration-300 border-t border-gray-100 dark:border-white/5">
-        <div className="max-w-7xl mx-auto">
-          <AnimatedSection className="text-center mb-16">
-            <div
-              className="inline-block px-4 py-1.5 rounded-full text-sm mb-4 bg-purple-50 dark:bg-purple-900/10"
-              style={{
-                color: "#7C3AED",
-                border: "1px solid rgba(124,58,237,0.25)",
-              }}
-            >
-              Galería
-            </div>
-            <h2
-              className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
-              style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 800 }}
-            >
-              Nuestra comunidad en <span style={{ color: "#7C3AED" }}>acción</span>
-            </h2>
-            <p className="text-gray-600 dark:text-white/60 max-w-xl mx-auto transition-colors duration-300">
-              Explora momentos de nuestros talleres, clases presenciales y proyectos creados por nuestros alumnos.
-            </p>
-          </AnimatedSection>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {galleryItems.map((item, index) => (
-              <AnimatedSection key={index} className={item.span} delay={index * 80}>
-                <div className="relative rounded-3xl overflow-hidden h-full min-h-[240px] group shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-white/5 bg-white dark:bg-white/5">
-                  {item.type === 'video' ? (
-                    <video
-                      src={item.src}
-                      title={item.alt}
-                      className="w-full h-full object-cover"
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                    />
-                  ) : (
-                    <img
-                      src={item.src}
-                      alt={item.alt}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  )}
-                  <div className="absolute inset-0 bg-purple-950/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
-
-          {/* Feed de Redes Sociales (Facebook) */}
-          <SocialMediaFeed />
-        </div>
-      </section>
-
-      {/* FINAL CTA */}
-      <section className="py-28 px-4 relative overflow-hidden bg-gray-50 dark:bg-[#050A14] transition-colors duration-300">
-        <div
-          className="absolute inset-0 pointer-events-none transition-colors duration-300"
-          style={{
-            background: theme === "dark" 
-              ? "radial-gradient(ellipse at center, rgba(0,201,255,0.07) 0%, transparent 70%)"
-              : "radial-gradient(ellipse at center, rgba(0,201,255,0.04) 0%, transparent 70%)",
-          }}
-        />
-        <div className="max-w-4xl mx-auto text-center relative">
-          <AnimatedSection>
-            <h2
-              className="text-gray-900 dark:text-white mb-6 transition-colors duration-300"
-              style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 900 }}
-            >
-              Tu <span style={{ color: "#26aaa3" }}>superfuturo</span> empieza hoy
-            </h2>
-            <p
-              className="text-gray-600 dark:text-white/60 mb-10 max-w-2xl mx-auto transition-colors duration-300"
-              style={{ fontSize: "1.15rem" }}
-            >
-              Agenda tu diagnóstico gratuito y descubre cómo GŌKU LAB puede
-              transformar tu futuro (o el de tus hijos). Sin compromiso. Sin costo.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="https://wa.me/5612668168?text=Quiero%20agendar%20mi%20clase%20muestra%20gratuita"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-3 px-10 py-5 rounded-2xl text-white font-bold"
-                style={{
-                  background: "linear-gradient(135deg, #00C9FF, #7C3AED)",
-                  boxShadow: "0 8px 40px rgba(0,201,255,0.4)",
-                  fontSize: "1.1rem",
-                  transition: "all 0.2s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "scale(1.03)";
-                  e.currentTarget.style.boxShadow = "0 12px 50px rgba(0,201,255,0.55)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "scale(1)";
-                  e.currentTarget.style.boxShadow = "0 8px 40px rgba(0,201,255,0.4)";
-                }}
-              >
-                <MessageCircle size={22} />
-                Agendar diagnóstico gratuito
-              </a>
-              <Link
-                to="/contacto"
-                className="flex items-center justify-center gap-2 px-10 py-5 rounded-2xl font-semibold border transition-all duration-300 text-gray-900 dark:text-white border-gray-300 dark:border-white/25 hover:bg-gray-200 dark:hover:bg-white/10"
-                style={{ fontSize: "1.1rem" }}
-              >
-                Hablar con el equipo
               </Link>
-            </div>
-          </AnimatedSection>
+            </AnimatedSection>
+          ))}
         </div>
       </section>
 
-      <style>{`
-        @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes floatOrb {
-          0%, 100% { transform: translateY(0px) scale(1); }
-          50% { transform: translateY(-20px) scale(1.05); }
-        }
-        @keyframes scrollDot {
-          0%, 100% { opacity: 0; transform: translateY(0); }
-          50% { opacity: 1; transform: translateY(6px); }
-        }
-        @keyframes bounce {
-          0%, 100% { transform: translateX(-50%) translateY(0); }
-          50% { transform: translateX(-50%) translateY(8px); }
-        }
-        @keyframes blink {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0; }
-        }
-        .animate-blink {
-          animation: blink 1s infinite;
-        }
-        video {
-          transition: opacity 0.5s ease-in-out;
-        }
-      `}</style>
+      {/* 4. COMUNIDAD VIVA (Galería + Redes) */}
+      <section className="py-24 bg-[#0A0F1E] border-y border-white/5">
+        <div className="max-w-7xl mx-auto px-4">
+          <AnimatedSection className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-black mb-4 tracking-tight">
+              Nuestra comunidad <span className="text-[#10B981]">en acción</span>
+            </h2>
+            <p className="text-gray-400 text-lg">Mira lo que nuestros alumnos están creando hoy mismo.</p>
+          </AnimatedSection>
+
+          {/* Grid de Galería */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-16">
+            <div className="md:col-span-2 relative rounded-3xl overflow-hidden h-[400px] border border-white/10">
+              <img src={GALERIA_HOME_IMAGES.clasePV} alt="Clase" className="w-full h-full object-cover" />
+            </div>
+            <div className="relative rounded-3xl overflow-hidden h-[400px] border border-white/10">
+              <img src={GALERIA_HOME_IMAGES.robotica} alt="Robotica" className="w-full h-full object-cover" />
+            </div>
+          </div>
+
+          {/* Feed Social (Reincorporado) */}
+          <div className="bg-white/5 rounded-3xl p-6 border border-white/10">
+            <div className="flex items-center gap-3 mb-6">
+              <Globe className="text-[#00C9FF]" />
+              <h3 className="text-xl font-bold">Últimas noticias de nuestras redes</h3>
+            </div>
+            <SocialMediaFeed />
+          </div>
+        </div>
+      </section>
+
+      {/* 5. PUENTE EMPRESAS (BehaviorLab) */}
+      <section className="py-24 px-4 max-w-7xl mx-auto">
+        <AnimatedSection>
+          <div className="relative rounded-[3rem] overflow-hidden bg-gradient-to-br from-[#7C3AED] to-[#050A14] border border-[#7C3AED]/30 p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-10">
+            <div className="md:w-2/3 z-10">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-sm font-bold mb-6">
+                <ShieldCheck size={16} /> Soluciones B2B
+              </div>
+              <h2 className="text-3xl md:text-5xl font-black mb-6 text-white">
+                Lleva la innovación a tu <span className="text-[#FFE134]">empresa</span>
+              </h2>
+              <p className="text-gray-300 text-lg mb-8 max-w-xl">
+                Capacita a tu equipo en IA, automatización y liderazgo digital. Descubre cómo el ecosistema GōkuLab y BehaviorLab transforman organizaciones.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <Link to="/capacitaciones" className="px-8 py-3 bg-white text-black font-bold rounded-xl hover:scale-105 transition-transform">
+                  Ver programas corporativos
+                </Link>
+                <a href="https://behaviorlab.gokulab.mx" target="_blank" rel="noopener noreferrer" className="px-8 py-3 bg-transparent border border-white/30 text-white font-bold rounded-xl hover:bg-white/10 transition-colors flex items-center gap-2">
+                  Ir a BehaviorLab <ArrowRight size={16} />
+                </a>
+              </div>
+            </div>
+            <div className="md:w-1/3 hidden md:flex justify-center">
+              <Rocket size={200} className="text-white/10" />
+            </div>
+          </div>
+        </AnimatedSection>
+      </section>
+
+      {/* 6. CTA FINAL (Full Width) */}
+      <section className="py-32 px-4 text-center relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#00C9FF]/10 via-transparent to-transparent pointer-events-none" />
+        <AnimatedSection className="relative z-10 max-w-3xl mx-auto">
+          <Sparkles size={48} className="text-[#FFE134] mx-auto mb-8 animate-pulse" />
+          <h2 className="text-5xl md:text-6xl font-black mb-6 tracking-tighter">
+            El futuro no se espera,<br /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C9FF] to-[#7C3AED]">se programa.</span>
+          </h2>
+          <p className="text-xl text-gray-400 mb-12">
+            Únete a la academia donde tus ideas se convierten en realidad.
+          </p>
+          <a
+            href="https://wa.me/5612668168?text=Hola,%20quiero%20agendar%20una%20masterclass%20gratuita"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 px-12 py-5 bg-white text-black font-black text-xl rounded-full hover:scale-105 transition-transform"
+          >
+            <MessageCircle size={24} />
+            Agendar Masterclass Gratuita
+          </a>
+        </AnimatedSection>
+      </section>
+
     </div>
   );
 }
