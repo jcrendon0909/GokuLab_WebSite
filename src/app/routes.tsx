@@ -13,6 +13,7 @@ import { Eventos } from "./pages/Eventos";
 import { Becas } from "./pages/Becas";
 import { Contacto } from "./pages/Contacto";
 import { Capacitaciones } from "./pages/Capacitaciones";
+import { Auditoria } from "./pages/Auditoria"; // <-- 1. IMPORTAMOS LA AUDITORÍA
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +38,7 @@ export const router = createBrowserRouter([
       { path: "becas", Component: Becas },
       { path: "contacto", Component: Contacto },
       { path: "capacitaciones", Component: Capacitaciones },
+      { path: "auditoria", Component: Auditoria }, // <-- 2. AGREGAMOS LA RUTA AQUÍ
     ],
   },
 ]);

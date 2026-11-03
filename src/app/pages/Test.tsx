@@ -1,315 +1,121 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import { AnimatedSection } from "../components/AnimatedSection";
-import { useTheme } from "next-themes";
-import { ArrowRight, RotateCcw, MessageCircle, CheckCircle } from "lucide-react";
+import { ArrowRight, RotateCcw, MessageCircle, CheckCircle, ChevronLeft, Sparkles, ShieldCheck, Zap, Brain, Target } from "lucide-react";
 
-type Answer = {
-  step0?: string;
-  step1?: string;
-  step2?: string;
-  step3?: string;
+type Answer = { step0?: string; step1?: string; step2?: string; step3?: string; };
+
+type CourseResult = {
+  title: string; desc: string; color: string; emoji: string; href: string;
+  softSkills: string[]; techSkills: string[]; finalProject: string;
 };
 
-// Convertimos las preguntas en una función dinámica que recibe las respuestas actuales
 const getQuestions = (answers: Answer) => {
-  // Configuración dinámica del Paso 3 según quién sea el usuario
-  let step3Title = "¿Cuál es tu objetivo principal?";
-  let step3Subtitle = "Esto nos ayuda a darte la mejor orientación.";
+  let step3Title = "¿Qué te gustaría lograr?";
   let step3Options = [
-    { id: "fun", label: "Aprender algo nuevo por gusto", emoji: "🎉", color: "#FFE134" },
-    { id: "job", label: "Impulso profesional / Emprender", emoji: "💼", color: "#00C9FF" },
-    { id: "school", label: "Mejorar en la escuela / Idiomas", emoji: "📚", color: "#10B981" },
-    { id: "study", label: "Prepararme para la universidad", emoji: "🎓", color: "#7C3AED" },
+    { id: "job", label: "Mejorar mis oportunidades profesionales", emoji: "💼" },
+    { id: "create", label: "Crear mis propios proyectos", emoji: "🎨" },
+    { id: "learn", label: "Aprender algo nuevo por curiosidad", emoji: "🧠" },
   ];
 
-  if (answers.step0 === "kids") {
-    step3Title = "¿Qué buscas para tu hijo/a?";
-    step3Subtitle = "Selecciona la meta que tienes en mente.";
+  if (answers.step0 === "kids" || answers.step0 === "teen") {
+    step3Title = "¿Qué te gustaría que fortaleciera?";
     step3Options = [
-      { id: "fun", label: "Que aprenda jugando", emoji: "🎉", color: "#FFE134" },
-      { id: "school", label: "Herramientas útiles para la escuela", emoji: "📚", color: "#10B981" },
-      { id: "logic", label: "Desarrollo lógico / Matemático", emoji: "🧩", color: "#00C9FF" },
-      { id: "create", label: "Que exprese su creatividad", emoji: "🎨", color: "#9C27B0" },
-    ];
-  } else if (answers.step0 === "company") {
-    step3Title = "¿Qué objetivo tiene tu empresa?";
-    step3Subtitle = "Para entender mejor sus necesidades.";
-    step3Options = [
-      { id: "train", label: "Capacitar al personal", emoji: "📈", color: "#00C9FF" },
-      { id: "innovate", label: "Innovación / Nuevas tecnologías", emoji: "🚀", color: "#7C3AED" },
-      { id: "digital", label: "Inclusión / Alfabetización digital", emoji: "💻", color: "#4CAF50" },
-      { id: "other", label: "Otro objetivo en específico", emoji: "🎯", color: "#FF6B35" },
+      { id: "logic", label: "Pensamiento lógico y resolución de problemas", emoji: "🧩" },
+      { id: "confidence", label: "Confianza en sí mismo y comunicación", emoji: "🗣️" },
+      { id: "creativity", label: "Creatividad y expresión personal", emoji: "🎨" },
+      { id: "teamwork", label: "Trabajo en equipo y colaboración", emoji: "🤝" },
     ];
   }
 
   return [
     {
-      id: "step0",
-      title: "¿Para quién es este curso?",
-      subtitle: "Cuéntanos sobre ti para orientarte mejor.",
-      emoji: "👤",
+      id: "step0", title: "¿Para quién es este curso?", subtitle: "Cuéntanos para orientarte mejor.", emoji: "👤",
       options: [
-        { id: "kids", label: "Para mis hijos (5-11 años)", emoji: "🧒", color: "#FF6B35" },
-        { id: "teen", label: "Para mí (soy joven, 12-17)", emoji: "🎮", color: "#FFE134" },
-        { id: "adult", label: "Para mí (soy adulto, 18+)", emoji: "👨‍💼", color: "#00C9FF" },
-        { id: "company", label: "Para mi empresa/equipo", emoji: "🏢", color: "#7C3AED" },
+        { id: "kids", label: "Para mis hijos (5-11 años)", emoji: "🧒" },
+        { id: "teen", label: "Para mí (12-17 años)", emoji: "🎮" },
+        { id: "adult", label: "Para mí (18+)", emoji: "👨‍💼" },
+        { id: "company", label: "Para mi empresa", emoji: "🏢" },
       ],
     },
     {
-      id: "step1",
-      title: "¿Cuál es el nivel de experiencia?",
-      subtitle: "Esto nos ayuda a recomendar el nivel adecuado.",
-      emoji: "📊",
+      id: "step1", title: "¿Qué es lo que más disfruta hacer?", subtitle: "Elige lo que más se parezca a su personalidad.", emoji: "🌟",
       options: [
-        { id: "zero", label: "Cero experiencia", emoji: "🌱", color: "#4CAF50" },
-        { id: "basic", label: "Sé algunas cosas básicas", emoji: "📚", color: "#00C9FF" },
-        { id: "inter", label: "Tengo nivel intermedio", emoji: "💪", color: "#7C3AED" },
-        { id: "adv", label: "Quiero especializarme", emoji: "🚀", color: "#FF6B35" },
+        { id: "play", label: "Jugar videojuegos / Minecraft", emoji: "🎮" },
+        { id: "draw", label: "Dibujar, crear historias o videos", emoji: "🎨" },
+        { id: "build", label: "Armar cosas, robots o Lego", emoji: "🤖" },
+        { id: "solve", label: "Resolver acertijos y retos", emoji: "🧩" },
       ],
     },
     {
-      id: "step2",
-      title: "¿Qué área te interesa más?",
-      subtitle: "Puedes elegir la que más te emocione.",
-      emoji: "✨",
+      id: "step2", title: "¿Cuál es su nivel de experiencia?", subtitle: "No hay respuestas incorrectas.", emoji: "📊",
       options: [
-        { id: "prog", label: "Programación / Web", emoji: "💻", color: "#00C9FF" },
-        { id: "games", label: "Crear Videojuegos", emoji: "🕹️", color: "#FFE134" },
-        { id: "design", label: "Diseño / Contenido", emoji: "🎨", color: "#9C27B0" },
-        { id: "ai", label: "Inteligencia Artificial", emoji: "🧠", color: "#10B981" },
-        { id: "robot", label: "Robótica / Hardware", emoji: "🤖", color: "#FF6B35" },
+        { id: "zero", label: "Cero experiencia, empezar desde cero", emoji: "🌱" },
+        { id: "basic", label: "Ya sabe lo básico", emoji: "📚" },
+        { id: "adv", label: "Quiere especializarse", emoji: "🚀" },
       ],
     },
     {
-      id: "step3",
-      title: step3Title,
-      subtitle: step3Subtitle,
-      emoji: "🎯",
+      id: "step3", title: step3Title, subtitle: "Esto define el enfoque del curso.", emoji: "🎯",
       options: step3Options,
     },
   ];
 };
 
-type CourseResult = {
-  title: string;
-  desc: string;
-  color: string;
-  emoji: string;
-  href: string;
-  hrefLabel: string;
-};
+function getResults(answers: Answer) {
+  const { step0, step1, step3 } = answers;
+  let primary: CourseResult = {} as CourseResult;
+  let secondary: CourseResult[] = [];
 
-// Función refactorizada para cubrir todo el catálogo de la academia
-function getResult(answers: Answer): CourseResult {
-  const { step0, step1, step2, step3 } = answers;
-
-  // 1. Ruta Corporativa
   if (step0 === "company") {
-    return {
-      title: "Capacitación corporativa",
-      desc: "Diseñamos un programa con horarios y duración personalizados a las necesidades de tu empresa o entidad.",
-      color: "#7C3AED",
-      emoji: "🏢",
-      href: "/capacitaciones",
-      hrefLabel: "Ver capacitaciones",
-    };
+    primary = { title: "Capacitación Corporativa", desc: "Transforma a tu equipo con mentalidad innovadora.", color: "#10B981", emoji: "🏢", href: "/capacitaciones", softSkills: ["Liderazgo digital", "Adaptabilidad"], techSkills: ["Automatización", "IA"], finalProject: "Roadmap de transformación digital" };
+  } else if (step0 === "kids") {
+    if (step1 === "play") {
+      primary = { title: "Minecraft Education", desc: "Aprende lógica en un mundo de bloques.", color: "#4CAF50", emoji: "⛏️", href: "/cursos/ninos/diseno-videojuegos-minecraft", softSkills: ["Creatividad", "Resolución de Problemas"], techSkills: ["MakeCode", "Lógica"], finalProject: "Mundo interactivo" };
+      secondary = [{ title: "Programación Visual", desc: "Crea sus primeros juegos.", color: "#1E88E5", emoji: "🐱", href: "/cursos/ninos/programacion-visual", softSkills: ["Lógica"], techSkills: ["Scratch"], finalProject: "Primer videojuego" }];
+    } else if (step1 === "build") {
+      primary = { title: "Robótica Inicial", desc: "Construye y programa robots.", color: "#FF6B35", emoji: "🤖", href: "/cursos/ninos/robotica-principiantes", softSkills: ["Lógica", "Trabajo en Equipo"], techSkills: ["Sensores"], finalProject: "Robot de trayectoria" };
+      secondary = [{ title: "El Caballero del Código", desc: "Aventuras lógicas.", color: "#FFE134", emoji: "⚔️", href: "/cursos/ninos/caballero-del-codigo", softSkills: ["Lógica"], techSkills: ["Scratch"], finalProject: "Juego de lógica" }];
+    } else if (step1 === "draw") {
+      primary = { title: "Diseño Gráfico", desc: "Despierta su creatividad visual.", color: "#E91E63", emoji: "🖌️", href: "/cursos/ninos/diseno-grafico-ninos", softSkills: ["Creatividad"], techSkills: ["Vectores"], finalProject: "Portafolio" };
+      secondary = [{ title: "Taller Creatividad", desc: "El arte detrás del código.", color: "#FFE134", emoji: "🎨", href: "/cursos/ninos/taller-creatividad", softSkills: ["Creatividad"], techSkills: ["Diseño"], finalProject: "Proyecto artístico" }];
+    } else {
+      primary = { title: "Programación Visual", desc: "Convertirá sus ideas en videojuegos.", color: "#1E88E5", emoji: "🐱", href: "/cursos/ninos/programacion-visual", softSkills: ["Lógica", "Tolerancia a la frustración"], techSkills: ["Scratch"], finalProject: "Primer videojuego" };
+      secondary = [{ title: "Matemáticas Divertidas", desc: "Lógica y retos.", color: "#00C9FF", emoji: "➗", href: "/cursos/ninos/regularizacion-matematicas", softSkills: ["Pensamiento Analítico"], techSkills: ["Método Singapur"], finalProject: "Resolución de retos" }];
+    }
+  } else if (step0 === "teen") {
+    if (step1 === "play") {
+      primary = { title: "Roblox Studio", desc: "Crea tus propios mundos.", color: "#E53E3E", emoji: "🎮", href: "/cursos/adolescentes/diseno-videojuegos-roblox", softSkills: ["Trabajo en equipo", "Liderazgo"], techSkills: ["Lua", "3D"], finalProject: "Juego multijugador" };
+      secondary = [{ title: "Unity", desc: "Videojuegos profesionales.", color: "#9C27B0", emoji: "👾", href: "/cursos/adolescentes/diseno-videojuegos-unity", softSkills: ["Pensamiento Crítico"], techSkills: ["C#"], finalProject: "Juego 3D" }];
+    } else if (step1 === "solve") {
+      primary = { title: "Python Pro", desc: "Desarrolla aplicaciones reales.", color: "#4CAF50", emoji: "🐍", href: "/cursos/adolescentes/python-pro", softSkills: ["Resolución de Problemas"], techSkills: ["Python", "APIs"], finalProject: "App web" };
+      secondary = [{ title: "Unity", desc: "Lógica avanzada en videojuegos.", color: "#9C27B0", emoji: "👾", href: "/cursos/adolescentes/diseno-videojuegos-unity", softSkills: ["Abstracción"], techSkills: ["C#"], finalProject: "Juego 3D" }];
+    } else {
+      primary = { title: "Next Gen Creators", desc: "Creación de videos y contenido.", color: "#E91E63", emoji: "🎬", href: "/cursos/adolescentes/video-blogging", softSkills: ["Comunicación"], techSkills: ["Edición"], finalProject: "Canal de video" };
+    }
+  } else if (step0 === "adult") {
+    if (step1 === "solve" || step3 === "job") {
+      primary = { title: "IA Zero to Hero", desc: "Domina la IA para tu profesión.", color: "#10B981", emoji: "🤖", href: "/cursos/adultos/inteligencia-artificial-adultos", softSkills: ["Liderazgo", "Adaptabilidad"], techSkills: ["ChatGPT", "Automatización"], finalProject: "Flujo automatizado" };
+    } else if (step1 === "draw") {
+      primary = { title: "Next Gen Creators", desc: "Crea contenido de alto impacto.", color: "#E91E63", emoji: "🎥", href: "/cursos/adultos/video-blogging", softSkills: ["Comunicación"], techSkills: ["Video"], finalProject: "Marca personal" };
+    } else {
+      primary = { title: "Alfabetización Digital", desc: "Independencia en el mundo digital.", color: "#00C9FF", emoji: "💻", href: "/cursos/adultos/alfabetizacion-digital", softSkills: ["Autonomía", "Confianza"], techSkills: ["Office", "Internet"], finalProject: "Trámites digitales" };
+    }
+  } else {
+    primary = { title: "Programación Visual", desc: "El mejor inicio en el mundo tech.", color: "#00C9FF", emoji: "🚀", href: "/cursos/ninos/programacion-visual", softSkills: ["Lógica"], techSkills: ["Scratch"], finalProject: "Primer videojuego" };
   }
 
-  // 2. Ruta Niños (5-11 años)
-  if (step0 === "kids") {
-    if (step3 === "school") {
-      return {
-        title: "Alfabetización digital (Peques)",
-        desc: "Aprenderán a usar dispositivos de forma segura aplicando herramientas útiles para la escuela, como la Suite de Google.",
-        color: "#10B981",
-        emoji: "📱",
-        href: "/cursos/ninos/alfabetizacion",
-        hrefLabel: "Ver curso",
-      };
-    }
-    if (step2 === "robot") {
-      return {
-        title: "Robótica I",
-        desc: "Construyen y programan robots iniciales, aprendiendo principios de mecánica y sensores.",
-        color: "#FF6B35",
-        emoji: "🤖",
-        href: "/cursos/ninos/robotica",
-        hrefLabel: "Ver curso",
-      };
-    }
-    if (step2 === "design" || step3 === "create") {
-      return {
-        title: "Diseño gráfico",
-        desc: "Crean proyectos visuales con ilustraciones, vectores y gráficos 3D desde la primera clase.",
-        color: "#9C27B0",
-        emoji: "🎨",
-        href: "/cursos/ninos/diseno",
-        hrefLabel: "Ver curso",
-      };
-    }
-    if (step1 === "zero") {
-      return {
-        title: "Fundamentos de la programación",
-        desc: "Se inician mediante ejercicios y retos gamificados en Scratch Jr. y cuadernillos de Algorithmics.",
-        color: "#00C9FF",
-        emoji: "🧩",
-        href: "/cursos/ninos/fundamentos",
-        hrefLabel: "Ver curso",
-      };
-    }
-    return {
-      title: "Programación visual",
-      desc: "Comienzan a crear sus primeras animaciones y juegos complejos usando programación por bloques y Scratch.",
-      color: "#FFE134",
-      emoji: "🐱",
-      href: "/cursos/ninos/programacion",
-      hrefLabel: "Ver curso",
-    };
-  }
-
-  // 3. Ruta Jóvenes (12-17 años)
-  if (step0 === "teen") {
-    if (step3 === "study") {
-      return {
-        title: "Preparación para Universidad",
-        desc: "Resuelven guías y simulacros de exámenes de admisión (UNAM, IPN, UAM) trabajando por áreas clave.",
-        color: "#7C3AED",
-        emoji: "🎓",
-        href: "/cursos/universidad",
-        hrefLabel: "Ver preparación",
-      };
-    }
-    if (step3 === "school") {
-      return {
-        title: "Regularización en Matemáticas o Inglés",
-        desc: "Resuelven problemas de matemáticas de acuerdo con su grado o aprenden inglés con dinámicas orales y visuales.",
-        color: "#10B981",
-        emoji: "📚",
-        href: "/cursos/academico",
-        hrefLabel: "Ver apoyo escolar",
-      };
-    }
-    if (step2 === "games") {
-      return {
-        title: "Diseño de videojuegos: Roblox o Unity",
-        desc: "Crean mundos programando en Lua con Roblox Studio, o publican juegos usando C# y Animator en Unity.",
-        color: "#FFE134",
-        emoji: "🕹️",
-        href: "/cursos/jovenes/videojuegos",
-        hrefLabel: "Ver videojuegos",
-      };
-    }
-    if (step2 === "design") {
-      return {
-        title: "Animación Digital o Creación de video",
-        desc: "Dibujo digital y fotogramas, o grabación y edición de videos para TikTok, Shorts y Reels de forma guiada.",
-        color: "#9C27B0",
-        emoji: "🎬",
-        href: "/cursos/jovenes/creativo",
-        hrefLabel: "Ver cursos creativos",
-      };
-    }
-    if (step2 === "ai") {
-      return {
-        title: "Inteligencia artificial (niños)",
-        desc: "Desarrollan proyectos usando IA para generar texto, código, audio, video y modelos 3D.",
-        color: "#10B981",
-        emoji: "✨",
-        href: "/cursos/jovenes/ia",
-        hrefLabel: "Ver curso de IA",
-      };
-    }
-    if (step3 === "job") {
-      return {
-        title: "Emprendimiento (intrapreneurship)",
-        desc: "Desarrollan actitud emprendedora, generan modelos de negocio y aplican la metodología ágil lean startup.",
-        color: "#FF6B35",
-        emoji: "🚀",
-        href: "/cursos/emprendimiento",
-        hrefLabel: "Ver emprendimiento",
-      };
-    }
-    return {
-      title: "Diseño web o Python Start I",
-      desc: "Crean sus propias páginas web con foco en UX/UI sin programar, o aprenden algoritmos modernos y PyGame en Python.",
-      color: "#00C9FF",
-      emoji: "💻",
-      href: "/cursos/jovenes/programacion",
-      hrefLabel: "Ver programación",
-    };
-  }
-
-  // 4. Ruta Adultos (18+)
-  if (step0 === "adult") {
-    if (step1 === "zero" && step2 !== "ai") {
-      return {
-        title: "Alfabetización Digital (Adultos)",
-        desc: "Se familiarizan paso a paso con computadoras, celulares y herramientas digitales en un ambiente seguro y paciente.",
-        color: "#4CAF50",
-        emoji: "📱",
-        href: "/cursos/adultos/alfabetizacion",
-        hrefLabel: "Ver curso",
-      };
-    }
-    if (step2 === "ai") {
-      return {
-        title: "Inteligencia artificial (adultos)",
-        desc: "Son sesiones individuales y personalizadas a las necesidades de cada estudiante a modo de consultoría.",
-        color: "#10B981",
-        emoji: "🧠",
-        href: "/cursos/adultos/ia",
-        hrefLabel: "Ver consultoría",
-      };
-    }
-    if (step3 === "school") {
-      return {
-        title: "Inglés",
-        desc: "Practican escuchar, hablar, leer y escribir, y avanzan hasta explicar temas y dar miniclases en inglés.",
-        color: "#7C3AED",
-        emoji: "🌍",
-        href: "/cursos/adultos/ingles",
-        hrefLabel: "Ver curso de inglés",
-      };
-    }
-    if (step2 === "design") {
-       return {
-        title: "Creación de contenido y video",
-        desc: "Aprende a planear, grabar y editar contenido para redes sociales desde la idea inicial hasta la edición final.",
-        color: "#9C27B0",
-        emoji: "🎥",
-        href: "/cursos/adultos/contenido",
-        hrefLabel: "Ver curso",
-      };
-    }
-    return {
-      title: "Python Start I o Emprendimiento",
-      desc: "Aplica conocimientos prácticos en programación moderna o desarrolla planes y modelos de negocios efectivos.",
-      color: "#00C9FF",
-      emoji: "💼",
-      href: "/cursos/adultos/profesional",
-      hrefLabel: "Ver cursos profesionales",
-    };
-  }
-
-  // Fallback final
-  return {
-    title: "Diagnóstico personalizado gratuito",
-    desc: "Habla directamente con nuestro equipo para que diseñemos el camino perfecto para ti.",
-    color: "#00C9FF",
-    emoji: "🎯",
-    href: "/contacto",
-    hrefLabel: "Contactar con el equipo",
-  };
+  return { primary, secondary };
 }
 
 export function TestPage() {
   const [step, setStep] = useState(-1);
   const [answers, setAnswers] = useState<Answer>({});
-  const [done, setDone] = useState(false);
-  const { theme } = useTheme();
+  const [isFinished, setIsFinished] = useState(false);
+  const [leadName, setLeadName] = useState("");
+  const [leadPhone, setLeadPhone] = useState("");
+  const [leadCaptured, setLeadCaptured] = useState(false);
 
-  // Llamamos a la función dinámica pasándole el estado actual de las respuestas
   const questionsList = getQuestions(answers);
   const currentQ = questionsList[step];
   const progress = step < 0 ? 0 : ((step + 1) / questionsList.length) * 100;
@@ -318,317 +124,165 @@ export function TestPage() {
     const key = currentQ.id as keyof Answer;
     const newAnswers = { ...answers, [key]: value };
     setAnswers(newAnswers);
-
     setTimeout(() => {
-      if (step < questionsList.length - 1) {
-        setStep(step + 1);
-      } else {
-        setDone(true);
-      }
+      if (step < questionsList.length - 1) setStep(step + 1);
+      else setIsFinished(true);
     }, 300);
   };
 
   const reset = () => {
-    setStep(-1);
-    setAnswers({});
-    setDone(false);
+    setStep(-1); setAnswers({}); setIsFinished(false); setLeadCaptured(false); setLeadName(""); setLeadPhone("");
   };
 
-  const result = done ? getResult(answers) : null;
+  const results = isFinished ? getResults(answers) : null;
+  const result = results?.primary;
+
+  const generateWhatsAppLink = () => {
+    if (!result) return "";
+    const text = `Hola equipo de GōkuLab. Soy ${leadName}. \n\nAcabo de hacer el test y me recomendó el curso: *${result.title}*.\n\nMe interesa desarrollar habilidades como: ${result.softSkills.join(', ')}.\n\nQuiero agendar una masterclass gratuita.`;
+    return `https://wa.me/5612668168?text=${encodeURIComponent(text)}`;
+  };
+
+  const handleLeadSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!leadName || !leadPhone) return;
+    setLeadCaptured(true);
+  };
 
   return (
-    <div className="bg-gray-50 dark:bg-[#0A0F1E] min-h-screen transition-colors duration-300">
-      {/* HERO */}
-      <section className="pt-32 pb-16 px-4 relative overflow-hidden bg-white dark:bg-[#050A14] transition-colors duration-300">
-        <div
-          className="absolute inset-0 pointer-events-none transition-colors duration-300"
-          style={{
-            background: theme === "dark" 
-              ? "radial-gradient(ellipse at center, rgba(124,58,237,0.08) 0%, transparent 70%)"
-              : "radial-gradient(ellipse at center, rgba(124,58,237,0.05) 0%, transparent 70%)",
-          }}
-        />
+    <div className="bg-[#050A14] text-white min-h-screen selection:bg-[#00C9FF] selection:text-black">
+      <section className="pt-32 pb-12 px-4 relative overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-lg h-64 bg-[#7C3AED] blur-[120px] opacity-20 pointer-events-none" />
         <div className="max-w-3xl mx-auto text-center relative z-10">
           <AnimatedSection>
-            <div
-              className="inline-block px-4 py-1.5 rounded-full text-sm mb-6 bg-purple-50 dark:bg-transparent shadow-sm dark:shadow-none transition-colors duration-300"
-              style={{
-                background: theme === "dark" ? "rgba(124,58,237,0.1)" : "rgba(124,58,237,0.08)",
-                color: "#7C3AED",
-                border: "1px solid rgba(124,58,237,0.25)",
-              }}
-            >
-              🎯 Diagnóstico de orientación
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm mb-6 bg-white/5 border border-white/10 text-[#00C9FF] font-black uppercase tracking-widest">
+              <Sparkles size={14} /> Diagnóstico de Orientación
             </div>
-            <h1
-              className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
-              style={{
-                fontSize: "clamp(2rem, 5vw, 3.5rem)",
-                fontWeight: 900,
-                lineHeight: 1.15,
-              }}
-            >
-              Encuentra tu curso{" "}
-              <span
-                style={{
-                  background: "linear-gradient(90deg, #00C9FF, #7C3AED)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                }}
-              >
-                perfecto
-              </span>
+            <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tighter">
+              Encuentra su <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#00C9FF] to-[#7C3AED]">superpoder</span>
             </h1>
-            <p className="text-gray-600 dark:text-white/65 max-w-xl mx-auto transition-colors duration-300" style={{ fontSize: "1.1rem" }}>
-              4 preguntas. 2 minutos. Una recomendación personalizada para ti.
+            <p className="text-xl text-gray-400 max-w-xl mx-auto">
+              4 preguntas. 2 minutos. Una recomendación personalizada para dar el primer paso hacia el futuro.
             </p>
           </AnimatedSection>
         </div>
       </section>
 
-      {/* TEST CARD */}
-      <section className="py-16 px-4">
-        <div className="max-w-2xl mx-auto">
-          {/* Progress bar */}
-          {step >= 0 && !done && (
-            <div className="mb-8">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-gray-500 dark:text-white/40 text-sm transition-colors duration-300">
-                  Pregunta {step + 1} de {questionsList.length}
-                </span>
-                <span className="text-gray-500 dark:text-white/40 text-sm transition-colors duration-300">
-                  {Math.round(progress)}%
-                </span>
-              </div>
-              <div
-                className="w-full h-2 rounded-full overflow-hidden transition-colors duration-300"
-                style={{ background: theme === "dark" ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)" }}
-              >
-                <div
-                  className="h-full rounded-full"
-                  style={{
-                    width: `${progress}%`,
-                    background: "linear-gradient(90deg, #00C9FF, #7C3AED)",
-                    transition: "width 0.5s ease",
-                  }}
-                />
-              </div>
+      <section className="py-12 px-4 max-w-3xl mx-auto relative z-10">
+        {step >= 0 && !isFinished && (
+          <div className="mb-10">
+            <div className="flex items-center justify-between mb-3 text-sm font-bold text-gray-500 uppercase tracking-widest">
+              <span>Pregunta {step + 1} de {questionsList.length}</span>
+              <span>{Math.round(progress)}%</span>
             </div>
-          )}
+            <div className="w-full h-2 rounded-full bg-white/10 overflow-hidden">
+              <div className="h-full rounded-full bg-gradient-to-r from-[#00C9FF] to-[#7C3AED] transition-all duration-500" style={{ width: `${progress}%` }} />
+            </div>
+          </div>
+        )}
 
-          {/* INTRO */}
-          {step === -1 && !done && (
-            <div
-              className="p-8 rounded-3xl text-center bg-white dark:bg-transparent shadow-md dark:shadow-none transition-colors duration-300"
-              style={{
-                background: theme === "dark" ? "rgba(255,255,255,0.03)" : "#ffffff",
-                border: theme === "dark" ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(0,0,0,0.08)",
-              }}
-            >
-              <div style={{ fontSize: "4rem" }} className="mb-6 drop-shadow-sm">🎮</div>
-              <h2
-                className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
-                style={{ fontWeight: 800, fontSize: "1.5rem" }}
-              >
-                ¿Estás listo?
-              </h2>
-              <p className="text-gray-600 dark:text-white/60 mb-8 leading-relaxed transition-colors duration-300">
-                Responde 4 preguntas rápidas y te diremos exactamente qué curso
-                de GOKU LAB es el indicado para ti o para tu familia.
-              </p>
-              <div className="flex flex-col gap-3 text-sm text-gray-500 dark:text-white/50 mb-8 transition-colors duration-300">
-                {["✅ Solo 4 preguntas", "✅ Resultado dinámico e inmediato", "✅ 100% personalizado"].map((i) => (
-                  <span key={i}>{i}</span>
-                ))}
-              </div>
-              <button
-                onClick={() => setStep(0)}
-                className="flex items-center justify-center gap-3 w-full py-4 rounded-2xl text-white font-bold"
-                style={{
-                  background: "linear-gradient(135deg, #00C9FF, #7C3AED)",
-                  boxShadow: "0 6px 25px rgba(0,201,255,0.3)",
-                  transition: "all 0.2s ease",
-                  fontSize: "1.05rem",
-                }}
-                onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.02)"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
-              >
-                Comenzar el diagnóstico
-                <ArrowRight size={20} />
+        {step === -1 && !isFinished && (
+          <AnimatedSection className="p-8 md:p-12 rounded-[3rem] bg-white/5 border border-white/10 text-center backdrop-blur-sm">
+            <div className="text-7xl mb-8">🚀</div>
+            <h2 className="text-3xl font-black text-white mb-4">¿Listo para descubrirlo?</h2>
+            <p className="text-gray-400 mb-8 max-w-md mx-auto">
+              No te preocupes por los términos técnicos. Solo dinos qué le gusta hacer y nosotros encontramos el curso perfecto.
+            </p>
+            <button onClick={() => setStep(0)} className="flex items-center justify-center gap-3 w-full py-5 rounded-2xl text-black font-black text-lg transition-transform hover:scale-105" style={{ background: "linear-gradient(135deg, #00C9FF, #7C3AED)", color: "#fff", boxShadow: "0 10px 30px rgba(0,201,255,0.3)" }}>
+              Comenzar el diagnóstico <ArrowRight size={20} />
+            </button>
+          </AnimatedSection>
+        )}
+
+        {step >= 0 && !isFinished && currentQ && (
+          <AnimatedSection key={step} className="p-8 md:p-12 rounded-[3rem] bg-white/5 border border-white/10 backdrop-blur-sm">
+            <div className="text-5xl mb-6">{currentQ.emoji}</div>
+            <h2 className="text-3xl font-black text-white mb-2">{currentQ.title}</h2>
+            <p className="text-gray-400 mb-8">{currentQ.subtitle}</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {currentQ.options.map((opt) => (
+                <button key={opt.id} onClick={() => handleAnswer(opt.id)} className={`p-6 rounded-2xl text-left flex items-center gap-4 transition-all duration-300 border ${answers[currentQ.id as keyof Answer] === opt.id ? "bg-[#7C3AED]/20 border-[#7C3AED] scale-[1.02]" : "bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/30"}`}>
+                  <span className="text-3xl">{opt.emoji}</span>
+                  <span className="font-bold text-white/90">{opt.label}</span>
+                </button>
+              ))}
+            </div>
+            {step > 0 && (
+              <button onClick={() => setStep(step - 1)} className="mt-8 flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-white transition-colors">
+                <ChevronLeft size={16} /> Volver atrás
               </button>
+            )}
+          </AnimatedSection>
+        )}
+
+        {isFinished && result && results && (
+          <AnimatedSection className="rounded-[3rem] overflow-hidden bg-[#0A0F1E] border border-white/10 shadow-2xl">
+            <div className="p-10 text-center border-b border-white/10" style={{ background: `linear-gradient(180deg, ${result.color}20 0%, transparent 100%)` }}>
+              <div className="text-7xl mb-6 drop-shadow-2xl">{result.emoji}</div>
+              <div className="inline-block px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest mb-4" style={{ background: result.color, color: "#fff" }}>Recomendación Principal</div>
+              <h2 className="text-4xl font-black text-white mb-4">{result.title}</h2>
+              <p className="text-gray-300 text-lg max-w-md mx-auto">{result.desc}</p>
             </div>
-          )}
 
-          {/* QUESTION */}
-          {step >= 0 && !done && currentQ && (
-            <div
-              className="p-8 rounded-3xl bg-white dark:bg-transparent shadow-md dark:shadow-none transition-colors duration-300"
-              style={{
-                background: theme === "dark" ? "rgba(255,255,255,0.03)" : "#ffffff",
-                border: theme === "dark" ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(0,0,0,0.08)",
-                animation: "slideIn 0.35s ease",
-              }}
-            >
-              <div className="text-4xl mb-5 drop-shadow-sm">{currentQ.emoji}</div>
-              <h2
-                className="text-gray-900 dark:text-white mb-2 transition-colors duration-300"
-                style={{ fontWeight: 800, fontSize: "1.5rem" }}
-              >
-                {currentQ.title}
-              </h2>
-              <p className="text-gray-500 dark:text-white/55 mb-8 transition-colors duration-300">{currentQ.subtitle}</p>
-
-              <div className="grid grid-cols-2 gap-3">
-                {currentQ.options.map((opt) => {
-                  const key = currentQ.id as keyof Answer;
-                  const selected = answers[key] === opt.id;
-                  return (
-                    <button
-                      key={opt.id}
-                      onClick={() => handleAnswer(opt.id)}
-                      className="p-5 rounded-2xl text-left flex flex-col gap-2 bg-gray-50 dark:bg-transparent shadow-sm dark:shadow-none"
-                      style={{
-                        background: selected
-                          ? `${opt.color}15`
-                          : (theme === "dark" ? "rgba(255,255,255,0.04)" : "#f9fafb"),
-                        border: `2px solid ${selected ? opt.color : (theme === "dark" ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.05)")}`,
-                        transition: "all 0.2s ease",
-                      }}
-                      onMouseEnter={(e) => {
-                        if (!selected) {
-                          (e.currentTarget as HTMLElement).style.borderColor = opt.color + "60";
-                          (e.currentTarget as HTMLElement).style.background = theme === "dark" ? `${opt.color}10` : `${opt.color}08`;
-                          (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
-                        }
-                      }}
-                      onMouseLeave={(e) => {
-                        if (!selected) {
-                          (e.currentTarget as HTMLElement).style.borderColor = theme === "dark" ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.05)";
-                          (e.currentTarget as HTMLElement).style.background = theme === "dark" ? "rgba(255,255,255,0.04)" : "#f9fafb";
-                          (e.currentTarget as HTMLElement).style.transform = "none";
-                        }
-                      }}
-                    >
-                      <span style={{ fontSize: "1.75rem" }} className="drop-shadow-sm">{opt.emoji}</span>
-                      <span
-                        className="text-sm leading-snug transition-colors duration-300"
-                        style={{ 
-                          color: selected ? opt.color : (theme === "dark" ? "rgba(255,255,255,0.7)" : "#4b5563"), 
-                          fontWeight: selected ? 700 : 500 
-                        }}
-                      >
-                        {opt.label}
-                      </span>
-                    </button>
-                  );
-                })}
+            <div className="p-8 border-b border-white/10 bg-white/5">
+              <h3 className="text-center text-sm font-bold text-gray-400 uppercase tracking-widest mb-6">Lo que desarrollará</h3>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="p-6 rounded-2xl bg-[#7C3AED]/10 border border-[#7C3AED]/20">
+                  <div className="flex items-center gap-2 mb-4"><Brain className="text-[#7C3AED]" size={20} /><h4 className="font-black text-white">Soft Skills (El Superpoder)</h4></div>
+                  <ul className="space-y-2">{result.softSkills.map(skill => <li key={skill} className="flex items-center gap-2 text-sm text-gray-300"><CheckCircle size={14} className="text-[#7C3AED]" /> {skill}</li>)}</ul>
+                </div>
+                <div className="p-6 rounded-2xl bg-[#00C9FF]/10 border border-[#00C9FF]/20">
+                  <div className="flex items-center gap-2 mb-4"><Zap className="text-[#00C9FF]" size={20} /><h4 className="font-black text-white">Tech Skills (La Herramienta)</h4></div>
+                  <ul className="space-y-2">{result.techSkills.map(skill => <li key={skill} className="flex items-center gap-2 text-sm text-gray-300"><CheckCircle size={14} className="text-[#00C9FF]" /> {skill}</li>)}</ul>
+                </div>
               </div>
-
-              {/* Back */}
-              {step > 0 && (
-                <button
-                  onClick={() => setStep(step - 1)}
-                  className="mt-5 text-sm text-gray-400 dark:text-white/30 hover:text-gray-700 dark:hover:text-white/60 transition-colors duration-300"
-                >
-                  ← Volver
-                </button>
-              )}
-            </div>
-          )}
-
-          {/* RESULT */}
-          {done && result && (
-            <div
-              className="rounded-3xl overflow-hidden bg-white dark:bg-transparent shadow-lg dark:shadow-none transition-colors duration-300"
-              style={{
-                background: theme === "dark" ? "rgba(255,255,255,0.03)" : "#ffffff",
-                border: theme === "dark" ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(0,0,0,0.08)",
-                animation: "slideIn 0.35s ease",
-              }}
-            >
-              {/* Header */}
-              <div
-                className="p-8 text-center transition-colors duration-300"
-                style={{
-                  background: theme === "dark" 
-                    ? `linear-gradient(135deg, ${result.color}15, ${result.color}05)`
-                    : `linear-gradient(135deg, ${result.color}10, transparent)`,
-                  borderBottom: theme === "dark" ? `1px solid ${result.color}20` : `1px solid ${result.color}15`,
-                }}
-              >
-                <div style={{ fontSize: "4rem" }} className="mb-4 drop-shadow-md">
-                  {result.emoji}
-                </div>
-                <div
-                  className="inline-block px-4 py-1 rounded-full text-sm mb-4 font-semibold shadow-sm"
-                  style={{ background: result.color, color: "#fff" }}
-                >
-                  Tu recomendación
-                </div>
-                <h2
-                  className="text-gray-900 dark:text-white mb-3 transition-colors duration-300"
-                  style={{ fontWeight: 800, fontSize: "1.5rem" }}
-                >
-                  {result.title}
-                </h2>
-                <p className="text-gray-600 dark:text-white/65 leading-relaxed transition-colors duration-300">{result.desc}</p>
-              </div>
-
-              {/* Actions */}
-              <div className="p-8">
-                <div className="flex flex-col gap-4 mb-8">
-                  <a
-                    href={`https://wa.me/5612668168?text=Hice%20el%20test%20y%20me%20recomendaron%3A%20${encodeURIComponent(result.title)}%2C%20quiero%20agendar%20mi%20clase%20muestra`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-3 py-4 rounded-2xl text-white font-bold"
-                    style={{
-                      background: "linear-gradient(135deg, #00C9FF, #7C3AED)",
-                      boxShadow: "0 6px 25px rgba(0,201,255,0.3)",
-                      transition: "all 0.2s ease",
-                      fontSize: "1.05rem",
-                    }}
-                    onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.02)"; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
-                  >
-                    <MessageCircle size={20} />
-                    Agendar masterclass gratuita
-                  </a>
-                  <Link
-                    to={result.href}
-                    className="flex items-center justify-center gap-2 py-3.5 rounded-2xl font-semibold border transition-all duration-300 text-gray-900 dark:text-white border-gray-300 dark:border-white/20 hover:bg-gray-100 dark:hover:bg-white/5"
-                  >
-                    {result.hrefLabel}
-                    <ArrowRight size={16} />
-                  </Link>
-                </div>
-
-                <div className="flex items-center gap-3 p-4 rounded-2xl transition-colors duration-300 bg-gray-50 dark:bg-transparent" style={{ background: theme === "dark" ? "rgba(255,255,255,0.03)" : "#f9fafb" }}>
-                  <CheckCircle size={18} className="text-[#10B981] shrink-0" />
-                  <p className="text-gray-600 dark:text-white/55 text-sm transition-colors duration-300">
-                    Alguien del equipo GOKU LAB revisará tus respuestas y te dará orientación personalizada.
-                  </p>
-                </div>
-
-                <button
-                  onClick={reset}
-                  className="mt-5 flex items-center gap-2 text-sm text-gray-400 dark:text-white/30 hover:text-gray-700 dark:hover:text-white/60 mx-auto transition-colors duration-300"
-                >
-                  <RotateCcw size={14} />
-                  Repetir el diagnóstico
-                </button>
+              <div className="mt-6 p-6 rounded-2xl bg-white/5 border border-white/10 flex items-start gap-4">
+                <Target className="text-[#FFE134] mt-1 shrink-0" size={24} />
+                <div><h4 className="font-bold text-white mb-1">El Proyecto Final</h4><p className="text-sm text-gray-400">{result.finalProject}</p></div>
               </div>
             </div>
-          )}
-        </div>
+
+            {results.secondary.length > 0 && (
+              <div className="p-8 border-b border-white/10 bg-[#0A0F1E]">
+                <h3 className="text-center text-sm font-bold text-gray-400 uppercase tracking-widest mb-6">También te podría interesar</h3>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {results.secondary.map((sec, idx) => (
+                    <Link key={idx} to={sec.href} className="p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-white/30 transition-colors flex items-center gap-4">
+                      <span className="text-3xl">{sec.emoji}</span>
+                      <div><h4 className="font-bold text-white text-sm">{sec.title}</h4><p className="text-xs text-gray-400 mt-1 line-clamp-1">{sec.desc}</p></div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {!leadCaptured ? (
+              <div className="p-10 bg-[#050A14]">
+                <div className="flex items-center gap-3 mb-6"><ShieldCheck className="text-[#10B981]" /><h3 className="text-xl font-bold text-white">¡Ya casi terminamos!</h3></div>
+                <p className="text-gray-400 mb-8">Déjanos tus datos para enviarte el temario completo y agendar tu masterclass gratuita.</p>
+                <form onSubmit={handleLeadSubmit} className="space-y-4">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div><label className="block text-sm font-bold text-gray-400 mb-2">Nombre completo</label><input type="text" required value={leadName} onChange={(e) => setLeadName(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-[#00C9FF]" placeholder="Ej. María González" /></div>
+                    <div><label className="block text-sm font-bold text-gray-400 mb-2">WhatsApp</label><input type="tel" required value={leadPhone} onChange={(e) => setLeadPhone(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-[#00C9FF]" placeholder="Ej. 5512345678" /></div>
+                  </div>
+                  <button type="submit" className="w-full mt-4 flex items-center justify-center gap-2 py-5 rounded-xl text-black font-black text-lg transition-transform hover:scale-[1.02]" style={{ background: `linear-gradient(135deg, ${result.color}, #ffffff)`, color: "#000" }}>Ver mi plan y agendar <ArrowRight size={20} /></button>
+                </form>
+              </div>
+            ) : (
+              <div className="p-10 text-center bg-[#050A14]">
+                <div className="w-20 h-20 bg-[#10B981]/20 rounded-full flex items-center justify-center mx-auto mb-6"><CheckCircle size={40} className="text-[#10B981]" /></div>
+                <h3 className="text-2xl font-black text-white mb-4">¡Listo, {leadName.split(' ')[0]}!</h3>
+                <p className="text-gray-400 mb-10">Tu recomendación está lista. Da el siguiente paso para asegurar tu lugar en el curso de <strong>{result.title}</strong>.</p>
+                <div className="flex flex-col gap-4">
+                  <a href={generateWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 py-5 rounded-2xl text-white font-black text-lg transition-transform hover:scale-105" style={{ background: "linear-gradient(135deg, #25D366, #128C7E)", boxShadow: "0 10px 30px rgba(37,211,102,0.3)" }}><MessageCircle size={24} /> Agendar por WhatsApp</a>
+                  <Link to={result.href} className="flex items-center justify-center gap-2 py-5 rounded-2xl font-bold border-2 border-white/20 text-white hover:bg-white/5 transition-colors">Ver el temario completo (Syllabus) <ArrowRight size={18} /></Link>
+                </div>
+                <button onClick={reset} className="mt-8 flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-white mx-auto transition-colors"><RotateCcw size={16} /> Hacer el test de nuevo</button>
+              </div>
+            )}
+          </AnimatedSection>
+        )}
       </section>
-
-      <style>{`
-        @keyframes slideIn {
-          from { opacity: 0; transform: translateX(20px); }
-          to { opacity: 1; transform: translateX(0); }
-        }
-      `}</style>
     </div>
   );
 }
