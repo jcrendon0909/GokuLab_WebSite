@@ -258,4 +258,4 @@ export function Layout() {
       </LanguageProvider>
     </ThemeProvider>
   );
-}
+} //error
