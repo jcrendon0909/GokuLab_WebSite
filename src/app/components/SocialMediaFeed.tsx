@@ -13,27 +13,28 @@ export function SocialMediaFeed() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+    useEffect(() => {
     const fetchPosts = async () => {
       try {
         const token = import.meta.env.VITE_FACEBOOK_ACCESS_TOKEN;
+        
+        // Si no hay token, no hacemos nada y evitamos el error
         if (!token) {
-          throw new Error("Falta el token de Facebook en el archivo .env");
+          console.warn("No hay token de Facebook configurado. Ocultando feed.");
+          setLoading(false);
+          return;
         }
 
-        const pageId = "me"; // o el ID de tu página
+        const pageId = "me"; 
         const url = `https://graph.facebook.com/v19.0/${pageId}/posts?fields=id,message,full_picture,permalink_url&limit=6&access_token=${token}`;
 
         const response = await fetch(url);
         
         if (!response.ok) {
-          const errorText = await response.text();
-          console.error("Error response from Facebook:", errorText);
           throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
 
-        const data = await response.json(); // ✅ Único parseo
-
+        const data = await response.json();
         if (!data.data || !Array.isArray(data.data)) {
           throw new Error("Formato de respuesta inesperado");
         }

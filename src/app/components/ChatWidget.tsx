@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Send, X, ExternalLink, Maximize2, RotateCw } from "lucide-react";
 
-const API_URL = import.meta.env.VITE_API_URL || "https://chatbot-gokulab-valeria.onrender.com";
+const API_URL = import.meta.env.VITE_API_URL || "https://agentevirtual-gokulab.onrender.com";
 
 type Message = { id: string; sender: "bot" | "user"; text: string; };
 
