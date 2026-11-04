@@ -35,7 +35,7 @@ const PROFESORES_DATA = [
     rol: "Instructora de Robótica y Programación",
     especialidad: "Scratch, Arduino, Python",
     bio: "Educadora apasionada por despertar el potencial de cada alumno. Especialista en programación visual, Python, videoblogging y alfabetización digital, transforma el aprendizaje en experiencias dinámicas, creativas y significativas para estudiantes de todas las edades.",
-    imagen: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400",
+    imagen: PROFESORES.karina,
     cvUrl: "https://media.gokulab.mx/Profesores/CV%20-%20Ana%20Karina%20Mati%CC%81as%20Rodri%CC%81guez.pdf"
   },
   {
