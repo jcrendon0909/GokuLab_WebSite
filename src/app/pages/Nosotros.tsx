@@ -16,7 +16,7 @@ const FUNDADORES = [
     linkedin: "https://linkedin.com/in/jcrendon0909",
     email: "mailto:jcrendon@gokulab.mx",
     cvUrl: "https://media.gokulab.mx/Profesores/CV%20JCRendo%CC%81n%202026.pdf"
-  }
+  }, // <--- AQUÍ ESTABA EL ERROR, FALTABA ESTA COMA
   {
     nombre: "Claudia Sierra",
     rol: "Cofundadora · Directora General",
@@ -32,7 +32,7 @@ const FUNDADORES = [
 const PROFESORES_DATA = [
   {
     nombre: "Ana Karina Matías",
-    rol: "Instructora de Programación, afabetización digital y regularización de materias",
+    rol: "Instructora de Robótica y Programación",
     especialidad: "Scratch, Arduino, Python",
     bio: "Educadora apasionada por despertar el potencial de cada alumno. Especialista en programación visual, Python, videoblogging y alfabetización digital, transforma el aprendizaje en experiencias dinámicas, creativas y significativas para estudiantes de todas las edades.",
     imagen: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400",
