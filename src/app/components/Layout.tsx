@@ -4,7 +4,7 @@ import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { LanguageProvider } from "../contexts/LanguageContext";
 import { ThemeProvider } from "../contexts/ThemeProvider";
-import { MessageCircle, X, Send, Home, RotateCw, ExternalLink } from "lucide-react";
+import { MessageCircle, X, Send, Home, RotateCw } from "lucide-react";
 
 // ==========================================
 // URL CORREGIDA: agentevirtual-gokulab
@@ -28,13 +28,12 @@ function ChatWidget() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [showMenu, setShowMenu] = useState(true); // Controla los botones rápidos
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const userId = "web_user_gokulab";
 
-  // Efecto para hacer scroll automático
+  // Efecto para hacer scroll automático en los mensajes
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isLoading]);
@@ -61,7 +60,6 @@ function ChatWidget() {
         text: "¡Hola! 👋 Soy el Súper Agente Gōku. ¿En qué te puedo ayudar hoy?",
       },
     ]);
-    setShowMenu(true);
   };
 
   const handleSendMessage = async (text: string) => {
@@ -71,7 +69,6 @@ function ChatWidget() {
     setMessages((prev) => [...prev, newUserMsg]);
     setInputValue("");
     setIsLoading(true);
-    setShowMenu(false); // Ocultamos el menú mientras escribe
 
     // Redirecciones especiales
     if (text.includes("Hacer el Test")) {
@@ -206,20 +203,31 @@ function ChatWidget() {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* BOTONES RÁPIDOS (SIEMPRE VISIBLES) */}
-          <div className="bg-white px-3 py-2 border-t border-gray-100 flex overflow-x-auto gap-2 scrollbar-hide shrink-0">
-            <button onClick={resetChat} className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 transition-colors" title="Menú principal">
-              <Home size={16} />
-            </button>
-            {QUICK_REPLIES.map((reply) => (
-              <button
-                key={reply}
-                onClick={() => handleSendMessage(reply)}
-                className="flex-shrink-0 text-xs font-semibold bg-white hover:bg-gray-50 border border-gray-200 text-gray-600 px-3 py-1.5 rounded-full transition-colors shadow-sm"
+          {/* BOTONES RÁPIDOS (AHORA EN GRID, SIN SCROLL) */}
+          <div className="bg-white px-3 py-2 border-t border-gray-100 shrink-0">
+            <div className="grid grid-cols-3 gap-1.5">
+              {/* Botón Home (Abarca toda la fila superior) */}
+              <button 
+                onClick={resetChat} 
+                className="col-span-3 flex items-center justify-center gap-2 py-1.5 rounded-xl bg-purple-50 text-[#6a1b9a] hover:bg-purple-100 transition-colors text-xs font-bold" 
+                title="Volver al menú principal"
               >
-                {reply}
+                <Home size={14} />
+                Menú Principal
               </button>
-            ))}
+
+              {/* Los botones de acción */}
+              {QUICK_REPLIES.map((reply) => (
+                <button
+                  key={reply}
+                  onClick={() => handleSendMessage(reply)}
+                  className="text-[11px] font-semibold bg-white hover:bg-gray-50 border border-gray-200 text-gray-600 py-1.5 px-1 rounded-xl transition-colors shadow-sm truncate"
+                  title={reply}
+                >
+                  {reply}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* INPUT DE TEXTO */}
