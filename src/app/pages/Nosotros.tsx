@@ -1,350 +1,95 @@
 import { Link } from "react-router";
 import { AnimatedSection } from "../components/AnimatedSection";
-import { MessageCircle, Heart, Zap, Globe, Award, ChevronRight, Users } from "lucide-react";
 import { useTheme } from "next-themes";
-
-// Placeholders de avatares neutros para las fotos circulares
+import { ArrowRight, GraduationCap, Heart, Lightbulb, Target, Users, Briefcase, FileText, Linkedin, Mail } from "lucide-react";
 import { PROFESORES } from "../../Data/images";
-const AVATAR_PLACEHOLDER = PROFESORES.jcrendon;
-const AVATAR_PLACEHOLDER2 = PROFESORES.csierra;
-const team = [
+
+// --- DATOS MOCK (Aquí conectarás a tus profesores reales después) ---
+const FUNDADORES = [
   {
-    name: "Juan Carlos Rendón Aguilar",
-    role: "Lic. en Matemáticas Aplicadas, Fundador, COO y Director Académico",
-    bio: "Líder tecnológico visionario con 25+ años de experiencia global en Microsoft, IBM y Softtek, combinado con 30+ años de excelencia académica en la UNAM. Actualmente COO de Gōkulab Academia de Innovación, transformando la educación a través de STEM, emprendimiento e integración tecnológica para niños, adolescentes y adultos. Múltiples certificaciones internacionales de Harvard Business School, Wharton School y CICC Japan.",
-    img: AVATAR_PLACEHOLDER,
-    emoji: "💻",
+    nombre: "Juan Carlos Rendón",
+    rol: "Cofundador · Director de Tecnología",
+    bio: "Matemático y experto en tecnología e IA, con más de 30 años enseñando en la UNAM y experiencia en empresas como IBM y Microsoft. Apasionado por democratizar el conocimiento tech.",
+    imagen: PROFESORES.jcrendon,
+    linkedin: "#",
+    email: "mailto:jcrendon@example.com" // Cambia esto después
   },
   {
-    name: "Claudia Sierra Magaña",
-    role: "Lic. en Actuaría, Fundadora, CEO",
-    bio: "Especialización en Innovación y mercado – Babson College, Boston Ma. - Técnicas y análisis de información en Investigación de Mercados, P&G - Certificación en metodología Lean Startup por los autores de la misma: Steve Blank y Bob Dorf y la Secretaría de Economía (INADEM) - Conferencista, internacional| Red internacional de conferencistas Munich, Socia Fundadora y directora general GOKULAB - Socia Fundadora Guardare Mercati",
-    img: AVATAR_PLACEHOLDER2,
-    emoji: "🦾",
-  },
-  {
-    name: "Profesor Ejemplo 3",
-    role: "Especialidad Diseño",
-    bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    img: AVATAR_PLACEHOLDER,
-    emoji: "🎨",
-  },
-  {
-    name: "Profesor Ejemplo 4",
-    role: "Especialidad Ciencias / IA",
-    bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    img: AVATAR_PLACEHOLDER,
-    emoji: "🧠",
-  },
+    nombre: "Claudia Sierra",
+    rol: "Cofundadora · Directora de Emprendimiento",
+    bio: "Actuaria, escritora y especialista en investigación de mercados y emprendimiento. Con más de 25 años de experiencia en empresas como Procter & Gamble liderando estrategias de crecimiento.",
+    imagen: PROFESORES.csierra,
+    linkedin: "#",
+    email: "mailto:csierra@example.com" // Cambia esto después
+  }
 ];
 
-const values = [
+const PROFESORES_DATA = [
   {
-    icon: Zap,
-    title: "Innovación constante",
-    desc: "Actualizamos nuestros currículos constantemente para estar a la vanguardia tecnológica.",
-    color: "#00C9FF",
+    nombre: "Ana Karina Matías",
+    rol: "Instructora de Robótica y Programación",
+    especialidad: "Scratch, Arduino, Python",
+    bio: "Ingeniera en Mecatrónica con 5 años de experiencia dando clases a niños. Cree firmemente que la mejor forma de aprender es construyendo y equivocándose.",
+    imagen: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400",
+    cvUrl: "#" // Aquí puedes poner un link a su CV en PDF
   },
   {
-    icon: Heart,
-    title: "Aprendizaje con propósito",
-    desc: "Cada curso tiene un objetivo claro: crear, resolver problemas y abrir oportunidades.",
-    color: "#FF6B35",
-  },
-  {
-    icon: Globe,
-    title: "Acceso para todos",
-    desc: "Becas, planes flexibles y metodologías adaptadas a cada perfil y contexto.",
-    color: "#7C3AED",
-  },
-  {
-    icon: Award,
-    title: "Excelencia y resultados",
-    desc: "Más del 95% de satisfacción. Nuestros alumnos llegan con objetivos y los cumplen.",
-    color: "#10B981",
-  },
+    nombre: "Carlos Mendoza",
+    rol: "Instructor de Diseño y Videojuegos",
+    especialidad: "Unity, Blender, Photoshop",
+    bio: "Diseñador de videojuegos indie. Ha lanzado 3 títulos en Steam y ahora enseña a los adolescentes a crear sus propios mundos digitales.",
+    imagen: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400",
+    cvUrl: "#"
+  }
 ];
 
 export function Nosotros() {
   const { theme } = useTheme();
 
   return (
-    <div className="bg-white dark:bg-[#0A0F1E] transition-colors duration-300">
-      {/* HERO */}
-      <section
-        className="relative py-32 px-4 overflow-hidden bg-slate-50 dark:bg-[#050A14] transition-colors duration-300"
-        style={{ paddingTop: "120px" }}
-      >
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(ellipse at 30% 50%, rgba(0,201,255,0.07) 0%, transparent 60%), radial-gradient(ellipse at 70% 20%, rgba(124,58,237,0.06) 0%, transparent 60%)",
-          }}
-        />
-
-        {/* Polaroid-style collage bg */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20 dark:opacity-10">
-          {[...Array(6)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-32 h-40 rounded-lg overflow-hidden bg-gray-300 dark:bg-white/10"
-              style={{
-                top: `${10 + (i % 3) * 30}%`,
-                left: `${5 + i * 16}%`,
-                transform: `rotate(${-8 + i * 3}deg)`,
-                animation: `floatCard ${4 + i}s ease-in-out infinite ${i * 0.5}s`,
-              }}
-            />
-          ))}
-        </div>
-
-        <div className="max-w-5xl mx-auto text-center relative">
+    <div className="bg-[#050A14] text-white min-h-screen selection:bg-[#00C9FF] selection:text-black">
+      
+      {/* 1. HERO */}
+      <section className="pt-32 pb-20 px-4 relative overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-64 bg-[#7C3AED] blur-[120px] opacity-20 pointer-events-none" />
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <AnimatedSection>
-            <div
-              className="inline-block px-4 py-1.5 rounded-full text-sm mb-6 bg-blue-50 dark:bg-blue-900/20"
-              style={{
-                color: "#00C9FF",
-                border: "1px solid rgba(0,201,255,0.25)",
-              }}
-            >
-              Nuestra historia
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm mb-6 bg-white/5 border border-white/10 text-[#00C9FF] font-black uppercase tracking-widest">
+              <Users size={14} /> Nuestra Historia
             </div>
-            <h1
-              className="text-gray-900 dark:text-white mb-6 transition-colors duration-300"
-              style={{
-                fontSize: "clamp(2rem, 5vw, 4rem)",
-                fontWeight: 900,
-                lineHeight: 1.15,
-              }}
-            >
-              Creemos en <span style={{ color: "#7C3AED" }}>superpoderes</span>
-              <br />
-              para un <span style={{ color: "#f8b50e" }}>superfuturo</span>
+            <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tighter">
+              Somos Gōku<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C9FF] to-[#7C3AED]">Lab</span>
             </h1>
-            <p
-              className="text-gray-600 dark:text-white/65 max-w-2xl mx-auto transition-colors duration-300"
-              style={{ fontSize: "1.15rem", lineHeight: 1.75 }}
-            >
-              GŌKU LAB nació de la convicción de que la tecnología puede y debe
-              estar al alcance de todos: niños que sueñan, jóvenes que exploran,
-              adultos que se reinventan y empresas que evolucionan.
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
+              No solo somos una academia. Somos una comunidad obsesionada con una idea: transformar a las personas de consumidoras de tecnología a creadoras del futuro.
             </p>
           </AnimatedSection>
         </div>
       </section>
 
-      {/* PHILOSOPHY */}
-      <section className="py-24 px-4 bg-white dark:bg-[#0A0F1E] transition-colors duration-300">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <AnimatedSection direction="left">
-              <div
-                className="inline-block px-4 py-1.5 rounded-full text-sm mb-6 bg-orange-50 dark:bg-orange-900/20"
-                style={{
-                  color: "#FF6B35",
-                  border: "1px solid rgba(255,107,53,0.25)",
-                }}
-              >
-                Nuestra filosofía
-              </div>
-              <h2
-                className="text-gray-900 dark:text-white mb-6 transition-colors duration-300"
-                style={{
-                  fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
-                  fontWeight: 800,
-                  lineHeight: 1.2,
-                }}
-              >
-                Tecnología como herramienta de{" "}
-                <span style={{ color: "#FF6B35" }}>desarrollo humano</span>
-              </h2>
-              <p
-                className="text-gray-600 dark:text-white/65 mb-6 leading-relaxed transition-colors duration-300"
-                style={{ fontSize: "1.05rem" }}
-              >
-                No enseñamos tecnología por enseñar tecnología. La usamos como
-                vehículo para desarrollar pensamiento crítico, creatividad,
-                colaboración y resiliencia.
-              </p>
-              <p
-                className="text-gray-600 dark:text-white/65 mb-8 leading-relaxed transition-colors duration-300"
-                style={{ fontSize: "1.05rem" }}
-              >
-                Cada alumno que sale de GŌKU LAB no solo sabe programar. Sabe
-                pensar diferente, crear soluciones y enfrentar los retos del
-                mundo digital con confianza.
-              </p>
-              <Link
-                to="/metodologia"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-white font-semibold"
-                style={{
-                  background: "#FF6B35",
-                  transition: "all 0.2s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "scale(1.03)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "scale(1)";
-                }}
-              >
-                Conocer metodología
-                <ChevronRight size={16} />
-              </Link>
-            </AnimatedSection>
-
-            <AnimatedSection direction="right" delay={100}>
-              <div className="grid grid-cols-2 gap-4">
-                {values.map((val) => (
-                  <div
-                    key={val.title}
-                    className="p-5 rounded-2xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 transition-all duration-300"
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLElement).style.borderColor = val.color + "40";
-                      (e.currentTarget as HTMLElement).style.background = val.color + "08";
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLElement).style.borderColor = "";
-                      (e.currentTarget as HTMLElement).style.background = "";
-                    }}
-                  >
-                    <val.icon
-                      size={24}
-                      className="mb-3"
-                      style={{ color: val.color }}
-                    />
-                    <h4
-                      className="text-gray-900 dark:text-white mb-1 transition-colors duration-300"
-                      style={{ fontSize: "0.9rem", fontWeight: 700 }}
-                    >
-                      {val.title}
-                    </h4>
-                    <p className="text-gray-500 dark:text-white/50 text-xs leading-relaxed transition-colors duration-300">
-                      {val.desc}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </AnimatedSection>
-          </div>
-        </div>
-      </section>
-
-      {/* SOBRE EL EQUIPO — Tarjetas Simétricas Corregidas (El badge ya no se corta) */}
-      <section className="py-24 px-4 bg-gray-50 dark:bg-[#050A14] transition-colors duration-300 border-t border-b border-gray-100 dark:border-white/5">
+      {/* 2. LA FILOSOFÍA (Bento Grid) */}
+      <section className="py-20 px-4 bg-[#0A0F1E] border-y border-white/5">
         <div className="max-w-7xl mx-auto">
           <AnimatedSection className="text-center mb-16">
-            <div
-              className="inline-block px-4 py-1.5 rounded-full text-sm mb-4 bg-purple-50 dark:bg-purple-900/20"
-              style={{
-                color: "#7C3AED",
-                border: "1px solid rgba(124,58,237,0.25)",
-              }}
-            >
-              <div className="flex items-center gap-1.5">
-                <Users size={14} />
-                <span>Sobre el equipo</span>
-              </div>
-            </div>
-            <h2
-              className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
-              style={{ fontSize: "clamp(1.8rem, 4vw, 2.8rem)", fontWeight: 800 }}
-            >
-              Nuestro equipo
+            <h2 className="text-3xl md:text-5xl font-black mb-4 tracking-tight">
+              Nuestra <span className="text-[#FFE134]">Filosofía</span>
             </h2>
-            <p className="text-gray-600 dark:text-white/60 max-w-2xl mx-auto text-sm transition-colors duration-300">
-              Conoce a los profesionales y guías dedicados a potenciar el desarrollo integral dentro de nuestra comunidad.
-            </p>
+            <p className="text-lg text-gray-400">Los pilares que guían cada clase que impartimos.</p>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {team.map((member, idx) => (
-              <AnimatedSection key={idx} delay={idx * 80}>
-                <div
-                  className="p-6 rounded-3xl flex flex-col items-center text-center h-full bg-white dark:bg-[#0A0F1E] border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-md transition-all duration-300"
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)";
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.transform = "none";
-                  }}
-                >
-                  {/* Foto Contenedora RELATIVA externa sin overflow-hidden para que el badge flote libremente */}
-                  <div className="relative w-24 h-24 mb-4 shrink-0">
-                    {/* Contenedor INTERNO circular que sí tiene overflow-hidden para recortar la foto */}
-                    <div className="w-full h-full rounded-full overflow-hidden border-2 border-purple-500/20 flex items-center justify-center bg-gray-100 dark:bg-white/5">
-                      <img
-                        src={member.img}
-                        alt={member.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    {/* Badge absoluto exterior (visible y exacto al diseño de Figma) */}
-                    <span className="absolute -bottom-1 -right-1 bg-white dark:bg-[#111827] rounded-full shadow-md border border-gray-100 dark:border-white/10 flex items-center justify-center w-8 h-8 z-10 text-base transition-colors duration-300">
-                      {member.emoji}
-                    </span>
-                  </div>
-
-                  <h3 className="text-gray-900 dark:text-white font-extrabold text-base mb-1 transition-colors duration-300">
-                    {member.name}
-                  </h3>
-                  <span className="text-purple-600 dark:text-purple-400 text-xs font-bold uppercase tracking-wider block mb-4">
-                    {member.role}
-                  </span>
-                  <p className="text-gray-600 dark:text-white/60 text-xs leading-relaxed transition-colors duration-300">
-                    {member.bio}
-                  </p>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* INSTITUTIONAL */}
-      <section
-        className="py-24 px-4 transition-colors duration-300 bg-white dark:bg-transparent"
-        style={{
-          background: "linear-gradient(135deg, rgba(0,201,255,0.05), rgba(124,58,237,0.05))",
-        }}
-      >
-        <div className="max-w-5xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-3 gap-6">
             {[
-              {
-                title: "Misión",
-                icon: "🎯",
-                text: "Democratizar el acceso a la educación tecnológica de calidad, formando creadores de tecnología que impacten positivamente a su entorno y al mundo.",
-              },
-              {
-                title: "Visión",
-                icon: "🔭",
-                text: "Ser la academia tecnológica de referencia en América Latina, reconocida por transformar vidas a través del aprendizaje activo, la innovación y el desarrollo humano integral.",
-              },
-              {
-                title: "Compromiso",
-                icon: "🤝",
-                text: "Cada alumno, sin importar su edad o punto de partida, merece un aprendizaje personalizado, significativo y con resultados reales.",
-              },
-              {
-                title: "Impacto",
-                icon: "🌎",
-                text: "Más de 3,200 alumnos formados, 85 empresas capacitadas y comunidades impactadas en múltiples ciudades de México y LATAM.",
-              },
+              { icon: Target, title: "Aprendizaje Basado en Proyectos", desc: "Nada de memorizar. Desde el primer día, los alumnos crean cosas reales que pueden mostrar y usar.", color: "#00C9FF" },
+              { icon: Heart, title: "Grupos Pequeños", desc: "Máximo 12 alumnos por clase para garantizar que cada estudiante reciba la atención que merece.", color: "#FF6B35" },
+              { icon: Lightbulb, title: "Error como Oportunidad", desc: "Fomentamos un entorno seguro donde equivocarse es parte del proceso de crear y aprender.", color: "#7C3AED" }
             ].map((item, i) => (
-              <AnimatedSection key={item.title} delay={i * 80}>
-                <div
-                  className="p-7 rounded-3xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-sm dark:shadow-none transition-all duration-300"
-                >
-                  <div className="text-3xl mb-4">{item.icon}</div>
-                  <h3
-                    className="text-gray-900 dark:text-white mb-3 transition-colors duration-300"
-                    style={{ fontWeight: 700, fontSize: "1.1rem" }}
-                  >
-                    {item.title}
-                  </h3>
-                  <p className="text-gray-600 dark:text-white/60 leading-relaxed transition-colors duration-300">{item.text}</p>
+              <AnimatedSection key={i} delay={i * 100}>
+                <div className="p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-white/20 transition-colors h-full">
+                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6" style={{ background: `${item.color}20`, color: item.color }}>
+                    <item.icon size={28} />
+                  </div>
+                  <h3 className="text-xl font-black text-white mb-3">{item.title}</h3>
+                  <p className="text-gray-400 text-sm leading-relaxed">{item.desc}</p>
                 </div>
               </AnimatedSection>
             ))}
@@ -352,45 +97,123 @@ export function Nosotros() {
         </div>
       </section>
 
-      {/* FINAL CTA */}
-      <section className="py-24 px-4 bg-white dark:bg-[#0A0F1E] transition-colors duration-300">
-        <div className="max-w-4xl mx-auto text-center">
-          <AnimatedSection>
-            <h2
-              className="text-gray-900 dark:text-white mb-4 transition-colors duration-300"
-              style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)", fontWeight: 800 }}
-            >
-              ¿Quieres ser parte de la historia?
+      {/* 3. FUNDADORES */}
+      <section className="py-24 px-4">
+        <div className="max-w-7xl mx-auto">
+          <AnimatedSection className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-black mb-4 tracking-tight">
+              Detrás de la <span className="text-[#00C9FF]">Misión</span>
             </h2>
-            <p className="text-gray-600 dark:text-white/60 mb-8 max-w-xl mx-auto transition-colors duration-300" style={{ fontSize: "1.1rem" }}>
-              Agenda tu masterclass gratuita y conoce en persona a nuestro
-              equipo. Estamos listos para acompañarte.
+          </AnimatedSection>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {FUNDADORES.map((fundador, i) => (
+              <AnimatedSection key={i} delay={i * 100}>
+                <div className="flex flex-col md:flex-row gap-6 p-8 rounded-3xl bg-white/5 border border-white/10 items-center md:items-start">
+                  <img 
+                    src={fundador.imagen} 
+                    alt={fundador.nombre} 
+                    className="w-32 h-32 rounded-2xl object-cover shadow-lg shrink-0" 
+                  />
+                  <div className="text-center md:text-left">
+                    <h3 className="text-2xl font-black text-white mb-1">{fundador.nombre}</h3>
+                    <p className="text-[#00C9FF] text-sm font-bold mb-4">{fundador.rol}</p>
+                    <p className="text-gray-400 text-sm leading-relaxed mb-6">{fundador.bio}</p>
+                    <div className="flex items-center justify-center md:justify-start gap-3">
+                      <a href={fundador.linkedin} className="p-2 bg-white/5 rounded-lg hover:bg-white/10 text-gray-400 hover:text-white transition-colors" title="LinkedIn">
+                        <Linkedin size={18} />
+                      </a>
+                      <a href={fundador.email} className="p-2 bg-white/5 rounded-lg hover:bg-white/10 text-gray-400 hover:text-white transition-colors" title="Correo">
+                        <Mail size={18} />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 4. EL EQUIPO DOCENTE (CVs) */}
+      <section className="py-24 px-4 bg-[#0A0F1E] border-t border-white/5">
+        <div className="max-w-7xl mx-auto">
+          <AnimatedSection className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm mb-4 bg-[#10B981]/10 border border-[#10B981]/30 text-[#10B981] font-black uppercase tracking-widest">
+              <GraduationCap size={14} /> Nuestros Expertos
+            </div>
+            <h2 className="text-3xl md:text-5xl font-black mb-4 tracking-tight">
+              El Equipo <span className="text-[#10B981]">Docente</span>
+            </h2>
+            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+              No son solo profesores, son profesionales activos en la industria. Conoce a quienes guiarán a los alumnos.
             </p>
-            <a
-              href="https://wa.me/5612668168"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 px-10 py-4 rounded-2xl text-white font-bold"
-              style={{
-                background: "linear-gradient(135deg, #00C9FF, #7C3AED)",
-                boxShadow: "0 8px 30px rgba(0,201,255,0.35)",
-                transition: "all 0.2s ease",
-                fontSize: "1.05rem",
-              }}
-            >
-              <MessageCircle size={20} />
-              Agendar masterclass gratuita
-            </a>
+          </AnimatedSection>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {PROFESORES_DATA.map((profe, i) => (
+              <AnimatedSection key={i} delay={i * 100}>
+                <div className="bg-white/5 rounded-3xl overflow-hidden border border-white/10 group hover:border-[#10B981]/50 transition-colors h-full flex flex-col">
+                  <div className="h-64 overflow-hidden relative">
+                    <img src={profe.imagen} alt={profe.nombre} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1E] to-transparent opacity-80" />
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <h3 className="text-xl font-black text-white">{profe.nombre}</h3>
+                      <p className="text-[#10B981] text-sm font-bold">{profe.rol}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="p-6 flex flex-col flex-1">
+                    <p className="text-gray-400 text-sm leading-relaxed mb-6 flex-1">
+                      {profe.bio}
+                    </p>
+                    
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2 text-xs font-bold text-gray-500 uppercase tracking-wider">
+                        <Briefcase size={14} /> Especialidad
+                      </div>
+                      <p className="text-sm text-gray-300 font-medium">{profe.especialidad}</p>
+                      
+                      <a 
+                        href={profe.cvUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-4 w-full flex items-center justify-center gap-2 py-3 bg-white/5 hover:bg-white/10 rounded-xl text-sm font-bold text-white transition-colors border border-white/10"
+                      >
+                        <FileText size={16} /> Ver CV completo
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+          
+          <AnimatedSection className="text-center mt-12">
+             <p className="text-gray-500 text-sm">¿Quieres formar parte de nuestro equipo? <a href="mailto:contacto@gokulab.mx" className="text-[#00C9FF] hover:underline">Envíanos tu CV</a></p>
           </AnimatedSection>
         </div>
       </section>
 
-      <style>{`
-        @keyframes floatCard {
-          0%, 100% { transform: translateY(0) rotate(var(--rot, -4deg)); }
-          50% { transform: translateY(-12px) rotate(var(--rot, -4deg)); }
-        }
-      `}</style>
+      {/* 5. CTA FINAL */}
+      <section className="py-24 px-4 text-center">
+        <AnimatedSection className="max-w-3xl mx-auto">
+          <h2 className="text-4xl font-black mb-6">
+            El futuro no se espera, <span className="text-[#FF6B35]">se construye</span>.
+          </h2>
+          <p className="text-xl text-gray-400 mb-10">
+            Únete a la comunidad de GōkuLab. Tú pones las ganas, nosotros los expertos y la tecnología.
+          </p>
+          <Link
+            to="/contacto"
+            className="inline-flex items-center gap-3 px-10 py-5 rounded-2xl text-black font-black text-lg transition-transform hover:scale-105 shadow-xl bg-white"
+          >
+            Hablar con el equipo
+            <ArrowRight size={22} />
+          </Link>
+        </AnimatedSection>
+      </section>
+
     </div>
   );
 }
