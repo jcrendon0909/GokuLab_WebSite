@@ -8,19 +8,21 @@ import { PROFESORES } from "../../Data/images";
 const FUNDADORES = [
   {
     nombre: "Juan Carlos Rendón",
-    rol: "Cofundador · Director de Tecnología",
-    bio: "Matemático y experto en tecnología e IA, con más de 30 años enseñando en la UNAM y experiencia en empresas como IBM y Microsoft. Apasionado por democratizar el conocimiento tech.",
+    rol: "Cofundador · Director de Innovacion y Tecnología",
+    bio: "Líder en Inteligencia Artificial, analítica y transformación digital con experiencia en Microsoft e IBM. Matemático y catedrático de la UNAM FES Acatlán durante más de 30 años, ha dedicado su carrera a formar talento, impulsar la innovación y acercar la tecnología de vanguardia a empresas y personas.",
     imagen: PROFESORES.jcrendon,
-    linkedin: "#",
-    email: "mailto:jcrendon@example.com" // Cambia esto después
+    linkedin: "linkedin.com/in/jcrendon0909",
+    email: "mailto:jcrendon@gokulab.mx" // Cambia esto después
+    cvUrl: "https://media.gokulab.mx/Profesores/CV%20JCRendo%CC%81n%202026.pdf" // Aquí puedes poner un link a su CV en PDF
   },
   {
     nombre: "Claudia Sierra",
-    rol: "Cofundadora · Directora de Emprendimiento",
-    bio: "Actuaria, escritora y especialista en investigación de mercados y emprendimiento. Con más de 25 años de experiencia en empresas como Procter & Gamble liderando estrategias de crecimiento.",
+    rol: "Cofundadora · Directora de General",
+    bio: "Actuaria, escritora, empresaria, conferencista internacional y catedrática de la UNAM FES Acatlán durante más de 25 años. Reconocida entre las 50 mujeres líderes de México, ha impulsado el crecimiento de empresas, emprendedores y proyectos de alto impacto mediante la innovación, la investigación de mercados y el desarrollo de negocios.",
     imagen: PROFESORES.csierra,
-    linkedin: "#",
-    email: "mailto:csierra@example.com" // Cambia esto después
+    linkedin: "linkedin.com/in/claudiasierramagana",
+    email: "mailto:claudiasierra@gokulab.mx" // Cambia esto después
+    cvUrl: "https://media.gokulab.mx/Profesores/CV%20Claudia%20Sierra%202026.pdf" // Aquí puedes poner un link a su CV en PDF
   }
 ];
 
@@ -29,12 +31,12 @@ const PROFESORES_DATA = [
     nombre: "Ana Karina Matías",
     rol: "Instructora de Robótica y Programación",
     especialidad: "Scratch, Arduino, Python",
-    bio: "Ingeniera en Mecatrónica con 5 años de experiencia dando clases a niños. Cree firmemente que la mejor forma de aprender es construyendo y equivocándose.",
+    bio: "Educadora apasionada por despertar el potencial de cada alumno. Especialista en programación visual, Python, videoblogging y alfabetización digital, transforma el aprendizaje en experiencias dinámicas, creativas y significativas para estudiantes de todas las edades.",
     imagen: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400",
-    cvUrl: "#" // Aquí puedes poner un link a su CV en PDF
+    cvUrl: "https://media.gokulab.mx/Profesores/CV%20-%20Ana%20Karina%20Mati%CC%81as%20Rodri%CC%81guez.pdf" // Aquí puedes poner un link a su CV en PDF
   },
   {
-    nombre: "Carlos Mendoza",
+    nombre: "Eduardo Castro",
     rol: "Instructor de Diseño y Videojuegos",
     especialidad: "Unity, Blender, Photoshop",
     bio: "Diseñador de videojuegos indie. Ha lanzado 3 títulos en Steam y ahora enseña a los adolescentes a crear sus propios mundos digitales.",
