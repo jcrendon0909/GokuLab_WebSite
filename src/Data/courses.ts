@@ -27,7 +27,7 @@ const defaultVP = [
 
 export const coursesData: Record<string, CourseData> = {
   // --- KIDS & TEENS (Ejemplo de curso compartido) ---
-  "programacion-visual": { id: "programacion-visual", title: "Programación Visual", subtitle: "De consumidor pasivo a creador digital.", age: "6 años en adelante", level: "Básico", duration: "90 min", modality: "Presencial, Online", price: "desde $1,600 al mes", emoji: "🐱", color: "#1E88E5", imgKey: "programacionVisual", targetAudience: ["kids", "teens"], valueProps: defaultVP, modules: [{ id: "m1", title: "Fundamentos", lessons: 10, topics: ["Scratch"] }], techs: ["Scratch"] },
+  "programacion-visual": { id: "programacion-visual", title: "Programación Visual", subtitle: "De consumidor pasivo a creador digital.", age: "6 años en adelante", level: "Básico", duration: "90 min", modality: "Presencial, Online", price: "desde $1,600 al mes", emoji: "🐱", color: "#1E88E5", imgKey: "programacion-visual", targetAudience: ["kids", "teens"], valueProps: defaultVP, modules: [{ id: "m1", title: "Fundamentos", lessons: 10, topics: ["Scratch"] }], techs: ["Scratch"] },
   
   // --- SOLO KIDS ---
   "robotica-principiantes": { id: "robotica-principiantes", title: "Curso Básico de Robótica", subtitle: "Construye y programa tus primeros robots.", age: "8 años en adelante", level: "Básico", duration: "90 min", modality: "Presencial", price: "desde $1,650 al mes", emoji: "🤖", color: "#FF6B35", imgKey: "robotica", targetAudience: ["kids"], valueProps: defaultVP, modules: [{ id: "m1", title: "Mecánica", lessons: 10, topics: ["Sensores"] }], techs: ["Arduino"] },
