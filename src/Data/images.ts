@@ -67,7 +67,7 @@ export const CURSOS: Record<string, string> = {
   "diseno-grafico-ninos": R2("Galery", "diseno-grafico1.jpeg", 800),
   "programacion-visual-avanzada": R2("Galery", "programacion-visual-peques1.JPG", 800),
   "diseno-2d-y-3d": R2("Galery", "diseno-grafico1.jpeg", 800),
-  "programacion-visual": R2("Galery", "programacion-visual.JPG", 800),
+  "programacion-visual": R2("Galery", "programacion-visual.jpg", 800),
   "taller-gobernanza-IA-ciberseguridad": R2("Galery", "capacitacion-orporativa.jpeg", 800),
   "taller-resolucion-de-conflictos": R2("Galery", "capacitacion-orporativa.jpeg", 800),
   "robotica-principiantes": R2("Galery", "robotica1.jpeg", 800),
