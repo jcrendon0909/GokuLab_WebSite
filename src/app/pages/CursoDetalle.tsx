@@ -82,7 +82,7 @@ export function CursoDetalle() {
   // 1. Si el curso trae imgKey, construimos la URL directo a R2 (con el CDN de Cloudflare)
 // 2. Si no trae (o es un curso viejo), usamos la imagen genérica.
 const courseImg = course.imgKey 
-  ? `https://media.gokulab.mx/cdn-cgi/image/width=800,format=auto,quality=80/Galery/${course.imgKey}` 
+  ? `https://media.gokulab.mx/Galery/${course.imgKey}` 
   : "https://media.gokulab.mx/Galery/pagina-principal1.jpg";
   const whatsappMsg = encodeURIComponent(`Hola, quiero agendar una masterclass del curso: ${course.title}`);
   const videoUrl = (course as any).videoUrl || "https://media.gokulab.mx/Galery/caballerocodigo.mp4";

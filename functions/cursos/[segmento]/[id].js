@@ -29,8 +29,8 @@ export async function onRequest(context) {
       
       // LA MAGIA: Usamos course.imgKey TAL CUAL, porque ya incluye el .jpg
       const imageUrl = (course.imgKey && course.imgKey !== "") 
-        ? `https://media.gokulab.mx/cdn-cgi/image/width=1200,format=auto,quality=80/Galery/${course.imgKey}` 
-        : "https://media.gokulab.mx/Galery/pagina-principal1.jpg";
+            ? `https://media.gokulab.mx/Galery/${course.imgKey}` 
+            : "https://media.gokulab.mx/Galery/pagina-principal1.jpg";
 
       const currentUrl = `https://gokulab.mx/cursos/${params.segmento}/${courseId}`;
 
