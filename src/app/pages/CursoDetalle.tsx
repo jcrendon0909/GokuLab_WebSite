@@ -3,19 +3,29 @@ import { useState, useEffect } from "react";
 import { AnimatedSection } from "../components/AnimatedSection";
 import { fetchCourseById } from "../../Data/courseService";
 import { CourseData } from "../../Data/courses";
-import { SEO } from "../components/SEO"; // <-- IMPORTAMOS EL SEO
+import { SEO } from "../components/SEO";
 import {
   Clock, Users, BarChart2, Monitor, CheckCircle,
   MessageCircle, ChevronLeft, Zap, ChevronDown, Sparkles, Star, Play, X
 } from "lucide-react";
 
-// Componente de Acordeón
-function ModuleAccordion({ modules, courseColor }: { modules: any[], courseColor: string }) {
-  const [openId, setOpenId] = useState<string | null>(modules[0]?.id || null);
+// Componente de Acordeón (Blindado)
+function ModuleAccordion({ modules, courseColor }: { modules?: any[], courseColor: string }) {
+  // Protección por si 'modules' llega undefined
+  const safeModules = modules || [];
+  const [openId, setOpenId] = useState<string | null>(safeModules[0]?.id || null);
+
+  if (safeModules.length === 0) {
+    return (
+      <p className="text-center text-gray-500 py-8">
+        El temario detallado estará disponible pronto.
+      </p>
+    );
+  }
 
   return (
     <div className="space-y-4">
-      {modules.map((mod) => (
+      {safeModules.map((mod) => (
         <div key={mod.id} className="border border-white/10 rounded-2xl overflow-hidden bg-white/5 transition-all duration-300 hover:border-white/20">
           <button onClick={() => setOpenId(openId === mod.id ? null : mod.id)} className="w-full flex items-center justify-between p-6 text-left">
             <div>
@@ -29,7 +39,7 @@ function ModuleAccordion({ modules, courseColor }: { modules: any[], courseColor
           <div className={`transition-all duration-300 overflow-hidden ${openId === mod.id ? "max-h-[800px] opacity-100" : "max-h-0 opacity-0"}`}>
             <div className="p-6 pt-0 border-t border-white/5">
               <ul className="space-y-3 mt-4">
-                {mod.topics.map((topic: string, i: number) => (
+                {(mod.topics || []).map((topic: string, i: number) => (
                   <li key={i} className="flex items-start gap-3 text-sm text-gray-300">
                     <span className="mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full" style={{ backgroundColor: courseColor }} />
                     <span>{topic}</span>
@@ -48,7 +58,6 @@ export function CursoDetalle() {
   const { id } = useParams<{ id: string }>();
   const [course, setCourse] = useState<CourseData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  
   const [isVideoOpen, setIsVideoOpen] = useState(false);
 
   useEffect(() => {
@@ -78,14 +87,17 @@ export function CursoDetalle() {
     );
   }
 
-  // Obtener imagen dinámica de R2
-  // 1. Si el curso trae imgKey, construimos la URL directo a R2 (con el CDN de Cloudflare)
-// 2. Si no trae (o es un curso viejo), usamos la imagen genérica.
-const courseImg = course.imgKey 
-  ? `https://media.gokulab.mx/Galery/${course.imgKey}` 
-  : "https://media.gokulab.mx/Galery/pagina-principal1.jpg";
+  // Imagen directa a R2 (con fallback si no hay imgKey)
+  const courseImg = course.imgKey 
+    ? `https://media.gokulab.mx/Galery/${course.imgKey}` 
+    : "https://media.gokulab.mx/Galery/pagina-principal1.jpg";
+
   const whatsappMsg = encodeURIComponent(`Hola, quiero agendar una masterclass del curso: ${course.title}`);
   const videoUrl = (course as any).videoUrl || "https://media.gokulab.mx/Galery/caballerocodigo.mp4";
+
+  // Protección por si el curso no trae valueProps o techs
+  const safeValueProps = course.valueProps || [];
+  const safeTechs = course.techs || [];
 
   return (
     <div className="bg-[#050A14] text-white min-h-screen selection:bg-[#00C9FF] selection:text-black">
@@ -199,7 +211,15 @@ const courseImg = course.imgKey
           <AnimatedSection delay={100} className="relative">
             <div className="absolute inset-0 bg-gradient-to-tr from-[#050A14] to-transparent z-10 rounded-[3rem]"></div>
             <div className="w-full aspect-[4/3] rounded-[3rem] overflow-hidden border border-white/10 relative group cursor-pointer" onClick={() => setIsVideoOpen(true)}>
-              <img src={courseImg} alt={`Curso de ${course.title}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <img 
+                src={courseImg} 
+                alt={`Curso de ${course.title}`} 
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                onError={(e) => {
+                  // Respaldo si la imagen de R2 no existe
+                  (e.target as HTMLImageElement).src = "https://media.gokulab.mx/Galery/pagina-principal1.jpg";
+                }}
+              />
               <div className="absolute inset-0 flex items-center justify-center z-20">
                 <div className="w-20 h-20 bg-white/20 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xl">
                   <Play size={32} className="text-white ml-2" fill="white" />
@@ -229,17 +249,21 @@ const courseImg = course.imgKey
             </p>
           </AnimatedSection>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {course.valueProps.map((prop, i) => (
-              <AnimatedSection key={i} delay={i * 100}>
-                <div className="p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-white/20 transition-colors h-full">
-                  <div className="text-4xl mb-4">{prop.icon}</div>
-                  <h3 className="text-xl font-black text-white mb-3">{prop.title}</h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">{prop.desc}</p>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
+          {safeValueProps.length > 0 ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {safeValueProps.map((prop, i) => (
+                <AnimatedSection key={i} delay={i * 100}>
+                  <div className="p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-white/20 transition-colors h-full">
+                    <div className="text-4xl mb-4">{prop.icon}</div>
+                    <h3 className="text-xl font-black text-white mb-3">{prop.title}</h3>
+                    <p className="text-gray-400 text-sm leading-relaxed">{prop.desc}</p>
+                  </div>
+                </AnimatedSection>
+              ))}
+            </div>
+          ) : (
+            <p className="text-center text-gray-500">Las habilidades de este curso estarán disponibles pronto.</p>
+          )}
         </div>
       </section>
 
@@ -254,24 +278,22 @@ const courseImg = course.imgKey
           </h2>
         </AnimatedSection>
 
-        {course.modules && course.modules.length > 0 ? (
-          <AnimatedSection>
-            <ModuleAccordion modules={course.modules} courseColor={course.color} />
-          </AnimatedSection>
-        ) : (
-          <p className="text-center text-gray-500">Cargando temario...</p>
-        )}
-
-        <AnimatedSection className="mt-20 text-center">
-          <p className="text-sm font-bold text-gray-500 uppercase tracking-[0.3em] mb-8">Herramientas que dominará</p>
-          <div className="flex flex-wrap justify-center gap-4">
-            {course.techs.map((tech) => (
-              <span key={tech} className="px-6 py-3 rounded-xl font-black text-sm bg-white/5 border border-white/10 text-white">
-                {tech}
-              </span>
-            ))}
-          </div>
+        <AnimatedSection>
+          <ModuleAccordion modules={course.modules} courseColor={course.color} />
         </AnimatedSection>
+
+        {safeTechs.length > 0 && (
+          <AnimatedSection className="mt-20 text-center">
+            <p className="text-sm font-bold text-gray-500 uppercase tracking-[0.3em] mb-8">Herramientas que dominará</p>
+            <div className="flex flex-wrap justify-center gap-4">
+              {safeTechs.map((tech) => (
+                <span key={tech} className="px-6 py-3 rounded-xl font-black text-sm bg-white/5 border border-white/10 text-white">
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </AnimatedSection>
+        )}
       </section>
 
       {/* 4. CTA FINAL */}
