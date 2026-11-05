@@ -1,55 +1,64 @@
 export async function onRequest(context) {
   const { request, params, next } = context;
-  const url = new URL(request.url);
   const userAgent = request.headers.get("User-Agent") || "";
 
-  // 1. Detectar si quien entra es un Bot (WhatsApp, Facebook, Twitter)
+  // 1. Detectar si es un Bot
   const isBot = /facebookexternalhit|twitterbot|whatsapp|linkedinbot|slackbot|telegrambot|discordbot/i.test(userAgent);
 
-  // Si es un humano, dejamos que React cargue normal
   if (!isBot) {
     return next(); 
   }
 
-  // 2. Si es un bot, buscamos la info del curso
   const courseId = params.id; // ej: "programacion-visual"
 
   try {
-    // Hacemos fetch a tu API en Render
-    const apiRes = await fetch("https://agentevirtual-gokulab.onrender.com/api/cursos");
+    // Hacemos fetch a Render con un timeout manual
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 segundos de espera
+
+    const apiRes = await fetch("https://agentevirtual-gokulab.onrender.com/api/cursos", {
+      signal: controller.signal
+    });
+    clearTimeout(timeoutId);
+
+    if (!apiRes.ok) throw new Error("Render no responde");
+    
     const courses = await apiRes.json();
-    const course = courses.find(c => c.id === courseId);
+    
+    // Buscamos el curso por el ID de la URL
+    const course = courses.find(c => c.id === courseId || c.slug === courseId);
 
     if (course) {
-      // 3. Obtenemos el HTML original
       const response = await next();
       let html = await response.text();
 
-      // 4. Preparamos los datos
       const title = `${course.title} | GōkuLab`;
-      const description = course.subtitle;
-      // Usamos la imagen del curso en R2 (si falla, usa la portada)
-      const imageUrl = course.imgKey 
+      const description = course.subtitle || "Aprende creando desde el primer día.";
+      
+      // Si el curso tiene imgKey, usamos esa imagen. Si no, la genérica.
+      const imageUrl = (course.imgKey && course.imgKey !== "") 
         ? `https://media.gokulab.mx/cdn-cgi/image/width=1200,format=auto,quality=80/Galery/${course.imgKey}.jpg`
         : "https://media.gokulab.mx/Galery/pagina-principal1.jpg";
 
-      // 5. Reemplazamos las etiquetas meta en el HTML
+      const currentUrl = `https://gokulab.mx/cursos/${params.segmento}/${courseId}`;
+
+      // Reemplazamos TODAS las etiquetas, incluyendo og:url y canonical
       html = html.replace(/<title>.*?<\/title>/, `<title>${title}</title>`);
       html = html.replace(/<meta property="og:title" content=".*?" \/>/g, `<meta property="og:title" content="${title}" />`);
       html = html.replace(/<meta property="og:description" content=".*?" \/>/g, `<meta property="og:description" content="${description}" />`);
       html = html.replace(/<meta property="og:image" content=".*?" \/>/g, `<meta property="og:image" content="${imageUrl}" />`);
+      html = html.replace(/<meta property="og:url" content=".*?" \/>/g, `<meta property="og:url" content="${currentUrl}" />`);
       html = html.replace(/<meta name="description" content=".*?" \/>/g, `<meta name="description" content="${description}" />`);
+      html = html.replace(/<link rel="canonical" href=".*?" \/>/g, `<link rel="canonical" href="${currentUrl}" />`);
 
-      // 6. Devolvemos el HTML modificado al bot
       return new Response(html, {
-        headers: response.headers,
-        status: response.status,
+        headers: { ...response.headers, "content-type": "text/html;charset=UTF-8" },
+        status: 200,
       });
     }
   } catch (e) {
-    console.error("Error fetching course for bot:", e);
+    console.error("Error en Cloudflare Function:", e);
   }
 
-  // Si algo falla o no es un curso, devolvemos el HTML normal
   return next();
 }
