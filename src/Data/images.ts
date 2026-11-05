@@ -25,7 +25,7 @@ export const HERO = {
 // ─── GALERÍA HOME (mockup original, se mantiene)
 export const GALERIA_HOME = [
   {
-    src:  R2("Galery", "programacion-visual-peques1.JPG", 1200),
+    src:  R2("Galery", "programacion-visual-peques1.jpg", 1200),
     span: "md:col-span-2 md:row-span-2",
     alt:  "Clase de Programación Visual",
   },
@@ -62,10 +62,10 @@ export const CURSOS: Record<string, string> = {
   "python-pro": R2("Galery", "python-start1.jpg", 800),
   "diseno-videojuejos-lua-roblox": R2("Galery", "diseno-videojuegos1.jpg", 800),
   "alfabetizacion-digital": R2("Galery", "alfabetizacion-digital-adultos1.jpg", 800),
-  "caballero-del-codigo": R2("Galery", "programacion-visual-peques1.JPG", 800), // Usando de respaldo por ahora
+  "caballero-del-codigo": R2("Galery", "programacion-visual-peques1.jpg", 800), // Usando de respaldo por ahora
   "diseno-videojuegos-roblox": R2("Galery", "diseno-videojuegos1.jpg", 800),
   "diseno-grafico-ninos": R2("Galery", "diseno-grafico1.jpeg", 800),
-  "programacion-visual-avanzada": R2("Galery", "programacion-visual-peques1.JPG", 800),
+  "programacion-visual-avanzada": R2("Galery", "programacion-visual-peques1.jpg", 800),
   "diseno-2d-y-3d": R2("Galery", "diseno-grafico1.jpeg", 800),
   "programacion-visual": R2("Galery", "programacion-visual.jpg", 800),
   "taller-gobernanza-IA-ciberseguridad": R2("Galery", "capacitacion-orporativa.jpeg", 800),
