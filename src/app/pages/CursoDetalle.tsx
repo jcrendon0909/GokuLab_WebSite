@@ -4,6 +4,7 @@ import { AnimatedSection } from "../components/AnimatedSection";
 import { fetchCourseById } from "../../Data/courseService";
 import { CourseData } from "../../Data/courses";
 import { CURSOS } from "../../Data/images"; 
+import { SEO } from "../components/SEO"; // <-- IMPORTAMOS EL SEO
 import {
   Clock, Users, BarChart2, Monitor, CheckCircle,
   MessageCircle, ChevronLeft, Zap, ChevronDown, Sparkles, Star, Play, X
@@ -49,7 +50,6 @@ export function CursoDetalle() {
   const [course, setCourse] = useState<CourseData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   
-  // Estado para el Modal de Video
   const [isVideoOpen, setIsVideoOpen] = useState(false);
 
   useEffect(() => {
@@ -82,12 +82,42 @@ export function CursoDetalle() {
   // Obtener imagen dinámica de R2
   const courseImg = (CURSOS as any)[course.imgKey] || CURSOS.programacionVisual;
   const whatsappMsg = encodeURIComponent(`Hola, quiero agendar una masterclass del curso: ${course.title}`);
-  
-  // URL del video (con fallback si no hay video cargado aún)
   const videoUrl = (course as any).videoUrl || "https://media.gokulab.mx/Galery/caballerocodigo.mp4";
 
   return (
     <div className="bg-[#050A14] text-white min-h-screen selection:bg-[#00C9FF] selection:text-black">
+      
+      {/* SEO DINÁMICO POR CURSO */}
+      <SEO 
+        title={`Curso de ${course.title}`}
+        description={`${course.subtitle} Dirigido a ${course.age}. Nivel ${course.level}. ${course.modality}.`}
+        image={courseImg}
+        url={`https://gokulab.mx/cursos/${course.id}`}
+        type="article"
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "Course",
+          "name": course.title,
+          "description": course.subtitle,
+          "provider": {
+            "@type": "Organization",
+            "name": "GōkuLab",
+            "sameAs": "https://gokulab.mx"
+          },
+          "educationalLevel": course.level,
+          "audience": {
+            "@type": "EducationalAudience",
+            "educationalRole": "student",
+            "audienceType": course.age
+          },
+          "offers": {
+            "@type": "Offer",
+            "price": "1600",
+            "priceCurrency": "MXN",
+            "availability": "https://schema.org/InStock"
+          }
+        }}
+      />
       
       {/* MODAL DE VIDEO */}
       {isVideoOpen && (
@@ -163,13 +193,10 @@ export function CursoDetalle() {
             </div>
           </AnimatedSection>
 
-          {/* IMAGEN CON BOTÓN DE PLAY */}
           <AnimatedSection delay={100} className="relative">
             <div className="absolute inset-0 bg-gradient-to-tr from-[#050A14] to-transparent z-10 rounded-[3rem]"></div>
             <div className="w-full aspect-[4/3] rounded-[3rem] overflow-hidden border border-white/10 relative group cursor-pointer" onClick={() => setIsVideoOpen(true)}>
-              <img src={courseImg} alt={course.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-              
-              {/* Botón Play Central */}
+              <img src={courseImg} alt={`Curso de ${course.title}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               <div className="absolute inset-0 flex items-center justify-center z-20">
                 <div className="w-20 h-20 bg-white/20 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xl">
                   <Play size={32} className="text-white ml-2" fill="white" />
@@ -213,7 +240,7 @@ export function CursoDetalle() {
         </div>
       </section>
 
-      {/* 3. TEMARIO (ACORDEÓN) */}
+      {/* 3. TEMARIO */}
       <section className="py-24 px-4 max-w-4xl mx-auto">
         <AnimatedSection className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm mb-4 font-black uppercase tracking-widest" style={{ background: `${course.color}20`, color: course.color }}>
