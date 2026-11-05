@@ -51,26 +51,31 @@ export const GALERIA_HOME = [
   },
 ];
 
-// ─── CURSOS ────────────────────────────────────────────────
-export const CURSOS = {
-  fundamentos:        R2("Galery", "fundamentos-programacion1.jpeg", 800),
-  programacionVisual: R2("Galery", "programacion-visual-peques1.JPG", 800),
-  disenoGrafico:      R2("Galery", "diseno-grafico1.jpeg", 800),
-  robotica:           R2("Galery", "robotica1.jpeg", 800),
-  animacion:          R2("Galery", "animacion-digital1.JPG", 800),
-  ingles:             R2("Galery", "regularizacion-ingles.jpeg", 800),
-  alfabetizacion:     R2("Galery", "alfabetizacion-digital-adultos1.jpg", 800),
-  corporativo:        R2("Galery", "capacitacion-orporativa.jpeg", 800),
-  creacionContenido:  R2("Galery", "creacion-contenido-video1.jpg", 800),
-  disenoVideojuegos:  R2("Galery", "diseno-videojuegos1.jpg", 800),
-  disenoWeb:          R2("Galery", "diseno-web1.jpg", 800),
-  emprendimiento:     R2("Galery", "emprendimiento1.jpg", 800),
-  iaNinos:            R2("Galery", "clases-niños1.jpg", 800),
-  preparacionUni:     R2("Galery", "preparacion-universidad.jpg", 800),
-  pythonStart:        R2("Galery", "python-start1.jpg", 800),
-  regularizacion:     R2("Galery", "regularizacion-matematicas1.jpg", 800),
-  unity:              R2("Galery", "unity1.jpg", 800),
-  iaAdultos:          R2("Galery", "ia-adultos.png", 800),
+// ─── CURSOS (Ahora las llaves coinciden con el "slug" o "imagen_key" de MongoDB) ───
+export const CURSOS: Record<string, string> = {
+  // Mapeamos los nombres de Mongo a las fotos reales de tu R2
+  "taller-creatividad": R2("Galery", "taller-creatividad.jpg", 800), // Si tu foto se llama distinto, cámbialo aquí
+  "taller-prompt-engeneering": R2("Galery", "taller-prompt-engeneering.jpg", 800),
+  "regularizacion-matematicas": R2("Galery", "regularizacion-matematicas1.jpg", 800),
+  "adminitracion-de-proyectos": R2("Galery", "capacitacion-orporativa.jpeg", 800),
+  "diseno-videojuegos-unity": R2("Galery", "unity1.jpg", 800),
+  "python-pro": R2("Galery", "python-start1.jpg", 800),
+  "diseno-videojuejos-lua-roblox": R2("Galery", "diseno-videojuegos1.jpg", 800),
+  "alfabetizacion-digital": R2("Galery", "alfabetizacion-digital-adultos1.jpg", 800),
+  "caballero-del-codigo": R2("Galery", "programacion-visual-peques1.JPG", 800), // Usando de respaldo por ahora
+  "diseno-videojuegos-roblox": R2("Galery", "diseno-videojuegos1.jpg", 800),
+  "diseno-grafico-ninos": R2("Galery", "diseno-grafico1.jpeg", 800),
+  "programacion-visual-avanzada": R2("Galery", "programacion-visual-peques1.JPG", 800),
+  "diseno-2d-y-3d": R2("Galery", "diseno-grafico1.jpeg", 800),
+  "programacion-visual": R2("Galery", "programacion-visual.JPG", 800),
+  "taller-gobernanza-IA-ciberseguridad": R2("Galery", "capacitacion-orporativa.jpeg", 800),
+  "taller-resolucion-de-conflictos": R2("Galery", "capacitacion-orporativa.jpeg", 800),
+  "robotica-principiantes": R2("Galery", "robotica1.jpeg", 800),
+  "diseno-videojuegos-minecraft": R2("Galery", "diseno-videojuegos1.jpg", 800),
+  "taller_impresion-3D": R2("Galery", "diseno-grafico1.jpeg", 800),
+  "video-blogging": R2("Galery", "creacion-contenido-video1.jpg", 800),
+  "python-start-avanzado": R2("Galery", "python-start1.jpg", 800),
+  "inteligencia-artificial-adultos": R2("Galery", "ia-adultos.png", 800),
 };
 
 export const ALUMNOS: { src: string; alt: string }[] = [];
@@ -81,9 +86,9 @@ export const ALGORITHMICS_LOGO = R2("Galery", "algorithmics-logo.png", 200);
 // ============================================================
 export const HOME_IMAGES = {
   hero:        R2("Galery", "pagina-principal1.jpg", 1600),
-  ninos:       R2("Galery", "clases-peques1.jpg", 800),     // ✅ usa la misma que HERO.ninos
-  adultos:     R2("Galery", "clases-adultos1.jpg", 800),    // ✅ usa la misma que HERO.adultos
-  corporativo: R2("Galery", "empresas-gobierno1.jpg", 800), // ✅ usa la misma que HERO.corporativo
+  ninos:       R2("Galery", "clases-peques1.jpg", 800),
+  adultos:     R2("Galery", "clases-adultos1.jpg", 800),
+  corporativo: R2("Galery", "empresas-gobierno1.jpg", 800),
 };
 
 // ============================================================
