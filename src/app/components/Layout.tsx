@@ -7,8 +7,8 @@ import { ThemeProvider } from "../contexts/ThemeProvider";
 import { MessageCircle, X, Send, Home, RotateCw } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-
-const API_URL = import.meta.env.VITE_API_URL || "https://agentevirtual-gokulab.onrender.com";
+import { API_URL } from "../../config";
+import { getSessionId } from "../../utils/session";
 
 type Message = { id: string; sender: "bot" | "user"; text: string; };
 
@@ -30,7 +30,7 @@ function ChatWidget() {
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
-  const userId = "web_user_gokulab";
+  const [userId] = useState(() => getSessionId());
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -91,6 +91,10 @@ function ChatWidget() {
         body: JSON.stringify({ mensaje: text, numero: userId, canal: "web" }),
       });
 
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
       const data = await response.json();
       setMessages((prev) => [...prev, { id: Date.now().toString(), sender: "bot", text: data.respuesta || "Lo siento, tuve un problema." }]);
     } catch (error) {
@@ -139,7 +143,6 @@ function ChatWidget() {
                 <div className={`max-w-[85%] rounded-2xl p-3 text-sm leading-relaxed shadow-sm ${
                   msg.sender === "user" ? "bg-[#29b6f6] text-white rounded-tr-sm" : "bg-white text-gray-700 rounded-tl-sm border border-gray-100"
                 }`}>
-                  {/* AQUI ESTÁ LA MAGIA: ReactMarkdown le da formato al texto del bot */}
                   {msg.sender === "bot" ? (
                     <ReactMarkdown
                       remarkPlugins={[remarkGfm]}

@@ -10,6 +10,8 @@ type CourseResult = {
   softSkills: string[]; techSkills: string[]; finalProject: string;
 };
 
+const SEDES = ["Naucalpan", "Ezequiel Montes"];
+
 const getQuestions = (answers: Answer) => {
   let step3Title = "¿Qué te gustaría lograr?";
   let step3Options = [
@@ -115,6 +117,7 @@ export function TestPage() {
   const [leadName, setLeadName] = useState("");
   const [leadPhone, setLeadPhone] = useState("");
   const [leadCaptured, setLeadCaptured] = useState(false);
+  const [selectedSede, setSelectedSede] = useState<string>("Naucalpan");
 
   const questionsList = getQuestions(answers);
   const currentQ = questionsList[step];
@@ -131,15 +134,54 @@ export function TestPage() {
   };
 
   const reset = () => {
-    setStep(-1); setAnswers({}); setIsFinished(false); setLeadCaptured(false); setLeadName(""); setLeadPhone("");
+    setStep(-1);
+    setAnswers({});
+    setIsFinished(false);
+    setLeadCaptured(false);
+    setLeadName("");
+    setLeadPhone("");
+    setSelectedSede("Naucalpan");
   };
 
   const results = isFinished ? getResults(answers) : null;
   const result = results?.primary;
 
   const generateWhatsAppLink = () => {
-    if (!result) return "";
-    const text = `Hola equipo de GōkuLab. Soy ${leadName}. \n\nAcabo de hacer el test y me recomendó el curso: *${result.title}*.\n\nMe interesa desarrollar habilidades como: ${result.softSkills.join(', ')}.\n\nQuiero agendar una masterclass gratuita.`;
+    if (!result || !results) return "";
+
+    const answerLabel = (questionId: string, answerId: string | undefined) => {
+      if (!answerId) return "No respondida";
+      const q = questionsList.find((q) => q.id === questionId);
+      const opt = q?.options.find((o) => o.id === answerId);
+      return opt ? opt.label : answerId;
+    };
+
+    const lines: string[] = [
+      `Hola equipo de GōkuLab. Soy ${leadName}.`,
+      `Teléfono: ${leadPhone}`,
+      `Sede de interés: ${selectedSede}`,
+      "",
+      `Acabo de hacer el test y me recomendó el curso: *${result.title}*.`,
+    ];
+
+    if (results.secondary.length > 0) {
+      lines.push(`Cursos alternativos: ${results.secondary.map((s) => s.title).join(", ")}`);
+    }
+
+    lines.push("");
+    lines.push("Respuestas del test:");
+    questionsList.forEach((q) => {
+      const answerId = answers[q.id as keyof Answer];
+      lines.push(`- ${q.title}: ${answerLabel(q.id, answerId)}`);
+    });
+
+    lines.push("");
+    lines.push(`Me interesa desarrollar habilidades como: ${result.softSkills.join(", ")}.`);
+    lines.push("");
+    lines.push("Quiero agendar una masterclass gratuita.");
+    lines.push("— Enviado desde el Test de Orientación de GōkuLab");
+
+    const text = lines.join("\n");
     return `https://wa.me/5612668168?text=${encodeURIComponent(text)}`;
   };
 
@@ -188,6 +230,27 @@ export function TestPage() {
             <p className="text-gray-400 mb-8 max-w-md mx-auto">
               No te preocupes por los términos técnicos. Solo dinos qué le gusta hacer y nosotros encontramos el curso perfecto.
             </p>
+
+            <div className="mb-8">
+              <p className="text-sm font-bold text-gray-400 mb-3 uppercase tracking-widest">Elige tu sede</p>
+              <div className="flex gap-3 justify-center flex-wrap">
+                {SEDES.map((sede) => (
+                  <button
+                    key={sede}
+                    type="button"
+                    onClick={() => setSelectedSede(sede)}
+                    className={`px-6 py-3 rounded-xl font-bold transition-all border ${
+                      selectedSede === sede
+                        ? "bg-white text-black border-white shadow-md"
+                        : "bg-white/5 text-gray-400 border-white/10 hover:bg-white/10 hover:text-white"
+                    }`}
+                  >
+                    {sede}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <button onClick={() => setStep(0)} className="flex items-center justify-center gap-3 w-full py-5 rounded-2xl text-black font-black text-lg transition-transform hover:scale-105" style={{ background: "linear-gradient(135deg, #00C9FF, #7C3AED)", color: "#fff", boxShadow: "0 10px 30px rgba(0,201,255,0.3)" }}>
               Comenzar el diagnóstico <ArrowRight size={20} />
             </button>
@@ -260,6 +323,27 @@ export function TestPage() {
               <div className="p-10 bg-[#050A14]">
                 <div className="flex items-center gap-3 mb-6"><ShieldCheck className="text-[#10B981]" /><h3 className="text-xl font-bold text-white">¡Ya casi terminamos!</h3></div>
                 <p className="text-gray-400 mb-8">Déjanos tus datos para enviarte el temario completo y agendar tu masterclass gratuita.</p>
+
+                <div className="mb-6">
+                  <label className="block text-sm font-bold text-gray-400 mb-2">Confirma tu sede</label>
+                  <div className="flex gap-3 flex-wrap">
+                    {SEDES.map((sede) => (
+                      <button
+                        key={sede}
+                        type="button"
+                        onClick={() => setSelectedSede(sede)}
+                        className={`flex-1 min-w-[140px] px-4 py-3 rounded-xl font-bold transition-all border ${
+                          selectedSede === sede
+                            ? "bg-white text-black border-white shadow-md"
+                            : "bg-white/5 text-gray-400 border-white/10 hover:bg-white/10 hover:text-white"
+                        }`}
+                      >
+                        {sede}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
                 <form onSubmit={handleLeadSubmit} className="space-y-4">
                   <div className="grid md:grid-cols-2 gap-4">
                     <div><label className="block text-sm font-bold text-gray-400 mb-2">Nombre completo</label><input type="text" required value={leadName} onChange={(e) => setLeadName(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-[#00C9FF]" placeholder="Ej. María González" /></div>

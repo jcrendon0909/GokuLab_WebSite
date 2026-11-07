@@ -43,8 +43,20 @@ export function Contacto() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Creamos el mensaje estructurado para WhatsApp (Kommo)
-    const mensajeWa = `Hola equipo de GōkuLab. 👋\n\nMi nombre es: *${formData.nombre}*\n\nEstoy interesado en: *${formData.interes}*\n\nMi WhatsApp es: ${formData.telefono}\nMi correo es: ${formData.email}\n\nMensaje: ${formData.mensaje}`;
+    // Mensaje estructurado para WhatsApp (Kommo)
+    const mensajeWa = [
+      `Hola equipo de GōkuLab. 👋`,
+      ``,
+      `Mi nombre es: *${formData.nombre}*`,
+      `Mi WhatsApp es: ${formData.telefono}`,
+      `Mi correo es: ${formData.email}`,
+      `Sede de interés: ${activeSede.nombre}`,
+      `Estoy interesado en: *${formData.interes}*`,
+      ``,
+      `Mensaje: ${formData.mensaje}`,
+      ``,
+      `— Enviado desde el formulario de contacto de GōkuLab`,
+    ].join("\n");
     
     // Abrimos WhatsApp en una nueva pestaña
     window.open(`https://wa.me/5612668168?text=${encodeURIComponent(mensajeWa)}`, "_blank");
@@ -154,8 +166,10 @@ export function Contacto() {
                 <div className="w-20 h-20 bg-[#10B981]/20 rounded-full flex items-center justify-center mx-auto mb-6">
                   <CheckCircle size={40} className="text-[#10B981]" />
                 </div>
-                <h3 className="text-2xl font-black text-white mb-4">¡Mensaje preparado!</h3>
-                <p className="text-gray-400 mb-8">Hemos abierto WhatsApp en otra pestaña con tu información. Solo presiona "Enviar" en WhatsApp y te responderemos al instante.</p>
+                <h3 className="text-2xl font-black text-white mb-4">¡Ya casi está!</h3>
+                <p className="text-gray-400 mb-8">
+                  Hemos abierto WhatsApp en otra pestaña con tu información. <strong className="text-white">Solo pulsa "Enviar" en WhatsApp</strong> y te responderemos al instante.
+                </p>
                 <button onClick={() => setIsSubmitted(false)} className="text-[#00C9FF] font-bold hover:underline">
                   Enviar otro mensaje
                 </button>

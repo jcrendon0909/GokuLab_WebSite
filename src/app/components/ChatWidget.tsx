@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Send, X, ExternalLink, Maximize2, RotateCw } from "lucide-react";
-
-const API_URL = import.meta.env.VITE_API_URL || "https://agentevirtual-gokulab.onrender.com";
+import { API_URL } from "../../config";
+import { getSessionId } from "../../utils/session";
 
 type Message = { id: string; sender: "bot" | "user"; text: string; };
 
@@ -17,7 +17,7 @@ export function ChatWidget({ isOpen, onClose }: { isOpen: boolean; onClose: () =
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const userId = "web_user_gokulab";
+  const [userId] = useState(() => getSessionId());
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -45,6 +45,11 @@ export function ChatWidget({ isOpen, onClose }: { isOpen: boolean; onClose: () =
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ mensaje: text, numero: userId, canal: "web" }),
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
       const data = await response.json();
       setMessages((prev) => [...prev, { id: Date.now().toString(), sender: "bot", text: data.respuesta || "Lo siento, tuve un problema." }]);
     } catch (error) {
@@ -93,7 +98,6 @@ export function ChatWidget({ isOpen, onClose }: { isOpen: boolean; onClose: () =
         <button className="bg-white text-[#29b6f6] text-xs font-bold px-3 py-1.5 rounded-full shadow-sm relative z-10">
           Do it!
         </button>
-        {/* Círculo decorativo de fondo */}
         <div className="absolute -bottom-8 -right-4 w-32 h-32 bg-white/10 rounded-full" />
       </div>
 
