@@ -2,54 +2,45 @@
 import { CourseData } from './courses';
 import { API_URL } from '../config';
 
-// 🔥 MAPEO POR ID ÚNICO: Garantiza que cada curso use su foto correcta
-const MAPEO_POR_ID: Record<string, string> = {
+// 🔥 MAPEO ESTRICTO DE AUDIENCIA (Ya no adivinamos, usamos tu categorización)
+const AUDIENCIA_POR_ID: Record<string, ("kids" | "teens" | "adults" | "company")[]> = {
   // KIDS
-  "programacion-visual": "ninos-programando1.jpeg",
-  "robotica-principiantes": "robotica1.jpeg",
-  "taller-creatividad": "taller-creatividad.jpg",
-  "regularizacion-matematicas": "regularizacion-matematicas1.jpg",
-  "caballero-del-codigo": "fundamentos-programacion1.jpeg",
-  "diseno-grafico-ninos": "diseno-grafico1.jpeg",
-  "programacion-visual-avanzada": "programacion-visual-peques2.JPG",
-  "diseno-videojuegos-minecraft": "diseño-videojuegos2.jpeg",
-
+  "programacion-visual": ["kids", "teens"],
+  "robotica-principiantes": ["kids"],
+  "taller-creatividad": ["kids"],
+  "regularizacion-matematicas": ["kids"],
+  "caballero-del-codigo": ["kids"],
+  "diseno-grafico-ninos": ["kids"],
+  "programacion-visual-avanzada": ["kids"],
+  "diseno-videojuegos-minecraft": ["kids"],
   // TEENS
-  "diseno-videojuegos-roblox": "diseno-videojuegos1.jpg",
-  "diseno-videojuejos-lua-roblox": "clases-adolescentes1.jpg",
-  "diseno-videojuegos-unity": "unity1.jpg",
-  "python-pro": "python-start1.jpg",
-  "python-start-avanzado": "python-start1.jpg",
-  "diseno-2d-y-3d": "diseno-web1.jpg",
-  "taller_impresion-3D": "Lumy.jpeg",
-  "video-blogging": "creacion-contenido-video1.jpg",
-  "taller-prompt-engeneering": "preparacion-universidad.jpg",
-
-  // ADULTS / EMPRESAS
-  "inteligencia-artificial-adultos": "ia-adultos.png",
-  "alfabetizacion-digital": "alfabetizacion-digital-adultos1.jpg",
-  "adminitracion-de-proyectos": "empresas-gobierno1.jpg",
-  "taller-gobernanza-IA-ciberseguridad": "clases-adultos1.jpg",
-  "taller-resolucion-de-conflictos": "trabajo-en-equipo1.jpg",
-  "taller-design-thinking": "trabajo-en-equipo1.jpg"
+  "diseno-videojuegos-roblox": ["teens"],
+  "diseno-videojuejos-lua-roblox": ["teens"],
+  "diseno-videojuegos-unity": ["teens"],
+  "python-pro": ["teens"],
+  "python-start-avanzado": ["teens"],
+  "diseno-2d-y-3d": ["teens"],
+  "taller_impresion-3d": ["teens"],
+  "video-blogging": ["teens"],
+  "taller-prompt-engeneering": ["teens", "adults"],
+  // ADULTS / COMPANY
+  "inteligencia-artificial-adultos": ["adults"],
+  "alfabetizacion-digital": ["adults"],
+  "adminitracion-de-proyectos": ["adults"],
+  "taller-gobernanza-ia-ciberseguridad": ["company", "adults"],
+  "taller-resolucion-de-conflictos": ["company", "adults"],
+  "taller-design-thinking": ["company", "adults"]
 };
 
-// Función auxiliar para adivinar la audiencia
-function inferAudience(age: string = ""): ("kids" | "teens" | "adults" | "company")[] {
-  const a = age.toLowerCase();
-  if (a.includes("empresa") || a.includes("docente")) return ["company"];
-  if (a.includes("niño") || a.includes("niña") || a.includes("kids") || a.match(/[5-9]\s*(a|-)\s*1[0-1]/)) return ["kids"];
-  if (a.includes("adolescente") || a.includes("teen") || a.match(/1[2-7]\s*(a|-)\s*/)) return ["teens", "adults"];
-  if (a.includes("adulto") || a.includes("18") || a.includes("30") || a.includes("profesional")) return ["adults"];
-  return ["kids"];
-}
-
 function mapCurso(cursoEncontrado: any): CourseData {
-  const idCurso = cursoEncontrado.id;
-  const imgKeyOriginal = cursoEncontrado.imgKey || cursoEncontrado.imagen_key || "";
+  const idCurso = cursoEncontrado.id || cursoEncontrado.slug || "";
   
-  // 🔥 PRIORIDAD 1: El diccionario por ID. Si no está, usa lo de Mongo.
-  const imgKeyReal = MAPEO_POR_ID[idCurso] || imgKeyOriginal || "pagina-principal1.jpg";
+  // Como ya actualizamos Mongo con Python, imgKey ya viene con el nombre exacto de R2.
+  // Si no viene, asumimos que se llama como el ID + .jpg
+  const imgKeyReal = cursoEncontrado.imgKey || cursoEncontrado.imagen_key || `${idCurso}.jpg`;
+  
+  // Buscamos la audiencia en mayúsculas o minúsculas
+  const audience = AUDIENCIA_POR_ID[idCurso.toLowerCase()] || ["kids"];
 
   return {
     id: idCurso,
@@ -63,7 +54,7 @@ function mapCurso(cursoEncontrado: any): CourseData {
     emoji: cursoEncontrado.emoji || "🚀",
     color: cursoEncontrado.color || "#00C9FF",
     imgKey: imgKeyReal,
-    targetAudience: inferAudience(cursoEncontrado.age || cursoEncontrado.edad_dirigida),
+    targetAudience: audience,
     techs: cursoEncontrado.techs || cursoEncontrado.tecnologias || ["Tecnología", "Creatividad"],
     modules: (cursoEncontrado.modules || cursoEncontrado.modulos || []).map((mod: any) => ({
       id: mod.id || Math.random().toString(),
@@ -97,7 +88,7 @@ export async function fetchCourseById(id: string): Promise<CourseData | null> {
     const response = await fetch(`${API_URL}/api/cursos`);
     if (!response.ok) throw new Error('Error al obtener cursos');
     const data = await response.json();
-    const cursoEncontrado = data.find((c: any) => c.id === id);
+    const cursoEncontrado = data.find((c: any) => (c.id || c.slug).toLowerCase() === id.toLowerCase());
     if (!cursoEncontrado) return null;
     return mapCurso(cursoEncontrado);
   } catch (error) {
