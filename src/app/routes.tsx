@@ -14,6 +14,9 @@ import { Becas } from "./pages/Becas";
 import { Contacto } from "./pages/Contacto";
 import { Capacitaciones } from "./pages/Capacitaciones";
 import { Auditoria } from "./pages/Auditoria"; // <-- 1. IMPORTAMOS LA AUDITORÍA
+import { DebugCursos } from "./pages/DebugCursos";
+import { CursosEmpresas } from "./pages/CursosEmpresas"; // <-- Nuevo import
+
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +29,7 @@ export const router = createBrowserRouter([
       { path: "cursos/ninos", Component: CursosNinos },
       { path: "cursos/adolescentes", Component: CursosAdolescentes },
       { path: "cursos/adultos", Component: CursosAdultos },
+      { path: "cursos/empresas", Component: CursosEmpresas }, // <-- Nueva ruta (PONLA ANTES de cursos/:segmento)
       { path: "cursos/:segmento", Component: Cursos },
       { path: "cursos/ninos/:id", Component: CursoDetalle },
       { path: "cursos/adolescentes/:id", Component: CursoDetalle },
@@ -39,6 +43,7 @@ export const router = createBrowserRouter([
       { path: "contacto", Component: Contacto },
       { path: "capacitaciones", Component: Capacitaciones },
       { path: "auditoria", Component: Auditoria }, // <-- 2. AGREGAMOS LA RUTA AQUÍ
+      { path: "debug-cursos", Component: DebugCursos },
     ],
   },
 ]);

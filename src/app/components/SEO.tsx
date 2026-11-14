@@ -1,52 +1,69 @@
-import { Helmet } from "react-helmet-async";
+import { useEffect } from "react";
 
 interface SEOProps {
   title: string;
   description: string;
   image?: string;
   url?: string;
-  type?: "website" | "article";
+  type?: string;
   schema?: Record<string, any>;
 }
 
-export function SEO({ 
-  title, 
-  description, 
-  image = "https://media.gokulab.mx/Galery/pagina-principal1.jpg", // Imagen por defecto de R2
-  url = "https://gokulab.mx",
-  type = "website",
-  schema
-}: SEOProps) {
-  const siteName = "GōkuLab";
-  const fullTitle = `${title} | ${siteName}`;
+export function SEO({ title, description, image, url, type = "website", schema }: SEOProps) {
+  useEffect(() => {
+    // 1. Actualizar Title
+    document.title = title;
 
-  return (
-    <Helmet>
-      {/* Básicos */}
-      <title>{fullTitle}</title>
-      <meta name="description" content={description} />
-      <link rel="canonical" href={url} />
+    // 2. Función auxiliar para actualizar/crear meta tags
+    const updateMeta = (name: string, property: string, content: string) => {
+      let element = document.querySelector(`meta[${property}="${name}"]`);
+      if (!element) {
+        element = document.createElement("meta");
+        element.setAttribute(property, name);
+        document.head.appendChild(element);
+      }
+      element.setAttribute("content", content);
+    };
 
-      {/* Open Graph (WhatsApp, Facebook, LinkedIn) */}
-      <meta property="og:title" content={fullTitle} />
-      <meta property="og:description" content={description} />
-      <meta property="og:image" content={image} />
-      <meta property="og:url" content={url} />
-      <meta property="og:type" content={type} />
-      <meta property="og:site_name" content={siteName} />
+    // Meta básicos
+    updateMeta("description", "name", description);
+    
+    // Open Graph (Facebook / WhatsApp)
+    updateMeta("og:title", "property", title);
+    updateMeta("og:description", "property", description);
+    updateMeta("og:type", "property", type);
+    if (image) updateMeta("og:image", "property", image);
+    if (url) updateMeta("og:url", "property", url);
 
-      {/* Twitter Cards */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={fullTitle} />
-      <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={image} />
+    // Twitter Card
+    updateMeta("twitter:card", "name", "summary_large_image");
+    updateMeta("twitter:title", "name", title);
+    updateMeta("twitter:description", "name", description);
+    if (image) updateMeta("twitter:image", "name", image);
 
-      {/* JSON-LD (Datos estructurados para Google) */}
-      {schema && (
-        <script type="application/ld+json">
-          {JSON.stringify(schema)}
-        </script>
-      )}
-    </Helmet>
-  );
+    // 3. Canonical URL (Crucial para SEO)
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", url || window.location.href.split('?')[0]);
+
+    // 4. Schema.org (JSON-LD)
+    let scriptSchema = document.querySelector('script[id="dynamic-schema"]');
+    if (scriptSchema) {
+      scriptSchema.remove();
+    }
+    if (schema) {
+      scriptSchema = document.createElement("script");
+      scriptSchema.setAttribute("type", "application/ld+json");
+      scriptSchema.setAttribute("id", "dynamic-schema");
+      scriptSchema.textContent = JSON.stringify(schema);
+      document.head.appendChild(scriptSchema);
+    }
+
+  }, [title, description, image, url, type, schema]);
+
+  return null;
 }

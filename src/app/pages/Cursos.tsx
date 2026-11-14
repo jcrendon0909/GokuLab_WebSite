@@ -1,11 +1,11 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Link, useParams } from "react-router";
 import { AnimatedSection } from "../components/AnimatedSection";
 import { AudienceTabs } from "../components/AudienceTabs";
 import { useTheme } from "next-themes";
-import { Clock, Users, Monitor, MessageCircle, Filter, Globe, Rocket, Award, Star, ArrowRight } from "lucide-react";
-import { CURSOS, ALGORITHMICS_LOGO } from "../../Data/images";
-import { coursesData } from "../../Data/courses";
+import { Clock, Users, Monitor, MessageCircle, Filter, ArrowRight } from "lucide-react";
+import { CourseData } from "../../Data/courses";
+import { fetchAllCourses } from "../../Data/courseService";
 
 type Segment = "ninos" | "adolescentes" | "adultos" | "empresas" | "todos";
 
@@ -20,18 +20,26 @@ const segmentConfig = {
 export function Cursos() {
   const { segmento } = useParams<{ segmento?: string }>();
   const [activeCategory, setActiveCategory] = useState<string>("todos");
+  const [allCourses, setAllCourses] = useState<CourseData[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { theme } = useTheme();
 
-  // Si no hay segmento en la URL, mostramos el HUB
+  // 1. Cargamos los cursos dinámicos desde Mongo (con el mapeo de imágenes ya aplicado)
+  useEffect(() => {
+    fetchAllCourses().then(data => {
+      setAllCourses(data);
+      setIsLoading(false);
+    });
+  }, []);
+
   const isHub = !segmento;
   const currentSegment = (segmento as Segment) || "todos";
   const config = segmentConfig[currentSegment] || segmentConfig.todos;
 
-  // Filtramos la base de datos dinámica
+  // 2. Filtramos y asignamos la imagen correcta de R2
   const dynamicCourses = useMemo(() => {
-    let filtered = Object.values(coursesData);
+    let filtered = allCourses;
     
-    // Filtro por segmento (audiencia)
     if (currentSegment === "ninos") filtered = filtered.filter(c => c.targetAudience.includes("kids"));
     else if (currentSegment === "adolescentes") filtered = filtered.filter(c => c.targetAudience.includes("teens"));
     else if (currentSegment === "adultos") filtered = filtered.filter(c => c.targetAudience.includes("adults"));
@@ -39,14 +47,21 @@ export function Cursos() {
 
     return filtered.map(c => ({
       ...c,
-      img: (CURSOS as any)[c.imgKey] || "https://images.unsplash.com/photo-1603354350266-a8de3496163b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=600",
+      img: c.imgKey ? `https://media.gokulab.mx/Galery/${c.imgKey}` : "https://media.gokulab.mx/Galery/pagina-principal1.jpg",
       isTeen: c.targetAudience.includes("teens"),
       segment: c.targetAudience.includes("kids") ? "ninos" : c.targetAudience.includes("teens") ? "adolescentes" : c.targetAudience.includes("adults") ? "adultos" : "empresas"
     }));
-  }, [currentSegment]);
+  }, [currentSegment, allCourses]);
 
-  // Filtro extra por categoría (Programación, Robótica, etc. dentro del catálogo)
   const filteredCourses = dynamicCourses.filter(c => activeCategory === "todos" || c.title.toLowerCase().includes(activeCategory.toLowerCase()));
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-[#0A0F1E]">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#00C9FF]"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white dark:bg-[#0A0F1E] transition-colors duration-300 min-h-screen">
@@ -65,10 +80,11 @@ export function Cursos() {
 
           <div className="grid md:grid-cols-2 gap-8">
             {[
-              { id: "ninos", title: "Niñas y Niños", age: "5-11 años", img: CURSOS.programacionVisual, color: "#FF6B35", desc: "Lógica, creatividad y primeros pasos en tecnología." },
-              { id: "adolescentes", title: "Adolescentes", age: "12-17 años", img: CURSOS.disenoVideojuegos, color: "#7C3AED", desc: "Videojuegos, código y preparación para el futuro." },
-              { id: "adultos", title: "Adultos", age: "18+ años", img: CURSOS.iaAdultos, color: "#00C9FF", desc: "Reconversión profesional, IA y habilidades digitales." },
-              { id: "empresas", title: "Empresas", age: "B2B", img: CURSOS.corporativo, color: "#10B981", desc: "Capacitación y transformación digital organizacional." },
+              // 🔥 AQUÍ ESTÁ LA MAGIA: URLs directas a las fotos que SÍ existen en R2
+              { id: "ninos", title: "Niñas y Niños", age: "5-11 años", img: "https://media.gokulab.mx/Galery/ninos-programando1.jpeg", color: "#FF6B35", desc: "Lógica, creatividad y primeros pasos en tecnología." },
+              { id: "adolescentes", title: "Adolescentes", age: "12-17 años", img: "https://media.gokulab.mx/Galery/diseno-videojuegos1.jpg", color: "#7C3AED", desc: "Videojuegos, código y preparación para el futuro." },
+              { id: "adultos", title: "Adultos", age: "18+ años", img: "https://media.gokulab.mx/Galery/ia-adultos.png", color: "#00C9FF", desc: "Reconversión profesional, IA y habilidades digitales." },
+              { id: "empresas", title: "Empresas", age: "B2B", img: "https://media.gokulab.mx/Galery/empresas-gobierno1.jpg", color: "#10B981", desc: "Capacitación y transformación digital organizacional." },
             ].map((item, i) => (
               <AnimatedSection key={item.id} delay={i * 100}>
                 <Link to={`/cursos/${item.id}`} className="group relative block h-[400px] rounded-[2rem] overflow-hidden border border-gray-200 dark:border-white/10 shadow-xl text-left">
@@ -133,7 +149,12 @@ export function Cursos() {
                   <AnimatedSection key={course.id} delay={i * 60}>
                     <div className="rounded-3xl overflow-hidden flex flex-col h-full group bg-white dark:bg-[#0A0F1E] border border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:border-white/30 transition-all hover:-translate-y-2 hover:shadow-xl">
                       <div className="relative h-44 overflow-hidden">
-                        <img src={course.img} alt={course.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                        <img 
+                          src={course.img} 
+                          alt={course.title} 
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                          onError={(e) => { (e.target as HTMLImageElement).src = "https://media.gokulab.mx/Galery/pagina-principal1.jpg"; }}
+                        />
                         <div className="absolute inset-0" style={{ background: `linear-gradient(to top, ${course.color}dd, transparent)` }} />
                         <div className="absolute top-3 left-3 flex flex-col gap-2">
                           <span className="text-xs px-3 py-1.5 rounded-full font-bold bg-black/60 text-white backdrop-blur-sm">{course.price}</span>
@@ -145,7 +166,7 @@ export function Cursos() {
                         <h3 className="text-gray-900 dark:text-white mb-2 font-black text-base">{course.title}</h3>
                         <p className="text-gray-600 dark:text-white/60 text-sm mb-4 flex-1 line-clamp-2">{course.subtitle}</p>
                         <div className="grid grid-cols-2 gap-2 mb-4">
-                          {[{ icon: Users, text: course.age }, { icon: Clock, text: course.duration }, { icon: Monitor, text: course.modality.split(" / ")[0] }].map(({ icon: Icon, text }) => (
+                          {[{ icon: Users, text: course.age }, { icon: Clock, text: course.duration }, { icon: Monitor, text: course.modality.split(",")[0] }].map(({ icon: Icon, text }) => (
                             <div key={text} className="flex items-center gap-2"><Icon size={14} className="text-gray-400" /><span className="text-gray-600 dark:text-white/60 text-xs font-medium">{text}</span></div>
                           ))}
                         </div>

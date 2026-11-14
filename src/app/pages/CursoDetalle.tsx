@@ -11,7 +11,6 @@ import {
 
 // Componente de Acordeón (Blindado)
 function ModuleAccordion({ modules, courseColor }: { modules?: any[], courseColor: string }) {
-  // Protección por si 'modules' llega undefined
   const safeModules = modules || [];
   const [openId, setOpenId] = useState<string | null>(safeModules[0]?.id || null);
 
@@ -93,8 +92,11 @@ export function CursoDetalle() {
     : "https://media.gokulab.mx/Galery/pagina-principal1.jpg";
 
   const whatsappMsg = encodeURIComponent(`Hola, quiero agendar una masterclass del curso: ${course.title}`);
-  const videoUrl = (course as any).videoUrl || "https://media.gokulab.mx/Galery/caballerocodigo.mp4";
-
+  
+  // Solo asignamos el video si realmente existe y no está vacío
+  const hasVideo = (course as any).videoUrl && (course as any).videoUrl.trim() !== "";
+  const videoUrl = hasVideo ? (course as any).videoUrl : null;
+  
   // Protección por si el curso no trae valueProps o techs
   const safeValueProps = course.valueProps || [];
   const safeTechs = course.techs || [];
@@ -102,12 +104,12 @@ export function CursoDetalle() {
   return (
     <div className="bg-[#050A14] text-white min-h-screen selection:bg-[#00C9FF] selection:text-black">
       
-      {/* SEO DINÁMICO POR CURSO */}
+            {/* SEO DINÁMICO POR CURSO */}
       <SEO 
-        title={`Curso de ${course.title}`}
-        description={`${course.subtitle} Dirigido a ${course.age}. Nivel ${course.level}. ${course.modality}.`}
+        title={`${course.title} | Cursos GōkuLab`}
+        description={`${course.subtitle} Dirigido a ${course.age}. Nivel ${course.level}. Modalidad ${course.modality}.`}
         image={courseImg}
-        url={`https://gokulab.mx/cursos/${course.id}`}
+        url={`https://gokulab.mx/cursos/${course.targetAudience[0] === 'kids' ? 'ninos' : course.targetAudience[0] === 'teens' ? 'adolescentes' : 'adultos'}/${course.id}`}
         type="article"
         schema={{
           "@context": "https://schema.org",
@@ -123,19 +125,25 @@ export function CursoDetalle() {
           "audience": {
             "@type": "EducationalAudience",
             "educationalRole": "student",
-            "audienceType": course.age
+            "audienceType": course.targetAudience.join(", ") // 👈 AQUI VA LA AUDIENCIA DE MONGO
           },
           "offers": {
             "@type": "Offer",
+            "category": "Paid",
             "price": "1600",
             "priceCurrency": "MXN",
             "availability": "https://schema.org/InStock"
+          },
+          "hasCourseInstance": {
+            "@type": "CourseInstance",
+            "courseMode": course.modality,
+            "courseWorkload": course.duration
           }
         }}
       />
       
-      {/* MODAL DE VIDEO */}
-      {isVideoOpen && (
+      {/* MODAL DE VIDEO (Solo si hay video) */}
+      {isVideoOpen && hasVideo && videoUrl && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm">
           <div className="relative w-full max-w-5xl rounded-3xl overflow-hidden border border-white/20 shadow-2xl bg-black">
             <button 
@@ -210,22 +218,31 @@ export function CursoDetalle() {
 
           <AnimatedSection delay={100} className="relative">
             <div className="absolute inset-0 bg-gradient-to-tr from-[#050A14] to-transparent z-10 rounded-[3rem]"></div>
-            <div className="w-full aspect-[4/3] rounded-[3rem] overflow-hidden border border-white/10 relative group cursor-pointer" onClick={() => setIsVideoOpen(true)}>
+            
+            {/* Contenedor de la imagen (Clic solo si hay video) */}
+            <div 
+              className={`w-full aspect-[4/3] rounded-[3rem] overflow-hidden border border-white/10 relative group ${hasVideo ? 'cursor-pointer' : ''}`}
+              onClick={() => hasVideo && setIsVideoOpen(true)}
+            >
               <img 
                 src={courseImg} 
                 alt={`Curso de ${course.title}`} 
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                 onError={(e) => {
-                  // Respaldo si la imagen de R2 no existe
                   (e.target as HTMLImageElement).src = "https://media.gokulab.mx/Galery/pagina-principal1.jpg";
                 }}
               />
-              <div className="absolute inset-0 flex items-center justify-center z-20">
-                <div className="w-20 h-20 bg-white/20 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xl">
-                  <Play size={32} className="text-white ml-2" fill="white" />
+              
+              {/* Botón de Play (Solo si hay video) */}
+              {hasVideo && (
+                <div className="absolute inset-0 flex items-center justify-center z-20">
+                  <div className="w-20 h-20 bg-white/20 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xl">
+                    <Play size={32} className="text-white ml-2" fill="white" />
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
+
             <div className="absolute -bottom-6 -left-6 bg-[#0A0F1E] border border-white/10 p-4 rounded-2xl flex items-center gap-3 shadow-2xl z-20">
               <Star className="text-[#FFE134]" fill="#FFE134" size={24} />
               <div>

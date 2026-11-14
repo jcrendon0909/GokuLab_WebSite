@@ -43,6 +43,7 @@ Devuelve EXCLUSIVAMENTE un objeto JSON con esta estructura exacta (sin markdown,
   "precio_desde": 1600,
   "emoji": "Un emoji representativo",
   "color": "Un código hex para el diseño (ej. #1E88E5)",
+  "targetAudience": ["kids"], // Elige 1 o más de estos: "kids", "teens", "adults", "company"
   "valueProps": [
     { "title": "Nombre de la Soft Skill", "desc": "Beneficio explicado para el padre", "icon": "Emoji" }
   ],
@@ -98,6 +99,7 @@ def procesar_archivo(ruta_archivo):
 
     # Armar documento para MongoDB
     doc_curso = {
+        "id": slug, # 🔥 Importante: el ID debe ser el slug
         "idCurso": slug.upper().replace("-", ""),
         "slug": slug,
         "nombreCurso": datos_extraidos.get("nombreCurso", slug),
@@ -109,7 +111,8 @@ def procesar_archivo(ruta_archivo):
         "precio_desde": datos_extraidos.get("precio_desde", 1600),
         "emoji": datos_extraidos.get("emoji", "🚀"),
         "color": datos_extraidos.get("color", "#00C9FF"),
-        "imagen_key": slug,
+        "targetAudience": datos_extraidos.get("targetAudience", ["kids"]), # 🔥 Inyectamos la audiencia que dictó Groq
+        "imgKey": f"{slug}.jpg", # 🔥 Forzamos que busque la foto con el nombre del PDF
         "videoUrl": "", # Aquí puedes agregar el link del video después en Mongo
         "is_express": False,
         "valueProps": datos_extraidos.get("valueProps", []),
