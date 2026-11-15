@@ -93,7 +93,6 @@ export function CursoDetalle() {
   const safeValueProps = course.valueProps || [];
   const safeTechs = course.techs || [];
 
-  // 🔥 CORRECCIÓN DEL CANONICAL: Función estricta para asignar el segmento
   const getAudienceSegment = () => {
     if (course.targetAudience.includes("company")) return "empresas";
     if (course.targetAudience.includes("adults")) return "adultos";
@@ -102,6 +101,11 @@ export function CursoDetalle() {
   };
   const canonicalUrl = `https://gokulab.mx/cursos/${getAudienceSegment()}/${course.id}`;
 
+  // 🔥 FIX SPRINT 1 (Tarea 6): Extraer el precio real para el Schema
+  // Convertimos "desde $1,800 al mes" a "1800"
+  const priceMatch = course.price.match(/\$([0-9,]+)/);
+  const schemaPrice = priceMatch ? priceMatch[1].replace(/,/g, '') : "1600"; // Fallback seguro
+
   return (
     <div className="bg-[#050A14] text-white min-h-screen selection:bg-[#00C9FF] selection:text-black">
       
@@ -109,7 +113,7 @@ export function CursoDetalle() {
         title={`${course.title} | Cursos GōkuLab`}
         description={`${course.subtitle} Dirigido a ${course.age}. Nivel ${course.level}. Modalidad ${course.modality}.`}
         image={courseImg}
-        url={canonicalUrl} // 🔥 Ahora envía la URL correcta
+        url={canonicalUrl}
         type="article"
         schema={{
           "@context": "https://schema.org",
@@ -130,7 +134,7 @@ export function CursoDetalle() {
           "offers": {
             "@type": "Offer",
             "category": "Paid",
-            "price": "1600",
+            "price": schemaPrice, // 🔥 Dinámico
             "priceCurrency": "MXN",
             "availability": "https://schema.org/InStock"
           }
