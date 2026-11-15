@@ -99,6 +99,18 @@ def procesar_pdf(ruta_pdf):
         print(f"❌ Error con Groq: {e}")
         return []
 
+def normalizar_audiencia(audiencias):
+    mapa = {
+        "niños": "kids", "ninos": "kids", "kids": "kids",
+        "adolescentes": "teens", "teens": "teens",
+        "adultos": "adults", "adults": "adults",
+        "empresas": "company", "business": "company", "company": "company",
+        "todos": "todos"
+    }
+    if not isinstance(audiencias, list):
+        return []
+    return list(set([mapa.get(str(a).lower(), str(a).lower()) for a in audiencias]))
+
 if __name__ == "__main__":
     carpeta = Path(".")
     archivos_eventos = list(carpeta.glob("*eventos*.pdf")) + list(carpeta.glob("*eventos*.docx"))
@@ -118,12 +130,16 @@ if __name__ == "__main__":
         insertados = 0
         
         for ev in todos_los_eventos:
-            # Generamos un ID único a partir del título (ej. "Campus Party México 2026" -> "campus-party-mexico-2026")
+            # Generamos un ID único a partir del título
             titulo = ev.get("titulo", "evento-sin-titulo")
             ev_id = re.sub(r'[^a-z0-9]+', '-', titulo.lower()).strip('-')
             ev["id"] = ev_id
             
-            # Usamos update_one con upsert=True (Si existe, lo actualiza; si no, lo inserta)
+            # Normalizamos la audiencia a inglés
+            if "audiencia" in ev:
+                ev["audiencia"] = normalizar_audiencia(ev["audiencia"])
+            
+            # Usamos update_one con upsert=True
             resultado = coleccion.update_one(
                 {"id": ev_id},
                 {"$set": ev},

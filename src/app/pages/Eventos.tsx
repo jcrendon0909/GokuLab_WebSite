@@ -25,24 +25,14 @@ export function Eventos() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<"todos" | "interno" | "externo">("todos");
 
-  useEffect(() => {
+    useEffect(() => {
     fetch(`${API_URL}/api/eventos`)
       .then((res) => {
         if (!res.ok) throw new Error("Error al obtener eventos");
         return res.json();
       })
       .then((data) => {
-        // Filtro de fechas DESACTIVADO TEMPORALMENTE
-        // const hoy = new Date();
-        // hoy.setHours(0, 0, 0, 0);
-        // const eventosFuturos = data.filter((e: Evento) => {
-        //   if (!e.fecha) return false;
-        //   const fechaEvento = new Date(e.fecha);
-        //   fechaEvento.setHours(23, 59, 59, 999); 
-        //   return fechaEvento >= hoy;
-        // });
-
-        // Ordenamos por fecha
+        // Ya no filtramos por fecha, mostramos todos y ordenamos
         const sorted = data.sort((a: Evento, b: Evento) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime());
         
         // Aseguramos que todos tengan ID
@@ -56,7 +46,6 @@ export function Eventos() {
         setLoading(false);
       });
   }, []);
-
   const filteredEvents = eventos.filter(
     (e) => activeTab === "todos" || e.tipo === activeTab
   );
