@@ -11,6 +11,7 @@ type NavLink = {
   dropdown?: { label: string; href: string }[];
 };
 
+// Reemplaza SOLO la constante navLinks por esta:
 const navLinks: NavLink[] = [
   { labelKey: "nav.home", href: "/", label: "Inicio" },
   { labelKey: "nav.about", href: "/nosotros", label: "Nosotros" },
@@ -21,7 +22,7 @@ const navLinks: NavLink[] = [
     dropdown: [
       { label: "🧒 Niñas, niños y adolescentes", href: "/cursos/ninos" },
       { label: "👨‍💼 Para adultos", href: "/cursos/adultos" },
-      { label: "🏢 Empresas y gobierno", href: "/capacitaciones" },
+      { label: "🏢 Empresas y gobierno", href: "/cursos/empresas" }, // 👈 CAMBIO AQUÍ
     ],
   },
   { labelKey: "nav.methodology", href: "/metodologia", label: "Metodología" },

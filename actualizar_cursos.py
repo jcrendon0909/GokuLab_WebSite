@@ -35,13 +35,14 @@ MAPEO_CURSOS = {
     "taller_impresion-3d": {"audiencia": ["teens"], "img": "taller_impresion-3d.jpg"},
     "video-blogging": {"audiencia": ["teens"], "img": "video-blogging.jpg"},
     "taller-prompt-engeneering": {"audiencia": ["teens", "adults"], "img": "taller-prompt-engeneering.jpg"},
+    
     # ADULTS / COMPANY
-    "inteligencia-artificial-adultos": {"audiencia": ["adults"], "img": "inteligencia-artificial-adultos.jpg"},
-    "alfabetizacion-digital": {"audiencia": ["adults"], "img": "alfabetizacion-digital.jpg"},
-    "adminitracion-de-proyectos": {"audiencia": ["adults"], "img": "adminitracion-de-proyectos.jpg"},
-    "taller-gobernanza-ia-ciberseguridad": {"audiencia": ["company", "adults"], "img": "taller-gobernanza-ia-ciberseguridad.jpg"},
+    "inteligencia-artificial-adultos": {"audiencia": ["company","adults"], "img": "inteligencia-artificial-adultos.jpg"},
+    "alfabetizacion-digital": {"audiencia": ["company","adults"], "img": "alfabetizacion-digital.jpg"},
+    "taller-gobernanza-ia-ciberseguridad": {"audiencia": ["company"], "img": "taller-gobernanza-ia-ciberseguridad.jpg"},
     "taller-resolucion-de-conflictos": {"audiencia": ["company", "adults"], "img": "taller-resolucion-de-conflictos.jpg"},
-    "taller-design-thinking": {"audiencia": ["company", "adults"], "img": "taller-design-thinking.jpg"}
+    "taller-design-thinking": {"audiencia": ["company", "adults"], "img": "taller-design-thinking.jpg"},
+    "adminitracion-de-proyectos": {"audiencia": ["adults", "company"], "img": "adminitracion-de-proyectos.jpg"},
     }
     
 

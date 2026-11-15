@@ -1,3 +1,4 @@
+import { createBrowserRouter, Navigate } from "react-router";
 import { createBrowserRouter } from "react-router";
 import { Layout } from "./components/Layout";
 import { Home } from "./pages/Home";
@@ -16,6 +17,7 @@ import { Capacitaciones } from "./pages/Capacitaciones";
 import { Auditoria } from "./pages/Auditoria"; // <-- 1. IMPORTAMOS LA AUDITORÍA
 import { DebugCursos } from "./pages/DebugCursos";
 import { CursosEmpresas } from "./pages/CursosEmpresas"; // <-- Nuevo import
+import { Navigate } from "react-router"; // Asegúrate de tener este import
 
 
 export const router = createBrowserRouter([
@@ -41,9 +43,10 @@ export const router = createBrowserRouter([
       { path: "eventos", Component: Eventos },
       { path: "becas", Component: Becas },
       { path: "contacto", Component: Contacto },
-      { path: "capacitaciones", Component: Capacitaciones },
+      { path: "capacitaciones", element: <Navigate to="/cursos/empresas" replace /> },
       { path: "auditoria", Component: Auditoria }, // <-- 2. AGREGAMOS LA RUTA AQUÍ
       { path: "debug-cursos", Component: DebugCursos },
+      { path: "capacitaciones", element: <Navigate to="/cursos/empresas" replace /> },
     ],
   },
 ]);

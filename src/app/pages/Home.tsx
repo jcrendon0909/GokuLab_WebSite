@@ -129,11 +129,12 @@ export function Home() {
           </AnimatedSection>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            // Reemplaza el arreglo actual por este:
             {[
               { title: "Niños", age: "5-11 años", desc: "Lógica y creación por bloques.", href: "/cursos/ninos", img: HOME_IMAGES.ninos, color: "#FF6B35" },
               { title: "Adolescentes", age: "12-17 años", desc: "Videojuegos, código y preparación.", href: "/cursos/adolescentes", img: HOME_IMAGES.adultos, color: "#7C3AED" },
               { title: "Adultos", age: "18+ años", desc: "Reconversión y habilidades IA.", href: "/cursos/adultos", img: HOME_IMAGES.adultos, color: "#00C9FF" },
-              { title: "Empresas", age: "Corporativo", desc: "Capacitación y transformación.", href: "/capacitaciones", img: HOME_IMAGES.corporativo, color: "#10B981" },
+              { title: "Empresas", age: "Corporativo", desc: "Capacitación y transformación.", href: "/cursos/empresas", img: HOME_IMAGES.corporativo, color: "#10B981" }, // 👈 CAMBIO AQUÍ
             ].map((item, i) => (
               <AnimatedSection key={item.title} delay={i * 100}>
                 <Link to={item.href} className="group relative block h-[400px] rounded-3xl overflow-hidden border border-white/10">
@@ -197,7 +198,8 @@ export function Home() {
                   Capacita a tu equipo en IA, automatización y liderazgo digital. Descubre cómo el ecosistema GōkuLab y BehaviorLab transforman organizaciones.
                 </p>
                 <div className="flex flex-wrap gap-4">
-                  <Link to="/capacitaciones" className="px-8 py-3 bg-white text-black font-bold rounded-xl hover:scale-105 transition-transform">
+                // Reemplaza el Link actual por este:
+                  <Link to="/cursos/empresas" className="px-8 py-3 bg-white text-black font-bold rounded-xl hover:scale-105 transition-transform">
                     Ver programas corporativos
                   </Link>
                   <a href="https://behaviorlab.gokulab.mx" target="_blank" rel="noopener noreferrer" className="px-8 py-3 bg-transparent border border-white/30 text-white font-bold rounded-xl hover:bg-white/10 transition-colors flex items-center gap-2">
