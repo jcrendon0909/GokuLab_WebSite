@@ -12,18 +12,24 @@ const SEDES = ["Naucalpan", "Ezequiel Montes"];
 const getQuestions = (answers: Answer) => {
   const audience = answers.step0;
 
-  // Preguntas base para niños y adolescentes
+  // 🔥 LA PREGUNTA BASE (SIEMPRE SE MUESTRA PRIMERO)
+  const baseQuestion = {
+    id: "step0", title: "¿Para quién es este curso?", subtitle: "Cuéntanos para orientarte mejor.", emoji: "👤",
+    options: [
+      { id: "kids", label: "Para mis hijos (5-11 años)", emoji: "🧒" },
+      { id: "teen", label: "Para mí (12-17 años)", emoji: "🎮" },
+      { id: "adult", label: "Para mí (18+)", emoji: "👨‍💼" },
+      { id: "company", label: "Para mi empresa", emoji: "🏢" },
+    ],
+  };
+
+  // Si aún no elige, solo mostramos la pregunta base
+  if (!audience) return [baseQuestion];
+
+  // FLUJO PARA NIÑOS Y ADOLESCENTES
   if (audience === "kids" || audience === "teen") {
     return [
-      {
-        id: "step0", title: "¿Para quién es este curso?", subtitle: "Cuéntanos para orientarte mejor.", emoji: "👤",
-        options: [
-          { id: "kids", label: "Para mis hijos (5-11 años)", emoji: "🧒" },
-          { id: "teen", label: "Para mí (12-17 años)", emoji: "🎮" },
-          { id: "adult", label: "Para mí (18+)", emoji: "👨‍💼" },
-          { id: "company", label: "Para mi empresa", emoji: "🏢" },
-        ],
-      },
+      baseQuestion,
       {
         id: "step1", title: "¿Qué es lo que más disfruta hacer?", subtitle: "Elige lo que más se parezca a su personalidad.", emoji: "🌟",
         options: [
@@ -53,21 +59,16 @@ const getQuestions = (answers: Answer) => {
     ];
   }
 
-  // Preguntas para Adultos (18+)
+  // FLUJO PARA ADULTOS (18+)
   if (audience === "adult") {
     return [
-      {
-        id: "step0", title: "¿Para quién es este curso?", subtitle: "Cuéntanos para orientarte mejor.", emoji: "👤",
-        options: [
-          { id: "adult", label: "Para mí (18+)", emoji: "👨‍💼" },
-        ],
-      },
+      baseQuestion,
       {
         id: "step1", title: "¿Cuál es tu objetivo principal?", subtitle: "Esto nos ayuda a recomendarte el programa ideal.", emoji: "🎯",
         options: [
           { id: "career", label: "Mejorar mi carrera profesional", emoji: "📈" },
           { id: "ai", label: "Aprender Inteligencia Artificial", emoji: "🧠" },
-          { id: "business", label: "Emprender mi propio negocio", emoji: "🚀" }, // 👈 OPCIÓN DE EMPRENDIMIENTO
+          { id: "business", label: "Emprender mi propio negocio", emoji: "🚀" },
           { id: "leadership", label: "Liderazgo y gestión de proyectos", emoji: "💼" },
         ],
       },
@@ -90,14 +91,9 @@ const getQuestions = (answers: Answer) => {
     ];
   }
 
-  // Preguntas para Empresas
+  // FLUJO PARA EMPRESAS
   return [
-    {
-      id: "step0", title: "¿Para quién es este curso?", subtitle: "Cuéntanos para orientarte mejor.", emoji: "👤",
-      options: [
-        { id: "company", label: "Para mi empresa", emoji: "🏢" },
-      ],
-    },
+    baseQuestion,
     {
       id: "step1", title: "¿Qué área necesita capacitar?", subtitle: "Selecciona el enfoque principal.", emoji: "🏢",
       options: [
@@ -138,7 +134,7 @@ function getResults(answers: Answer) {
     else primaryId = "taller-resolucion-de-conflictos";
   } else if (step0 === "adult") {
     if (step1 === "ai") primaryId = "inteligencia-artificial-adultos";
-    else if (step1 === "business") primaryId = "adminitracion-de-proyectos"; // 👈 EMPRENDEDORES
+    else if (step1 === "business") primaryId = "adminitracion-de-proyectos"; 
     else if (step1 === "leadership") primaryId = "taller-prompt-engeneering";
     else primaryId = "alfabetizacion-digital";
   } else if (step0 === "kids") {
@@ -165,7 +161,6 @@ export function TestPage() {
   const [leadCaptured, setLeadCaptured] = useState(false);
   const [selectedSede, setSelectedSede] = useState("Naucalpan");
   
-  // 🔥 NUEVOS ESTADOS PARA CONECTAR CON MONGO
   const [allCourses, setAllCourses] = useState<CourseData[]>([]);
   const [isDataLoading, setIsDataLoading] = useState(true);
 
@@ -176,6 +171,7 @@ export function TestPage() {
     });
   }, []);
 
+  // 🔥 AQUÍ SE RECALCULAN LAS PREGUNTAS CUANDO CAMBIA LA RESPUESTA
   const questionsList = getQuestions(answers);
   const currentQ = questionsList[step];
   const progress = step < 0 ? 0 : ((step + 1) / questionsList.length) * 100;
@@ -194,7 +190,6 @@ export function TestPage() {
     setStep(-1); setAnswers({}); setIsFinished(false); setLeadCaptured(false); setLeadName(""); setLeadPhone(""); setSelectedSede("Naucalpan");
   };
 
-  // 🔥 BUSCAMOS EL CURSO REAL EN MONGO USANDO LOS IDs
   const resultsData = isFinished ? getResults(answers) : null;
   const primaryCourse = allCourses.find(c => c.id === resultsData?.primaryId);
 
@@ -266,7 +261,6 @@ export function TestPage() {
           </AnimatedSection>
         )}
 
-        {/* 🔥 MOSTRAMOS EL RESULTADO SI YA CARGÓ MONGO */}
         {isFinished && isDataLoading && (
           <div className="text-center py-20">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#00C9FF] mx-auto mb-4"></div>
@@ -326,7 +320,6 @@ export function TestPage() {
           </AnimatedSection>
         )}
 
-        {/* Fallback si el curso no se encuentra en Mongo */}
         {isFinished && !isDataLoading && !primaryCourse && (
           <div className="text-center py-20 bg-white/5 rounded-3xl border border-white/10">
             <p className="text-gray-400 mb-4">No pudimos cargar la recomendación en este momento.</p>

@@ -2,17 +2,18 @@
 import { CourseData } from './courses';
 import { API_URL } from '../config';
 
-// 🔥 MAPEO ESTRICTO DE AUDIENCIA (Ya no adivinamos, usamos tu categorización)
+// 🔥 MAPEO ESTRICTO (Basado en tu script de Python)
 const AUDIENCIA_POR_ID: Record<string, ("kids" | "teens" | "adults" | "company")[]> = {
   // KIDS
   "programacion-visual": ["kids", "teens"],
-  "robotica-principiantes": ["kids"],
-  "taller-creatividad": ["kids"],
-  "regularizacion-matematicas": ["kids"],
-  "caballero-del-codigo": ["kids"],
-  "diseno-grafico-ninos": ["kids"],
-  "programacion-visual-avanzada": ["kids"],
-  "diseno-videojuegos-minecraft": ["kids"],
+  "robotica-principiantes": ["kids", "teens"],
+  "taller-creatividad": ["kids", "teens"],
+  "regularizacion-matematicas": ["kids", "teens"],
+  "caballero-del-codigo": ["kids", "teens"],
+  "diseno-grafico-ninos": ["kids", "teens"],
+  "programacion-visual-avanzada": ["kids", "teens"],
+  "diseno-videojuegos-minecraft": ["kids", "teens"],
+
   // TEENS
   "diseno-videojuegos-roblox": ["teens"],
   "diseno-videojuejos-lua-roblox": ["teens"],
@@ -20,30 +21,48 @@ const AUDIENCIA_POR_ID: Record<string, ("kids" | "teens" | "adults" | "company")
   "python-pro": ["teens"],
   "python-start-avanzado": ["teens"],
   "diseno-2d-y-3d": ["teens"],
-  "taller_impresion-3d": ["teens"],
-  "video-blogging": ["teens"],
-  "taller-prompt-engeneering": ["teens", "adults"],
-  // ADULTS / COMPANY
+  "taller_impresion-3d": ["kids", "teens"],
+  "video-blogging": ["kids", "teens"],
+
+  // ADULTS
+  "taller-prompt-engeneering": ["adults"],
   "inteligencia-artificial-adultos": ["adults"],
   "alfabetizacion-digital": ["adults"],
-  "adminitracion-de-proyectos": ["adults"],
+  
+  // COMPANY & ADULTS
+  "adminitracion-de-proyectos": ["adults", "company"],
   "taller-gobernanza-ia-ciberseguridad": ["company", "adults"],
   "taller-resolucion-de-conflictos": ["company", "adults"],
   "taller-design-thinking": ["company", "adults"]
 };
 
 function mapCurso(cursoEncontrado: any): CourseData {
-  const idCurso = cursoEncontrado.id || cursoEncontrado.slug || "";
+  // Normalizamos el ID a minúsculas para que haga match con el diccionario
+  const idCurso = (cursoEncontrado.id || cursoEncontrado.slug || "").toLowerCase();
   
-  // Como ya actualizamos Mongo con Python, imgKey ya viene con el nombre exacto de R2.
-  // Si no viene, asumimos que se llama como el ID + .jpg
   const imgKeyReal = cursoEncontrado.imgKey || cursoEncontrado.imagen_key || `${idCurso}.jpg`;
   
-  // Buscamos la audiencia en mayúsculas o minúsculas
-  const audience = AUDIENCIA_POR_ID[idCurso.toLowerCase()] || ["kids"];
+  // 🔥 FORZAMOS LA AUDIENCIA: Si está en el diccionario, usamos esa. Si es nuevo, intentamos leer de Mongo.
+  let audience = AUDIENCIA_POR_ID[idCurso];
+  
+  if (!audience) {
+    // Fallback solo para cursos nuevos que no estén en el diccionario
+    const rawAudience = cursoEncontrado.targetAudience || cursoEncontrado.audiencia || [];
+    if (typeof rawAudience === "string") {
+      audience = rawAudience.split(",").map((s: string) => s.trim().toLowerCase() as any);
+    } else if (Array.isArray(rawAudience) && rawAudience.length > 0) {
+      audience = rawAudience.map((s: string) => String(s).trim().toLowerCase() as any);
+    } else {
+      // Fallback de emergencia por edad
+      const ageText = (cursoEncontrado.age || cursoEncontrado.edad_dirigida || "").toLowerCase();
+      if (ageText.includes("adulto") || ageText.includes("18") || ageText.includes("empresa") || ageText.includes("docente")) audience = ["adults"];
+      else if (ageText.includes("adolescente") || ageText.includes("12") || ageText.includes("13") || ageText.includes("14") || ageText.includes("15") || ageText.includes("16") || ageText.includes("17")) audience = ["teens"];
+      else audience = ["kids"];
+    }
+  }
 
   return {
-    id: idCurso,
+    id: cursoEncontrado.id || cursoEncontrado.slug || "",
     title: cursoEncontrado.title || cursoEncontrado.nombreCurso || "",
     subtitle: cursoEncontrado.subtitle || cursoEncontrado.descripcionCorta || "",
     age: cursoEncontrado.age || cursoEncontrado.edad_dirigida || "",
@@ -54,7 +73,7 @@ function mapCurso(cursoEncontrado: any): CourseData {
     emoji: cursoEncontrado.emoji || "🚀",
     color: cursoEncontrado.color || "#00C9FF",
     imgKey: imgKeyReal,
-    targetAudience: audience,
+    targetAudience: audience as any,
     techs: cursoEncontrado.techs || cursoEncontrado.tecnologias || ["Tecnología", "Creatividad"],
     modules: (cursoEncontrado.modules || cursoEncontrado.modulos || []).map((mod: any) => ({
       id: mod.id || Math.random().toString(),
