@@ -1,5 +1,6 @@
 import os
 import json
+import re
 from pathlib import Path
 from dotenv import load_dotenv
 from pymongo import MongoClient
@@ -21,7 +22,6 @@ try:
     cliente_mongo = MongoClient(MONGO_URI)
     db = cliente_mongo["chatbot_Goku_lab"]
     coleccion = db["eventos"]
-    # Prueba de conexión
     cliente_mongo.server_info()
     print("✅ Conexión a MongoDB exitosa.")
 except Exception as e:
@@ -111,12 +111,30 @@ if __name__ == "__main__":
 
     todos_los_eventos = eventos_internos + EVENTOS_EXTERNOS
 
-    print(f"\n📦 Total de eventos a subir: {len(todos_los_eventos)}")
+    print(f"\n📦 Total de eventos a procesar: {len(todos_los_eventos)}")
     
-    # Limpiamos e insertamos
     if todos_los_eventos:
-        coleccion.delete_many({}) # Borra lo viejo para no duplicar
-        resultado = coleccion.insert_many(todos_los_eventos)
-        print(f"🎉 ¡Éxito! Se insertaron {len(resultado.inserted_ids)} eventos en la colección 'eventos'.")
+        actualizados = 0
+        insertados = 0
+        
+        for ev in todos_los_eventos:
+            # Generamos un ID único a partir del título (ej. "Campus Party México 2026" -> "campus-party-mexico-2026")
+            titulo = ev.get("titulo", "evento-sin-titulo")
+            ev_id = re.sub(r'[^a-z0-9]+', '-', titulo.lower()).strip('-')
+            ev["id"] = ev_id
+            
+            # Usamos update_one con upsert=True (Si existe, lo actualiza; si no, lo inserta)
+            resultado = coleccion.update_one(
+                {"id": ev_id},
+                {"$set": ev},
+                upsert=True
+            )
+            
+            if resultado.upserted_id:
+                insertados += 1
+            else:
+                actualizados += 1
+                
+        print(f"🎉 ¡Éxito! Se insertaron {insertados} eventos nuevos y se actualizaron {actualizados} eventos existentes.")
     else:
         print("❌ No hay eventos para insertar.")
