@@ -4,6 +4,7 @@ import { AnimatedSection } from "../components/AnimatedSection";
 import { ArrowRight, RotateCcw, MessageCircle, CheckCircle, ChevronLeft } from "lucide-react";
 import { fetchAllCourses } from "../../Data/courseService";
 import { CourseData } from "../../Data/courses";
+import { useUTMs } from "../../hooks/useUTMs";
 
 type Answer = { step0?: string; step1?: string; step2?: string; step3?: string; };
 
@@ -12,7 +13,6 @@ const SEDES = ["Naucalpan", "Ezequiel Montes"];
 const getQuestions = (answers: Answer) => {
   const audience = answers.step0;
 
-  // 🔥 LA PREGUNTA BASE (SIEMPRE SE MUESTRA PRIMERO)
   const baseQuestion = {
     id: "step0", title: "¿Para quién es este curso?", subtitle: "Cuéntanos para orientarte mejor.", emoji: "👤",
     options: [
@@ -23,10 +23,8 @@ const getQuestions = (answers: Answer) => {
     ],
   };
 
-  // Si aún no elige, solo mostramos la pregunta base
   if (!audience) return [baseQuestion];
 
-  // FLUJO PARA NIÑOS Y ADOLESCENTES
   if (audience === "kids" || audience === "teen") {
     return [
       baseQuestion,
@@ -59,7 +57,6 @@ const getQuestions = (answers: Answer) => {
     ];
   }
 
-  // FLUJO PARA ADULTOS (18+)
   if (audience === "adult") {
     return [
       baseQuestion,
@@ -122,7 +119,6 @@ const getQuestions = (answers: Answer) => {
   ];
 };
 
-// 🔥 AHORA SOLO DEVOLVEMOS LOS IDs DE LOS CURSOS
 function getResults(answers: Answer) {
   const { step0, step1 } = answers;
   let primaryId = "";
@@ -143,7 +139,6 @@ function getResults(answers: Answer) {
     else if (step1 === "draw") primaryId = "diseno-grafico-ninos";
     else primaryId = "programacion-visual";
   } else {
-    // Teens
     if (step1 === "play") primaryId = "diseno-videojuegos-roblox";
     else if (step1 === "solve") primaryId = "python-pro";
     else primaryId = "video-blogging";
@@ -153,6 +148,7 @@ function getResults(answers: Answer) {
 }
 
 export function TestPage() {
+  const utms = useUTMs();
   const [step, setStep] = useState(-1);
   const [answers, setAnswers] = useState<Answer>({});
   const [isFinished, setIsFinished] = useState(false);
@@ -171,7 +167,6 @@ export function TestPage() {
     });
   }, []);
 
-  // 🔥 AQUÍ SE RECALCULAN LAS PREGUNTAS CUANDO CAMBIA LA RESPUESTA
   const questionsList = getQuestions(answers);
   const currentQ = questionsList[step];
   const progress = step < 0 ? 0 : ((step + 1) / questionsList.length) * 100;
@@ -180,9 +175,15 @@ export function TestPage() {
     const key = currentQ.id as keyof Answer;
     const newAnswers = { ...answers, [key]: value };
     setAnswers(newAnswers);
+    
+    const nextQuestionsList = getQuestions(newAnswers);
+    
     setTimeout(() => {
-      if (step < questionsList.length - 1) setStep(step + 1);
-      else setIsFinished(true);
+      if (step < nextQuestionsList.length - 1) {
+        setStep(step + 1);
+      } else {
+        setIsFinished(true);
+      }
     }, 300);
   };
 
@@ -193,9 +194,18 @@ export function TestPage() {
   const resultsData = isFinished ? getResults(answers) : null;
   const primaryCourse = allCourses.find(c => c.id === resultsData?.primaryId);
 
+  const getAnswerText = (questionId: string, answerId?: string) => {
+    if (!answerId) return "No especificado";
+    const q = questionsList.find((q) => q.id === questionId);
+    const opt = q?.options.find((o) => o.id === answerId);
+    return opt ? opt.label : answerId;
+  };
+
   const generateWhatsAppLink = () => {
     if (!primaryCourse) return "";
-    const text = `Hola equipo de GōkuLab.\n\nSoy ${leadName}.\nTeléfono: ${leadPhone}\nSede de interés: ${selectedSede}\n\nEl test me recomendó: *${primaryCourse.title}*.\n\nQuiero agendar una masterclass gratuita.\n— Enviado desde el Test de Orientación de GōkuLab`;
+    
+    const text = `Hola equipo de GōkuLab.\n\nSoy ${leadName}.\nTeléfono: ${leadPhone}\nSede de interés: ${selectedSede}\n\n*Resultado del Test de Orientación:*\nCurso recomendado: *${primaryCourse.title}*\n\n*Mis respuestas:*\n- Perfil: ${getAnswerText("step0", answers.step0)}\n- Objetivo/Interés: ${getAnswerText("step1", answers.step1)}\n- Nivel: ${getAnswerText("step2", answers.step2)}\n- Enfoque: ${getAnswerText("step3", answers.step3)}\n\nQuiero agendar una masterclass gratuita.${utms}\n— Enviado desde el Test de Orientación de GōkuLab`;
+    
     return `https://wa.me/5612668168?text=${encodeURIComponent(text)}`;
   };
 

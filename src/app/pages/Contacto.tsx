@@ -3,8 +3,8 @@ import { Link } from "react-router";
 import { AnimatedSection } from "../components/AnimatedSection";
 import { useTheme } from "next-themes";
 import { MessageCircle, Phone, Mail, MapPin, Clock, Send, CheckCircle, ArrowRight, Building2 } from "lucide-react";
+import { useUTMs } from "../../hooks/useUTMs";
 
-// --- DATOS DE LAS SEDES ---
 const SEDES = [
   {
     id: "naucalpan",
@@ -25,6 +25,7 @@ const SEDES = [
 ];
 
 export function Contacto() {
+  const utms = useUTMs();
   const { theme } = useTheme();
   const [activeSede, setActiveSede] = useState(SEDES[0]);
   const [formData, setFormData] = useState({
@@ -43,32 +44,23 @@ export function Contacto() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Mensaje estructurado para WhatsApp (Kommo)
-    const mensajeWa = [
-      `Hola equipo de GōkuLab. 👋`,
-      ``,
-      `Mi nombre es: *${formData.nombre}*`,
-      `Mi WhatsApp es: ${formData.telefono}`,
-      `Mi correo es: ${formData.email}`,
-      `Sede de interés: ${activeSede.nombre}`,
-      `Estoy interesado en: *${formData.interes}*`,
-      ``,
-      `Mensaje: ${formData.mensaje}`,
-      ``,
-      `— Enviado desde el formulario de contacto de GōkuLab`,
-    ].join("\n");
+    const mensajeWa = `Hola equipo de GōkuLab.\n\nMi nombre es: ${formData.nombre}\nMi WhatsApp es: ${formData.telefono}\nMi correo es: ${formData.email}\nSede de interés: ${activeSede.nombre}\nEstoy interesado en: ${formData.interes}\n\nMensaje: ${formData.mensaje}${utms}\n\n— Enviado desde el formulario de contacto de GōkuLab`;
     
-    // Abrimos WhatsApp en una nueva pestaña
-    window.open(`https://wa.me/5612668168?text=${encodeURIComponent(mensajeWa)}`, "_blank");
+    const url = `https://wa.me/5612668168?text=${encodeURIComponent(mensajeWa)}`;
     
-    // Mostramos el estado de éxito en la interfaz
+    const link = document.createElement('a');
+    link.href = url;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
     setIsSubmitted(true);
   };
 
   return (
     <div className="bg-[#050A14] text-white min-h-screen selection:bg-[#00C9FF] selection:text-black">
-      
-      {/* 1. HERO */}
       <section className="pt-32 pb-16 px-4 relative overflow-hidden">
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#00C9FF] blur-[150px] opacity-10 pointer-events-none" />
         <div className="max-w-4xl mx-auto text-center relative z-10">
@@ -86,7 +78,6 @@ export function Contacto() {
         </div>
       </section>
 
-      {/* 2. TARJETAS DE CONTACTO RÁPIDO */}
       <section className="py-12 px-4 max-w-5xl mx-auto">
         <div className="grid sm:grid-cols-3 gap-6">
           {[
@@ -112,11 +103,9 @@ export function Contacto() {
         </div>
       </section>
 
-      {/* 3. FORMULARIO + MAPA/SEDES */}
       <section className="py-16 px-4 max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-12">
           
-          {/* Formulario */}
           <AnimatedSection className="bg-white/5 p-8 md:p-10 rounded-[3rem] border border-white/10 relative overflow-hidden">
             {!isSubmitted ? (
               <>
@@ -177,10 +166,7 @@ export function Contacto() {
             )}
           </AnimatedSection>
 
-          {/* Sedes (Selector + Mapa) */}
           <AnimatedSection delay={200} className="flex flex-col gap-6">
-            
-            {/* Selector de Sede */}
             <div className="flex bg-white/5 p-2 rounded-2xl border border-white/10">
               {SEDES.map((sede) => (
                 <button
@@ -197,7 +183,6 @@ export function Contacto() {
               ))}
             </div>
 
-            {/* Mapa Dinámico */}
             <div className="rounded-[3rem] overflow-hidden border border-white/10 relative h-[300px] bg-[#0A0F1E]">
               <iframe 
                 src={activeSede.mapSrc} 
@@ -211,7 +196,6 @@ export function Contacto() {
               />
             </div>
 
-            {/* Info de la sede seleccionada */}
             <div className="bg-white/5 p-8 rounded-[3rem] border border-white/10 flex-1">
               <h3 className="text-2xl font-black mb-6 flex items-center gap-2">
                 <Building2 className="text-[#00C9FF]" /> {activeSede.nombre}
@@ -247,17 +231,15 @@ export function Contacto() {
               </ul>
             </div>
           </AnimatedSection>
-
         </div>
       </section>
 
-      {/* 4. CTA FINAL (Empresas) */}
       <section className="py-20 px-4 text-center border-t border-white/5">
         <AnimatedSection className="max-w-3xl mx-auto">
           <h2 className="text-3xl font-black mb-4">¿Necesitas capacitación corporativa?</h2>
           <p className="text-gray-400 mb-8">Conoce nuestra área de soluciones para empresas y gobierno.</p>
           <Link
-            to="/capacitaciones"
+            to="/cursos/empresas"
             className="inline-flex items-center gap-2 px-8 py-4 bg-transparent border-2 border-white/20 text-white font-bold rounded-xl hover:bg-white/5 transition-colors"
           >
             Ir a Empresas <ArrowRight size={18} />

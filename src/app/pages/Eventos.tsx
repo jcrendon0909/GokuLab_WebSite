@@ -4,12 +4,13 @@ import { useTheme } from "next-themes";
 import { Calendar, MapPin, Clock, ArrowRight, ExternalLink, Sparkles, Filter } from "lucide-react";
 import { API_URL } from "../../config";
 import { SEO } from "../components/SEO";
+import { useUTMs } from "../../hooks/useUTMs";
 
 type Evento = {
   id: string;
   titulo: string;
   descripcion: string;
-  fecha: string; // Formato YYYY-MM-DD
+  fecha: string;
   hora: string;
   lugar: string;
   tipo: "interno" | "externo";
@@ -20,24 +21,21 @@ type Evento = {
 };
 
 export function Eventos() {
+  const utms = useUTMs();
   const { theme } = useTheme();
   const [eventos, setEventos] = useState<Evento[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<"todos" | "interno" | "externo">("todos");
 
-    useEffect(() => {
+  useEffect(() => {
     fetch(`${API_URL}/api/eventos`)
       .then((res) => {
         if (!res.ok) throw new Error("Error al obtener eventos");
         return res.json();
       })
       .then((data) => {
-        // Ya no filtramos por fecha, mostramos todos y ordenamos
         const sorted = data.sort((a: Evento, b: Evento) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime());
-        
-        // Aseguramos que todos tengan ID
         const conId = sorted.map((e: Evento, i: number) => ({ ...e, id: e.id || `ev-${i}` }));
-        
         setEventos(conId);
         setLoading(false);
       })
@@ -46,6 +44,7 @@ export function Eventos() {
         setLoading(false);
       });
   }, []);
+
   const filteredEvents = eventos.filter(
     (e) => activeTab === "todos" || e.tipo === activeTab
   );
@@ -72,7 +71,6 @@ export function Eventos() {
       />
       <div className="min-h-screen bg-[#050A14] text-white selection:bg-[#00C9FF] selection:text-black">
         
-        {/* HERO */}
         <section className="pt-32 pb-12 px-4 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#7C3AED] blur-[150px] opacity-20 pointer-events-none" />
           <div className="max-w-7xl mx-auto relative z-10">
@@ -90,7 +88,6 @@ export function Eventos() {
           </div>
         </section>
 
-        {/* TABS / FILTROS */}
         <section className="py-4 px-4 sticky top-20 z-30 bg-[#050A14]/90 backdrop-blur-md border-b border-white/10">
           <div className="max-w-7xl mx-auto flex items-center justify-center gap-3">
             <Filter size={18} className="text-gray-500" />
@@ -114,7 +111,6 @@ export function Eventos() {
           </div>
         </section>
 
-        {/* LISTA DE EVENTOS */}
         <section className="py-16 px-4 max-w-5xl mx-auto min-h-[50vh]">
           {loading ? (
             <div className="text-center py-20">
@@ -169,16 +165,16 @@ export function Eventos() {
                             {ev.precio}
                           </span>
                           
-                            <a 
-                              href={isInternal ? `https://wa.me/5612668168?text=${encodeURIComponent(`Hola equipo de GōkuLab. Me interesa registrarme al evento: *${ev.titulo}* del día ${ev.fecha}. ¿Me pueden dar más información?`)}` : ev.link}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-transform hover:scale-105 ${
+                          <a 
+                            href={isInternal ? `https://wa.me/5612668168?text=${encodeURIComponent(`Hola equipo de GōkuLab. Me interesa registrarme al evento: *${ev.titulo}* del día ${ev.fecha}. ¿Me pueden dar más información?${utms}`)}` : ev.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-transform hover:scale-105 ${
                               isInternal 
-                              ? "bg-white text-black" 
-                              : "bg-transparent border-2 border-[#00C9FF] text-[#00C9FF] hover:bg-[#00C9FF]/10"
-                              }`}
-                            >
+                                ? "bg-white text-black" 
+                                : "bg-transparent border-2 border-[#00C9FF] text-[#00C9FF] hover:bg-[#00C9FF]/10"
+                            }`}
+                          >
                             {isInternal ? "Registrarme" : "Más información"}
                             {isInternal ? <ArrowRight size={18} /> : <ExternalLink size={18} />}
                           </a>
@@ -197,7 +193,7 @@ export function Eventos() {
             <h2 className="text-3xl font-black mb-4">¿Quieres organizar un evento con nosotros?</h2>
             <p className="text-gray-400 mb-8">Escríbenos y llevemos la tecnología a tu escuela, empresa o comunidad.</p>
             <a
-              href="https://wa.me/5612668168?text=Hola,%20me%20interesa%20organizar%20un%20evento%20con%20GōkuLab"
+              href={`https://wa.me/5612668168?text=${encodeURIComponent(`Hola, me interesa organizar un evento con GōkuLab.${utms}`)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-4 bg-[#25D366] text-white font-black rounded-full hover:scale-105 transition-transform"

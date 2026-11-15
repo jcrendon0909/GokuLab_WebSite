@@ -77,9 +77,12 @@ function ChatWidget() {
 
     if (text.includes("Empresas")) {
       setTimeout(() => {
-        setMessages((prev) => [...prev, { id: Date.now().toString(), sender: "bot", text: "¡Perfecto! Para soluciones corporativas, te llevo a nuestra división de empresas." }]);
+        setMessages((prev) => [...prev, { id: Date.now().toString(), sender: "bot", text: "¡Perfecto! Para soluciones corporativas, te llevo a nuestra división de especialistas en BehaviorLab." }]);
         setIsLoading(false);
-        setTimeout(() => { setIsOpen(false); navigate("/capacitaciones"); }, 2500);
+        setTimeout(() => { 
+          setIsOpen(false); 
+          window.location.href = "https://behaviorlab.gokulab.mx?utm_source=gokulab_chatbot&utm_campaign=derivacion_b2b"; 
+        }, 2500);
       }, 800);
       return;
     }
