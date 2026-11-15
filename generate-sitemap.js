@@ -8,12 +8,23 @@ async function generateSitemap() {
   try {
     console.log("Obteniendo cursos para el sitemap...");
     const response = await fetch(API_URL);
+    
+    if (!response.ok) {
+      throw new Error(`La API falló con estado: ${response.status}`);
+    }
+    const contentType = response.headers.get("content-type");
+    if (!contentType || !contentType.includes("application/json")) {
+      throw new Error(`La API no devolvió JSON. Devolvió: ${contentType}`);
+    }
+
     const cursos = await response.json();
+    if (!Array.isArray(cursos) || cursos.length === 0) {
+      throw new Error("La API devolvió un arreglo vacío o inválido de cursos.");
+    }
 
     let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
     xml += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
 
-    // Rutas estáticas
     const staticRoutes = [
       '/', '/nosotros', '/cursos', '/cursos/ninos', 
       '/cursos/adolescentes', '/cursos/adultos', '/cursos/empresas', 
@@ -26,17 +37,26 @@ async function generateSitemap() {
 
     // Rutas dinámicas (Cursos)
     cursos.forEach(curso => {
-      let segment = "adultos";
-      if (curso.targetAudience.includes("kids")) segment = "ninos";
-      else if (curso.targetAudience.includes("teens")) segment = "adolescentes";
-      else if (curso.targetAudience.includes("company")) segment = "empresas";
+      // 🔥 BLINDAJE: Si targetAudience no existe, usamos un plan B por edad
+      let segment = "ninos"; // Default
+      const audience = curso.targetAudience || curso.audiencia || [];
+      const ageText = (curso.age || curso.edad_dirigida || "").toLowerCase();
+
+      if (Array.isArray(audience) && audience.length > 0) {
+        if (audience.includes("company")) segment = "empresas";
+        else if (audience.includes("adults")) segment = "adultos";
+        else if (audience.includes("teens")) segment = "adolescentes";
+      } else {
+        // Fallback por si el curso no tiene el arreglo
+        if (ageText.includes("adulto") || ageText.includes("18") || ageText.includes("empresa")) segment = "adultos";
+        else if (ageText.includes("adolescente") || ageText.includes("12")) segment = "adolescentes";
+      }
 
       xml += `  <url>\n    <loc>${BASE_URL}/cursos/${segment}/${curso.id}</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.9</priority>\n  </url>\n`;
     });
 
     xml += `</urlset>`;
 
-    // Escribir en dist/ (donde Vite compila para producción)
     const distDir = path.join(process.cwd(), 'dist');
     if (!fs.existsSync(distDir)) {
       fs.mkdirSync(distDir, { recursive: true });
@@ -45,7 +65,8 @@ async function generateSitemap() {
     fs.writeFileSync(path.join(distDir, 'sitemap.xml'), xml);
     console.log("✅ sitemap.xml generado exitosamente en /dist");
   } catch (error) {
-    console.error("❌ Error generando sitemap:", error);
+    console.error("❌ ERROR FATAL generando sitemap:", error.message);
+    process.exit(1); 
   }
 }
 

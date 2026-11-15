@@ -9,17 +9,12 @@ import {
   MessageCircle, ChevronLeft, Zap, ChevronDown, Sparkles, Star, Play, X
 } from "lucide-react";
 
-// Componente de Acordeón (Blindado)
 function ModuleAccordion({ modules, courseColor }: { modules?: any[], courseColor: string }) {
   const safeModules = modules || [];
   const [openId, setOpenId] = useState<string | null>(safeModules[0]?.id || null);
 
   if (safeModules.length === 0) {
-    return (
-      <p className="text-center text-gray-500 py-8">
-        El temario detallado estará disponible pronto.
-      </p>
-    );
+    return <p className="text-center text-gray-500 py-8">El temario detallado estará disponible pronto.</p>;
   }
 
   return (
@@ -86,30 +81,35 @@ export function CursoDetalle() {
     );
   }
 
-  // Imagen directa a R2 (con fallback si no hay imgKey)
   const courseImg = course.imgKey 
     ? `https://media.gokulab.mx/Galery/${course.imgKey}` 
     : "https://media.gokulab.mx/Galery/pagina-principal1.jpg";
 
   const whatsappMsg = encodeURIComponent(`Hola, quiero agendar una masterclass del curso: ${course.title}`);
   
-  // Solo asignamos el video si realmente existe y no está vacío
   const hasVideo = (course as any).videoUrl && (course as any).videoUrl.trim() !== "";
   const videoUrl = hasVideo ? (course as any).videoUrl : null;
   
-  // Protección por si el curso no trae valueProps o techs
   const safeValueProps = course.valueProps || [];
   const safeTechs = course.techs || [];
+
+  // 🔥 CORRECCIÓN DEL CANONICAL: Función estricta para asignar el segmento
+  const getAudienceSegment = () => {
+    if (course.targetAudience.includes("company")) return "empresas";
+    if (course.targetAudience.includes("adults")) return "adultos";
+    if (course.targetAudience.includes("teens")) return "adolescentes";
+    return "ninos";
+  };
+  const canonicalUrl = `https://gokulab.mx/cursos/${getAudienceSegment()}/${course.id}`;
 
   return (
     <div className="bg-[#050A14] text-white min-h-screen selection:bg-[#00C9FF] selection:text-black">
       
-            {/* SEO DINÁMICO POR CURSO */}
       <SEO 
         title={`${course.title} | Cursos GōkuLab`}
         description={`${course.subtitle} Dirigido a ${course.age}. Nivel ${course.level}. Modalidad ${course.modality}.`}
         image={courseImg}
-        url={`https://gokulab.mx/cursos/${course.targetAudience[0] === 'kids' ? 'ninos' : course.targetAudience[0] === 'teens' ? 'adolescentes' : 'adultos'}/${course.id}`}
+        url={canonicalUrl} // 🔥 Ahora envía la URL correcta
         type="article"
         schema={{
           "@context": "https://schema.org",
@@ -125,7 +125,7 @@ export function CursoDetalle() {
           "audience": {
             "@type": "EducationalAudience",
             "educationalRole": "student",
-            "audienceType": course.targetAudience.join(", ") // 👈 AQUI VA LA AUDIENCIA DE MONGO
+            "audienceType": course.targetAudience.join(", ")
           },
           "offers": {
             "@type": "Offer",
@@ -133,36 +133,21 @@ export function CursoDetalle() {
             "price": "1600",
             "priceCurrency": "MXN",
             "availability": "https://schema.org/InStock"
-          },
-          "hasCourseInstance": {
-            "@type": "CourseInstance",
-            "courseMode": course.modality,
-            "courseWorkload": course.duration
           }
         }}
       />
       
-      {/* MODAL DE VIDEO (Solo si hay video) */}
       {isVideoOpen && hasVideo && videoUrl && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm">
           <div className="relative w-full max-w-5xl rounded-3xl overflow-hidden border border-white/20 shadow-2xl bg-black">
-            <button 
-              onClick={() => setIsVideoOpen(false)}
-              className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black text-white rounded-full transition-colors"
-            >
+            <button onClick={() => setIsVideoOpen(false)} className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black text-white rounded-full transition-colors">
               <X size={24} />
             </button>
-            <video 
-              src={videoUrl} 
-              controls 
-              autoPlay 
-              className="w-full h-auto aspect-video"
-            />
+            <video src={videoUrl} controls autoPlay className="w-full h-auto aspect-video" />
           </div>
         </div>
       )}
 
-      {/* 1. HERO DEL CURSO */}
       <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <AnimatedSection className="mb-8">
           <div className="flex items-center gap-2 text-sm font-bold text-gray-500 uppercase tracking-wider">
@@ -218,22 +203,8 @@ export function CursoDetalle() {
 
           <AnimatedSection delay={100} className="relative">
             <div className="absolute inset-0 bg-gradient-to-tr from-[#050A14] to-transparent z-10 rounded-[3rem]"></div>
-            
-            {/* Contenedor de la imagen (Clic solo si hay video) */}
-            <div 
-              className={`w-full aspect-[4/3] rounded-[3rem] overflow-hidden border border-white/10 relative group ${hasVideo ? 'cursor-pointer' : ''}`}
-              onClick={() => hasVideo && setIsVideoOpen(true)}
-            >
-              <img 
-                src={courseImg} 
-                alt={`Curso de ${course.title}`} 
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = "https://media.gokulab.mx/Galery/pagina-principal1.jpg";
-                }}
-              />
-              
-              {/* Botón de Play (Solo si hay video) */}
+            <div className={`w-full aspect-[4/3] rounded-[3rem] overflow-hidden border border-white/10 relative group ${hasVideo ? 'cursor-pointer' : ''}`} onClick={() => hasVideo && setIsVideoOpen(true)}>
+              <img src={courseImg} alt={`Curso de ${course.title}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onError={(e) => { (e.target as HTMLImageElement).src = "https://media.gokulab.mx/Galery/pagina-principal1.jpg"; }} />
               {hasVideo && (
                 <div className="absolute inset-0 flex items-center justify-center z-20">
                   <div className="w-20 h-20 bg-white/20 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xl">
@@ -242,7 +213,6 @@ export function CursoDetalle() {
                 </div>
               )}
             </div>
-
             <div className="absolute -bottom-6 -left-6 bg-[#0A0F1E] border border-white/10 p-4 rounded-2xl flex items-center gap-3 shadow-2xl z-20">
               <Star className="text-[#FFE134]" fill="#FFE134" size={24} />
               <div>
@@ -254,7 +224,6 @@ export function CursoDetalle() {
         </div>
       </section>
 
-      {/* 2. EL VALOR (SOFT SKILLS) */}
       <section className="py-24 px-4 bg-[#0A0F1E] border-y border-white/5">
         <div className="max-w-7xl mx-auto">
           <AnimatedSection className="text-center mb-16 max-w-3xl mx-auto">
@@ -284,7 +253,6 @@ export function CursoDetalle() {
         </div>
       </section>
 
-      {/* 3. TEMARIO */}
       <section className="py-24 px-4 max-w-4xl mx-auto">
         <AnimatedSection className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm mb-4 font-black uppercase tracking-widest" style={{ background: `${course.color}20`, color: course.color }}>
@@ -313,7 +281,6 @@ export function CursoDetalle() {
         )}
       </section>
 
-      {/* 4. CTA FINAL */}
       <section className="py-32 px-4 text-center relative overflow-hidden bg-[#0A0F1E]">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/5 via-transparent to-transparent pointer-events-none" />
         <AnimatedSection className="relative z-10 max-w-3xl mx-auto">
@@ -329,7 +296,6 @@ export function CursoDetalle() {
           </a>
         </AnimatedSection>
       </section>
-
     </div>
   );
 }
