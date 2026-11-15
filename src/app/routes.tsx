@@ -1,56 +1,20 @@
-import { createBrowserRouter, Navigate } from "react-router";
-import { Layout } from "./components/Layout";
-import { Home } from "./pages/Home";
-import { Nosotros } from "./pages/Nosotros";
-import { Cursos } from "./pages/Cursos";
-import { CursosNinos } from "./pages/CursosNinos";
-import { CursosAdolescentes } from "./pages/CursosAdolescentes";
-import { CursosAdultos } from "./pages/CursosAdultos";
-import { CursosEmpresas } from "./pages/CursosEmpresas";
-import { CursoDetalle } from "./pages/CursoDetalle";
-import { Metodologia } from "./pages/Metodologia";
-import { TestPage } from "./pages/Test";
-import { Eventos } from "./pages/Eventos";
-import { Becas } from "./pages/Becas";
-import { Contacto } from "./pages/Contacto";
-import { Auditoria } from "./pages/Auditoria";
-import { DebugCursos } from "./pages/DebugCursos";
+import { Link } from "react-router";
+import { ArrowLeft } from "lucide-react";
 
-export const router = createBrowserRouter([
-  {
-    path: "/",
-    Component: Layout,
-    children: [
-      { index: true, Component: Home },
-      { path: "nosotros", Component: Nosotros },
-      { path: "cursos", Component: Cursos },
-      
-      // Rutas específicas de categorías
-      { path: "cursos/ninos", Component: CursosNinos },
-      { path: "cursos/adolescentes", Component: CursosAdolescentes },
-      { path: "cursos/adultos", Component: CursosAdultos },
-      { path: "cursos/empresas", Component: CursosEmpresas },
-
-      // Rutas dinámicas de detalle de curso
-      { path: "cursos/ninos/:id", Component: CursoDetalle },
-      { path: "cursos/adolescentes/:id", Component: CursoDetalle },
-      { path: "cursos/adultos/:id", Component: CursoDetalle },
-      { path: "cursos/empresas/:id", Component: CursoDetalle },
-      { path: "cursos/:segmento/:id", Component: CursoDetalle },
-      { path: "curso/:id", Component: CursoDetalle },
-      { path: "cursos/:segmento", Component: Cursos },
-
-      // Otras páginas
-      { path: "metodologia", Component: Metodologia },
-      { path: "test", Component: TestPage },
-      { path: "eventos", Component: Eventos },
-      { path: "becas", Component: Becas },
-      { path: "contacto", Component: Contacto },
-      { path: "auditoria", Component: Auditoria },
-      { path: "debug-cursos", Component: DebugCursos },
-
-      // Redirección de la ruta vieja a la nueva de empresas
-      { path: "capacitaciones", element: <Navigate to="/cursos/empresas" replace /> },
-    ],
-  },
-]);
+export function NotFound() {
+  return (
+    <div className="min-h-screen bg-[#050A14] flex flex-col items-center justify-center text-white p-4">
+      <h1 className="text-9xl font-black text-[#7C3AED] mb-4">404</h1>
+      <h2 className="text-3xl font-bold mb-6 text-center">¡Ups! Parece que este curso no existe.</h2>
+      <p className="text-gray-400 mb-8 text-center max-w-md">
+        La página que buscas puede haber sido movida, o el enlace está roto.
+      </p>
+      <Link 
+        to="/" 
+        className="flex items-center gap-2 px-6 py-3 bg-white text-black font-bold rounded-xl hover:scale-105 transition-transform"
+      >
+        <ArrowLeft size={18} /> Volver al inicio
+      </Link>
+    </div>
+  );
+}

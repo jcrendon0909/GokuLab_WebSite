@@ -201,12 +201,40 @@ export function TestPage() {
     return opt ? opt.label : answerId;
   };
 
-  const generateWhatsAppLink = () => {
+      const generateWhatsAppLink = () => {
     if (!primaryCourse) return "";
     
-    const text = `Hola equipo de GōkuLab.\n\nSoy ${leadName}.\nTeléfono: ${leadPhone}\nSede de interés: ${selectedSede}\n\n*Resultado del Test de Orientación:*\nCurso recomendado: *${primaryCourse.title}*\n\n*Mis respuestas:*\n- Perfil: ${getAnswerText("step0", answers.step0)}\n- Objetivo/Interés: ${getAnswerText("step1", answers.step1)}\n- Nivel: ${getAnswerText("step2", answers.step2)}\n- Enfoque: ${getAnswerText("step3", answers.step3)}\n\nQuiero agendar una masterclass gratuita.${utms}\n— Enviado desde el Test de Orientación de GōkuLab`;
+    // Armamos el mensaje usando un arreglo
+    const lineas = [
+      "Hola equipo de GōkuLab.",
+      "",
+      `Soy ${leadName}.`,
+      `Teléfono: ${leadPhone}`,
+      `Sede de interés: ${selectedSede}`,
+      "",
+      "*Resultado del Test de Orientación:*",
+      `Curso recomendado: *${primaryCourse.title}*`,
+      "",
+      "*Mis respuestas:*",
+      `- Perfil: ${getAnswerText("step0", answers.step0)}`,
+      `- Objetivo/Interés: ${getAnswerText("step1", answers.step1)}`,
+      `- Nivel: ${getAnswerText("step2", answers.step2)}`,
+      `- Enfoque: ${getAnswerText("step3", answers.step3)}`,
+      "",
+      "Quiero agendar una masterclass gratuita."
+    ];
+
+    if (utms) {
+      lineas.push("", utms);
+    }
+
+    lineas.push("", "— Enviado desde el Test de Orientación de GōkuLab");
+
+    // Unimos con \n y lo codificamos
+    const textoFinal = lineas.join("\n");
     
-    return `https://wa.me/5612668168?text=${encodeURIComponent(text)}`;
+    // Usamos btoa y atob para asegurarnos de que el texto no sea alterado (opcional, pero ayuda)
+    return `https://wa.me/5612668168?text=${encodeURIComponent(textoFinal)}`;
   };
 
   const handleLeadSubmit = (e: React.FormEvent) => {
@@ -322,8 +350,17 @@ export function TestPage() {
                 <CheckCircle size={48} className="text-[#10B981] mx-auto mb-4" />
                 <h3 className="text-2xl font-black text-white mb-2">¡Listo, {leadName.split(' ')[0]}!</h3>
                 <p className="text-gray-400 mb-8">Tu recomendación está lista. Agenda tu masterclass por WhatsApp.</p>
-                <a href={generateWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl text-white font-black text-lg" style={{ background: "linear-gradient(135deg, #25D366, #128C7E)" }}><MessageCircle size={24} /> Agendar por WhatsApp</a>
-                <div className="mt-6"><Link to={primaryCourse.targetAudience[0] === "company" ? `/cursos/empresas/${primaryCourse.id}` : primaryCourse.targetAudience[0] === "adults" ? `/cursos/adultos/${primaryCourse.id}` : primaryCourse.targetAudience[0] === "teens" ? `/cursos/adolescentes/${primaryCourse.id}` : `/cursos/ninos/${primaryCourse.id}`} className="text-[#00C9FF] font-bold hover:underline">Ver temario completo</Link></div>
+                <button 
+  onClick={() => {
+    // Usamos window.open en lugar de un enlace <a>
+    window.open(generateWhatsAppLink(), "_blank", "noopener,noreferrer");
+  }}
+  className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl text-white font-black text-lg transition-transform hover:scale-105" 
+  style={{ background: "linear-gradient(135deg, #25D366, #128C7E)" }}
+>
+  <MessageCircle size={24} /> Agendar por WhatsApp
+</button>
+<div className="mt-6"><Link to={primaryCourse.targetAudience[0] === "company" ? `/cursos/empresas/${primaryCourse.id}` : primaryCourse.targetAudience[0] === "adults" ? `/cursos/adultos/${primaryCourse.id}` : primaryCourse.targetAudience[0] === "teens" ? `/cursos/adolescentes/${primaryCourse.id}` : `/cursos/ninos/${primaryCourse.id}`} className="text-[#00C9FF] font-bold hover:underline">Ver temario completo</Link></div>
                 <button onClick={reset} className="mt-8 flex items-center gap-2 text-sm text-gray-500 hover:text-white mx-auto"><RotateCcw size={16} /> Hacer el test de nuevo</button>
               </div>
             )}
