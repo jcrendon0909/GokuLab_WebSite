@@ -4,27 +4,56 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- Título y descripción por defecto (Google los usa si React no ha cargado) -->
+    <!-- Título y descripción por defecto -->
     <title>GōkuLab | Juega, Aprende y Emprende</title>
     <meta name="description" content="Academia de tecnología para niños, jóvenes y adultos. Aprende programación, robótica, IA y diseño con proyectos reales y expertos de la industria." />
     <meta name="author" content="GōkuLab" />
     <meta name="theme-color" content="#050A14" />
 
-    <!-- Open Graph por defecto (para redes sociales) -->
+    <!-- Open Graph (WhatsApp, Facebook, LinkedIn) -->
     <meta property="og:title" content="GōkuLab | Juega, Aprende y Emprende" />
     <meta property="og:description" content="Academia de tecnología para niños, jóvenes y adultos. Aprende programación, robótica, IA y diseño." />
     <meta property="og:image" content="https://media.gokulab.mx/Galery/pagina-principal1.jpg" />
     <meta property="og:url" content="https://gokulab.mx" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="GōkuLab" />
-        <!-- ID de la App de Facebook (Soluciona la advertencia) -->
+    <!-- ID de la App de Facebook -->
     <meta property="fb:app_id" content="1288292123466170" />
 
-    <!-- Twitter Card por defecto -->
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="GōkuLab | Juega, Aprende y Emprende" />
     <meta name="twitter:description" content="Academia de tecnología para niños, jóvenes y adultos." />
     <meta name="twitter:image" content="https://media.gokulab.mx/Galery/pagina-principal1.jpg" />
+
+    <!-- 🔥 SCHEMA ESTÁTICO: Para que Google, WhatsApp y Redes Sociales lean la info sin ejecutar React -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      "name": "GōkuLab",
+      "alternateName": "Algorithmics Naucalpan",
+      "url": "https://gokulab.mx",
+      "logo": "https://media.gokulab.mx/Galery/logo-gokulab.png",
+      "image": "https://media.gokulab.mx/Galery/pagina-principal1.jpg",
+      "description": "Academia de tecnología para niños, jóvenes y adultos. Programación, robótica, IA y diseño.",
+      "telephone": "+52-56-1266-8168",
+      "email": "contacto@gokulab.mx",
+      "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Av. Adolfo López Mateos 201-418, Sta Cruz Acatlán",
+        "addressLocality": "Naucalpan de Juárez",
+        "addressRegion": "Méx.",
+        "postalCode": "53150",
+        "addressCountry": "MX"
+      },
+      "sameAs": [
+        "https://www.facebook.com/GokuLabMexico",
+        "https://www.instagram.com/gokulab_mx"
+      ]
+    }
+    </script>
 
     <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
