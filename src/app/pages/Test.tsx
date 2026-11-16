@@ -201,15 +201,15 @@ export function TestPage() {
     return opt ? opt.label : answerId;
   };
 
-      const generateWhatsAppLink = () => {
+   const generateWhatsAppLink = () => {
     if (!primaryCourse) return "";
     
-    // Armamos el mensaje usando un arreglo
+    // Construimos el texto usando un arreglo para evitar cualquier problema de saltos de línea
     const lineas = [
-      "Hola equipo de GōkuLab.",
+      "Hola equipo de GokuLab.",
       "",
-      `Soy ${leadName}.`,
-      `Teléfono: ${leadPhone}`,
+      `Soy ${leadName.trim()}.`,
+      `Teléfono: ${leadPhone.trim()}`,
       `Sede de interés: ${selectedSede}`,
       "",
       "*Resultado del Test de Orientación:*",
@@ -228,12 +228,10 @@ export function TestPage() {
       lineas.push("", utms);
     }
 
-    lineas.push("", "— Enviado desde el Test de Orientación de GōkuLab");
+    lineas.push("", "— Enviado desde el Test de Orientación de GokuLab");
 
-    // Unimos con \n y lo codificamos
+    // Forzamos la codificación de caracteres para que WhatsApp lo reciba perfecto
     const textoFinal = lineas.join("\n");
-    
-    // Usamos btoa y atob para asegurarnos de que el texto no sea alterado (opcional, pero ayuda)
     return `https://wa.me/5612668168?text=${encodeURIComponent(textoFinal)}`;
   };
 

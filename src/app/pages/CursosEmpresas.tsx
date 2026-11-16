@@ -94,6 +94,21 @@ export function CursosEmpresas() {
             </div>
           </div>
         </section>
+              {/* Añade esto al final de CursosEmpresas.tsx, antes de cerrar el div principal */}
+      <section className="py-20 px-4 text-center border-t border-white/5 bg-[#0A0F1E]">
+        <AnimatedSection className="max-w-3xl mx-auto">
+          <h2 className="text-3xl font-black mb-4">¿Buscas una transformación profunda en tu empresa?</h2>
+          <p className="text-gray-400 mb-8">Nuestra división BehaviorLab está especializada en cultura, liderazgo y transformación organizacional a gran escala.</p>
+          <a
+            href="https://behaviorlab.gokulab.mx?utm_source=gokulab_pagina_empresas&utm_campaign=derivacion_b2b"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black font-black rounded-xl hover:scale-105 transition-transform"
+          >
+            Ir a BehaviorLab <ArrowRight size={18} />
+          </a>
+        </AnimatedSection>
+      </section>
       </div>
     </>
   );

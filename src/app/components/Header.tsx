@@ -22,7 +22,7 @@ const navLinks: NavLink[] = [
     dropdown: [
       { label: "🧒 Niñas, niños y adolescentes", href: "/cursos/ninos" },
       { label: "👨‍💼 Para adultos", href: "/cursos/adultos" },
-      { label: "🏢 Empresas y gobierno", href: "/cursos/empresas" }, // 👈 CAMBIO AQUÍ
+      { label: "🏢 Empresas y gobierno", href: "https://behaviorlab.gokulab.mx?utm_source=gokulab_nav&utm_campaign=derivacion_b2b" }, // 👈 CAMBIO AQUÍ
     ],
   },
   { labelKey: "nav.methodology", href: "/metodologia", label: "Metodología" },
