@@ -61,12 +61,12 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gokulab.mx/cursos/ninos/taller-prompt-engeneering</loc>
+    <loc>https://gokulab.mx/cursos/adultos/taller-prompt-engeneering</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gokulab.mx/cursos/ninos/taller-design-thinking</loc>
+    <loc>https://gokulab.mx/cursos/empresas/taller-design-thinking</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -86,7 +86,7 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gokulab.mx/cursos/ninos/python-pro</loc>
+    <loc>https://gokulab.mx/cursos/adolescentes/python-pro</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -96,7 +96,7 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gokulab.mx/cursos/ninos/alfabetizacion-digital</loc>
+    <loc>https://gokulab.mx/cursos/adultos/alfabetizacion-digital</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -106,12 +106,12 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gokulab.mx/cursos/ninos/diseno-videojuegos-roblox</loc>
+    <loc>https://gokulab.mx/cursos/adolescentes/diseno-videojuegos-roblox</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gokulab.mx/cursos/adolescentes/diseno-grafico-ninos</loc>
+    <loc>https://gokulab.mx/cursos/ninos/diseno-grafico-ninos</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -121,7 +121,7 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gokulab.mx/cursos/ninos/diseno-2d-y-3d</loc>
+    <loc>https://gokulab.mx/cursos/adolescentes/diseno-2d-y-3d</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -131,12 +131,12 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gokulab.mx/cursos/ninos/taller-gobernanza-IA-ciberseguridad</loc>
+    <loc>https://gokulab.mx/cursos/empresas/taller-gobernanza-IA-ciberseguridad</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gokulab.mx/cursos/adultos/taller-resolucion-de-conflictos</loc>
+    <loc>https://gokulab.mx/cursos/empresas/taller-resolucion-de-conflictos</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -151,17 +151,17 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gokulab.mx/cursos/ninos/taller_impresion-3D</loc>
+    <loc>https://gokulab.mx/cursos/adolescentes/taller_impresion-3D</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gokulab.mx/cursos/ninos/video-blogging</loc>
+    <loc>https://gokulab.mx/cursos/adolescentes/video-blogging</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gokulab.mx/cursos/ninos/python-start-avanzado</loc>
+    <loc>https://gokulab.mx/cursos/adolescentes/python-start-avanzado</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
