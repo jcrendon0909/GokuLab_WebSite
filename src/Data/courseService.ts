@@ -2,64 +2,40 @@
 import { CourseData } from './courses';
 import { API_URL } from '../config';
 
-// 🔥 MAPEO ESTRICTO (Basado en tu script de Python)
-const AUDIENCIA_POR_ID: Record<string, ("kids" | "teens" | "adults" | "company")[]> = {
-  // KIDS
-  "programacion-visual": ["kids", "teens"],
-  "robotica-principiantes": ["kids", "teens"],
-  "taller-creatividad": ["kids", "teens"],
-  "regularizacion-matematicas": ["kids", "teens"],
-  "caballero-del-codigo": ["kids", "teens"],
-  "diseno-grafico-ninos": ["kids", "teens"],
-  "programacion-visual-avanzada": ["kids", "teens"],
-  "diseno-videojuegos-minecraft": ["kids", "teens"],
-
-  // TEENS
-  "diseno-videojuegos-roblox": ["teens"],
-  "diseno-videojuejos-lua-roblox": ["teens"],
-  "diseno-videojuegos-unity": ["teens"],
-  "python-pro": ["teens"],
-  "python-start-avanzado": ["teens"],
-  "diseno-2d-y-3d": ["teens"],
-  "taller_impresion-3d": ["kids", "teens"],
-  "video-blogging": ["kids", "teens"],
-
-  // ADULTS
-  "taller-prompt-engeneering": ["adults"],
-  "inteligencia-artificial-adultos": ["adults"],
-  "alfabetizacion-digital": ["adults"],
-  
-  // COMPANY & ADULTS
-  "adminitracion-de-proyectos": ["adults", "company"],
-  "taller-gobernanza-ia-ciberseguridad": ["company", "adults"],
-  "taller-resolucion-de-conflictos": ["company", "adults"],
-  "taller-design-thinking": ["company", "adults"]
+// 🔥 EL DICCIONARIO MÁGICO: Traduce los IDs de Mongo a los nombres REALES en R2
+const MAPEO_IMAGENES: Record<string, string> = {
+  "programacion-visual": "ninos-programando1.jpeg",
+  "robotica-principiantes": "robotica1.jpeg",
+  "taller-creatividad": "taller-creatividad.jpg",
+  "regularizacion-matematicas": "regularizacion-matematicas1.jpg",
+  "caballero-del-codigo": "fundamentos-programacion1.jpeg",
+  "diseno-grafico-ninos": "diseno-grafico1.jpeg",
+  "programacion-visual-avanzada": "programacion-visual-peques2.JPG",
+  "diseno-videojuegos-minecraft": "diseño-videojuegos2.jpeg",
+  "diseno-videojuegos-roblox": "diseno-videojuegos1.jpg",
+  "diseno-videojuejos-lua-roblox": "clases-adolescentes1.jpg",
+  "diseno-videojuegos-unity": "unity1.jpg",
+  "python-pro": "python-start1.jpg",
+  "python-start-avanzado": "clases-adolescentes2.jpg",
+  "diseno-2d-y-3d": "diseno-web1.jpg",
+  "taller_impresion-3d": "Lumy.jpeg",
+  "video-blogging": "creacion-contenido-video1.jpg",
+  "taller-prompt-engeneering": "preparacion-universidad.jpg",
+  "inteligencia-artificial-adultos": "ia-adultos.png",
+  "alfabetizacion-digital": "alfabetizacion-digital-adultos1.jpg",
+  "adminitracion-de-proyectos": "empresas-gobierno1.jpg",
+  "taller-gobernanza-ia-ciberseguridad": "clases-adultos1.jpg",
+  "taller-resolucion-de-conflictos": "trabajo-en-equipo1.jpg",
+  "taller-design-thinking": "trabajo-en-equipo1.jpg"
 };
 
 function mapCurso(cursoEncontrado: any): CourseData {
-  // Normalizamos el ID a minúsculas para que haga match con el diccionario
   const idCurso = (cursoEncontrado.id || cursoEncontrado.slug || "").toLowerCase();
   
-  const imgKeyReal = cursoEncontrado.imgKey || cursoEncontrado.imagen_key || `${idCurso}.jpg`;
-  
-  // 🔥 FORZAMOS LA AUDIENCIA: Si está en el diccionario, usamos esa. Si es nuevo, intentamos leer de Mongo.
-  let audience = AUDIENCIA_POR_ID[idCurso];
-  
-  if (!audience) {
-    // Fallback solo para cursos nuevos que no estén en el diccionario
-    const rawAudience = cursoEncontrado.targetAudience || cursoEncontrado.audiencia || [];
-    if (typeof rawAudience === "string") {
-      audience = rawAudience.split(",").map((s: string) => s.trim().toLowerCase() as any);
-    } else if (Array.isArray(rawAudience) && rawAudience.length > 0) {
-      audience = rawAudience.map((s: string) => String(s).trim().toLowerCase() as any);
-    } else {
-      // Fallback de emergencia por edad
-      const ageText = (cursoEncontrado.age || cursoEncontrado.edad_dirigida || "").toLowerCase();
-      if (ageText.includes("adulto") || ageText.includes("18") || ageText.includes("empresa") || ageText.includes("docente")) audience = ["adults"];
-      else if (ageText.includes("adolescente") || ageText.includes("12") || ageText.includes("13") || ageText.includes("14") || ageText.includes("15") || ageText.includes("16") || ageText.includes("17")) audience = ["teens"];
-      else audience = ["kids"];
-    }
-  }
+  // 🔥 LÓGICA: Si el curso está en el diccionario, usamos el nombre real de R2.
+  // Si es un curso NUEVO (que subiste hoy), usamos lo que diga Mongo.
+  const imgKeyOriginal = cursoEncontrado.imgKey || cursoEncontrado.imagen_key || `${idCurso}.jpg`;
+  const imgKeyReal = MAPEO_IMAGENES[idCurso] || imgKeyOriginal;
 
   return {
     id: cursoEncontrado.id || cursoEncontrado.slug || "",
@@ -72,8 +48,8 @@ function mapCurso(cursoEncontrado: any): CourseData {
     price: cursoEncontrado.price || (cursoEncontrado.precio_desde ? `desde $${cursoEncontrado.precio_desde}` : ""),
     emoji: cursoEncontrado.emoji || "🚀",
     color: cursoEncontrado.color || "#00C9FF",
-    imgKey: imgKeyReal,
-    targetAudience: audience as any,
+    imgKey: imgKeyReal, // 🔥 Aquí se inyecta el nombre traducido
+    targetAudience: cursoEncontrado.targetAudience || ["kids"],
     techs: cursoEncontrado.techs || cursoEncontrado.tecnologias || ["Tecnología", "Creatividad"],
     modules: (cursoEncontrado.modules || cursoEncontrado.modulos || []).map((mod: any) => ({
       id: mod.id || Math.random().toString(),
