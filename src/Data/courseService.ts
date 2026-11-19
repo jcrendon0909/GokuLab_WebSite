@@ -3,20 +3,15 @@ import { CourseData } from './courses';
 import { API_URL } from '../config';
 
 function mapCurso(cursoEncontrado: any): CourseData {
-  // Limpiamos el ID por si viene con espacios o mayúsculas
   const idCurso = String(cursoEncontrado.id || cursoEncontrado.slug || "").trim().toLowerCase();
-  
-  // Leemos la imagen directamente de Mongo, con fallback de seguridad
   const imgKeyReal = cursoEncontrado.imgKey || cursoEncontrado.imagen_key || `${idCurso}.jpg`;
 
-  // 🔥 LEEMOS LA AUDIENCIA DIRECTAMENTE DE MONGO
+  // 🔥 Leemos la audiencia que ya nos manda Python
   let audience = cursoEncontrado.targetAudience || cursoEncontrado.audiencia;
   
-  // Si por alguna razón un curso nuevo no tiene audiencia, lo mandamos a "kids" por defecto
   if (!audience || !Array.isArray(audience) || audience.length === 0) {
-    audience = ["kids"];
+    audience = ["kids"]; // Fallback
   } else {
-    // Nos aseguramos de que todo esté en minúsculas (por si en Mongo se escribió "Adults")
     audience = audience.map((a: string) => a.toLowerCase().trim());
   }
 
