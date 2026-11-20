@@ -72,7 +72,7 @@ export const CURSOS: Record<string, string> = {
   "taller-resolucion-de-conflictos": R2("Galery", "capacitacion-orporativa.jpeg", 800),
   "robotica-principiantes": R2("Galery", "robotica1.jpeg", 800),
   "diseno-videojuegos-minecraft": R2("Galery", "diseno-videojuegos1.jpg", 800),
-  "taller_impresion-3D": R2("Galery", "diseno-grafico1.jpeg", 800),
+  "taller_impresion-3D": R2("Galery", "taller_impresion-3d.jpg", 800),
   "video-blogging": R2("Galery", "creacion-contenido-video1.jpg", 800),
   "python-start-avanzado": R2("Galery", "python-start1.jpg", 800),
   "inteligencia-artificial-adultos": R2("Galery", "ia-adultos.png", 800),
