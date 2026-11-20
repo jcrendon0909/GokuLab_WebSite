@@ -9,7 +9,7 @@ const MAPEO_IMAGENES: Record<string, string> = {
   "programacion-visual-avanzada": "programacion-visual-peques2.JPG", "diseno-videojuegos-minecraft": "diseño-videojuegos2.jpeg",
   "diseno-videojuegos-roblox": "diseno-videojuegos1.jpg", "diseno-videojuejos-lua-roblox": "clases-adolescentes1.jpg",
   "diseno-videojuegos-unity": "unity1.jpg", "python-pro": "python-start1.jpg", "python-start-avanzado": "clases-adolescentes2.jpg",
-  "diseno-2d-y-3d": "diseno-web1.jpg", "taller_impresion-3d": "Lumy.jpeg", "video-blogging": "creacion-contenido-video1.jpg",
+  "diseno-2d-y-3d": "diseno-web1.jpg", "taller_impresion-3d": "taller_impresion-3d.jpg", "video-blogging": "creacion-contenido-video1.jpg",
   "taller-prompt-engeneering": "preparacion-universidad.jpg", "inteligencia-artificial-adultos": "ia-adultos.png",
   "alfabetizacion-digital": "alfabetizacion-digital-adultos1.jpg", "adminitracion-de-proyectos": "empresas-gobierno1.jpg",
   "taller-gobernanza-ia-ciberseguridad": "clases-adultos1.jpg", "taller-resolucion-de-conflictos": "trabajo-en-equipo1.jpg",
