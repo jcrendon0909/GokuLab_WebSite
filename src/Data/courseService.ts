@@ -2,34 +2,20 @@
 import { CourseData } from './courses';
 import { API_URL } from '../config';
 
-// 🔥 1. RESTAURAMOS EL DICCIONARIO DE IMÁGENES (Para que no se rompan)
 const MAPEO_IMAGENES: Record<string, string> = {
-  "programacion-visual": "ninos-programando1.jpeg",
-  "robotica-principiantes": "robotica1.jpeg",
-  "taller-creatividad": "taller-creatividad.jpg",
-  "regularizacion-matematicas": "regularizacion-matematicas1.jpg",
-  "caballero-del-codigo": "fundamentos-programacion1.jpeg",
-  "diseno-grafico-ninos": "diseno-grafico1.jpeg",
-  "programacion-visual-avanzada": "programacion-visual-peques2.JPG",
-  "diseno-videojuegos-minecraft": "diseño-videojuegos2.jpeg",
-  "diseno-videojuegos-roblox": "diseno-videojuegos1.jpg",
-  "diseno-videojuejos-lua-roblox": "clases-adolescentes1.jpg",
-  "diseno-videojuegos-unity": "unity1.jpg",
-  "python-pro": "python-start1.jpg",
-  "python-start-avanzado": "clases-adolescentes2.jpg",
-  "diseno-2d-y-3d": "diseno-web1.jpg",
-  "taller_impresion-3d": "Lumy.jpeg",
-  "video-blogging": "creacion-contenido-video1.jpg",
-  "taller-prompt-engeneering": "preparacion-universidad.jpg",
-  "inteligencia-artificial-adultos": "ia-adultos.png",
-  "alfabetizacion-digital": "alfabetizacion-digital-adultos1.jpg",
-  "adminitracion-de-proyectos": "empresas-gobierno1.jpg",
-  "taller-gobernanza-ia-ciberseguridad": "clases-adultos1.jpg",
-  "taller-resolucion-de-conflictos": "trabajo-en-equipo1.jpg",
+  "programacion-visual": "ninos-programando1.jpeg", "robotica-principiantes": "robotica1.jpeg",
+  "taller-creatividad": "taller-creatividad.jpg", "regularizacion-matematicas": "regularizacion-matematicas1.jpg",
+  "caballero-del-codigo": "fundamentos-programacion1.jpeg", "diseno-grafico-ninos": "diseno-grafico1.jpeg",
+  "programacion-visual-avanzada": "programacion-visual-peques2.JPG", "diseno-videojuegos-minecraft": "diseño-videojuegos2.jpeg",
+  "diseno-videojuegos-roblox": "diseno-videojuegos1.jpg", "diseno-videojuejos-lua-roblox": "clases-adolescentes1.jpg",
+  "diseno-videojuegos-unity": "unity1.jpg", "python-pro": "python-start1.jpg", "python-start-avanzado": "clases-adolescentes2.jpg",
+  "diseno-2d-y-3d": "diseno-web1.jpg", "taller_impresion-3d": "Lumy.jpeg", "video-blogging": "creacion-contenido-video1.jpg",
+  "taller-prompt-engeneering": "preparacion-universidad.jpg", "inteligencia-artificial-adultos": "ia-adultos.png",
+  "alfabetizacion-digital": "alfabetizacion-digital-adultos1.jpg", "adminitracion-de-proyectos": "empresas-gobierno1.jpg",
+  "taller-gobernanza-ia-ciberseguridad": "clases-adultos1.jpg", "taller-resolucion-de-conflictos": "trabajo-en-equipo1.jpg",
   "taller-design-thinking": "trabajo-en-equipo1.jpg"
 };
 
-// 🔥 2. DICCIONARIO DE RESPALDO (Si la API falla, al menos esto categoriza)
 const AUDIENCIA_FALLBACK: Record<string, string[]> = {
   "programacion-visual": ["kids", "teens"], "robotica-principiantes": ["kids"], "taller-creatividad": ["kids"],
   "regularizacion-matematicas": ["kids"], "caballero-del-codigo": ["kids"], "diseno-grafico-ninos": ["kids"],
@@ -44,14 +30,10 @@ const AUDIENCIA_FALLBACK: Record<string, string[]> = {
 
 function mapCurso(cursoEncontrado: any): CourseData {
   const idCurso = String(cursoEncontrado.id || cursoEncontrado.slug || "").trim().toLowerCase();
-  
-  // Resolvemos la imagen
   const imgKeyOriginal = cursoEncontrado.imgKey || cursoEncontrado.imagen_key || "";
   const imgKeyReal = MAPEO_IMAGENES[idCurso] || imgKeyOriginal || `${idCurso}.jpg`;
 
-  // Resolvemos la audiencia (Prioridad: Lo que manda Python. Si falla: Usamos el diccionario fallback)
   let audience = cursoEncontrado.targetAudience || cursoEncontrado.audiencia;
-  
   if (!audience || !Array.isArray(audience) || audience.length === 0) {
     audience = AUDIENCIA_FALLBACK[idCurso] || ["kids"];
   } else {
@@ -82,7 +64,12 @@ function mapCurso(cursoEncontrado: any): CourseData {
       title: vp.title || vp.titulo || "",
       desc: vp.desc || vp.descripcion || "",
       icon: vp.icon || vp.icono || "✨"
-    }))
+    })),
+    audiencia_principal: cursoEncontrado.audiencia_principal ? cursoEncontrado.audiencia_principal.toLowerCase() : undefined,
+    orden_kids: cursoEncontrado.orden_kids,
+    orden_teens: cursoEncontrado.orden_teens,
+    orden_adults: cursoEncontrado.orden_adults,
+    orden_company: cursoEncontrado.orden_company
   };
 }
 

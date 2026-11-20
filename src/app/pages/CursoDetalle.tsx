@@ -4,19 +4,12 @@ import { AnimatedSection } from "../components/AnimatedSection";
 import { fetchCourseById } from "../../Data/courseService";
 import { CourseData } from "../../Data/courses";
 import { SEO } from "../components/SEO";
-import {
-  Clock, Users, BarChart2, Monitor, CheckCircle,
-  MessageCircle, ChevronLeft, Zap, ChevronDown, Sparkles, Star, Play, X
-} from "lucide-react";
+import { Clock, Users, BarChart2, Monitor, MessageCircle, ChevronLeft, Zap, ChevronDown, Sparkles, Star, Play, X } from "lucide-react";
 
 function ModuleAccordion({ modules, courseColor }: { modules?: any[], courseColor: string }) {
   const safeModules = modules || [];
   const [openId, setOpenId] = useState<string | null>(safeModules[0]?.id || null);
-
-  if (safeModules.length === 0) {
-    return <p className="text-center text-gray-500 py-8">El temario detallado estará disponible pronto.</p>;
-  }
-
+  if (safeModules.length === 0) return <p className="text-center text-gray-500 py-8">El temario detallado estará disponible pronto.</p>;
   return (
     <div className="space-y-4">
       {safeModules.map((mod) => (
@@ -57,7 +50,8 @@ export function CursoDetalle() {
   useEffect(() => {
     if (id) {
       setIsLoading(true);
-      fetchCourseById(id).then((data) => {
+      const idLimpio = decodeURIComponent(id).trim();
+      fetchCourseById(idLimpio).then((data) => {
         setCourse(data);
         setIsLoading(false);
       });
@@ -76,77 +70,62 @@ export function CursoDetalle() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-[#050A14] text-white">
         <h1 className="text-4xl font-black mb-4">Curso no encontrado</h1>
+        <p className="text-gray-400 mb-6">Es posible que el enlace esté roto o el curso ya no exista.</p>
         <Link to="/cursos" className="text-[#00C9FF] hover:underline font-bold text-lg">Volver al catálogo</Link>
       </div>
     );
   }
 
-  const courseImg = course.imgKey 
-    ? `https://media.gokulab.mx/Galery/${course.imgKey}` 
-    : "https://media.gokulab.mx/Galery/pagina-principal1.jpg";
-
+  const courseImg = course.imgKey ? `https://media.gokulab.mx/Galery/${course.imgKey}` : "https://media.gokulab.mx/Galery/pagina-principal1.jpg";
   const whatsappMsg = encodeURIComponent(`Hola, quiero agendar una masterclass del curso: ${course.title}`);
   
   const hasVideo = (course as any).videoUrl && (course as any).videoUrl.trim() !== "";
   const videoUrl = hasVideo ? (course as any).videoUrl : null;
-  
   const safeValueProps = course.valueProps || [];
   const safeTechs = course.techs || [];
 
+  // 🔥 LÓGICA DE CANONICAL PARA SEO MULTI-AUDIENCIA
   const getAudienceSegment = () => {
+    if (course.audiencia_principal) {
+      if (course.audiencia_principal === "company") return "empresas";
+      if (course.audiencia_principal === "adults") return "adultos";
+      if (course.audiencia_principal === "teens") return "adolescentes";
+      return "ninos";
+    }
     if (course.targetAudience.includes("company")) return "empresas";
     if (course.targetAudience.includes("adults")) return "adultos";
     if (course.targetAudience.includes("teens")) return "adolescentes";
     return "ninos";
   };
   const canonicalUrl = `https://gokulab.mx/cursos/${getAudienceSegment()}/${course.id}`;
-
-  // 🔥 FIX SPRINT 1 (Tarea 6): Extraer el precio real para el Schema
-  // Convertimos "desde $1,800 al mes" a "1800"
+  
   const priceMatch = course.price.match(/\$([0-9,]+)/);
-  const schemaPrice = priceMatch ? priceMatch[1].replace(/,/g, '') : "1600"; // Fallback seguro
+  const schemaPrice = priceMatch ? priceMatch[1].replace(/,/g, '') : "1600";
 
   return (
     <div className="bg-[#050A14] text-white min-h-screen selection:bg-[#00C9FF] selection:text-black">
-      
       <SEO 
         title={`${course.title} | Cursos GōkuLab`}
         description={`${course.subtitle} Dirigido a ${course.age}. Nivel ${course.level}. Modalidad ${course.modality}.`}
         image={courseImg}
-        url={canonicalUrl}
+        url={canonicalUrl} // 🔥 Inyectamos el Canonical oficial
         type="article"
         schema={{
           "@context": "https://schema.org",
           "@type": "Course",
           "name": course.title,
           "description": course.subtitle,
-          "provider": {
-            "@type": "Organization",
-            "name": "GōkuLab",
-            "sameAs": "https://gokulab.mx"
-          },
+          "provider": { "@type": "Organization", "name": "GōkuLab", "sameAs": "https://gokulab.mx" },
           "educationalLevel": course.level,
-          "audience": {
-            "@type": "EducationalAudience",
-            "educationalRole": "student",
-            "audienceType": course.targetAudience.join(", ")
-          },
-          "offers": {
-            "@type": "Offer",
-            "category": "Paid",
-            "price": schemaPrice, // 🔥 Dinámico
-            "priceCurrency": "MXN",
-            "availability": "https://schema.org/InStock"
-          }
+          "audience": { "@type": "EducationalAudience", "educationalRole": "student", "audienceType": course.targetAudience.join(", ") },
+          "offers": { "@type": "Offer", "category": "Paid", "price": schemaPrice, "priceCurrency": "MXN", "availability": "https://schema.org/InStock" }
         }}
       />
       
       {isVideoOpen && hasVideo && videoUrl && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm">
           <div className="relative w-full max-w-5xl rounded-3xl overflow-hidden border border-white/20 shadow-2xl bg-black">
-            <button onClick={() => setIsVideoOpen(false)} className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black text-white rounded-full transition-colors">
-              <X size={24} />
-            </button>
+            <button onClick={() => setIsVideoOpen(false)} className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black text-white rounded-full transition-colors"><X size={24} /></button>
             <video src={videoUrl} controls autoPlay className="w-full h-auto aspect-video" />
           </div>
         </div>
@@ -155,9 +134,7 @@ export function CursoDetalle() {
       <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <AnimatedSection className="mb-8">
           <div className="flex items-center gap-2 text-sm font-bold text-gray-500 uppercase tracking-wider">
-            <Link to="/cursos" className="hover:text-white flex items-center gap-1 transition-colors">
-              <ChevronLeft size={16} /> Cursos
-            </Link>
+            <Link to="/cursos" className="hover:text-white flex items-center gap-1 transition-colors"><ChevronLeft size={16} /> Cursos</Link>
             <span>/</span>
             <span style={{ color: course.color }}>{course.title}</span>
           </div>
@@ -166,28 +143,15 @@ export function CursoDetalle() {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <AnimatedSection>
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm mb-6 shadow-sm font-black uppercase tracking-widest" style={{ background: `${course.color}20`, color: course.color, border: `1px solid ${course.color}40` }}>
-              <Zap size={14} />
-              <span>{course.level}</span>
+              <Zap size={14} /> <span>{course.level}</span>
             </div>
-
-            <h1 className="text-5xl md:text-7xl font-black mb-6 leading-[1.1] tracking-tighter">
-              {course.title}
-            </h1>
-            <p className="text-xl text-gray-400 mb-10 font-medium leading-relaxed">
-              {course.subtitle}
-            </p>
+            <h1 className="text-5xl md:text-7xl font-black mb-6 leading-[1.1] tracking-tighter">{course.title}</h1>
+            <p className="text-xl text-gray-400 mb-10 font-medium leading-relaxed">{course.subtitle}</p>
 
             <div className="grid grid-cols-2 gap-4 mb-10">
-              {[
-                { icon: Users, label: "Edad", value: course.age },
-                { icon: Clock, label: "Duración", value: course.duration },
-                { icon: Monitor, label: "Modalidad", value: course.modality },
-                { icon: BarChart2, label: "Nivel", value: course.level },
-              ].map(({ icon: Icon, label, value }) => (
+              {[{ icon: Users, label: "Edad", value: course.age }, { icon: Clock, label: "Duración", value: course.duration }, { icon: Monitor, label: "Modalidad", value: course.modality }, { icon: BarChart2, label: "Nivel", value: course.level }].map(({ icon: Icon, label, value }) => (
                 <div key={label} className="p-4 rounded-2xl bg-white/5 border border-white/10">
-                  <div className="text-gray-400 text-xs uppercase font-bold tracking-wider flex items-center gap-2 mb-1">
-                    <Icon size={14} style={{ color: course.color }} /> {label}
-                  </div>
+                  <div className="text-gray-400 text-xs uppercase font-bold tracking-wider flex items-center gap-2 mb-1"><Icon size={14} style={{ color: course.color }} /> {label}</div>
                   <div className="text-white text-base font-black">{value}</div>
                 </div>
               ))}
@@ -195,8 +159,7 @@ export function CursoDetalle() {
 
             <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
               <a href={`https://wa.me/5612668168?text=${whatsappMsg}`} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 w-full sm:w-auto px-10 py-5 rounded-full text-black font-black text-lg transition-transform hover:scale-105 shadow-xl" style={{ background: `linear-gradient(135deg, ${course.color}, #ffffff)` }}>
-                <MessageCircle size={22} />
-                Agendar Masterclass
+                <MessageCircle size={22} /> Agendar Masterclass
               </a>
               <div>
                 <p className="text-xs text-gray-500 font-bold uppercase tracking-wider mb-1">Inversión</p>
@@ -211,18 +174,13 @@ export function CursoDetalle() {
               <img src={courseImg} alt={`Curso de ${course.title}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onError={(e) => { (e.target as HTMLImageElement).src = "https://media.gokulab.mx/Galery/pagina-principal1.jpg"; }} />
               {hasVideo && (
                 <div className="absolute inset-0 flex items-center justify-center z-20">
-                  <div className="w-20 h-20 bg-white/20 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xl">
-                    <Play size={32} className="text-white ml-2" fill="white" />
-                  </div>
+                  <div className="w-20 h-20 bg-white/20 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-2xl"><Play size={32} className="text-white ml-2" fill="white" /></div>
                 </div>
               )}
             </div>
             <div className="absolute -bottom-6 -left-6 bg-[#0A0F1E] border border-white/10 p-4 rounded-2xl flex items-center gap-3 shadow-2xl z-20">
               <Star className="text-[#FFE134]" fill="#FFE134" size={24} />
-              <div>
-                <p className="text-white font-black text-sm">Top Rated</p>
-                <p className="text-gray-400 text-xs">Por padres de familia</p>
-              </div>
+              <div><p className="text-white font-black text-sm">Top Rated</p><p className="text-gray-400 text-xs">Por padres de familia</p></div>
             </div>
           </AnimatedSection>
         </div>
@@ -231,14 +189,9 @@ export function CursoDetalle() {
       <section className="py-24 px-4 bg-[#0A0F1E] border-y border-white/5">
         <div className="max-w-7xl mx-auto">
           <AnimatedSection className="text-center mb-16 max-w-3xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-black mb-4 tracking-tight">
-              El verdadero <span style={{ color: course.color }}>superpoder</span> que se lleva
-            </h2>
-            <p className="text-lg text-gray-400">
-              No solo aprende a usar una computadora. Desarrolla habilidades para destacar en la escuela, en su futuro profesional y en la vida.
-            </p>
+            <h2 className="text-4xl md:text-5xl font-black mb-4 tracking-tight">El verdadero <span style={{ color: course.color }}>superpoder</span> que se lleva</h2>
+            <p className="text-lg text-gray-400">No solo aprende a usar una computadora. Desarrolla habilidades para destacar en la escuela, en su futuro profesional y en la vida.</p>
           </AnimatedSection>
-
           {safeValueProps.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {safeValueProps.map((prop, i) => (
@@ -259,27 +212,15 @@ export function CursoDetalle() {
 
       <section className="py-24 px-4 max-w-4xl mx-auto">
         <AnimatedSection className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm mb-4 font-black uppercase tracking-widest" style={{ background: `${course.color}20`, color: course.color }}>
-            <Sparkles size={14} /> Temario
-          </div>
-          <h2 className="text-4xl md:text-5xl font-black mb-4 tracking-tight">
-            Un camino paso a paso
-          </h2>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm mb-4 font-black uppercase tracking-widest" style={{ background: `${course.color}20`, color: course.color }}><Sparkles size={14} /> Temario</div>
+          <h2 className="text-4xl md:text-5xl font-black mb-4 tracking-tight">Un camino paso a paso</h2>
         </AnimatedSection>
-
-        <AnimatedSection>
-          <ModuleAccordion modules={course.modules} courseColor={course.color} />
-        </AnimatedSection>
-
+        <AnimatedSection><ModuleAccordion modules={course.modules} courseColor={course.color} /></AnimatedSection>
         {safeTechs.length > 0 && (
           <AnimatedSection className="mt-20 text-center">
             <p className="text-sm font-bold text-gray-500 uppercase tracking-[0.3em] mb-8">Herramientas que dominará</p>
             <div className="flex flex-wrap justify-center gap-4">
-              {safeTechs.map((tech) => (
-                <span key={tech} className="px-6 py-3 rounded-xl font-black text-sm bg-white/5 border border-white/10 text-white">
-                  {tech}
-                </span>
-              ))}
+              {safeTechs.map((tech) => (<span key={tech} className="px-6 py-3 rounded-xl font-black text-sm bg-white/5 border border-white/10 text-white">{tech}</span>))}
             </div>
           </AnimatedSection>
         )}
@@ -288,16 +229,9 @@ export function CursoDetalle() {
       <section className="py-32 px-4 text-center relative overflow-hidden bg-[#0A0F1E]">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/5 via-transparent to-transparent pointer-events-none" />
         <AnimatedSection className="relative z-10 max-w-3xl mx-auto">
-          <h2 className="text-4xl md:text-6xl font-black mb-6 tracking-tighter">
-            ¿Listo para ver a tu hijo <span style={{ color: course.color }}>crear</span> su propio futuro?
-          </h2>
-          <p className="text-xl text-gray-400 mb-12">
-            Agenda una clase muestra gratuita. Sin compromiso, solo diversión y tecnología.
-          </p>
-          <a href={`https://wa.me/5612668168?text=${whatsappMsg}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 px-12 py-5 rounded-full text-black font-black text-xl transition-transform hover:scale-105 shadow-xl" style={{ background: `linear-gradient(135deg, ${course.color}, #ffffff)` }}>
-            <MessageCircle size={24} />
-            Agendar Masterclass Gratuita
-          </a>
+          <h2 className="text-4xl md:text-6xl font-black mb-6 tracking-tighter">¿Listo para ver a tu hijo <span style={{ color: course.color }}>crear</span> su propio futuro?</h2>
+          <p className="text-xl text-gray-400 mb-12">Agenda una clase muestra gratuita. Sin compromiso, solo diversión y tecnología.</p>
+          <a href={`https://wa.me/5612668168?text=${whatsappMsg}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 px-12 py-5 rounded-full text-black font-black text-xl transition-transform hover:scale-105 shadow-xl" style={{ background: `linear-gradient(135deg, ${course.color}, #ffffff)` }}><MessageCircle size={24} /> Agendar Masterclass Gratuita</a>
         </AnimatedSection>
       </section>
     </div>

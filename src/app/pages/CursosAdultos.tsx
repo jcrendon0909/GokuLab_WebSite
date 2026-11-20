@@ -11,10 +11,8 @@ import { SEO } from "../components/SEO";
 type Category = "todos" | "ia" | "programacion" | "negocios" | "digital";
 
 const categories: { id: Category | "todos"; label: string; emoji: string }[] = [
-  { id: "todos", label: "Todos", emoji: "📚" },
-  { id: "ia", label: "Inteligencia Artificial", emoji: "🧠" },
-  { id: "programacion", label: "Programación", emoji: "💻" },
-  { id: "digital", label: "Habilidades Digitales", emoji: "📱" },
+  { id: "todos", label: "Todos", emoji: "📚" }, { id: "ia", label: "Inteligencia Artificial", emoji: "🧠" },
+  { id: "programacion", label: "Programación", emoji: "💻" }, { id: "digital", label: "Habilidades Digitales", emoji: "📱" },
   { id: "negocios", label: "Negocios y Liderazgo", emoji: "💼" },
 ];
 
@@ -42,62 +40,32 @@ export function CursosAdultos() {
           category: cat,
           img: c.imgKey ? `https://media.gokulab.mx/Galery/${c.imgKey}` : "https://media.gokulab.mx/Galery/pagina-principal1.jpg",
         };
-      });
+      })
+      .sort((a, b) => (a.orden_adults || 99) - (b.orden_adults || 99)); // 🔥 ORDEN
   }, [cursos]);
 
   const filtered = dynamicCourses.filter((c) => activeCategory === "todos" || c.category === activeCategory);
 
   return (
     <>
-      <SEO 
-        title="Cursos de Tecnología e IA para Adultos y Profesionales | GōkuLab"
-        description="Actualízate profesionalmente. Aprende Inteligencia Artificial, domina el entorno digital o mejora tus habilidades de liderazgo."
-        url="https://gokulab.mx/cursos/adultos"
-        schema={{
-          "@context": "https://schema.org",
-          "@type": "ItemList",
-          "name": "Cursos para adultos en GōkuLab",
-          "description": "Programas de reconversión profesional y habilidades digitales para adultos."
-        }}
-      />
-      <div
-        className="min-h-screen transition-colors duration-500"
-        style={{
-          background: theme === "dark" 
-            ? "linear-gradient(180deg, #050A14 0%, #0A1E2E 50%, #050A14 100%)"
-            : "linear-gradient(180deg, #f0fdf4 0%, #e0f2fe 50%, #f0fdf4 100%)"
-        }}
-      >
-        <div className="pt-20">
-          <AudienceTabs active="adultos" />
-        </div>
-
+      <SEO title="Cursos de Tecnología e IA para Adultos y Profesionales | GōkuLab" description="Actualízate profesionalmente. Aprende Inteligencia Artificial, domina el entorno digital o mejora tus habilidades de liderazgo." url="https://gokulab.mx/cursos/adultos" schema={{ "@context": "https://schema.org", "@type": "ItemList", "name": "Cursos para adultos en GōkuLab", "description": "Programas de reconversión profesional y habilidades digitales para adultos." }} />
+      <div className="min-h-screen transition-colors duration-500" style={{ background: theme === "dark" ? "linear-gradient(180deg, #050A14 0%, #0A1E2E 50%, #050A14 100%)" : "linear-gradient(180deg, #f0fdf4 0%, #e0f2fe 50%, #f0fdf4 100%)" }}>
+        <div className="pt-20"><AudienceTabs active="adultos" /></div>
         <section className="pt-16 pb-16 px-4 relative overflow-hidden">
           <div className="max-w-5xl mx-auto text-center relative z-10">
             <AnimatedSection>
               <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm mb-6 backdrop-blur-sm" style={{ background: "rgba(0,201,255,0.1)", border: "1px solid rgba(0,201,255,0.3)" }}>
-                <Briefcase size={18} className="text-[#00C9FF]" />
-                <span className="text-gray-900 dark:text-white font-bold">Profesionales y Adultos</span>
-                <TrendingUp size={18} className="text-[#10B981]" />
+                <Briefcase size={18} className="text-[#00C9FF]" /><span className="text-gray-900 dark:text-white font-bold">Profesionales y Adultos</span><TrendingUp size={18} className="text-[#10B981]" />
               </div>
-
               <h1 className="text-gray-900 dark:text-white mb-6" style={{ fontSize: "clamp(2.2rem, 6vw, 4.5rem)", fontWeight: 900, lineHeight: 1.15 }}>
-                <span style={{ background: "linear-gradient(90deg, #00C9FF, #10B981)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-                  Evoluciona tu Carrera
-                </span>
-                <div className="text-gray-900 dark:text-white mt-2" style={{ fontSize: "clamp(1.5rem, 4vw, 2.5rem)" }}>
-                  Cursos Tech para Adultos
-                </div>
+                <span style={{ background: "linear-gradient(90deg, #00C9FF, #10B981)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Evoluciona tu Carrera</span>
+                <div className="text-gray-900 dark:text-white mt-2" style={{ fontSize: "clamp(1.5rem, 4vw, 2.5rem)" }}>Cursos Tech para Adultos</div>
               </h1>
-
-              <p className="text-gray-700 dark:text-white/80 max-w-2xl mx-auto mb-8 text-lg">
-                La tecnología avanza rápido. No te quedes atrás. Aprende Inteligencia Artificial, domina el entorno digital o prepara a tu equipo para el futuro.
-              </p>
+              <p className="text-gray-700 dark:text-white/80 max-w-2xl mx-auto mb-8 text-lg">La tecnología avanza rápido. No te quedes atrás. Aprende Inteligencia Artificial, domina el entorno digital o prepara a tu equipo para el futuro.</p>
             </AnimatedSection>
           </div>
         </section>
-
-        <section className="py-4 px-4 sticky top-[130px] z-30" style={{ background: theme === "dark" ? "rgba(5,10,20,0.95)" : "rgba(255,255,255,0.95)", backdropFilter: "blur(12px)", borderBottom: theme === "dark" ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(0,0,0,0.1)" }}>
+        <section className="py-4 px-4 sticky top-20 z-40" style={{ background: theme === "dark" ? "rgba(5,10,20,0.95)" : "rgba(255,255,255,0.95)", backdropFilter: "blur(12px)", borderBottom: theme === "dark" ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(0,0,0,0.1)" }}>
           <div className="max-w-7xl mx-auto flex items-center gap-3 overflow-x-auto pb-1 scrollbar-hide">
             <Filter size={18} className="text-gray-400 shrink-0" />
             {categories.map((cat) => (
@@ -107,7 +75,6 @@ export function CursosAdultos() {
             ))}
           </div>
         </section>
-
         <section className="py-16 px-4">
           <div className="max-w-7xl mx-auto">
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -131,11 +98,7 @@ export function CursosAdultos() {
                           <div key={text} className="flex items-center gap-2"><Icon size={14} className="text-gray-400" /><span className="text-gray-600 dark:text-white/60 text-xs font-medium">{text}</span></div>
                         ))}
                       </div>
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {(course.techs || []).slice(0, 3).map((tech) => (
-                          <span key={tech} className="text-xs px-3 py-1 rounded-full font-bold" style={{ background: `${course.color}20`, color: course.color, border: `1px solid ${course.color}40` }}>{tech}</span>
-                        ))}
-                      </div>
+                      <div className="flex flex-wrap gap-2 mb-4">{(course.techs || []).slice(0, 3).map((tech) => (<span key={tech} className="text-xs px-3 py-1 rounded-full font-bold" style={{ background: `${course.color}20`, color: course.color, border: `1px solid ${course.color}40` }}>{tech}</span>))}</div>
                       <div className="flex gap-2 mt-auto">
                         <Link to={`/cursos/adultos/${course.id}`} className="flex-1 py-3 rounded-2xl text-center text-sm font-black text-white transition-opacity hover:opacity-90" style={{ background: `linear-gradient(135deg, ${course.color}, ${course.color}dd)` }}>Ver programa</Link>
                         <a href={`https://wa.me/5612668168?text=Hola,%20me%20interesa%20el%20curso%20${encodeURIComponent(course.title)}`} target="_blank" rel="noopener noreferrer" className="p-3 rounded-2xl flex items-center justify-center text-[#25D366]" style={{ background: theme === "dark" ? "#25D36620" : "#25D36615" }}><MessageCircle size={18} /></a>

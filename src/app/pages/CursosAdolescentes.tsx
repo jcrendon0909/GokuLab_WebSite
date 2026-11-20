@@ -23,53 +23,33 @@ export function CursosAdolescentes() {
       .map(c => ({
         ...c,
         img: c.imgKey ? `https://media.gokulab.mx/Galery/${c.imgKey}` : "https://media.gokulab.mx/Galery/pagina-principal1.jpg"
-      }));
+      }))
+      .sort((a, b) => (a.orden_teens || 99) - (b.orden_teens || 99)); // 🔥 ORDEN
   }, [cursos]);
 
   const filtered = dynamicCourses.filter(c => activeCategory === "todos" || c.title.toLowerCase().includes(activeCategory.toLowerCase()));
 
   return (
     <>
-      <SEO 
-        title="Cursos de Programación y Videojuegos para Adolescentes | GōkuLab"
-        description="Deja que tus hijos creen sus propios videojuegos, apps e IA. Prepáralos para la universidad con nuestros cursos para adolescentes de 12 a 17 años."
-        url="https://gokulab.mx/cursos/adolescentes"
-        schema={{
-          "@context": "https://schema.org",
-          "@type": "ItemList",
-          "name": "Cursos para adolescentes en GōkuLab",
-          "description": "Lista de cursos de tecnología y programación para jóvenes de 12 a 17 años."
-        }}
-      />
+      <SEO title="Cursos de Programación y Videojuegos para Adolescentes | GōkuLab" description="Deja que tus hijos creen sus propios videojuegos, apps e IA. Prepáralos para la universidad con nuestros cursos para adolescentes de 12 a 17 años." url="https://gokulab.mx/cursos/adolescentes" schema={{ "@context": "https://schema.org", "@type": "ItemList", "name": "Cursos para adolescentes en GōkuLab", "description": "Lista de cursos de tecnología y programación para jóvenes de 12 a 17 años." }} />
       <div className="bg-[#050A14] text-white min-h-screen selection:bg-[#7C3AED] selection:text-white">
-        <div className="pt-20">
-          <AudienceTabs active="adolescentes" />
-        </div>
-
+        <div className="pt-20"><AudienceTabs active="adolescentes" /></div>
         <section className="pt-16 pb-16 px-4 relative overflow-hidden">
           <div className="max-w-5xl mx-auto text-center relative z-10">
             <AnimatedSection>
-              <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-tighter">
-                ¡Domina el <span className="text-[#7C3AED]">Futuro!</span>
-              </h1>
-              <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-                Deja de solo jugar y empieza a crear. Aprende a programar los videojuegos que amas, diseña tu propio contenido y prepárate para la universidad. 🚀👾
-              </p>
+              <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-tighter">¡Domina el <span className="text-[#7C3AED]">Futuro!</span></h1>
+              <p className="text-xl text-gray-400 max-w-2xl mx-auto">Deja de solo jugar y empieza a crear. Aprende a programar los videojuegos que amas, diseña tu propio contenido y prepárate para la universidad. 🚀👾</p>
             </AnimatedSection>
           </div>
         </section>
-
-        <section className="py-6 px-4 sticky top-[130px] z-30 transition-colors duration-300 bg-[#050A14]/95 backdrop-blur-md border-b border-white/10">
+        <section className="py-6 px-4 sticky top-20 z-40 transition-colors duration-300 bg-[#050A14]/95 backdrop-blur-md border-b border-white/10">
           <div className="max-w-7xl mx-auto flex items-center gap-3 overflow-x-auto pb-1 scrollbar-hide">
             <Filter size={16} className="text-gray-400 shrink-0" />
             {["todos", "programación", "videojuegos", "diseño", "ia"].map((cat) => (
-              <button key={cat} onClick={() => setActiveCategory(cat)} className={`px-4 py-2 rounded-xl text-sm font-bold shrink-0 capitalize transition-all ${activeCategory === cat ? "bg-[#7C3AED] text-white" : "bg-white/5 text-gray-400 hover:bg-white/10"}`}>
-                {cat}
-              </button>
+              <button key={cat} onClick={() => setActiveCategory(cat)} className={`px-4 py-2 rounded-xl text-sm font-bold shrink-0 capitalize transition-all ${activeCategory === cat ? "bg-[#7C3AED] text-white" : "bg-white/5 text-gray-400 hover:bg-white/10"}`}>{cat}</button>
             ))}
           </div>
         </section>
-
         <section className="py-16 px-4">
           <div className="max-w-7xl mx-auto">
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -94,12 +74,8 @@ export function CursosAdolescentes() {
                         ))}
                       </div>
                       <div className="flex gap-2 mt-auto">
-                        <Link to={`/cursos/adolescentes/${course.id}`} className="flex-1 py-3 rounded-2xl text-center text-sm font-black text-white hover:opacity-90 transition-opacity" style={{ background: `linear-gradient(135deg, ${course.color}, ${course.color}dd)` }}>
-                          Ver curso
-                        </Link>
-                        <a href={`https://wa.me/5612668168?text=Hola,%20me%20interesa%20el%20curso%20${encodeURIComponent(course.title)}`} target="_blank" rel="noopener noreferrer" className="p-3 rounded-2xl flex items-center justify-center text-[#25D366] bg-[#25D36620]">
-                          <MessageCircle size={18} />
-                        </a>
+                        <Link to={`/cursos/adolescentes/${course.id}`} className="flex-1 py-3 rounded-2xl text-center text-sm font-black text-white hover:opacity-90 transition-opacity" style={{ background: `linear-gradient(135deg, ${course.color}, ${course.color}dd)` }}>Ver curso</Link>
+                        <a href={`https://wa.me/5612668168?text=Hola,%20me%20interesa%20el%20curso%20${encodeURIComponent(course.title)}`} target="_blank" rel="noopener noreferrer" className="p-3 rounded-2xl flex items-center justify-center text-[#25D366] bg-[#25D36620]"><MessageCircle size={18} /></a>
                       </div>
                     </div>
                   </div>
