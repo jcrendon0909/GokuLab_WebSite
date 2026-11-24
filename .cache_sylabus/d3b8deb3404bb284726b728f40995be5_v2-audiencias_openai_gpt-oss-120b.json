@@ -1,0 +1,110 @@
+{
+  "prompt_version": "v2-audiencias",
+  "model": "openai/gpt-oss-120b",
+  "data": {
+    "nombreCurso": "Next Gen Creators — Creación de Videos y Contenido",
+    "descripcionCorta": "Crea videos virales y lanza tu propio canal en 5 módulos",
+    "edad_dirigida": "9 a 15 años",
+    "nivel": "Básico",
+    "duracion": "5 módulos (40‑64 horas)",
+    "modalidad": [
+      "Presencial"
+    ],
+    "precio_desde": 1600,
+    "emoji": "🎬",
+    "color": "#FF6F61",
+    "techs": [
+      "Grabación móvil",
+      "Edición video",
+      "Storytelling",
+      "Marketing digital",
+      "Canal Algorithmics"
+    ],
+    "targetAudience": [
+      "kids",
+      "teens"
+    ],
+    "audiencia_principal": "teens",
+    "publicable": true,
+    "valueProps": [
+      {
+        "title": "Confianza en cámara",
+        "desc": "Tu hijo ganará seguridad al hablar en público",
+        "icon": "💪"
+      },
+      {
+        "title": "Creatividad y expresión",
+        "desc": "Desarrollará ideas originales y narrativas visuales",
+        "icon": "🎨"
+      },
+      {
+        "title": "Pensamiento emprendedor",
+        "desc": "Aprenderá a gestionar y monetizar su propio canal",
+        "icon": "🚀"
+      }
+    ],
+    "modulos": [
+      {
+        "id": "m1",
+        "titulo": "Módulo 1: Grabación Móvil",
+        "lecciones": 5,
+        "temas": [
+          "Introducción a la creación de contenido",
+          "Autopresentación",
+          "Edición básica con InShot",
+          "Composición y encuadre",
+          "Técnicas avanzadas de cámara"
+        ]
+      },
+      {
+        "id": "m2",
+        "titulo": "Módulo 2: Fundamentos de Edición de Video",
+        "lecciones": 5,
+        "temas": [
+          "Herramientas de edición desktop",
+          "Guion y storyboard",
+          "Diseño de sonido",
+          "Corrección de color con OpenShot",
+          "Efecto de clonación y desafío creativo"
+        ]
+      },
+      {
+        "id": "m3",
+        "titulo": "Módulo 3: Contenido Variado",
+        "lecciones": 12,
+        "temas": [
+          "Géneros de videoblogging",
+          "Etiquetas y subtítulos SEO",
+          "Efectos de velocidad y transiciones",
+          "Chroma Key y stop‑motion",
+          "Producción de videos gaming, noticias y entrevistas"
+        ]
+      },
+      {
+        "id": "m4",
+        "titulo": "Módulo 4: Promoción y Monetización",
+        "lecciones": 6,
+        "temas": [
+          "Marca personal y crecimiento digital",
+          "Modelos de monetización",
+          "Estrategias en redes sociales",
+          "Formato de historias y reels",
+          "Transmisión en vivo",
+          "Identidad visual del canal"
+        ]
+      },
+      {
+        "id": "m5",
+        "titulo": "Módulo 5: Canal Algorithmics",
+        "lecciones": 4,
+        "temas": [
+          "Creación y configuración del canal",
+          "Video animado con Canva",
+          "Seguridad y privacidad digital",
+          "Video promocional y derechos de autor"
+        ]
+      }
+    ],
+    "resumen_rag": "Next Gen Creators es un curso presencial de 5 módulos que enseña a crear y publicar videos virales. Está dirigido a niños y adolescentes de 9 a 15 años que quieren pasar de consumidores a creadores de contenido. Desarrolla confianza en cámara, creatividad narrativa y habilidades emprendedoras para gestionar su propio canal."
+  }
+}

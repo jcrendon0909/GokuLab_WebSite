@@ -1,0 +1,117 @@
+{
+  "prompt_version": "v2-audiencias",
+  "model": "openai/gpt-oss-120b",
+  "data": {
+    "nombreCurso": "El Caballero del Código",
+    "descripcionCorta": "Programa a tu hijo como pequeño programador con juegos interactivos",
+    "edad_dirigida": "5 a 8 años",
+    "nivel": "Básico",
+    "duracion": "24 lecciones (6 meses)",
+    "modalidad": [
+      "Online",
+      "Híbrido"
+    ],
+    "precio_desde": 1600,
+    "emoji": "🛡️",
+    "color": "#4A90E2",
+    "techs": [
+      "Programación Visual",
+      "Scratch Jr.",
+      "Gamificación",
+      "Algoritmos",
+      "Animación"
+    ],
+    "targetAudience": [
+      "kids"
+    ],
+    "audiencia_principal": "kids",
+    "publicable": true,
+    "valueProps": [
+      {
+        "title": "Pensamiento lógico",
+        "desc": "Mejora la capacidad de resolución de problemas del niño",
+        "icon": "🧠"
+      },
+      {
+        "title": "Creatividad digital",
+        "desc": "Fomenta la imaginación y la creación de contenidos interactivos",
+        "icon": "🎨"
+      },
+      {
+        "title": "Trabajo colaborativo",
+        "desc": "Desarrolla habilidades de comunicación y cooperación en equipo",
+        "icon": "🤝"
+      },
+      {
+        "title": "Autonomía y confianza",
+        "desc": "Incrementa la seguridad al crear y presentar sus propios proyectos",
+        "icon": "🚀"
+      }
+    ],
+    "modulos": [
+      {
+        "id": "m1",
+        "titulo": "Módulo 1: Algoritmos Lineales",
+        "lecciones": 5,
+        "temas": [
+          "Ejecutor",
+          "Algoritmo",
+          "Bloques de programa",
+          "Corrección de errores"
+        ]
+      },
+      {
+        "id": "m2",
+        "titulo": "Módulo 2: Ciclos",
+        "lecciones": 3,
+        "temas": [
+          "Automatización con ciclos",
+          "Repetición de instrucciones"
+        ]
+      },
+      {
+        "id": "m3",
+        "titulo": "Módulo 3: Introducción a Scratch Jr.",
+        "lecciones": 4,
+        "temas": [
+          "Interfaz",
+          "Movimiento",
+          "Apariencia",
+          "Ciclos en Scratch Jr."
+        ]
+      },
+      {
+        "id": "m4",
+        "titulo": "Módulo 4: Animación de Eventos",
+        "lecciones": 4,
+        "temas": [
+          "Acciones paralelas",
+          "Cambio de escenas",
+          "Sonidos",
+          "Animaciones completas"
+        ]
+      },
+      {
+        "id": "m5",
+        "titulo": "Módulo 5: Mensajes",
+        "lecciones": 4,
+        "temas": [
+          "Comunicación entre objetos",
+          "Botones de control",
+          "Coordinación de personajes"
+        ]
+      },
+      {
+        "id": "m6",
+        "titulo": "Módulo 6: Operador Condicional",
+        "lecciones": 3,
+        "temas": [
+          "Lógica condicional",
+          "Detección de toque",
+          "Juegos interactivos"
+        ]
+      }
+    ],
+    "resumen_rag": "El Caballero del Código es un curso de programación visual que enseña a niños de 5 a 8 años a crear algoritmos, animaciones y juegos usando la app homónima y Scratch Jr. Está dirigido a niños en etapa de educación inicial que desean iniciar su camino en el pensamiento computacional de forma lúdica. Desarrolla pensamiento lógico, creatividad digital, trabajo colaborativo y resiliencia frente a errores."
+  }
+}

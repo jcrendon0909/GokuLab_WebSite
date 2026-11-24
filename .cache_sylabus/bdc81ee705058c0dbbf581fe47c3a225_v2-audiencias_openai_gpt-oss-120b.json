@@ -1,0 +1,80 @@
+{
+  "prompt_version": "v2-audiencias",
+  "model": "openai/gpt-oss-120b",
+  "data": {
+    "nombreCurso": "Resolución de conflictos",
+    "descripcionCorta": "Domina técnicas para analizar y resolver conflictos organizacionales de forma creativa",
+    "edad_dirigida": "18+ años",
+    "nivel": "Avanzado",
+    "duracion": "10 horas (curso intensivo)",
+    "modalidad": [
+      "Online"
+    ],
+    "precio_desde": 1600,
+    "emoji": "🤝",
+    "color": "#4A90E2",
+    "techs": [
+      "Análisis de Problemas",
+      "Pensamiento Creativo",
+      "SCAMPER",
+      "Ishikawa",
+      "5 Whys"
+    ],
+    "targetAudience": [
+      "adults",
+      "company"
+    ],
+    "audiencia_principal": "adults",
+    "publicable": true,
+    "valueProps": [
+      {
+        "title": "Toma de decisiones",
+        "desc": "Los padres verán a su hijo tomar decisiones más acertadas y fundamentadas",
+        "icon": "🧠"
+      },
+      {
+        "title": "Creatividad aplicada",
+        "desc": "Fomenta la generación de ideas innovadoras para resolver desafíos reales",
+        "icon": "💡"
+      },
+      {
+        "title": "Gestión de conflictos",
+        "desc": "Mejora la capacidad de manejar y resolver tensiones en equipos y familias",
+        "icon": "🤝"
+      }
+    ],
+    "modulos": [
+      {
+        "id": "m1",
+        "titulo": "Módulo 1: Análisis de problemas y toma de decisiones",
+        "lecciones": 3,
+        "temas": [
+          "Identificación de problemas",
+          "Diagrama Ishikawa",
+          "Matriz de decisión"
+        ]
+      },
+      {
+        "id": "m2",
+        "titulo": "Módulo 2: Pensamiento creativo",
+        "lecciones": 3,
+        "temas": [
+          "Fundamentos de creatividad",
+          "Técnicas de generación de ideas",
+          "Superación de bloqueos creativos"
+        ]
+      },
+      {
+        "id": "m3",
+        "titulo": "Módulo 3: Gestión de quejas y conflictos",
+        "lecciones": 4,
+        "temas": [
+          "Método SCAMPER",
+          "Técnica de los 5 Whys",
+          "Aplicación práctica en equipos"
+        ]
+      }
+    ],
+    "resumen_rag": "El curso de Resolución de conflictos enseña herramientas como Ishikawa, SCAMPER y los 5 Whys para analizar y solucionar problemas organizacionales. Está dirigido a adultos y profesionales que buscan mejorar su toma de decisiones y creatividad en entornos laborales. Desarrolla habilidades de pensamiento crítico, creatividad y gestión de conflictos."
+  }
+}

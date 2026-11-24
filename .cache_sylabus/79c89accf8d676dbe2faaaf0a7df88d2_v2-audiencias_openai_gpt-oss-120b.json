@@ -1,0 +1,79 @@
+{
+  "prompt_version": "v2-audiencias",
+  "model": "openai/gpt-oss-120b",
+  "data": {
+    "nombreCurso": "Diseño 2D a 3D",
+    "descripcionCorta": "Transforma tus dibujos 2D en modelos 3D listos para imprimir",
+    "edad_dirigida": "13 a 18 años",
+    "nivel": "Básico",
+    "duracion": "6 lecciones (2 meses)",
+    "modalidad": [
+      "Online"
+    ],
+    "precio_desde": 1600,
+    "emoji": "🎨",
+    "color": "#FF6F61",
+    "techs": [
+      "Blender",
+      "Tinkercad",
+      "Fusion 360",
+      "ZBrush",
+      "Maya"
+    ],
+    "targetAudience": [
+      "teens",
+      "adults"
+    ],
+    "audiencia_principal": "teens",
+    "publicable": true,
+    "valueProps": [
+      {
+        "title": "Creatividad",
+        "desc": "Fomenta la imaginación al convertir ideas 2D en objetos reales",
+        "icon": "🧠"
+      },
+      {
+        "title": "Resolución de problemas",
+        "desc": "Desarrolla habilidades analíticas al preparar modelos para impresión",
+        "icon": "🔧"
+      },
+      {
+        "title": "Confianza digital",
+        "desc": "Aumenta la seguridad al manejar herramientas 3D profesionales",
+        "icon": "💪"
+      }
+    ],
+    "modulos": [
+      {
+        "id": "m1",
+        "titulo": "Módulo 1: Preparación del diseño 2D",
+        "lecciones": 2,
+        "temas": [
+          "Revisión de vistas",
+          "Exportación de archivos"
+        ]
+      },
+      {
+        "id": "m2",
+        "titulo": "Módulo 2: Modelado básico en Blender",
+        "lecciones": 3,
+        "temas": [
+          "Importar referencia",
+          "Escultura inicial",
+          "Exportar STL"
+        ]
+      },
+      {
+        "id": "m3",
+        "titulo": "Módulo 3: Preparación e impresión 3D",
+        "lecciones": 1,
+        "temas": [
+          "Verificar manifold",
+          "Ajustes de impresión",
+          "Exportar para impresora"
+        ]
+      }
+    ],
+    "resumen_rag": "Este curso enseña a transformar diseños 2D en modelos 3D listos para imprimir. Está dirigido a adolescentes y jóvenes adultos que quieren iniciarse en el modelado digital. Desarrolla creatividad, pensamiento crítico y confianza en el uso de herramientas 3D."
+  }
+}

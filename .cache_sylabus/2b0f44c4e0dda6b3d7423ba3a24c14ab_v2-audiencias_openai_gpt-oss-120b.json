@@ -1,0 +1,144 @@
+{
+  "prompt_version": "v2-audiencias",
+  "model": "openai/gpt-oss-120b",
+  "data": {
+    "nombreCurso": "Diseño Gráfico para Niños",
+    "descripcionCorta": "Crea logos, portadas y stickers profesionales, desarrollando tu creatividad visual",
+    "edad_dirigida": "12 a 15 años",
+    "nivel": "Intermedio",
+    "duracion": "36 lecciones (1 año)",
+    "modalidad": [
+      "Híbrido"
+    ],
+    "precio_desde": 1600,
+    "emoji": "🎨",
+    "color": "#FF6F61",
+    "techs": [
+      "Diseño Gráfico",
+      "Branding",
+      "Ilustración Digital",
+      "UX/UI",
+      "Animación"
+    ],
+    "targetAudience": [
+      "teens"
+    ],
+    "audiencia_principal": "teens",
+    "publicable": true,
+    "valueProps": [
+      {
+        "title": "Creatividad",
+        "desc": "Fomenta la imaginación y la expresión personal del niño",
+        "icon": "🧠"
+      },
+      {
+        "title": "Trabajo en equipo",
+        "desc": "Desarrolla habilidades colaborativas y comunicación efectiva",
+        "icon": "🤝"
+      },
+      {
+        "title": "Pensamiento crítico",
+        "desc": "Mejora la capacidad de analizar y resolver problemas visuales",
+        "icon": "🔍"
+      },
+      {
+        "title": "Confianza",
+        "desc": "Aumenta la seguridad al presentar ideas ante público",
+        "icon": "💪"
+      }
+    ],
+    "modulos": [
+      {
+        "id": "m1",
+        "titulo": "Módulo 1: Fundamentos del Diseño Digital",
+        "lecciones": 4,
+        "temas": [
+          "Introducción al diseño",
+          "Principios de composición",
+          "Herramientas básicas",
+          "Proyecto inicial"
+        ]
+      },
+      {
+        "id": "m2",
+        "titulo": "Módulo 2: Identidad Visual y Branding",
+        "lecciones": 5,
+        "temas": [
+          "Conceptos de branding",
+          "Diseño de logos",
+          "Paletas de color",
+          "Tipografía",
+          "Proyecto de identidad"
+        ]
+      },
+      {
+        "id": "m3",
+        "titulo": "Módulo 3: Diseño para Redes Sociales",
+        "lecciones": 6,
+        "temas": [
+          "Especificaciones por plataforma",
+          "Thumbnails y posts virales",
+          "Stories y reels",
+          "A/B testing visual",
+          "Infografías",
+          "Campaña multiplataforma"
+        ]
+      },
+      {
+        "id": "m4",
+        "titulo": "Módulo 4: Diseño de Personajes y Stickers",
+        "lecciones": 5,
+        "temas": [
+          "Anatomía y estilo",
+          "Expresiones y emociones",
+          "Creación de stickerpacks",
+          "Adaptación cultural",
+          "Proyecto de stickers"
+        ]
+      },
+      {
+        "id": "m5",
+        "titulo": "Módulo 5: Diseño Editorial y Portadas",
+        "lecciones": 4,
+        "temas": [
+          "Layouts de libros",
+          "Tipografía editorial",
+          "Portadas impactantes",
+          "Proyecto de portada"
+        ]
+      },
+      {
+        "id": "m6",
+        "titulo": "Módulo 6: Herramientas Avanzadas y Efectos",
+        "lecciones": 4,
+        "temas": [
+          "Efectos visuales",
+          "Animación básica",
+          "Mockups 3D",
+          "Optimización y exportación"
+        ]
+      },
+      {
+        "id": "m7",
+        "titulo": "Módulo 7: Diseño UX/UI Básico",
+        "lecciones": 4,
+        "temas": [
+          "Principios de usabilidad",
+          "Wireframes",
+          "Prototipos móviles",
+          "Proyecto de app"
+        ]
+      },
+      {
+        "id": "m8",
+        "titulo": "Módulo 8: Portafolio y Presentación Profesional",
+        "lecciones": 2,
+        "temas": [
+          "Construcción de portafolio digital",
+          "Narrativa visual y presentación"
+        ]
+      }
+    ],
+    "resumen_rag": "Curso de Diseño Gráfico para adolescentes que les enseña a crear contenido visual profesional. Dirigido a jóvenes de 12 a 15 años interesados en arte digital y branding. Desarrolla creatividad, trabajo en equipo, pensamiento crítico y confianza en la presentación."
+  }
+}

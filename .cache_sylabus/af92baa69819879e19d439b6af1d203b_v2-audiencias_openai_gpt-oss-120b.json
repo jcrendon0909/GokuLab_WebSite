@@ -1,0 +1,95 @@
+{
+  "prompt_version": "v2-audiencias",
+  "model": "openai/gpt-oss-120b",
+  "data": {
+    "nombreCurso": "Curso de Impresión 3D",
+    "descripcionCorta": "Transforma ideas en objetos reales con impresión 3D",
+    "edad_dirigida": "10 a 16 años",
+    "nivel": "Básico",
+    "duracion": "12 clases",
+    "modalidad": [
+      "Presencial"
+    ],
+    "precio_desde": 1600,
+    "emoji": "🖨️",
+    "color": "#4A90E2",
+    "techs": [
+      "Impresión 3D",
+      "Tinkercad",
+      "Orca Slicer",
+      "Diseño Digital",
+      "Fabricación Aditiva"
+    ],
+    "targetAudience": [
+      "kids",
+      "teens"
+    ],
+    "audiencia_principal": "teens",
+    "publicable": true,
+    "valueProps": [
+      {
+        "title": "Creatividad",
+        "desc": "Fomenta la capacidad de crear objetos únicos y personalizados",
+        "icon": "🎨"
+      },
+      {
+        "title": "Pensamiento crítico",
+        "desc": "Desarrolla habilidades de resolución de problemas y diagnóstico",
+        "icon": "🧩"
+      },
+      {
+        "title": "Responsabilidad",
+        "desc": "Enseña manejo seguro de equipos y protocolos",
+        "icon": "🔒"
+      },
+      {
+        "title": "Confianza",
+        "desc": "Aumenta la seguridad al materializar ideas propias",
+        "icon": "💪"
+      }
+    ],
+    "modulos": [
+      {
+        "id": "m1",
+        "titulo": "Módulo 1: Fundamentos y Anatomía",
+        "lecciones": 3,
+        "temas": [
+          "Introducción a la fabricación aditiva",
+          "Componentes de una impresora 3D",
+          "Materiales y tolerancias"
+        ]
+      },
+      {
+        "id": "m2",
+        "titulo": "Módulo 2: Modelado 3D con Tinkercad (Opcional)",
+        "lecciones": 3,
+        "temas": [
+          "Diseño de formas básicas",
+          "Operaciones booleanas y tolerancias",
+          "Creación de objetos personalizados"
+        ]
+      },
+      {
+        "id": "m3",
+        "titulo": "Módulo 3: Laminado Avanzado con Orca Slicer",
+        "lecciones": 3,
+        "temas": [
+          "Configuración de capas y relleno",
+          "Soportes tipo árbol y ajustes de impresión",
+          "Generación de G‑Code"
+        ]
+      },
+      {
+        "id": "m4",
+        "titulo": "Módulo 4: Operación, Mantenimiento y Postprocesado",
+        "lecciones": 3,
+        "temas": [
+          "Nivelado y calibración de la cama",
+          "Mantenimiento básico de la impresora",
+          "Retiro de soportes, lijado y pintura"
+        ]
+      }
+    ],
+    "resumen_rag": "El Curso de Impresión 3D de GŌKULAB enseña a los jóvenes a diseñar, laminar y fabricar objetos físicos mediante tecnología de fabricación aditiva. Está dirigido a estudiantes de 10 a 16 años, tanto niños como adolescentes, interesados en tecnología, diseño y creación. Desarrolla creatividad, pensamiento crítico y responsabilidad al manejar equipos de alta temperatura y resolver problemas de impresión."
+  }
+}

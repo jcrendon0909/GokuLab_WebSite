@@ -1,0 +1,101 @@
+{
+  "prompt_version": "v2-audiencias",
+  "model": "openai/gpt-oss-120b",
+  "data": {
+    "nombreCurso": "Administración de Proyectos con Apoyo de Inteligencia Artificial",
+    "descripcionCorta": "Gestión de proyectos potenciada con IA: planifica rápido, ejecuta con precisión",
+    "edad_dirigida": "18 a 65 años",
+    "nivel": "Avanzado",
+    "duracion": "6 sesiones (24 horas)",
+    "modalidad": [
+      "Online",
+      "Presencial"
+    ],
+    "precio_desde": 1600,
+    "emoji": "🤖",
+    "color": "#4A90E2",
+    "techs": [
+      "Gestión de Proyectos",
+      "Inteligencia Artificial",
+      "Prompt Engineering",
+      "Automatización",
+      "Dashboard IA"
+    ],
+    "targetAudience": [
+      "adults",
+      "company"
+    ],
+    "audiencia_principal": "adults",
+    "publicable": true,
+    "valueProps": [
+      {
+        "title": "Productividad",
+        "desc": "Reduce tiempo de planificación y documentación, aumentando la eficiencia del equipo",
+        "icon": "⚡"
+      },
+      {
+        "title": "Liderazgo Estratégico",
+        "desc": "Enfoca al gestor en decisiones críticas y creatividad, mejorando la dirección del proyecto",
+        "icon": "🧠"
+      },
+      {
+        "title": "Adaptabilidad",
+        "desc": "Prepara al equipo para la transformación digital y el cambio continuo",
+        "icon": "🚀"
+      }
+    ],
+    "modulos": [
+      {
+        "id": "m1",
+        "titulo": "Módulo 1: Fundamentos de Gestión de Proyectos e IA",
+        "lecciones": 1,
+        "temas": [
+          "Ciclo de vida del proyecto",
+          "Introducción a IA",
+          "Primeros prompts"
+        ]
+      },
+      {
+        "id": "m2",
+        "titulo": "Módulo 2: Inicio, Integración y Alcance con IA",
+        "lecciones": 1,
+        "temas": [
+          "Acta de constitución",
+          "EDT/WBS",
+          "Definición de alcance"
+        ]
+      },
+      {
+        "id": "m3",
+        "titulo": "Módulo 3: Planificación y Cronogramas Inteligentes",
+        "lecciones": 1,
+        "temas": [
+          "Cronograma Gantt con IA",
+          "Estimación de recursos",
+          "Gestión de riesgos"
+        ]
+      },
+      {
+        "id": "m4",
+        "titulo": "Módulo 4: Ejecución, Monitoreo y Comunicación Automatizada",
+        "lecciones": 1,
+        "temas": [
+          "Dashboards IA",
+          "Resumen de reuniones",
+          "Reportes de avance"
+        ]
+      },
+      {
+        "id": "m5",
+        "titulo": "Módulo 5: Cierre y Lecciones Aprendidas con IA",
+        "lecciones": 1,
+        "temas": [
+          "Cierre inteligente",
+          "Lecciones aprendidas automáticas",
+          "Evaluación de ROI"
+        ]
+      }
+    ],
+    "resumen_rag": "Este curso enseña a gestores de proyectos a integrar herramientas de IA en todo el ciclo de vida del proyecto, desde la generación automática de documentos hasta el monitoreo inteligente. Está dirigido a profesionales y equipos de cualquier sector que buscan acelerar su gestión y aumentar su valor estratégico. Desarrolla habilidades blandas como liderazgo estratégico, toma de decisiones basada en datos y adaptabilidad al cambio digital."
+  }
+}

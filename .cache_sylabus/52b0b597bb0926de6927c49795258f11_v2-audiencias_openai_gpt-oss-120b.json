@@ -1,0 +1,117 @@
+{
+  "prompt_version": "v2-audiencias",
+  "model": "openai/gpt-oss-120b",
+  "data": {
+    "nombreCurso": "Alfabetización Digital para Adultos",
+    "descripcionCorta": "Domina tu celular y herramientas digitales con confianza y seguridad",
+    "edad_dirigida": "18 a 65 años",
+    "nivel": "Básico",
+    "duracion": "32 lecciones (4 meses)",
+    "modalidad": [
+      "Online",
+      "Presencial"
+    ],
+    "precio_desde": 1600,
+    "emoji": "📱",
+    "color": "#4A90E2",
+    "techs": [
+      "Smartphone",
+      "Google Workspace",
+      "Microsoft Office",
+      "Canva",
+      "Seguridad Digital"
+    ],
+    "targetAudience": [
+      "adults",
+      "teens"
+    ],
+    "audiencia_principal": "adults",
+    "publicable": true,
+    "valueProps": [
+      {
+        "title": "Confianza digital",
+        "desc": "Los padres se sienten seguros al usar su celular y PC",
+        "icon": "💪"
+      },
+      {
+        "title": "Comunicación segura",
+        "desc": "Aprenden a proteger su información y a evitar fraudes",
+        "icon": "🔒"
+      },
+      {
+        "title": "Productividad personal",
+        "desc": "Gestionan su tiempo y documentos con herramientas modernas",
+        "icon": "⏰"
+      },
+      {
+        "title": "Creatividad online",
+        "desc": "Diseñan contenidos visuales y promocionan ideas propias",
+        "icon": "🎨"
+      }
+    ],
+    "modulos": [
+      {
+        "id": "m1",
+        "titulo": "Módulo 1: ¿Cómo utilizar tu celular?",
+        "lecciones": 4,
+        "temas": [
+          "Encendido y configuración básica",
+          "Descarga y gestión de apps",
+          "Personalización y seguridad"
+        ]
+      },
+      {
+        "id": "m2",
+        "titulo": "Módulo 2: Conceptos básicos en tecnología",
+        "lecciones": 8,
+        "temas": [
+          "Hardware vs software",
+          "Correo electrónico",
+          "Videollamadas (Zoom, Meet)",
+          "Redes sociales y privacidad"
+        ]
+      },
+      {
+        "id": "m3",
+        "titulo": "Módulo 3: Uso de Google Workspace",
+        "lecciones": 5,
+        "temas": [
+          "Google Calendar y Maps",
+          "Gmail y Drive",
+          "Google Docs y Forms"
+        ]
+      },
+      {
+        "id": "m4",
+        "titulo": "Módulo 4: Paquetería Office",
+        "lecciones": 6,
+        "temas": [
+          "Word: creación y formato",
+          "Excel: tablas y cálculos",
+          "PowerPoint: presentaciones"
+        ]
+      },
+      {
+        "id": "m5",
+        "titulo": "Módulo 5: Ciudadanía Digital",
+        "lecciones": 6,
+        "temas": [
+          "Privacidad y derechos digitales",
+          "Inteligencia Artificial básica",
+          "Ciberseguridad y protección de datos"
+        ]
+      },
+      {
+        "id": "m6",
+        "titulo": "Módulo 6: Habilidades Digitales para Todos",
+        "lecciones": 5,
+        "temas": [
+          "Canva: diseño gráfico",
+          "Programación web básica",
+          "Marketing digital y gestión de contenido"
+        ]
+      }
+    ],
+    "resumen_rag": "Este curso introduce a los adultos en el uso seguro y eficaz de smartphones, computadoras y herramientas online. Está dirigido a personas mayores de 18 años que desean ganar autonomía digital. Desarrolla confianza, seguridad en la red, productividad y creatividad."
+  }
+}

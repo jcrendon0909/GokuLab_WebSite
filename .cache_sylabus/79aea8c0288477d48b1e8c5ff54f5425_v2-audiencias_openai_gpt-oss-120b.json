@@ -1,0 +1,125 @@
+{
+  "prompt_version": "v2-audiencias",
+  "model": "openai/gpt-oss-120b",
+  "data": {
+    "nombreCurso": "Programación Visual para Niños",
+    "descripcionCorta": "Crea videojuegos, animaciones y apps con Scratch, desarrollando creatividad y pensamiento lógico",
+    "edad_dirigida": "6 a 13 años",
+    "nivel": "Intermedio",
+    "duracion": "36 lecciones (1 año)",
+    "modalidad": [
+      "Híbrido"
+    ],
+    "precio_desde": 1600,
+    "emoji": "🎮",
+    "color": "#FF6F61",
+    "techs": [
+      "Scratch",
+      "Programación Visual",
+      "Animación",
+      "Videojuegos",
+      "Pensamiento Computacional"
+    ],
+    "targetAudience": [
+      "kids"
+    ],
+    "audiencia_principal": "kids",
+    "publicable": true,
+    "valueProps": [
+      {
+        "title": "Creatividad",
+        "desc": "Fomenta la imaginación y expresión digital del niño",
+        "icon": "🎨"
+      },
+      {
+        "title": "Pensamiento crítico",
+        "desc": "Desarrolla lógica y resolución de problemas",
+        "icon": "🧠"
+      },
+      {
+        "title": "Colaboración",
+        "desc": "Mejora habilidades de trabajo en equipo y comunicación",
+        "icon": "🤝"
+      },
+      {
+        "title": "Confianza",
+        "desc": "Incrementa la autoestima al presentar proyectos",
+        "icon": "🌟"
+      }
+    ],
+    "modulos": [
+      {
+        "id": "m1",
+        "titulo": "Módulo 1: Introducción al Mundo Digital",
+        "lecciones": 5,
+        "temas": [
+          "Algoritmos básicos",
+          "Ciclos",
+          "Eventos",
+          "Interactividad"
+        ]
+      },
+      {
+        "id": "m2",
+        "titulo": "Módulo 2: Navegando el Espacio Digital",
+        "lecciones": 5,
+        "temas": [
+          "Movimiento",
+          "Animación",
+          "Comunicación entre objetos"
+        ]
+      },
+      {
+        "id": "m3",
+        "titulo": "Módulo 3: Creación de Videojuegos",
+        "lecciones": 6,
+        "temas": [
+          "Diseño de niveles",
+          "Mecánicas de juego",
+          "Lógica de puntuación"
+        ]
+      },
+      {
+        "id": "m4",
+        "titulo": "Módulo 4: Lógica Avanzada",
+        "lecciones": 6,
+        "temas": [
+          "Lógica booleana",
+          "Ciclos condicionales",
+          "Trabajo colaborativo"
+        ]
+      },
+      {
+        "id": "m5",
+        "titulo": "Módulo 5: Variables y Datos",
+        "lecciones": 6,
+        "temas": [
+          "Variables",
+          "Tipos de datos",
+          "Construcción de chatbot"
+        ]
+      },
+      {
+        "id": "m6",
+        "titulo": "Módulo 6: Clones y Objetos",
+        "lecciones": 5,
+        "temas": [
+          "Programación orientada a objetos",
+          "Clones",
+          "Interfaces de usuario"
+        ]
+      },
+      {
+        "id": "m7",
+        "titulo": "Módulo 7: Proyecto Final",
+        "lecciones": 3,
+        "temas": [
+          "Proyecto integrador",
+          "Presentación final",
+          "Graduación"
+        ]
+      }
+    ],
+    "resumen_rag": "El Curso de Programación Visual para Niños enseña a crear videojuegos, animaciones y aplicaciones usando Scratch. Está dirigido a niños de 6 a 13 años que desean pasar de consumidores a creadores digitales. Desarrolla creatividad, pensamiento computacional y habilidades colaborativas que fortalecen la confianza y la resiliencia."
+  }
+}

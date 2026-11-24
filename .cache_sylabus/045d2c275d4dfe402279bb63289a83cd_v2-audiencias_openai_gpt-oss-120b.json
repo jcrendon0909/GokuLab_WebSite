@@ -1,0 +1,102 @@
+{
+  "prompt_version": "v2-audiencias",
+  "model": "openai/gpt-oss-120b",
+  "data": {
+    "nombreCurso": "Taller de Ingeniería de Prompts Creativos",
+    "descripcionCorta": "Convierte tus clases en aventuras mágicas con prompts que inspiran creatividad",
+    "edad_dirigida": "18 a 65 años",
+    "nivel": "Intermedio",
+    "duracion": "6 lecciones (2 semanas)",
+    "modalidad": [
+      "Online",
+      "Presencial",
+      "Híbrido"
+    ],
+    "precio_desde": 1600,
+    "emoji": "🪄",
+    "color": "#8A2BE2",
+    "techs": [
+      "Prompt Engineering",
+      "IA Creativa",
+      "Gamificación",
+      "Diseño Instruccional",
+      "Pensamiento Crítico"
+    ],
+    "targetAudience": [
+      "adults",
+      "company"
+    ],
+    "audiencia_principal": "adults",
+    "publicable": true,
+    "valueProps": [
+      {
+        "title": "Creatividad",
+        "desc": "Los docentes fomentan la imaginación y la innovación en sus alumnos",
+        "icon": "🎨"
+      },
+      {
+        "title": "Pensamiento crítico",
+        "desc": "Se potencia la capacidad de análisis y solución de problemas",
+        "icon": "🧠"
+      },
+      {
+        "title": "Colaboración",
+        "desc": "Se fortalece el trabajo en equipo y la comunicación",
+        "icon": "🤝"
+      }
+    ],
+    "modulos": [
+      {
+        "id": "m1",
+        "titulo": "Módulo 1: Ingredientes del Prompt",
+        "lecciones": 4,
+        "temas": [
+          "Claridad",
+          "Contexto",
+          "Tono",
+          "Originalidad"
+        ]
+      },
+      {
+        "id": "m2",
+        "titulo": "Módulo 2: Diseño de Prompts Creativos",
+        "lecciones": 5,
+        "temas": [
+          "Estrategias de gamificación",
+          "Uso de IA para generar ideas",
+          "Formato de consigna"
+        ]
+      },
+      {
+        "id": "m3",
+        "titulo": "Módulo 3: Dinámicas Grupales y Evaluación",
+        "lecciones": 4,
+        "temas": [
+          "El Caldero de Ingredientes",
+          "Duelo de Magos Mentores",
+          "Retroalimentación lúdica"
+        ]
+      },
+      {
+        "id": "m4",
+        "titulo": "Módulo 4: Integración de IA en el Aula",
+        "lecciones": 3,
+        "temas": [
+          "Herramientas de IA",
+          "Personalización del aprendizaje",
+          "Ética y control pedagógico"
+        ]
+      },
+      {
+        "id": "m5",
+        "titulo": "Módulo 5: Construcción de Comunidad",
+        "lecciones": 2,
+        "temas": [
+          "Biblioteca de ideas compartidas",
+          "Mural virtual y redes de mentores"
+        ]
+      }
+    ],
+    "resumen_rag": "El taller de Ingeniería de Prompts enseña a los docentes a crear consignas poderosas que estimulan la creatividad y el pensamiento crítico en el aula. Está dirigido a profesores y mentores educativos que desean integrar IA y metodologías lúdicas en sus clases. Desarrolla habilidades de creatividad, colaboración y reflexión crítica."
+  }
+}

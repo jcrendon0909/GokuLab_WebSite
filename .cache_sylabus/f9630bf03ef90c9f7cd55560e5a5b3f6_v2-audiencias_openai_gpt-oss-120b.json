@@ -1,0 +1,99 @@
+{
+  "prompt_version": "v2-audiencias",
+  "model": "openai/gpt-oss-120b",
+  "data": {
+    "nombreCurso": "Programación en Lua con Roblox Studio",
+    "descripcionCorta": "Crea y publica tu propio videojuego en Roblox aprendiendo Lua",
+    "edad_dirigida": "12 a 15 años",
+    "nivel": "Intermedio",
+    "duracion": "30 sesiones (45 horas)",
+    "modalidad": [
+      "Presencial",
+      "Online"
+    ],
+    "precio_desde": 1600,
+    "emoji": "🎮",
+    "color": "#4A90E2",
+    "techs": [
+      "Lua",
+      "Roblox Studio",
+      "Programación",
+      "Game Design",
+      "Publicación"
+    ],
+    "targetAudience": [
+      "teens"
+    ],
+    "audiencia_principal": "teens",
+    "publicable": true,
+    "valueProps": [
+      {
+        "title": "Pensamiento computacional",
+        "desc": "Desarrolla lógica y resolución de problemas",
+        "icon": "🧠"
+      },
+      {
+        "title": "Creatividad digital",
+        "desc": "Fomenta la creación de mundos y mecánicas propias",
+        "icon": "🎨"
+      },
+      {
+        "title": "Autonomía y confianza",
+        "desc": "Publica su juego y lo muestra a familiares",
+        "icon": "🚀"
+      },
+      {
+        "title": "Portafolio real",
+        "desc": "Construye evidencia tangible para futuros estudios",
+        "icon": "📁"
+      }
+    ],
+    "modulos": [
+      {
+        "id": "m1",
+        "titulo": "Módulo 1: Bases de Programación con Lua",
+        "lecciones": 10,
+        "temas": [
+          "Variables",
+          "Condicionales",
+          "Ciclos",
+          "Funciones",
+          "Tablas"
+        ]
+      },
+      {
+        "id": "m2",
+        "titulo": "Módulo 2: Lua dentro de Roblox — El Puente",
+        "lecciones": 6,
+        "temas": [
+          "Integración con objetos",
+          "Eventos de juego",
+          "Comunicación cliente‑servidor"
+        ]
+      },
+      {
+        "id": "m3",
+        "titulo": "Módulo 3: Construimos el Juego",
+        "lecciones": 10,
+        "temas": [
+          "Obby con monedas",
+          "Tienda y mejoras",
+          "Persistencia de datos",
+          "UI personalizada"
+        ]
+      },
+      {
+        "id": "m4",
+        "titulo": "Módulo 4: Pulido, Pruebas y Publicación",
+        "lecciones": 4,
+        "temas": [
+          "Depuración",
+          "Optimización",
+          "Configuración de privacidad",
+          "Publicación en Roblox"
+        ]
+      }
+    ],
+    "resumen_rag": "Programación en Lua con Roblox Studio es un curso práctico que enseña a crear y publicar videojuegos dentro de Roblox. Está dirigido a adolescentes de 12 a 15 años que ya conocen Roblox Studio y quieren pasar de jugar a programar. Desarrolla pensamiento computacional, creatividad digital y autonomía al publicar su propio juego."
+  }
+}

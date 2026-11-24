@@ -1,0 +1,142 @@
+{
+  "prompt_version": "v2-audiencias",
+  "model": "openai/gpt-oss-120b",
+  "data": {
+    "nombreCurso": "Diseño de Videojuegos en Unity",
+    "descripcionCorta": "Crea y publica videojuegos 3D y 2D con Unity desde cero",
+    "edad_dirigida": "12 a 16 años",
+    "nivel": "Intermedio",
+    "duracion": "7 módulos + Graduación (40‑64 h)",
+    "modalidad": [
+      "Presencial"
+    ],
+    "precio_desde": 1600,
+    "emoji": "🎮",
+    "color": "#1E90FF",
+    "techs": [
+      "Unity",
+      "C#",
+      "Diseño 3D",
+      "Animación",
+      "Publicación móvil"
+    ],
+    "targetAudience": [
+      "kids",
+      "teens"
+    ],
+    "audiencia_principal": "teens",
+    "publicable": true,
+    "valueProps": [
+      {
+        "title": "Creatividad",
+        "desc": "Estimula la imaginación y la capacidad de crear mundos propios",
+        "icon": "🎨"
+      },
+      {
+        "title": "Trabajo en equipo",
+        "desc": "Desarrolla colaboración y comunicación al crear proyectos grupales",
+        "icon": "🤝"
+      },
+      {
+        "title": "Pensamiento crítico",
+        "desc": "Mejora la resolución de problemas y la lógica de programación",
+        "icon": "🧠"
+      },
+      {
+        "title": "Confianza",
+        "desc": "Aumenta la seguridad al presentar y defender ideas ante público",
+        "icon": "💪"
+      }
+    ],
+    "modulos": [
+      {
+        "id": "m1",
+        "titulo": "Módulo 1: Bases de Unity",
+        "lecciones": 4,
+        "temas": [
+          "Introducción a Unity",
+          "Objetos y prefabs",
+          "Materiales y texturas",
+          "Prototipo nivel 3D"
+        ]
+      },
+      {
+        "id": "m2",
+        "titulo": "Módulo 2: Diseño de Niveles 3D",
+        "lecciones": 4,
+        "temas": [
+          "Paisaje y Terrain",
+          "Iluminación y partículas",
+          "Construcción de niveles",
+          "Publicación WebGL"
+        ]
+      },
+      {
+        "id": "m3",
+        "titulo": "Módulo 3: Juego de plataformas 3D",
+        "lecciones": 4,
+        "temas": [
+          "Programación C# básica",
+          "Mecánicas de movimiento",
+          "Colisiones y UI",
+          "Exportación Android"
+        ]
+      },
+      {
+        "id": "m4",
+        "titulo": "Módulo 4: Tráiler y Video CG",
+        "lecciones": 4,
+        "temas": [
+          "Creación de tráiler",
+          "Animación de cámara",
+          "Edición de video",
+          "Presentación de proyecto"
+        ]
+      },
+      {
+        "id": "m5",
+        "titulo": "Módulo 5: Shooter 2D para Android",
+        "lecciones": 4,
+        "temas": [
+          "Desarrollo 2D",
+          "Física y disparos",
+          "Optimización móvil",
+          "Publicación Play Market"
+        ]
+      },
+      {
+        "id": "m6",
+        "titulo": "Módulo 6: Juego de carreras 3D",
+        "lecciones": 4,
+        "temas": [
+          "Diseño de pista",
+          "Mecánicas de carrera",
+          "IA básica",
+          "Polish y publicación"
+        ]
+      },
+      {
+        "id": "m7",
+        "titulo": "Módulo 7: RPG 3D completo",
+        "lecciones": 4,
+        "temas": [
+          "Narrativa y quests",
+          "Sistemas de inventario",
+          "Animaciones avanzadas",
+          "Portafolio final"
+        ]
+      },
+      {
+        "id": "g1",
+        "titulo": "Graduación: Portafolio Unity",
+        "lecciones": 1,
+        "temas": [
+          "Compilación de proyectos",
+          "Presentación profesional",
+          "Feedback y certificación"
+        ]
+      }
+    ],
+    "resumen_rag": "El curso enseña a crear y publicar videojuegos 3D y 2D usando Unity y C#. Está dirigido a adolescentes de 12‑16 años que quieren pasar de jugadores a creadores. Desarrolla creatividad, trabajo en equipo, pensamiento crítico y confianza en la presentación de ideas."
+  }
+}

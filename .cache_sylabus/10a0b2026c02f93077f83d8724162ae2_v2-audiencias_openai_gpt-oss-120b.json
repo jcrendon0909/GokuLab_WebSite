@@ -1,0 +1,85 @@
+{
+  "prompt_version": "v2-audiencias",
+  "model": "openai/gpt-oss-120b",
+  "data": {
+    "nombreCurso": "Curso Básico de Robótica",
+    "descripcionCorta": "Construye y programa robots reales, desarrolla ingenio y trabajo en equipo",
+    "edad_dirigida": "8 a 16 años",
+    "nivel": "Básico",
+    "duracion": "40-45 horas (3 niveles)",
+    "modalidad": [
+      "Presencial"
+    ],
+    "precio_desde": 1600,
+    "emoji": "🤖",
+    "color": "#4A90E2",
+    "techs": [
+      "Robótica",
+      "Programación",
+      "Python",
+      "Electrónica",
+      "Diseño Mecánico"
+    ],
+    "targetAudience": [
+      "kids",
+      "teens"
+    ],
+    "audiencia_principal": "teens",
+    "publicable": true,
+    "valueProps": [
+      {
+        "title": "Pensamiento ingenieril",
+        "desc": "Desarrolla la capacidad de resolver problemas complejos",
+        "icon": "🛠️"
+      },
+      {
+        "title": "Trabajo en equipo",
+        "desc": "Fomenta la colaboración y comunicación entre pares",
+        "icon": "🤝"
+      },
+      {
+        "title": "Confianza y autonomía",
+        "desc": "Incrementa la seguridad al enfrentar desafíos tecnológicos",
+        "icon": "🚀"
+      },
+      {
+        "title": "Creatividad e innovación",
+        "desc": "Estimula la imaginación para diseñar soluciones únicas",
+        "icon": "🎨"
+      }
+    ],
+    "modulos": [
+      {
+        "id": "m1",
+        "titulo": "Módulo 1: Exploradores – Mecánica básica y sensores",
+        "lecciones": 5,
+        "temas": [
+          "Construcción mecánica",
+          "Uso de sensores",
+          "Programación por bloques básica"
+        ]
+      },
+      {
+        "id": "m2",
+        "titulo": "Módulo 2: Inventores – Lógica y programación visual",
+        "lecciones": 5,
+        "temas": [
+          "Programación por bloques avanzada",
+          "Algoritmos y decisiones",
+          "Retos de laberinto y sumo"
+        ]
+      },
+      {
+        "id": "m3",
+        "titulo": "Módulo 3: Maestros – Python y optimización",
+        "lecciones": 5,
+        "temas": [
+          "Programación en Python",
+          "Transmisiones mecánicas",
+          "Misión de rescate"
+        ]
+      }
+    ],
+    "resumen_rag": "El Curso Básico de Robótica de GŌKULAB enseña a niños y adolescentes a diseñar, construir y programar robots reales mediante bloques visuales y Python. Está dirigido a jóvenes de 8 a 16 años, tanto principiantes como con conocimientos básicos, que desean explorar la ingeniería y la tecnología. Desarrolla pensamiento ingenieril, trabajo en equipo, creatividad y confianza para resolver problemas complejos."
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "prompt_version": "v2-audiencias",
+  "model": "openai/gpt-oss-120b",
+  "data": {
+    "nombreCurso": "Gobernanza de IA para Ciberseguridad",
+    "descripcionCorta": "Marco práctico para gobernar IA y automatización, reduciendo riesgos y protegiendo datos",
+    "edad_dirigida": "18 a 65 años",
+    "nivel": "Avanzado",
+    "duracion": "1 sesión (60 minutos)",
+    "modalidad": [
+      "Online"
+    ],
+    "precio_desde": 1600,
+    "emoji": "🛡️",
+    "color": "#1E3A8A",
+    "techs": [
+      "IA",
+      "Ciberseguridad",
+      "Gobernanza",
+      "Automatización",
+      "Data Privacy"
+    ],
+    "targetAudience": [
+      "adults",
+      "company"
+    ],
+    "audiencia_principal": "company",
+    "publicable": true,
+    "valueProps": [
+      {
+        "title": "Toma de decisiones informada",
+        "desc": "Los líderes podrán evaluar riesgos de IA y elegir soluciones seguras",
+        "icon": "🧠"
+      },
+      {
+        "title": "Gestión de riesgos",
+        "desc": "Reduce exposición de datos sensibles y protege la reputación corporativa",
+        "icon": "🔐"
+      },
+      {
+        "title": "Liderazgo en innovación",
+        "desc": "Fomenta la adopción responsable de IA sin frenar la transformación digital",
+        "icon": "🚀"
+      }
+    ],
+    "modulos": [
+      {
+        "id": "m1",
+        "titulo": "Bloque 1: Contexto IA y riesgos emergentes",
+        "lecciones": 1,
+        "temas": [
+          "Evolución IA",
+          "Superficie de ataque por automatización",
+          "Datos sensibles y terceros"
+        ]
+      },
+      {
+        "id": "m2",
+        "titulo": "Bloque 2: Riesgos clave para TI y Ciberseguridad",
+        "lecciones": 1,
+        "temas": [
+          "Exposición de información interna",
+          "Plataformas IA de terceros",
+          "Automatizaciones no gobernadas"
+        ]
+      },
+      {
+        "id": "m3",
+        "titulo": "Bloque 3: Framework práctico de gobernanza de IA",
+        "lecciones": 1,
+        "temas": [
+          "Inventario y clasificación",
+          "Políticas y límites de uso",
+          "Controles para datos y terceros",
+          "Monitoreo y ajuste"
+        ]
+      },
+      {
+        "id": "m4",
+        "titulo": "Bloque 4: Patrones seguros y buenas prácticas",
+        "lecciones": 1,
+        "temas": [
+          "Diseño con controles de ciberseguridad",
+          "Guía de evaluación de iniciativas IA",
+          "Ejemplos en manufactura y consumo"
+        ]
+      },
+      {
+        "id": "m5",
+        "titulo": "Bloque 5: Checklist ejecutivo y roadmap",
+        "lecciones": 1,
+        "temas": [
+          "Checklist de 5‑7 puntos",
+          "Roadmap de 90 días",
+          "Pasos para madurar la gobernanza"
+        ]
+      },
+      {
+        "id": "m6",
+        "titulo": "Bloque 6: Preguntas y discusión guiada",
+        "lecciones": 1,
+        "temas": [
+          "Resolución de dudas específicas",
+          "Análisis de casos reales"
+        ]
+      }
+    ],
+    "resumen_rag": "Este taller brinda a líderes de TI, Ciberseguridad y Desarrollo un marco práctico para gobernar IA y automatización. Está dirigido a gerentes y directores de empresas, especialmente embotelladores, que buscan proteger datos sensibles y mitigar riesgos. Desarrolla habilidades de gestión de riesgos, toma de decisiones informada y liderazgo en innovación responsable"
+  }
+}

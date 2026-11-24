@@ -1,0 +1,136 @@
+{
+  "prompt_version": "v2-audiencias",
+  "model": "openai/gpt-oss-120b",
+  "data": {
+    "nombreCurso": "Python Pro",
+    "descripcionCorta": "Conviértete en un desarrollador profesional de Python antes del bachillerato",
+    "edad_dirigida": "14 a 17 años",
+    "nivel": "Avanzado",
+    "duracion": "64 lecciones (2 años)",
+    "modalidad": [
+      "Presencial",
+      "Online",
+      "Híbrido"
+    ],
+    "precio_desde": 1600,
+    "emoji": "🐍",
+    "color": "#4B8BBE",
+    "techs": [
+      "Python",
+      "PyGame",
+      "PyQt5",
+      "Flask",
+      "Pandas"
+    ],
+    "targetAudience": [
+      "teens"
+    ],
+    "audiencia_principal": "teens",
+    "publicable": true,
+    "valueProps": [
+      {
+        "title": "Pensamiento crítico",
+        "desc": "Tu hijo aprenderá a resolver problemas complejos con lógica avanzada",
+        "icon": "🧠"
+      },
+      {
+        "title": "Trabajo en equipo",
+        "desc": "Desarrollará habilidades colaborativas usando metodologías Agile y Scrum",
+        "icon": "🤝"
+      },
+      {
+        "title": "Emprendimiento",
+        "desc": "Adquirirá la mentalidad de crear startups y presentar proyectos a inversores",
+        "icon": "🚀"
+      },
+      {
+        "title": "Comunicación profesional",
+        "desc": "Mejorará su capacidad de presentar ideas técnicas a audiencias diversas",
+        "icon": "🗣️"
+      }
+    ],
+    "modulos": [
+      {
+        "id": "m1",
+        "titulo": "Módulo 1: Tipos de Datos y Fundamentos",
+        "lecciones": 4,
+        "temas": [
+          "Variables y tipos avanzados",
+          "Gestión de memoria",
+          "Debugging y herramientas"
+        ]
+      },
+      {
+        "id": "m2",
+        "titulo": "Módulo 2: Algoritmos y Lógica Computacional",
+        "lecciones": 4,
+        "temas": [
+          "Condicionales avanzadas",
+          "Patrones de diseño básicos",
+          "Complejidad temporal"
+        ]
+      },
+      {
+        "id": "m3",
+        "titulo": "Módulo 3: Métodos de Organización de Código",
+        "lecciones": 4,
+        "temas": [
+          "Arquitectura de software",
+          "Funciones de orden superior",
+          "Git y trabajo colaborativo"
+        ]
+      },
+      {
+        "id": "m4",
+        "titulo": "Módulo 4: Estructuras de Datos Avanzadas",
+        "lecciones": 4,
+        "temas": [
+          "Listas y diccionarios avanzados",
+          "JSON y APIs",
+          "Optimización de rendimiento"
+        ]
+      },
+      {
+        "id": "m5",
+        "titulo": "Módulo 5: Programación Orientada a Objetos",
+        "lecciones": 4,
+        "temas": [
+          "Clases avanzadas",
+          "Patrones de diseño OOP",
+          "Testing y debugging"
+        ]
+      },
+      {
+        "id": "m6",
+        "titulo": "Módulo 6: Juegos 2D Profesionales",
+        "lecciones": 6,
+        "temas": [
+          "PyGame avanzado",
+          "Física y colisiones",
+          "Packaging y distribución"
+        ]
+      },
+      {
+        "id": "m7",
+        "titulo": "Módulo 7: Aplicaciones de Escritorio",
+        "lecciones": 6,
+        "temas": [
+          "PyQt5 UI/UX",
+          "Control de versiones con Git",
+          "CI/CD básico"
+        ]
+      },
+      {
+        "id": "m8",
+        "titulo": "Módulo 8: Repaso y Consolidación",
+        "lecciones": 2,
+        "temas": [
+          "Revisión de algoritmos",
+          "Cultura startup",
+          "Preparación de proyecto final"
+        ]
+      }
+    ],
+    "resumen_rag": "El curso Python Pro forma a adolescentes de 14‑17 años en desarrollo profesional de software con Python. Está dirigido a jóvenes que desean crear aplicaciones, juegos, IA y startups antes de la universidad. Desarrolla pensamiento crítico, trabajo en equipo, emprendimiento y comunicación profesional."
+  }
+}

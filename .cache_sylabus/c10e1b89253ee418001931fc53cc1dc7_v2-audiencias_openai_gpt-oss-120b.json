@@ -1,0 +1,83 @@
+{
+  "prompt_version": "v2-audiencias",
+  "model": "openai/gpt-oss-120b",
+  "data": {
+    "nombreCurso": "Matemáticas: Suma y Resta con Método Singapur",
+    "descripcionCorta": "Aprende suma y resta con juegos y método Singapur",
+    "edad_dirigida": "5 a 12 años",
+    "nivel": "Básico",
+    "duracion": "4 semanas (4 lecciones)",
+    "modalidad": [
+      "Presencial",
+      "Online",
+      "Híbrido"
+    ],
+    "precio_desde": 1600,
+    "emoji": "🎓",
+    "color": "#FFB74D",
+    "techs": [
+      "Singapur",
+      "Manipulativos",
+      "Modelado",
+      "Juego"
+    ],
+    "targetAudience": [
+      "kids"
+    ],
+    "audiencia_principal": "kids",
+    "publicable": true,
+    "valueProps": [
+      {
+        "title": "Pensamiento lógico",
+        "desc": "Desarrolla su capacidad de razonar y analizar situaciones cotidianas",
+        "icon": "🧠"
+      },
+      {
+        "title": "Autonomía",
+        "desc": "Fomenta la independencia al resolver problemas por sí mismo",
+        "icon": "🚀"
+      },
+      {
+        "title": "Habilidades sociales",
+        "desc": "Mejora la comunicación y colaboración a través de juegos grupales",
+        "icon": "🤝"
+      }
+    ],
+    "modulos": [
+      {
+        "id": "m1",
+        "titulo": "Módulo 1: Conceptos Concretos de Suma y Resta",
+        "lecciones": 4,
+        "temas": [
+          "Conteo y reconocimiento",
+          "Sumas con objetos",
+          "Restas con objetos",
+          "Juegos de manipulación"
+        ]
+      },
+      {
+        "id": "m2",
+        "titulo": "Módulo 2: Visualización Pictórica",
+        "lecciones": 4,
+        "temas": [
+          "Dibujo de problemas",
+          "Modelos de barras",
+          "Representación gráfica",
+          "Transición a símbolos"
+        ]
+      },
+      {
+        "id": "m3",
+        "titulo": "Módulo 3: Abstracción y Operaciones",
+        "lecciones": 4,
+        "temas": [
+          "Ecuaciones simples",
+          "Familias de operaciones",
+          "Desafíos mentales",
+          "Reforzamiento de conceptos"
+        ]
+      }
+    ],
+    "resumen_rag": "Este curso introduce a los niños la suma y la resta usando el método Singapur, combinando actividades concretas, pictóricas y abstractas. Está dirigido a niños de 5 a 12 años que necesitan desarrollar habilidades matemáticas básicas de forma lúdica. Fomenta el pensamiento lógico, la autonomía y la confianza en la resolución de problemas."
+  }
+}

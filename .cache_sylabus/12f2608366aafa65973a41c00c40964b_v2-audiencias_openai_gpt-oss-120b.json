@@ -1,0 +1,95 @@
+{
+  "prompt_version": "v2-audiencias",
+  "model": "openai/gpt-oss-120b",
+  "data": {
+    "nombreCurso": "Programación y Diseño con Minecraft Education",
+    "descripcionCorta": "Crea y programa mundos 3D, puzzles, RPG y arcade en Minecraft",
+    "edad_dirigida": "8 a 14 años",
+    "nivel": "Intermedio",
+    "duracion": "26 lecciones (52 horas)",
+    "modalidad": [
+      "Híbrido"
+    ],
+    "precio_desde": 1600,
+    "emoji": "🎮",
+    "color": "#1E90FF",
+    "techs": [
+      "Minecraft Education",
+      "Programación con bloques",
+      "Diseño 3D",
+      "Narrativa interactiva",
+      "Game Design"
+    ],
+    "targetAudience": [
+      "kids",
+      "teens"
+    ],
+    "audiencia_principal": "kids",
+    "publicable": true,
+    "valueProps": [
+      {
+        "title": "Pensamiento computacional",
+        "desc": "Desarrolla lógica y resolución de problemas",
+        "icon": "🧠"
+      },
+      {
+        "title": "Trabajo en equipo",
+        "desc": "Fomenta colaboración y comunicación",
+        "icon": "🤝"
+      },
+      {
+        "title": "Creatividad digital",
+        "desc": "Estimula la imaginación y el diseño",
+        "icon": "🎨"
+      },
+      {
+        "title": "Confianza tecnológica",
+        "desc": "Aumenta la seguridad al crear, no solo usar",
+        "icon": "🚀"
+      }
+    ],
+    "modulos": [
+      {
+        "id": "m1",
+        "titulo": "Módulo 1: Fundamentos y Diseño Espacial",
+        "lecciones": 5,
+        "temas": [
+          "Introducción a Minecraft Education",
+          "Construcción de mundos jugables",
+          "Diseño espacial 3D"
+        ]
+      },
+      {
+        "id": "m2",
+        "titulo": "Módulo 2: El Agente y el Laboratorio de Puzzles",
+        "lecciones": 7,
+        "temas": [
+          "Programación del Agente",
+          "Diseño de puzzles con código",
+          "Lógica de bloques"
+        ]
+      },
+      {
+        "id": "m3",
+        "titulo": "Módulo 3: Aventura RPG y Narrativa",
+        "lecciones": 7,
+        "temas": [
+          "Creación de narrativas RPG",
+          "Diálogos y decisiones con JSON",
+          "Desarrollo de personajes"
+        ]
+      },
+      {
+        "id": "m4",
+        "titulo": "Módulo 4: El Desafío Arcade",
+        "lecciones": 7,
+        "temas": [
+          "Diseño de juego arcade",
+          "Sistema de puntos y power-ups",
+          "Torneo final"
+        ]
+      }
+    ],
+    "resumen_rag": "Programación y Diseño con Minecraft Education es un curso práctico donde los estudiantes crean y programan mundos, puzzles, aventuras RPG y juegos arcade dentro de Minecraft. Está dirigido a niños de 8 a 14 años que quieren pasar de jugar a crear experiencias digitales. Desarrolla pensamiento computacional, creatividad, trabajo colaborativo y confianza en la tecnología."
+  }
+}

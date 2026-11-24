@@ -1,0 +1,95 @@
+{
+  "prompt_version": "v2-audiencias",
+  "model": "openai/gpt-oss-120b",
+  "data": {
+    "nombreCurso": "Creadores Digitales Integrales: El Arte Detrás del Código",
+    "descripcionCorta": "Aprende a diseñar y animar personajes digitales con FlipaClip en 4 sesiones",
+    "edad_dirigida": "6 a 13 años",
+    "nivel": "Básico",
+    "duracion": "4 sesiones (6 horas)",
+    "modalidad": [
+      "Presencial"
+    ],
+    "precio_desde": 1600,
+    "emoji": "🎨",
+    "color": "#FF6F61",
+    "techs": [
+      "FlipaClip",
+      "Diseño Digital",
+      "Animación 2D",
+      "Storytelling",
+      "Teoría del Color"
+    ],
+    "targetAudience": [
+      "kids",
+      "teens"
+    ],
+    "audiencia_principal": "kids",
+    "publicable": true,
+    "valueProps": [
+      {
+        "title": "Creatividad",
+        "desc": "Fomenta la imaginación y expresión artística de tu hijo",
+        "icon": "🎨"
+      },
+      {
+        "title": "Comunicación",
+        "desc": "Mejora la capacidad de contar historias y expresar ideas",
+        "icon": "🗣️"
+      },
+      {
+        "title": "Pensamiento crítico",
+        "desc": "Desarrolla análisis visual y toma de decisiones",
+        "icon": "🧠"
+      },
+      {
+        "title": "Trabajo en equipo",
+        "desc": "Promueve la colaboración y el feedback constructivo",
+        "icon": "🤝"
+      }
+    ],
+    "modulos": [
+      {
+        "id": "m1",
+        "titulo": "Módulo 1: Fundamentos del Diseño e Introducción a FlipaClip",
+        "lecciones": 1,
+        "temas": [
+          "Teoría de Diseño",
+          "Uso de FlipaClip",
+          "Práctica de Calentamiento"
+        ]
+      },
+      {
+        "id": "m2",
+        "titulo": "Módulo 2: Storytelling y Diseño de Personaje",
+        "lecciones": 1,
+        "temas": [
+          "Arte del Storytelling",
+          "Creación del Protagonista",
+          "Composición de Fondos"
+        ]
+      },
+      {
+        "id": "m3",
+        "titulo": "Módulo 3: Principios de Animación y Laboratorio",
+        "lecciones": 1,
+        "temas": [
+          "Principios de Animación",
+          "Onion Skin",
+          "Laboratorio de Animación"
+        ]
+      },
+      {
+        "id": "m4",
+        "titulo": "Módulo 4: Galería Digital y Cierre",
+        "lecciones": 1,
+        "temas": [
+          "Exportación",
+          "Presentación en Galería",
+          "Clausura y Testimonios"
+        ]
+      }
+    ],
+    "resumen_rag": "El taller Creadores Digitales Integrales enseña a niños a diseñar y animar personajes digitales usando FlipaClip. Está dirigido a niños de 6 a 13 años que desean explorar el arte y la tecnología de forma lúdica. Desarrolla creatividad, comunicación y pensamiento crítico mientras aprenden a contar historias visuales."
+  }
+}
