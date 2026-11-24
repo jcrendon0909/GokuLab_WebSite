@@ -76,7 +76,6 @@ export function DebugCursos() {
 
     setSaveStatus(prev => ({ ...prev, [slug]: "saving" }));
 
-    // Limpiamos los campos vacíos para no sobreescribir con null
     const payload: any = { ...editData };
     Object.keys(payload).forEach(k => {
       if (payload[k] === "" || payload[k] === null) delete payload[k];
@@ -97,7 +96,7 @@ export function DebugCursos() {
       setSaveStatus(prev => ({ ...prev, [slug]: "ok" }));
       setTimeout(() => setSaveStatus(prev => ({ ...prev, [slug]: "ok" })), 2000);
       setEditingId(null);
-      cargarCursos(); // Recargamos para ver los cambios
+      cargarCursos();
     } catch (error) {
       console.error(error);
       setSaveStatus(prev => ({ ...prev, [slug]: "error" }));
@@ -109,26 +108,27 @@ export function DebugCursos() {
     c.id.toLowerCase().includes(search.toLowerCase())
   );
 
-  if (isLoading) return <div className="p-10 text-white bg-[#050A14] min-h-screen">Cargando datos...</div>;
+  if (isLoading) return <div className="pt-32 px-10 text-white bg-[#050A14] min-h-screen">Cargando datos...</div>;
 
   return (
-    <div className="p-6 md:p-10 text-white bg-[#050A14] min-h-screen font-sans">
+    /* 🔥 FIX: pt-32 para esquivar el Header fixed */
+    <div className="pt-32 pb-10 px-6 md:px-10 text-white bg-[#050A14] min-h-screen font-sans">
       
-      {/* HEADER Y TOKEN */}
       <div className="max-w-7xl mx-auto mb-10">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <h1 className="text-3xl font-black mb-2">🛠️ Panel de Administración de Cursos</h1>
             <p className="text-gray-400">Edita campos básicos. Los cambios se guardan en MongoDB al instante.</p>
           </div>
-          <div className="flex items-center gap-2 bg-white/5 p-2 rounded-xl border border-white/10">
+          {/* Token Input con relative y z-10 para asegurar clics */}
+          <div className="relative z-10 flex items-center gap-2 bg-white/5 p-2 rounded-xl border border-white/20 hover:border-white/40 transition-colors">
             <Lock size={18} className={adminToken ? "text-green-400" : "text-red-400"} />
             <input 
               type="password"
               placeholder="Pega tu ADMIN_TOKEN aquí"
               value={adminToken}
               onChange={(e) => handleSaveToken(e.target.value)}
-              className="bg-transparent outline-none text-sm w-64 px-2 text-white"
+              className="bg-transparent outline-none text-sm w-64 px-2 text-white placeholder-gray-500"
             />
             <button onClick={cargarCursos} className="p-2 hover:bg-white/10 rounded-lg transition-colors">
               <RefreshCw size={18} />
@@ -136,7 +136,6 @@ export function DebugCursos() {
           </div>
         </div>
 
-        {/* BUSCADOR */}
         <div className="mt-6 relative">
           <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
           <input 
@@ -149,7 +148,6 @@ export function DebugCursos() {
         </div>
       </div>
 
-      {/* GRID DE CURSOS */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {filteredCursos.map((curso) => {
           const imgUrl = `https://media.gokulab.mx/Galery/${curso.imgKey}`;
@@ -160,7 +158,6 @@ export function DebugCursos() {
           return (
             <div key={curso.id} className={`border rounded-3xl p-5 flex flex-col gap-4 transition-all ${hasError && !isEditing ? 'bg-red-900/10 border-red-500/30' : 'bg-white/5 border-white/10'}`}>
               
-              {/* ID Y ESTADO */}
               <div className="flex justify-between items-start">
                 <div>
                   <p className="text-xs text-gray-400">ID: <span className="font-mono text-white select-all">{curso.id}</span></p>
@@ -173,7 +170,6 @@ export function DebugCursos() {
                 )}
               </div>
 
-              {/* IMAGEN */}
               <div className="relative h-40 bg-black/50 rounded-xl overflow-hidden">
                 <img 
                   src={imgUrl} 
@@ -184,7 +180,6 @@ export function DebugCursos() {
                 {hasError && <div className="absolute inset-0 flex items-center justify-center bg-black/70 text-red-400 font-bold text-sm">❌ 404 - No está en R2</div>}
               </div>
 
-              {/* MODO LECTURA */}
               {!isEditing && (
                 <>
                   <h3 className="text-lg font-black">{curso.title}</h3>
@@ -203,7 +198,6 @@ export function DebugCursos() {
                 </>
               )}
 
-              {/* MODO EDICIÓN */}
               {isEditing && (
                 <div className="space-y-3">
                   <div>
@@ -225,13 +219,11 @@ export function DebugCursos() {
                     </div>
                   </div>
                   
-                  {/* IMGKEY */}
                   <div>
                     <label className="block text-xs text-gray-400 mb-1">Nombre del archivo en R2</label>
                     <input type="text" value={editData.imgKey} onChange={(e) => handleFieldChange("imgKey", e.target.value)} className="w-full bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[#00C9FF]" />
                   </div>
 
-                  {/* AUDIENCES */}
                   <div>
                     <label className="block text-xs text-gray-400 mb-1">Target Audience (puede ser múltiple)</label>
                     <div className="flex flex-wrap gap-2">
@@ -243,7 +235,6 @@ export function DebugCursos() {
                     </div>
                   </div>
 
-                  {/* AUDIENCIA PRINCIPAL */}
                   <div>
                     <label className="block text-xs text-gray-400 mb-1">Audiencia Principal (SEO)</label>
                     <select value={editData.audiencia_principal} onChange={(e) => handleFieldChange("audiencia_principal", e.target.value)} className="w-full bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[#00C9FF]">
@@ -254,7 +245,6 @@ export function DebugCursos() {
                     </select>
                   </div>
 
-                  {/* ORDENES */}
                   <div>
                     <label className="block text-xs text-gray-400 mb-1">Órdenes por Categoría</label>
                     <div className="grid grid-cols-2 gap-2">
@@ -265,7 +255,6 @@ export function DebugCursos() {
                     </div>
                   </div>
 
-                  {/* BOTONES */}
                   <div className="flex gap-2 pt-2">
                     <button onClick={() => saveChanges(curso.id)} disabled={status === "saving"} className="flex-1 flex items-center justify-center gap-2 py-2 bg-[#10B981] text-white font-bold rounded-lg hover:bg-[#059669] transition-colors disabled:opacity-50">
                       {status === "saving" ? "Guardando..." : status === "ok" ? <><CheckCircle size={16}/> Guardado</> : status === "error" ? <><AlertCircle size={16}/> Error</> : <><Save size={16}/> Guardar</>}
