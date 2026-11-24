@@ -110,5 +110,11 @@ async function generateSEOAssets() {
     console.error("❌ ERROR FATAL:", error.message);
     process.exit(1); 
   }
+  // 🔥 Generar HTML para el panel de administración (debug-cursos)
+    let adminHtml = baseHtml;
+    adminHtml = adminHtml.replace(/<title>.*?<\/title>/, `<title>Panel de Administración | GōkuLab</title>`);
+    const adminDir = path.join(distDir, 'debug-cursos');
+    if (!fs.existsSync(adminDir)) fs.mkdirSync(adminDir, { recursive: true });
+    fs.writeFileSync(path.join(adminDir, 'index.html'), adminHtml);
 }
 generateSEOAssets();
