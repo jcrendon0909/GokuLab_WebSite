@@ -35,7 +35,6 @@ async function generateSEOAssets() {
     const baseHtml = fs.readFileSync(baseHtmlPath, 'utf-8');
 
     cursos.forEach(curso => {
-      // 🔥 Usamos audiencia_principal si existe
       let segment = curso.audiencia_principal;
       
       if (!segment) {
@@ -87,7 +86,7 @@ async function generateSEOAssets() {
       fs.writeFileSync(path.join(courseDir, 'index.html'), courseHtml);
     });
 
-    // Generar HTML para las categorías (Evita el 404 al recargar)
+    // Generar HTML para las categorías
     const categorias = [
       { slug: 'ninos', title: 'Cursos para Niños' },
       { slug: 'adolescentes', title: 'Cursos para Adolescentes' },
@@ -103,18 +102,19 @@ async function generateSEOAssets() {
       fs.writeFileSync(path.join(catDir, 'index.html'), catHtml);
     });
 
-    xml += `</urlset>`;
-    fs.writeFileSync(path.join(distDir, 'sitemap.xml'), xml);
-    console.log(`✅ Sitemap y HTML generados para ${cursos.length} cursos y 4 categorías.`);
-  } catch (error) {
-    console.error("❌ ERROR FATAL:", error.message);
-    process.exit(1); 
-  }
-  // 🔥 Generar HTML para el panel de administración (debug-cursos)
+    // 🔥 CORRECCIÓN: Generar HTML para el panel de administración (debug-cursos)
     let adminHtml = baseHtml;
     adminHtml = adminHtml.replace(/<title>.*?<\/title>/, `<title>Panel de Administración | GōkuLab</title>`);
     const adminDir = path.join(distDir, 'debug-cursos');
     if (!fs.existsSync(adminDir)) fs.mkdirSync(adminDir, { recursive: true });
     fs.writeFileSync(path.join(adminDir, 'index.html'), adminHtml);
+
+    xml += `</urlset>`;
+    fs.writeFileSync(path.join(distDir, 'sitemap.xml'), xml);
+    console.log(`✅ Sitemap, cursos, categorías y panel de admin generados correctamente.`);
+  } catch (error) {
+    console.error("❌ ERROR FATAL:", error.message);
+    process.exit(1); 
+  }
 }
 generateSEOAssets();
