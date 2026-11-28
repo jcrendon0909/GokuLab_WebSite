@@ -1,4 +1,3 @@
-// src/app/pages/DebugCursos.tsx
 import { useState, useEffect } from "react";
 import { fetchAllCourses } from "../../Data/courseService";
 import { CourseData } from "../../Data/courses";
@@ -14,6 +13,7 @@ export function DebugCursos() {
   const [adminToken, setAdminToken] = useState("");
   const [search, setSearch] = useState("");
   const [saveStatus, setSaveStatus] = useState<Record<string, "saving" | "ok" | "error">>({});
+  const [timestamp] = useState(Date.now()); // 🔥 Para forzar recarga de imágenes en el panel
 
   useEffect(() => {
     const savedToken = localStorage.getItem("goku_admin_token") || "";
@@ -36,7 +36,6 @@ export function DebugCursos() {
 
   const startEdit = (curso: CourseData) => {
     setEditingId(curso.id);
-    // Limpiamos el ?v= para que el usuario edite solo el nombre del archivo
     const cleanImgKey = curso.imgKey.split('?')[0];
     
     setEditData({
@@ -153,9 +152,9 @@ export function DebugCursos() {
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {filteredCursos.map((curso) => {
-          // 🔥 FIX: Usamos split('?')[0] para que la previsualización funcione sin problemas de caché
           const cleanImgKey = curso.imgKey.split('?')[0];
-          const imgUrl = `https://media.gokulab.mx/Galery/${cleanImgKey}`;
+          // 🔥 Forzamos la recarga de la imagen en el panel para que no se vea la vieja en caché
+          const imgUrl = `https://media.gokulab.mx/Galery/${cleanImgKey}?t=${timestamp}`;
           const hasError = errorImages[curso.id];
           const isEditing = editingId === curso.id;
           const status = saveStatus[curso.id];
