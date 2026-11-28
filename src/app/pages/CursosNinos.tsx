@@ -24,7 +24,7 @@ export function CursosNinos() {
         ...c,
         img: c.imgKey ? `https://media.gokulab.mx/Galery/${c.imgKey}` : "https://media.gokulab.mx/Galery/pagina-principal1.jpg"
       }))
-      .sort((a, b) => (a.orden_kids || 99) - (b.orden_kids || 99)); // 🔥 ORDEN
+      .sort((a, b) => (a.orden_kids || 99) - (b.orden_kids || 99));
   }, [cursos]);
 
   const filtered = dynamicCourses.filter(c => activeCategory === "todos" || c.title.toLowerCase().includes(activeCategory.toLowerCase()));
@@ -56,7 +56,7 @@ export function CursosNinos() {
               {filtered.map((course, i) => (
                 <AnimatedSection key={course.id} delay={i * 60}>
                   <div className="rounded-3xl overflow-hidden flex flex-col h-full group bg-white/5 border border-white/10 hover:border-white/30 transition-all hover:-translate-y-2">
-                    <div className="relative h-44 overflow-hidden">
+                    <div className="relative h-56 overflow-hidden">
                       <img src={course.img} alt={course.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onError={(e) => { (e.target as HTMLImageElement).src = "https://media.gokulab.mx/Galery/pagina-principal1.jpg"; }} />
                       <div className="absolute inset-0" style={{ background: `linear-gradient(to top, ${course.color}dd, transparent)` }} />
                       <div className="absolute top-3 left-3 flex flex-col gap-2">

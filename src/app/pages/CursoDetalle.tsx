@@ -84,7 +84,6 @@ export function CursoDetalle() {
   const safeValueProps = course.valueProps || [];
   const safeTechs = course.techs || [];
 
-  // 🔥 LÓGICA DE CANONICAL PARA SEO MULTI-AUDIENCIA
   const getAudienceSegment = () => {
     if (course.audiencia_principal) {
       if (course.audiencia_principal === "company") return "empresas";
@@ -108,7 +107,7 @@ export function CursoDetalle() {
         title={`${course.title} | Cursos GōkuLab`}
         description={`${course.subtitle} Dirigido a ${course.age}. Nivel ${course.level}. Modalidad ${course.modality}.`}
         image={courseImg}
-        url={canonicalUrl} // 🔥 Inyectamos el Canonical oficial
+        url={canonicalUrl}
         type="article"
         schema={{
           "@context": "https://schema.org",
@@ -170,7 +169,9 @@ export function CursoDetalle() {
 
           <AnimatedSection delay={100} className="relative">
             <div className="absolute inset-0 bg-gradient-to-tr from-[#050A14] to-transparent z-10 rounded-[3rem]"></div>
-            <div className={`w-full aspect-[4/3] rounded-[3rem] overflow-hidden border border-white/10 relative group ${hasVideo ? 'cursor-pointer' : ''}`} onClick={() => hasVideo && setIsVideoOpen(true)}>
+            
+            {/* 🔥 FIX: Cambiamos a aspect-video (16:9) para que el banner quepa perfecto */}
+            <div className={`w-full aspect-video rounded-[3rem] overflow-hidden border border-white/10 relative group ${hasVideo ? 'cursor-pointer' : ''}`} onClick={() => hasVideo && setIsVideoOpen(true)}>
               <img src={courseImg} alt={`Curso de ${course.title}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onError={(e) => { (e.target as HTMLImageElement).src = "https://media.gokulab.mx/Galery/pagina-principal1.jpg"; }} />
               {hasVideo && (
                 <div className="absolute inset-0 flex items-center justify-center z-20">
@@ -186,6 +187,7 @@ export function CursoDetalle() {
         </div>
       </section>
 
+      {/* ... (El resto de las secciones de Soft Skills, Temario y CTA se quedan igual) ... */}
       <section className="py-24 px-4 bg-[#0A0F1E] border-y border-white/5">
         <div className="max-w-7xl mx-auto">
           <AnimatedSection className="text-center mb-16 max-w-3xl mx-auto">

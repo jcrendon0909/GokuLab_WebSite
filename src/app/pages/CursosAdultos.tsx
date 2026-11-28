@@ -41,7 +41,7 @@ export function CursosAdultos() {
           img: c.imgKey ? `https://media.gokulab.mx/Galery/${c.imgKey}` : "https://media.gokulab.mx/Galery/pagina-principal1.jpg",
         };
       })
-      .sort((a, b) => (a.orden_adults || 99) - (b.orden_adults || 99)); // 🔥 ORDEN
+      .sort((a, b) => (a.orden_adults || 99) - (b.orden_adults || 99));
   }, [cursos]);
 
   const filtered = dynamicCourses.filter((c) => activeCategory === "todos" || c.category === activeCategory);
@@ -81,7 +81,7 @@ export function CursosAdultos() {
               {filtered.map((course, i) => (
                 <AnimatedSection key={course.id} delay={i * 60}>
                   <div className="rounded-3xl overflow-hidden flex flex-col h-full group relative transition-all duration-300 hover:-translate-y-2" style={{ background: theme === "dark" ? `linear-gradient(135deg, ${course.color}10, rgba(5,10,20,0.95))` : `linear-gradient(135deg, ${course.color}05, rgba(255,255,255,0.95))`, border: theme === "dark" ? `1px solid ${course.color}30` : `1px solid ${course.color}20` }}>
-                    <div className="relative h-44 overflow-hidden">
+                    <div className="relative h-56 overflow-hidden">
                       <img src={course.img} alt={course.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onError={(e) => { (e.target as HTMLImageElement).src = "https://media.gokulab.mx/Galery/pagina-principal1.jpg"; }} />
                       <div className="absolute inset-0" style={{ background: `linear-gradient(to top, ${course.color}cc, transparent)` }} />
                       <div className="absolute top-3 left-3 flex flex-col gap-2">
