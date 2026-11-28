@@ -2,20 +2,6 @@
 import { CourseData } from './courses';
 import { API_URL } from '../config';
 
-const MAPEO_IMAGENES: Record<string, string> = {
-  "programacion-visual": "ninos-programando1.jpeg", "robotica-principiantes": "robotica1.jpeg",
-  "taller-creatividad": "taller-creatividad.jpg", "regularizacion-matematicas": "regularizacion-matematicas1.jpg",
-  "caballero-del-codigo": "fundamentos-programacion1.jpeg", "diseno-grafico-ninos": "diseno-grafico1.jpeg",
-  "programacion-visual-avanzada": "programacion-visual-peques2.JPG", "diseno-videojuegos-minecraft": "diseño-videojuegos2.jpeg",
-  "diseno-videojuegos-roblox": "diseno-videojuegos1.jpg", "diseno-videojuejos-lua-roblox": "clases-adolescentes1.jpg",
-  "diseno-videojuegos-unity": "unity1.jpg", "python-pro": "python-start1.jpg", "python-start-avanzado": "clases-adolescentes2.jpg",
-  "diseno-2d-y-3d": "diseno-web1.jpg", "taller_impresion-3d": "Lumy.jpeg", "video-blogging": "creacion-contenido-video1.jpg",
-  "taller-prompt-engeneering": "preparacion-universidad.jpg", "inteligencia-artificial-adultos": "ia-adultos.png",
-  "alfabetizacion-digital": "alfabetizacion-digital-adultos1.jpg", "adminitracion-de-proyectos": "empresas-gobierno1.jpg",
-  "taller-gobernanza-ia-ciberseguridad": "clases-adultos1.jpg", "taller-resolucion-de-conflictos": "trabajo-en-equipo1.jpg",
-  "taller-design-thinking": "trabajo-en-equipo1.jpg"
-};
-
 const AUDIENCIA_FALLBACK: Record<string, string[]> = {
   "programacion-visual": ["kids", "teens"], "robotica-principiantes": ["kids"], "taller-creatividad": ["kids"],
   "regularizacion-matematicas": ["kids"], "caballero-del-codigo": ["kids"], "diseno-grafico-ninos": ["kids"],
@@ -31,13 +17,11 @@ const AUDIENCIA_FALLBACK: Record<string, string[]> = {
 function mapCurso(cursoEncontrado: any): CourseData {
   const idCurso = String(cursoEncontrado.id || cursoEncontrado.slug || "").trim().toLowerCase();
   
-  // 🔥 FIX: Priorizamos lo que viene de la API (MongoDB). El diccionario es solo el último recurso.
-  const rawImgKey = cursoEncontrado.imgKey || cursoEncontrado.imagen_key;
-  let imgKeyReal = rawImgKey || MAPEO_IMAGENES[idCurso] || `${idCurso}.jpg`;
+  // 🔥 Ahora usamos DIRECTAMENTE lo que dice Mongo. Si no hay, usamos el slug + .jpg
+  let imgKeyReal = cursoEncontrado.imgKey || cursoEncontrado.imagen_key || `${idCurso}.jpg`;
   
-  // 🔥 CACHE BUSTING: Añadimos ?v=version para forzar recarga en Cloudflare
+  // Cache Busting
   const version = cursoEncontrado.imgVersion || 1;
-  // Evitamos duplicar el ?v si ya lo tiene
   if (!imgKeyReal.includes("?v=")) {
     imgKeyReal = `${imgKeyReal}?v=${version}`;
   }
