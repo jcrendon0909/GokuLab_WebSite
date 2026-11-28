@@ -1,3 +1,4 @@
+// src/app/pages/DebugCursos.tsx
 import { useState, useEffect } from "react";
 import { fetchAllCourses } from "../../Data/courseService";
 import { CourseData } from "../../Data/courses";
@@ -35,6 +36,9 @@ export function DebugCursos() {
 
   const startEdit = (curso: CourseData) => {
     setEditingId(curso.id);
+    // Limpiamos el ?v= para que el usuario edite solo el nombre del archivo
+    const cleanImgKey = curso.imgKey.split('?')[0];
+    
     setEditData({
       targetAudience: curso.targetAudience || [],
       audiencia_principal: (curso as any).audiencia_principal || "kids",
@@ -44,7 +48,8 @@ export function DebugCursos() {
       orden_company: (curso as any).orden_company || "",
       edad_dirigida: curso.age || "",
       precio_desde: parseInt(curso.price.replace(/[^0-9]/g, "")) || 0,
-      imgKey: curso.imgKey || "",
+      imgKey: cleanImgKey,
+      imgVersion: (curso as any).imgVersion || 1,
       nombreCurso: curso.title || "",
       descripcionCorta: curso.subtitle || "",
       publicable: true
@@ -111,7 +116,6 @@ export function DebugCursos() {
   if (isLoading) return <div className="pt-32 px-10 text-white bg-[#050A14] min-h-screen">Cargando datos...</div>;
 
   return (
-    /* 🔥 FIX: pt-32 para esquivar el Header fixed */
     <div className="pt-32 pb-10 px-6 md:px-10 text-white bg-[#050A14] min-h-screen font-sans">
       
       <div className="max-w-7xl mx-auto mb-10">
@@ -120,7 +124,6 @@ export function DebugCursos() {
             <h1 className="text-3xl font-black mb-2">🛠️ Panel de Administración de Cursos</h1>
             <p className="text-gray-400">Edita campos básicos. Los cambios se guardan en MongoDB al instante.</p>
           </div>
-          {/* Token Input con relative y z-10 para asegurar clics */}
           <div className="relative z-10 flex items-center gap-2 bg-white/5 p-2 rounded-xl border border-white/20 hover:border-white/40 transition-colors">
             <Lock size={18} className={adminToken ? "text-green-400" : "text-red-400"} />
             <input 
@@ -150,7 +153,9 @@ export function DebugCursos() {
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {filteredCursos.map((curso) => {
-          const imgUrl = `https://media.gokulab.mx/Galery/${curso.imgKey}`;
+          // 🔥 FIX: Usamos split('?')[0] para que la previsualización funcione sin problemas de caché
+          const cleanImgKey = curso.imgKey.split('?')[0];
+          const imgUrl = `https://media.gokulab.mx/Galery/${cleanImgKey}`;
           const hasError = errorImages[curso.id];
           const isEditing = editingId === curso.id;
           const status = saveStatus[curso.id];
@@ -219,9 +224,15 @@ export function DebugCursos() {
                     </div>
                   </div>
                   
-                  <div>
-                    <label className="block text-xs text-gray-400 mb-1">Nombre del archivo en R2</label>
-                    <input type="text" value={editData.imgKey} onChange={(e) => handleFieldChange("imgKey", e.target.value)} className="w-full bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[#00C9FF]" />
+                  <div className="grid grid-cols-3 gap-2">
+                    <div className="col-span-2">
+                      <label className="block text-xs text-gray-400 mb-1">Nombre del archivo en R2</label>
+                      <input type="text" value={editData.imgKey} onChange={(e) => handleFieldChange("imgKey", e.target.value)} className="w-full bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[#00C9FF]" />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-gray-400 mb-1" title="Incrementa este número si cambiaste la imagen en R2">Versión (Caché)</label>
+                      <input type="number" value={editData.imgVersion} onChange={(e) => handleFieldChange("imgVersion", parseInt(e.target.value))} className="w-full bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:border-[#00C9FF]" />
+                    </div>
                   </div>
 
                   <div>

@@ -9,7 +9,7 @@ const MAPEO_IMAGENES: Record<string, string> = {
   "programacion-visual-avanzada": "programacion-visual-peques2.JPG", "diseno-videojuegos-minecraft": "diseño-videojuegos2.jpeg",
   "diseno-videojuegos-roblox": "diseno-videojuegos1.jpg", "diseno-videojuejos-lua-roblox": "clases-adolescentes1.jpg",
   "diseno-videojuegos-unity": "unity1.jpg", "python-pro": "python-start1.jpg", "python-start-avanzado": "clases-adolescentes2.jpg",
-  "diseno-2d-y-3d": "diseno-web1.jpg", "taller_impresion-3d": "taller_impresion-3d.jpg", "video-blogging": "creacion-contenido-video1.jpg",
+  "diseno-2d-y-3d": "diseno-web1.jpg", "taller_impresion-3d": "Lumy.jpeg", "video-blogging": "creacion-contenido-video1.jpg",
   "taller-prompt-engeneering": "preparacion-universidad.jpg", "inteligencia-artificial-adultos": "ia-adultos.png",
   "alfabetizacion-digital": "alfabetizacion-digital-adultos1.jpg", "adminitracion-de-proyectos": "empresas-gobierno1.jpg",
   "taller-gobernanza-ia-ciberseguridad": "clases-adultos1.jpg", "taller-resolucion-de-conflictos": "trabajo-en-equipo1.jpg",
@@ -30,8 +30,17 @@ const AUDIENCIA_FALLBACK: Record<string, string[]> = {
 
 function mapCurso(cursoEncontrado: any): CourseData {
   const idCurso = String(cursoEncontrado.id || cursoEncontrado.slug || "").trim().toLowerCase();
-  const imgKeyOriginal = cursoEncontrado.imgKey || cursoEncontrado.imagen_key || "";
-  const imgKeyReal = MAPEO_IMAGENES[idCurso] || imgKeyOriginal || `${idCurso}.jpg`;
+  
+  // 🔥 FIX: Priorizamos lo que viene de la API (MongoDB). El diccionario es solo el último recurso.
+  const rawImgKey = cursoEncontrado.imgKey || cursoEncontrado.imagen_key;
+  let imgKeyReal = rawImgKey || MAPEO_IMAGENES[idCurso] || `${idCurso}.jpg`;
+  
+  // 🔥 CACHE BUSTING: Añadimos ?v=version para forzar recarga en Cloudflare
+  const version = cursoEncontrado.imgVersion || 1;
+  // Evitamos duplicar el ?v si ya lo tiene
+  if (!imgKeyReal.includes("?v=")) {
+    imgKeyReal = `${imgKeyReal}?v=${version}`;
+  }
 
   let audience = cursoEncontrado.targetAudience || cursoEncontrado.audiencia;
   if (!audience || !Array.isArray(audience) || audience.length === 0) {
